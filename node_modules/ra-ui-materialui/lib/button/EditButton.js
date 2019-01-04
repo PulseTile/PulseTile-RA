@@ -1,0 +1,55 @@
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(require("react"));
+var prop_types_1 = __importDefault(require("prop-types"));
+var shouldUpdate_1 = __importDefault(require("recompose/shouldUpdate"));
+var Create_1 = __importDefault(require("@material-ui/icons/Create"));
+var react_router_dom_1 = require("react-router-dom");
+var ra_core_1 = require("ra-core");
+var Button_1 = __importDefault(require("./Button"));
+// useful to prevent click bubbling in a datagrid with rowClick
+var stopPropagation = function (e) { return e.stopPropagation(); };
+var EditButton = function (_a) {
+    var _b = _a.basePath, basePath = _b === void 0 ? '' : _b, _c = _a.label, label = _c === void 0 ? 'ra.action.edit' : _c, _d = _a.record, record = _d === void 0 ? {} : _d, _e = _a.icon, icon = _e === void 0 ? react_1.default.createElement(Create_1.default, null) : _e, rest = __rest(_a, ["basePath", "label", "record", "icon"]);
+    return (react_1.default.createElement(Button_1.default, __assign({ component: react_router_dom_1.Link, to: ra_core_1.linkToRecord(basePath, record.id), label: label, onClick: stopPropagation }, rest), icon));
+};
+EditButton.propTypes = {
+    basePath: prop_types_1.default.string,
+    className: prop_types_1.default.string,
+    classes: prop_types_1.default.object,
+    label: prop_types_1.default.string,
+    record: prop_types_1.default.object,
+    icon: prop_types_1.default.element,
+};
+var enhance = shouldUpdate_1.default(function (props, nextProps) {
+    return props.translate !== nextProps.translate ||
+        (props.record &&
+            nextProps.record &&
+            props.record.id !== nextProps.record.id) ||
+        props.basePath !== nextProps.basePath ||
+        (props.record == null && nextProps.record != null);
+});
+exports.default = enhance(EditButton);
