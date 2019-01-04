@@ -1,0 +1,6 @@
+# Directories
+node_modules/
+
+#IDE generated
+.idea/
+
