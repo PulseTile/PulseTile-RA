@@ -13,7 +13,7 @@ import {
     DELETE_MANY
 } from "react-admin";
 
-import { token } from './token';
+import { token } from '../token';
 
 const domainName = "http://dev.ripple.foundation:8000";
 const apiPatientsUser = 'api/patients/9999999000';
