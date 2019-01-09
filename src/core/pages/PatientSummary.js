@@ -4,16 +4,16 @@ import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 
-import allergiesIcon from "./images/banners/allergies.jpg";
-import medicationsIcon from "./images/banners/medications.jpg";
-import contactsIcon from "./images/banners/contacts.jpg";
-import problemsIcon from "./images/banners/problems.jpg";
+import allergiesIcon from "../images/banners/allergies.jpg";
+import medicationsIcon from "../images/banners/medications.jpg";
+import contactsIcon from "../images/banners/contacts.jpg";
+import problemsIcon from "../images/banners/problems.jpg";
 
-import DashboardCard from "./common/DashboardCard";
+import DashboardCard from "../common/DashboardCard";
 
-import * as coreSynopsisActions from './actions/synopsisActions';
-import * as nonCoreSynopsisActions from "../version/actions/synopsisActions";
-import { nonCoreSynopsisData } from "../version/config/nonCoreSynopsis";
+import * as coreSynopsisActions from '../actions/synopsisActions';
+import * as nonCoreSynopsisActions from "../../version/actions/synopsisActions";
+import { nonCoreSynopsisData } from "../../version/config/nonCoreSynopsis";
 
 const synopsisActions = Object.assign(coreSynopsisActions, nonCoreSynopsisActions);
 const synopsisActionsArray = Object.values(synopsisActions);

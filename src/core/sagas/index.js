@@ -1,17 +1,20 @@
-import allergiesSynopsisSagas from "./allergiesSynopsisSagas";
-import contactsSynopsisSagas from "./contactsSynopsisSagas";
-import medicationsSynopsisSagas from "./medicationsSynopsisSagas";
-import problemsSynopsisSagas from "./problemsSynopsisSagas";
+// CORE SAGAS
+import patientsStatisticSagas from "./patientsStatisticSagas";
+import synopsisSagas from "./synopsisSagas";
 
+// LINK TO NON-CORE SAGAS
 import nonCoreSagas from "../../version/sagas";
 
+/**
+ * This function unites core and non-core sagas and returns total array
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ */
 export default function* rootSaga() {
 
     const coreSagas = [
-        allergiesSynopsisSagas,
-        contactsSynopsisSagas,
-        medicationsSynopsisSagas,
-        problemsSynopsisSagas,
+        patientsStatisticSagas,
+        synopsisSagas
     ];
 
     const sagas = coreSagas.concat(nonCoreSagas);

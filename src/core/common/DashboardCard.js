@@ -62,7 +62,7 @@ export default props => {
                 component="img"
                 alt={title}
                 className={classes.media}
-                height="120"
+                height="180"
                 image={icon}
                 title={title}
             />
