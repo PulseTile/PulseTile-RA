@@ -3,14 +3,18 @@ import contactsSynopsisSagas from "./contactsSynopsisSagas";
 import medicationsSynopsisSagas from "./medicationsSynopsisSagas";
 import problemsSynopsisSagas from "./problemsSynopsisSagas";
 
+import nonCoreSagas from "../../version/sagas";
+
 export default function* rootSaga() {
 
-    const sagas = [
+    const coreSagas = [
         allergiesSynopsisSagas,
         contactsSynopsisSagas,
         medicationsSynopsisSagas,
         problemsSynopsisSagas,
     ];
+
+    const sagas = coreSagas.concat(nonCoreSagas);
 
     yield sagas;
 }

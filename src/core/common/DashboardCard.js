@@ -19,9 +19,6 @@ const ItemsList = ({ items, list, history }) => {
     return (
         <List>
             {items.map((item, key) => {
-
-                console.log(item)
-
                 const showRoute = "/" + list + "/" + item.sourceId + "/show";
                 return (
                     <ListItem button divider onClick={() => history.push(showRoute)}>

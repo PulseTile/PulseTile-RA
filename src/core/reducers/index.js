@@ -4,11 +4,15 @@ import contactsSynopsis from "./contactsSynopsisReducer";
 import medicationsSynopsis from "./medicationsSynopsisReducer";
 import problemsSynopsis from "./problemsSynopsisReducer";
 
-const reducers = {
+import nonCoreReducers from "../../version/reducers";
+
+const coreReducers = {
     allergiesSynopsis,
     contactsSynopsis,
     medicationsSynopsis,
     problemsSynopsis,
 };
+
+const reducers = Object.assign(coreReducers, nonCoreReducers);
 
 export default combineReducers(reducers);

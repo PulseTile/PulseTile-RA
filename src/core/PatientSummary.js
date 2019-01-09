@@ -11,13 +11,12 @@ import problemsIcon from "./images/banners/problems.jpg";
 
 import DashboardCard from "./common/DashboardCard";
 
-import {
-    allergiesSynopsisAction,
-    contactsSynopsisAction,
-    medicationsSynopsisAction,
-    problemsSynopsisAction
-} from './actions/synopsisActions';
+import * as coreSynopsisActions from './actions/synopsisActions';
+import * as nonCoreSynopsisActions from "../version/actions/synopsisActions";
+import { nonCoreSynopsisData } from "../version/config/nonCoreSynopsis";
 
+const synopsisActions = Object.assign(coreSynopsisActions, nonCoreSynopsisActions);
+const synopsisActionsArray = Object.values(synopsisActions);
 
 const styles = {
     card: {
@@ -36,20 +35,17 @@ const styles = {
 class PatientSummary extends Component {
 
     componentDidMount() {
-        const { allergiesSynopsisAction, contactsSynopsisAction } = this.props;
-
         const currentUserID = "9999999000";
+        synopsisActionsArray.map(item => {
+            item(currentUserID);
+        });
 
-        allergiesSynopsisAction(currentUserID);
-        contactsSynopsisAction(currentUserID);
-        medicationsSynopsisAction(currentUserID);
-        problemsSynopsisAction(currentUserID);
     }
 
     render() {
         const { allergiesSynopsis, contactsSynopsis, medicationsSynopsis, problemsSynopsis } = this.props;
 
-        const summaryArray = [
+        const coreSynopsisData = [
             { title: "Allergies", list: "allergies", items: allergiesSynopsis, icon: allergiesIcon },
             { title: "Contacts", list: "contacts", items: contactsSynopsis, icon: contactsIcon },
             { title: "Medications", list: "medications", items: medicationsSynopsis, icon: medicationsIcon },
@@ -58,12 +54,23 @@ class PatientSummary extends Component {
 
         return (
             <div>
-                { summaryArray.map(item => {
+                { coreSynopsisData.map(item => {
                     return (
                         <DashboardCard
                           title={item.title}
                           list={item.list}
                           items={item.items}
+                          icon={item.icon}
+                          {...this.props}
+                        />
+                    );
+                })}
+                { nonCoreSynopsisData.map(item => {
+                    return (
+                        <DashboardCard
+                          title={item.title}
+                          list={item.list}
+                          items={this.props[item.statePropsName]}
                           icon={item.icon}
                           {...this.props}
                         />
@@ -75,20 +82,23 @@ class PatientSummary extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
+
+    const coreSynopsis = {
         allergiesSynopsis: get(state, "custom.allergiesSynopsis.data", []),
         contactsSynopsis: get(state, "custom.contactsSynopsis.data", []),
         medicationsSynopsis: get(state, "custom.medicationsSynopsis.data", []),
         problemsSynopsis: get(state, "custom.problemsSynopsis.data", []),
-    }
+    };
+
+    let nonCoreSynopsis = {};
+    nonCoreSynopsisData.forEach(item => {
+        nonCoreSynopsis[item.statePropsName] = get(state, "custom." + item.statePropsName + ".data", [])
+    });
+
+    return Object.assign(coreSynopsis, nonCoreSynopsis);
 };
 
-const mapDispatchToProps = dispatch => ({
-    allergiesSynopsisAction,
-    contactsSynopsisAction,
-    medicationsSynopsisAction,
-    problemsSynopsisAction,
-});
+const mapDispatchToProps = dispatch => (synopsisActions);
 
 export default compose(
     withStyles(styles),
