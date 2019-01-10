@@ -1,3 +1,5 @@
+// For separate synopsis request to dev.ripple.foundation:8000
+
 import React, { Component } from "react";
 import { get } from "lodash";
 import compose from 'recompose/compose';

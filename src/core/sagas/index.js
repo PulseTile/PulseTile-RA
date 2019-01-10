@@ -1,4 +1,5 @@
 // CORE SAGAS
+import patientInfo from "./patientInfoSagas";
 import patientsStatisticSagas from "./patientsStatisticSagas";
 import synopsisSagas from "./synopsisSagas";
 
@@ -13,8 +14,9 @@ import nonCoreSagas from "../../version/sagas";
 export default function* rootSaga() {
 
     const coreSagas = [
+        patientInfo,
         patientsStatisticSagas,
-        synopsisSagas
+        // synopsisSagas
     ];
 
     const sagas = coreSagas.concat(nonCoreSagas);

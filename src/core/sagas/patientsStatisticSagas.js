@@ -3,10 +3,9 @@ import { get } from "lodash";
 import { token } from "../token";
 import { patientsStatisticAction } from '../actions/patientsAction';
 
-function* synopsisSagas() {
+function* patientsStatisticSagas() {
 
-    const params = yield put(patientsStatisticAction.request());
-    const userId = get(params, 'payload', null);
+    yield put(patientsStatisticAction.request());
 
     const domainName = "http://dev.ripple.foundation";
     const apiPatientsUser = 'api/patients';
@@ -34,5 +33,5 @@ function* synopsisSagas() {
 }
 
 export default [
-    fork(synopsisSagas),
+    fork(patientsStatisticSagas),
 ];
