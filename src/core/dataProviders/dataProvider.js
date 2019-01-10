@@ -15,7 +15,7 @@ import {
 
 import { token } from '../token';
 
-const domainName = "http://dev.ripple.foundation:8000";
+const domainName = "http://dev.ripple.foundation";
 const apiPatientsUser = 'api/patients/9999999000';
 const currentUserID = "9999999000";
 

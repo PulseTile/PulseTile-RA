@@ -25,7 +25,7 @@ function* synopsisSagas() {
         const params = yield put(item.action.request());
         const userId = get(params, 'payload', null);
 
-        const domainName = "http://dev.ripple.foundation:8000";
+        const domainName = "http://dev.ripple.foundation";
         const apiPatientsUser = 'api/patients';
         const route = "synopsis/" + item.heading;
 
@@ -37,6 +37,7 @@ function* synopsisSagas() {
         }
         options.headers = {
             Authorization: "Bearer " + token,
+            Cookie: token,
         };
 
         try {

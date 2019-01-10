@@ -8,7 +8,7 @@ function* synopsisSagas() {
     const params = yield put(patientsStatisticAction.request());
     const userId = get(params, 'payload', null);
 
-    const domainName = "http://dev.ripple.foundation:8000";
+    const domainName = "http://dev.ripple.foundation";
     const apiPatientsUser = 'api/patients';
 
     const url = domainName + '/' + apiPatientsUser;
