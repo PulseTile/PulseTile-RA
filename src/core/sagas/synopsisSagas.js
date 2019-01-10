@@ -9,16 +9,16 @@ import {
 } from '../actions/synopsisActions';
 import { nonCoreSynopsisSagas } from "../../version/config/nonCoreSynopsis";
 
-const coreSynopsisArray = [
-    { heading: 'allergies', action: allergiesSynopsisAction },
-    { heading: 'contacts', action: contactsSynopsisAction },
-    { heading: 'medications', action: medicationsSynopsisAction },
-    { heading: 'problems', action: problemsSynopsisAction }
-];
-
-const synopsisArray = Object.assign(coreSynopsisArray, nonCoreSynopsisSagas);
-
 function* synopsisSagas() {
+
+    const coreSynopsis = [
+        { heading: 'allergies', action: allergiesSynopsisAction },
+        { heading: 'contacts', action: contactsSynopsisAction },
+        { heading: 'medications', action: medicationsSynopsisAction },
+        { heading: 'problems', action: problemsSynopsisAction }
+    ];
+
+    const synopsisArray = coreSynopsis.concat(nonCoreSynopsisSagas);
 
     for (let i = 0, n = synopsisArray.length; i < n; i++) {
         let item = synopsisArray[i];

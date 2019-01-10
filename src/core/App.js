@@ -13,8 +13,6 @@ import customReducers from "./reducers";
 import customRoutes from "./routes";
 
 import PatientSummary from "./pages/PatientSummary";
-import LoginPage from "./pages/LoginPage";
-import LogoutButton from "./pages/LogoutButton";
 
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
@@ -31,8 +29,6 @@ export default class App extends Component {
         customRoutes={customRoutes}
         dataProvider={dataProvider}
         dashboard={PatientSummary}
-        // loginPage={LoginPage}
-        // logoutButton={LogoutButton}
       >
           {
               plugins.map(item => {

@@ -23,6 +23,10 @@ function* synopsisSagas() {
 
     try {
         const res = yield fetch(url, options).then(res => res.json());
+
+        console.log('SAGAS')
+        console.log(res)
+
         yield put(patientsStatisticAction.success(res))
     } catch(e) {
         yield put(patientsStatisticAction.failure(e))
