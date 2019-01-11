@@ -5,12 +5,14 @@ import AllergiesList from "../plugins/Allergies/AllergiesList";
 import ContactsList from "../plugins/Contacts/ContactsList";
 import MedicationsList from "../plugins/Medications/MedicationsList";
 import DiagnosisList from "../plugins/Diagnosis/DiagnosisList";
+import PatientsList from "../pages/PatientsList";
 
 // SHOW PAGES
 import AllergiesShow from "../plugins/Allergies/AllergiesShow";
 import ContactsShow from "../plugins/Contacts/ContactsShow";
 import MedicationsShow from "../plugins/Medications/MedicationsShow";
 import DiagnosisShow from "../plugins/Diagnosis/DiagnosisShow";
+import PatientsShow from "../pages/PatientInfo";
 
 // EDIT PAGES
 import AllergiesEdit from "../plugins/Allergies/AllergiesEdit";
@@ -29,6 +31,7 @@ import AllergiesIcon from "@material-ui/icons/Pets";
 import ContactsIcon from "@material-ui/icons/Phone";
 import MedicationsIcon from "@material-ui/icons/LocalHospital";
 import DiagnosisIcon from "@material-ui/icons/Today";
+import PatientsIcon from "@material-ui/icons/People";
 
 export default [
     {
@@ -66,5 +69,12 @@ export default [
         show: DiagnosisShow,
         edit: DiagnosisEdit,
         create: DiagnosisCreate,
+    },
+    {
+        name: "patients",
+        icon: PatientsIcon,
+        label: "Patients",
+        list: PatientsList,
+        show: PatientsShow,
     },
 ];

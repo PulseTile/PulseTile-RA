@@ -16,7 +16,7 @@ import {
 import { token } from '../token';
 
 const domainName = "http://dev.ripple.foundation";
-const apiPatientsUser = 'api/patients/9999999000';
+const apiPatientsUser = 'api/patients';
 const currentUserID = "9999999000";
 
 /**
@@ -43,11 +43,13 @@ export default () => {
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = "";
         const options = {};
-
         switch (type) {
-
             case GET_LIST: {
-                url = `${domainName}/${apiPatientsUser}/${resource}`;
+                if ('patients' === resource) {
+                    url = `${domainName}/api/${resource}`;
+                } else {
+                    url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
+                }
                 options.method = "GET";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
@@ -129,11 +131,21 @@ export default () => {
         switch (type) {
 
             case GET_LIST:
+
                 const pageNumber = get(params, 'pagination.page', 1);
                 const numberPerPage = get(params, 'pagination.perPage', 10);
-                const results = response.map((item, id) => {
-                   return Object.assign({id: item.sourceId}, item);
-                });
+
+                let results = [];
+                if ('patients' !== resource) {
+                    results = response.map((item, id) => {
+                        return Object.assign({id: item.sourceId}, item);
+                    });
+                } else {
+                    results = Object.values(response).map((item, id) => {
+                        return Object.assign({id: item.sourceId}, item);
+                    });
+                }
+
                 const startItem = (pageNumber - 1) * numberPerPage;
                 const endItem = pageNumber * numberPerPage;
                 const paginationResults = results.slice(startItem, endItem);
@@ -149,10 +161,6 @@ export default () => {
                 };
 
             case CREATE:
-
-                console.log('RESPONSE: ')
-                console.log(response)
-
                 let compositionUidArray = response.compositionUid.split('::');
                 let sourseID = compositionUidArray[0];
                 let id = response.host + '-' + sourseID;
@@ -175,13 +183,6 @@ export default () => {
      */
     return (type, resource, params) => {
         let { url, options } = convertDataRequestToHTTP(type, resource, params);
-
-        console.log('----------------------------')
-        console.log(type)
-        console.log(url)
-        console.log(options)
-        console.log('----------------------------')
-
         return fetch(url, options).then(response => response.json())
             .then(res => convertHTTPResponse(res, type, resource, params))
             .catch(err => console.log('Error: ', err));
