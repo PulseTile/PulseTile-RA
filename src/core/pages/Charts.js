@@ -109,24 +109,36 @@ class Charts extends Component {
         };
     }
 
+    /**
+     * This function redirects to patients list when user clicks on Bar
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {shape}  history
+     * @param {shape}  item
+     */
+    redirectTo(history, item) {
+        let url = "/patients?sort="+item.sort;
+        history.push(url);
+    }
+
     render() {
-        const { patients } = this.props;
+        const { patients, history } = this.props;
 
         const DepartmentPercentage = this.getDepartmentPercentage(patients);
         const dataGreen = [
-            { Text: "Community Care", RespondentPercentage: get(DepartmentPercentage, 'CommunityCare', 0) },
-            { Text: "Hospital", RespondentPercentage: get(DepartmentPercentage, 'Hospital', 0) },
-            { Text: "Mental Health", RespondentPercentage: get(DepartmentPercentage, 'MentalHealth', 0) },
-            { Text: "Neighbourhood", RespondentPercentage: get(DepartmentPercentage, 'Neighbourhood', 0) },
-            { Text: "Primary Care", RespondentPercentage: get(DepartmentPercentage, 'PrimaryCare', 0) }
+            { Text: "Community Care", sort: "CommunityCare", RespondentPercentage: get(DepartmentPercentage, 'CommunityCare', 0) },
+            { Text: "Hospital", sort: "Hospital", RespondentPercentage: get(DepartmentPercentage, 'Hospital', 0) },
+            { Text: "Mental Health", sort: "MentalHealth", RespondentPercentage: get(DepartmentPercentage, 'MentalHealth', 0) },
+            { Text: "Neighbourhood", sort: "Neighbourhood", RespondentPercentage: get(DepartmentPercentage, 'Neighbourhood', 0) },
+            { Text: "Primary Care", sort: "PrimaryCare", RespondentPercentage: get(DepartmentPercentage, 'PrimaryCare', 0) }
         ];
 
         const AgePercentage = this.getAgePercentage(patients);
         const dataViolet = [
-            { Text: "19-30", RespondentPercentage: get(AgePercentage, 'first', 0) },
-            { Text: "31-60", RespondentPercentage: get(AgePercentage, 'second', 0) },
-            { Text: "61-80", RespondentPercentage: get(AgePercentage, 'third', 0) },
-            { Text: ">80", RespondentPercentage: get(AgePercentage, 'fourth', 0) }
+            { Text: "19-30", sort: "first", RespondentPercentage: get(AgePercentage, 'first', 0) },
+            { Text: "31-60", sort: "second", RespondentPercentage: get(AgePercentage, 'second', 0) },
+            { Text: "61-80", sort: "third", RespondentPercentage: get(AgePercentage, 'third', 0) },
+            { Text: ">80", sort: "fourth", RespondentPercentage: get(AgePercentage, 'fourth', 0) }
         ];
 
         return (
@@ -142,7 +154,12 @@ class Charts extends Component {
                         <XAxis dataKey="Text" fontFamily="sans-serif" tickSize dy="25" />
                         <YAxis hide />
                         <CartesianGrid vertical={false} stroke="#E8E8E8" />
-                        <Bar dataKey="RespondentPercentage" barSize={170} fontFamily="sans-serif" >
+                        <Bar
+                            dataKey="RespondentPercentage"
+                            barSize={170}
+                            fontFamily="sans-serif"
+                            onClick={(item) => this.redirectTo(history, item)}
+                        >
                             {dataGreen.map((entry, index) => (
                                 <Cell fill={"#c5e29f"} />
                             ))}
@@ -160,7 +177,7 @@ class Charts extends Component {
                         <XAxis dataKey="Text" fontFamily="sans-serif" tickSize dy="25" />
                         <YAxis hide />
                         <CartesianGrid vertical={false} stroke="#E8E8E8" />
-                        <Bar dataKey="RespondentPercentage" barSize={170} fontFamily="sans-serif" >
+                        <Bar dataKey="RespondentPercentage" barSize={170} fontFamily="sans-serif" onClick={(item) => this.redirectTo(history, item)} >
                             {dataViolet.map((entry, index) => (
                                 <Cell fill={"#d3b2f4"} />
                             ))}

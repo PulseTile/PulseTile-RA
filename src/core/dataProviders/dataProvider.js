@@ -1,5 +1,6 @@
 import { stringify } from "query-string";
 import { get } from "lodash";
+import moment from "moment";
 import {
     fetchUtils,
     GET_LIST,
@@ -119,6 +120,52 @@ export default () => {
     };
 
     /**
+     * This function filters patients list by department
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {shape} response
+     * @param {shape} params
+     * @return {Array}
+     */
+    function getPatientsList(response, params) {
+
+        const departmentsArray = ["CommunityCare", "Hospital", "MentalHealth", "Neighbourhood", "PrimaryCare"];
+        const ageArray = ["first", "second", "third", "fourth"];
+        const ageLimits = {
+            first: { min: 19, max: 30 },
+            second: { min: 31, max: 60 },
+            third: { min: 61, max: 80 },
+            fourth: { min: 81, max: 100 },
+        };
+
+        const filter = get(params, 'sort.field', null);
+        let results = [];
+        if (-1 !== departmentsArray.indexOf(filter)) {
+            results = Object.values(response).filter(item => {
+                let filterWithSpaces = filter
+                    .replace(/([A-Z])/g, ' $1')
+                    .replace(/^./, function(str){ return str.toUpperCase(); })
+                    .trim();
+                return (item.department === filterWithSpaces);
+            });
+        } else if (-1 !== ageArray.indexOf(filter)) {
+            const currentDate = new Date().getTime();
+            const endDate = new moment(currentDate);
+            results = Object.values(response).filter(item => {
+                let birthDate = get(item, 'dateOfBirth', null);
+                let startDate = new moment(birthDate);
+                let duration = moment.duration(endDate.diff(startDate)).get('year');
+                return (duration > ageLimits[filter].min && duration < ageLimits[filter].max);
+            })
+        } else {
+            results = Object.values(response).map(item => {
+                return Object.assign({id: item.sourceId}, item);
+            });
+        }
+        return results;
+    }
+
+    /**
      * This constant handle response data
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
@@ -141,9 +188,7 @@ export default () => {
                         return Object.assign({id: item.sourceId}, item);
                     });
                 } else {
-                    results = Object.values(response).map((item, id) => {
-                        return Object.assign({id: item.sourceId}, item);
-                    });
+                    results = getPatientsList(response, params);
                 }
 
                 const startItem = (pageNumber - 1) * numberPerPage;
