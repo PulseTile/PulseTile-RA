@@ -1,5 +1,5 @@
 import { get } from "lodash";
-import { patientInfoAction } from "../actions/patientInfoAction";
+import { PATIENT_INFO } from "../actions/patientInfoAction";
 
 const initialState = {
     data: null,
@@ -7,28 +7,24 @@ const initialState = {
     error: null,
 };
 
-export default (state = initialState, { type, payload }) => {
-    switch (type) {
-        case patientInfoAction.REQUEST:
+export default (state = initialState, action) => {
+    switch (action.type) {
+        case PATIENT_INFO.REQUEST:
             return {
                 ...state,
                 loading: true,
             };
-        case patientInfoAction.SUCCESS:
-
-            console.log('REDUCER-SUCCESS------------------------------------------------------')
-            console.log(payload)
-
+        case PATIENT_INFO.SUCCESS:
             return {
                 ...state,
                 loading: false,
-                data: get(payload, "patients", []),
+                data: get(action, "data", null),
             };
-        case patientInfoAction.FAILURE:
+        case PATIENT_INFO.FAILURE:
             return {
                 ...state,
                 loading: false,
-                error: payload,
+                error: get(action, "error", null),
             };
         default:
             return state;

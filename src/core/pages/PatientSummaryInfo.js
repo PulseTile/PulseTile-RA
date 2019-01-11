@@ -32,14 +32,13 @@ class PatientSummaryInfo extends Component {
 
     componentDidMount() {
         const currentUserID = "9999999000";
-
-        console.log('++++++++++++++++++++++++ component')
-
-        patientInfoAction(currentUserID);
+        this.props.getPatientInfo(currentUserID);
     }
 
     render() {
         const { patientInfo } = this.props;
+
+        console.log(patientInfo)
 
         const coreSynopsisData = [
             { title: "Allergies", list: "allergies", items: get(patientInfo, 'allergies', []), icon: allergiesIcon },
@@ -72,9 +71,15 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    patientInfoAction,
-});
+const mapDispatchToProps = dispatch => {
+    return {
+        getPatientInfo(userId) {
+            dispatch(patientInfoAction.request(userId));
+        }
+    }
+
+
+};
 
 export default compose(
     withStyles(styles),

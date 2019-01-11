@@ -1,15 +1,10 @@
-import { fork, put } from 'redux-saga/effects';
-import { get } from "lodash";
+import { takeEvery, put } from 'redux-saga/effects';
 import { token } from "../token";
-import { patientsStatisticAction } from '../actions/patientsAction';
+import { PATIENTS_STATISTIC, patientStatisticAction } from '../actions/patientsStatisticAction';
 
-function* patientsStatisticSagas() {
-
-    yield put(patientsStatisticAction.request());
-
+export default takeEvery(PATIENTS_STATISTIC.REQUEST, function*() {
     const domainName = "http://dev.ripple.foundation";
     const apiPatientsUser = 'api/patients';
-
     const url = domainName + '/' + apiPatientsUser;
     let options = {};
     options.method = "GET";
@@ -19,19 +14,10 @@ function* patientsStatisticSagas() {
     options.headers = {
         Authorization: "Bearer " + token,
     };
-
     try {
-        const res = yield fetch(url, options).then(res => res.json());
-
-        console.log('SAGAS')
-        console.log(res)
-
-        yield put(patientsStatisticAction.success(res))
+        const result = yield fetch(url, options).then(res => res.json());
+        yield put(patientStatisticAction.success(result))
     } catch(e) {
-        yield put(patientsStatisticAction.failure(e))
+        yield put(patientStatisticAction.error(e))
     }
-}
-
-export default [
-    fork(patientsStatisticSagas),
-];
+});

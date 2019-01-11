@@ -1,4 +1,9 @@
-import { createRoutine } from 'redux-saga-routines';
+import { createRequestTypes } from "./functions";
 
-// For common request about patient (for dev.ripple.foundation without 8000)
-export const patientInfoAction = createRoutine('PATIENT_INFO_ACTION');
+export const PATIENT_INFO = createRequestTypes('PATIENT_INFO');
+
+export const patientInfoAction = {
+    request: data => ({ type: PATIENT_INFO.REQUEST, data }),
+    success: data => ({ type: PATIENT_INFO.SUCCESS, data }),
+    error:   error => ({ type: PATIENT_INFO.FAILURE, error }),
+};
