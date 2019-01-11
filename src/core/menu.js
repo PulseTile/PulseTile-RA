@@ -2,6 +2,7 @@ import React, { createElement } from 'react';
 import { withRouter } from 'react-router-dom';
 import { MenuItemLink, getResources } from 'react-admin';
 import { connect } from 'react-redux';
+import HomeIcon from '@material-ui/icons/Home';
 import LabelIcon from '@material-ui/icons/Timeline';
 
 /**
@@ -16,6 +17,12 @@ import LabelIcon from '@material-ui/icons/Timeline';
 const Menu = ({ resources, onMenuClick }) => {
     return (
         <div>
+            <MenuItemLink
+                to="/"
+                primaryText="Home"
+                leftIcon={<HomeIcon />}
+                onClick={onMenuClick}
+            />
             {resources.map(resource => (
                 <MenuItemLink
                     to={`/${resource.name}`}
