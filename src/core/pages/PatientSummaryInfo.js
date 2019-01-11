@@ -31,14 +31,12 @@ const styles = {
 class PatientSummaryInfo extends Component {
 
     componentDidMount() {
-        const currentUserID = "9999999000";
+        const currentUserID = localStorage.getItem('userId');
         this.props.getPatientInfo(currentUserID);
     }
 
     render() {
         const { patientInfo } = this.props;
-
-        console.log(patientInfo)
 
         const coreSynopsisData = [
             { title: "Allergies", list: "allergies", items: get(patientInfo, 'allergies', []), icon: allergiesIcon },

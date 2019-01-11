@@ -13,11 +13,7 @@ import customReducers from "./reducers";
 import customRoutes from "./routes";
 import customMenu from "./menu";
 
-// For separate synopsis request to dev.ripple.foundation:8000
-// import PatientSummary from "./pages/PatientSummary";
-
-// For common request about patient (for dev.ripple.foundation without 8000)
-import PatientSummaryInfo from "./pages/PatientSummaryInfo";
+import PatientSummary from "./pages/PatientSummaryInfo";
 
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
@@ -27,14 +23,14 @@ export default class App extends Component {
   render() {
     return (
       <Admin
-        // authProvider={authProvider}
+        authProvider={authProvider}
         menu={customMenu}
         title="PulseTile"
         customSagas={[customSagas]}
         customReducers={{custom: customReducers}}
         customRoutes={customRoutes}
         dataProvider={dataProvider}
-        dashboard={PatientSummaryInfo}
+        dashboard={PatientSummary}
       >
           {
               plugins.map(item => {

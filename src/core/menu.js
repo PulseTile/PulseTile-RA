@@ -19,7 +19,7 @@ const Menu = ({ resources, onMenuClick }) => {
         <div>
             <MenuItemLink
                 to="/"
-                primaryText="Home"
+                primaryText="Patient Summary"
                 leftIcon={<HomeIcon />}
                 onClick={onMenuClick}
             />
