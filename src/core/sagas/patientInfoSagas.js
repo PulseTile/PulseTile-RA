@@ -1,11 +1,14 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import { token } from "../token";
-import { PATIENTS_STATISTIC, patientStatisticAction } from '../actions/patientsStatisticAction';
+import { get } from "lodash";
 
-export default takeEvery(PATIENTS_STATISTIC.REQUEST, function*() {
+import { token } from "../token";
+import { PATIENT_INFO, patientInfoAction } from "../actions/patientInfoAction";
+
+export default takeEvery(PATIENT_INFO.REQUEST, function*(action) {
+    const userId = get(action, 'data', null);
     const domainName = "http://dev.ripple.foundation";
     const apiPatientsUser = 'api/patients';
-    const url = domainName + '/' + apiPatientsUser;
+    const url = domainName + '/' + apiPatientsUser + '/' + userId;
     let options = {};
     options.method = "GET";
     if (!options.headers) {
@@ -16,8 +19,8 @@ export default takeEvery(PATIENTS_STATISTIC.REQUEST, function*() {
     };
     try {
         const result = yield fetch(url, options).then(res => res.json());
-        yield put(patientStatisticAction.success(result))
+        yield put(patientInfoAction.success(result))
     } catch(e) {
-        yield put(patientStatisticAction.error(e))
+        yield put(patientInfoAction.error(e))
     }
 });

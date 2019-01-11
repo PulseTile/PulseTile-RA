@@ -11,8 +11,9 @@ import nonCorePlugins from "../version/config/nonCorePlugins";
 import customSagas from "./sagas";
 import customReducers from "./reducers";
 import customRoutes from "./routes";
+import customMenu from "./menu";
 
-import PatientSummary from "./pages/PatientSummary";
+import PatientSummary from "./pages/PatientSummaryInfo";
 
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
@@ -22,7 +23,8 @@ export default class App extends Component {
   render() {
     return (
       <Admin
-        // authProvider={authProvider}
+        authProvider={authProvider}
+        menu={customMenu}
         title="PulseTile"
         customSagas={[customSagas]}
         customReducers={{custom: customReducers}}
@@ -35,6 +37,7 @@ export default class App extends Component {
                   return (
                       <Resource
                         name={item.name}
+                        options={{ label: item.label }}
                         icon={item.icon}
                         list={item.list}
                         show={get(item, 'show', false) ? item.show : null}

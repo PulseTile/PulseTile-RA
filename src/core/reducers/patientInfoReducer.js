@@ -1,5 +1,5 @@
 import { get } from "lodash";
-import { allergiesSynopsisAction } from "../actions/synopsisActions";
+import { PATIENT_INFO } from "../actions/patientInfoAction";
 
 const initialState = {
     data: null,
@@ -7,24 +7,24 @@ const initialState = {
     error: null,
 };
 
-export default (state = initialState, { type, payload }) => {
-    switch (type) {
-        case allergiesSynopsisAction.REQUEST:
+export default (state = initialState, action) => {
+    switch (action.type) {
+        case PATIENT_INFO.REQUEST:
             return {
                 ...state,
                 loading: true,
             };
-        case allergiesSynopsisAction.SUCCESS:
+        case PATIENT_INFO.SUCCESS:
             return {
                 ...state,
                 loading: false,
-                data: get(payload, "synopsis", []),
+                data: get(action, "data", null),
             };
-        case allergiesSynopsisAction.FAILURE:
+        case PATIENT_INFO.FAILURE:
             return {
                 ...state,
                 loading: false,
-                error: payload,
+                error: get(action, "error", null),
             };
         default:
             return state;

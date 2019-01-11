@@ -18,7 +18,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 const ItemsList = ({ items, list, history }) => {
     return (
         <List>
-            {items.map((item, key) => {
+            {items.slice(0, 4).map((item, key) => {
                 const showRoute = "/" + list + "/" + item.sourceId + "/show";
                 return (
                     <ListItem button divider onClick={() => history.push(showRoute)}>

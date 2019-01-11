@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "material-ui": "^0.20.2",
+    "moment": "^2.23.0",
     "prop-types": "15.6.2",
     "query-string": "6.2.0",
     "ra-data-fakerest": "2.5.2",

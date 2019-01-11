@@ -1,5 +1,6 @@
 import { stringify } from "query-string";
 import { get } from "lodash";
+import moment from "moment";
 import {
     fetchUtils,
     GET_LIST,
@@ -15,8 +16,8 @@ import {
 
 import { token } from '../token';
 
-const domainName = "http://dev.ripple.foundation:8000";
-const apiPatientsUser = 'api/patients/9999999000';
+const domainName = "http://dev.ripple.foundation";
+const apiPatientsUser = 'api/patients';
 const currentUserID = "9999999000";
 
 /**
@@ -43,11 +44,13 @@ export default () => {
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = "";
         const options = {};
-
         switch (type) {
-
             case GET_LIST: {
-                url = `${domainName}/${apiPatientsUser}/${resource}`;
+                if ('patients' === resource) {
+                    url = `${domainName}/api/${resource}`;
+                } else {
+                    url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
+                }
                 options.method = "GET";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
@@ -59,7 +62,7 @@ export default () => {
             }
 
             case GET_ONE:
-                url = `${domainName}/${apiPatientsUser}/${resource}/${params.id}`;
+                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
                 options.method = "GET";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
@@ -71,7 +74,7 @@ export default () => {
 
             case UPDATE:
                 let data = Object.assign({userId: currentUserID}, params.data);
-                url = `${domainName}/${apiPatientsUser}/${resource}/${params.id}`;
+                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
                 options.method = "PUT";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
@@ -85,7 +88,7 @@ export default () => {
 
             case CREATE:
                 data = Object.assign({userId: currentUserID}, params.data);
-                url = `${domainName}/${apiPatientsUser}/${resource}`;
+                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
                 options.method = "POST";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
@@ -117,6 +120,52 @@ export default () => {
     };
 
     /**
+     * This function filters patients list by department
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {shape} response
+     * @param {shape} params
+     * @return {Array}
+     */
+    function getPatientsList(response, params) {
+
+        const departmentsArray = ["CommunityCare", "Hospital", "MentalHealth", "Neighbourhood", "PrimaryCare"];
+        const ageArray = ["first", "second", "third", "fourth"];
+        const ageLimits = {
+            first: { min: 19, max: 30 },
+            second: { min: 31, max: 60 },
+            third: { min: 61, max: 80 },
+            fourth: { min: 81, max: 100 },
+        };
+
+        const filter = get(params, 'sort.field', null);
+        let results = [];
+        if (-1 !== departmentsArray.indexOf(filter)) {
+            results = Object.values(response).filter(item => {
+                let filterWithSpaces = filter
+                    .replace(/([A-Z])/g, ' $1')
+                    .replace(/^./, function(str){ return str.toUpperCase(); })
+                    .trim();
+                return (item.department === filterWithSpaces);
+            });
+        } else if (-1 !== ageArray.indexOf(filter)) {
+            const currentDate = new Date().getTime();
+            const endDate = new moment(currentDate);
+            results = Object.values(response).filter(item => {
+                let birthDate = get(item, 'dateOfBirth', null);
+                let startDate = new moment(birthDate);
+                let duration = moment.duration(endDate.diff(startDate)).get('year');
+                return (duration > ageLimits[filter].min && duration < ageLimits[filter].max);
+            })
+        } else {
+            results = Object.values(response).map(item => {
+                return Object.assign({id: item.sourceId}, item);
+            });
+        }
+        return results;
+    }
+
+    /**
      * This constant handle response data
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
@@ -129,11 +178,19 @@ export default () => {
         switch (type) {
 
             case GET_LIST:
+
                 const pageNumber = get(params, 'pagination.page', 1);
                 const numberPerPage = get(params, 'pagination.perPage', 10);
-                const results = response.map((item, id) => {
-                   return Object.assign({id: item.sourceId}, item);
-                });
+
+                let results = [];
+                if ('patients' !== resource) {
+                    results = response.map((item, id) => {
+                        return Object.assign({id: item.sourceId}, item);
+                    });
+                } else {
+                    results = getPatientsList(response, params);
+                }
+
                 const startItem = (pageNumber - 1) * numberPerPage;
                 const endItem = pageNumber * numberPerPage;
                 const paginationResults = results.slice(startItem, endItem);
@@ -149,10 +206,6 @@ export default () => {
                 };
 
             case CREATE:
-
-                console.log('RESPONSE: ')
-                console.log(response)
-
                 let compositionUidArray = response.compositionUid.split('::');
                 let sourseID = compositionUidArray[0];
                 let id = response.host + '-' + sourseID;
@@ -175,13 +228,6 @@ export default () => {
      */
     return (type, resource, params) => {
         let { url, options } = convertDataRequestToHTTP(type, resource, params);
-
-        console.log('----------------------------')
-        console.log(type)
-        console.log(url)
-        console.log(options)
-        console.log('----------------------------')
-
         return fetch(url, options).then(response => response.json())
             .then(res => convertHTTPResponse(res, type, resource, params))
             .catch(err => console.log('Error: ', err));

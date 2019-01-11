@@ -15,6 +15,7 @@ export default [
     {
         name: "vaccinations",
         icon: VaccinationsIcon,
+        label: "Vaccinations",
         list: VaccinationsList,
         show: VaccinationsShow,
         edit: VaccinationsEdit,
@@ -23,6 +24,7 @@ export default [
     {
         name: "top3Things",
         icon: TopThreeThingsIcon,
+        label: "Top Three Things",
         list: TopThreeThingsList,
         show: null,
         edit: null,
