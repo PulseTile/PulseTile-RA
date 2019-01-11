@@ -34,6 +34,7 @@ export default [
     {
         name: "allergies",
         icon: AllergiesIcon,
+        label: "Allergies",
         list: AllergiesList,
         show: AllergiesShow,
         edit: AllergiesEdit,
@@ -42,6 +43,7 @@ export default [
     {
         name: "contacts",
         icon: ContactsIcon,
+        label: "Contacts",
         list: ContactsList,
         show: ContactsShow,
         edit: ContactsEdit,
@@ -50,6 +52,7 @@ export default [
     {
         name: "medications",
         icon: MedicationsIcon,
+        label: "Medications",
         list: MedicationsList,
         show: MedicationsShow,
         edit: MedicationsEdit,
@@ -58,6 +61,7 @@ export default [
     {
         name: "problems",
         icon: DiagnosisIcon,
+        label: "Problems / Issues",
         list: DiagnosisList,
         show: DiagnosisShow,
         edit: DiagnosisEdit,
