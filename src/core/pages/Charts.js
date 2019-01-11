@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { get } from "lodash";
 import { connect } from 'react-redux';
 import {
@@ -12,90 +13,120 @@ import {
 
 import { patientStatisticAction } from "../actions/patientsStatisticAction";
 
-const CustomLabel = () => {
-    return (
-        <div>Label</div>
-    );
-};
-
 class Charts extends Component {
 
     componentDidMount() {
         this.props.getPatientsStatistic();
     }
 
+    /**
+     * This function calculates percentage of patients by department
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {array} patients
+     * @return {array}
+     */
+    getDepartmentPercentage(patients) {
+        let CommunityCareCount = 0;
+        let HospitalCount = 0;
+        let MentalHealthCount = 0;
+        let NeighbourhoodCount = 0;
+        let PrimaryCareCount = 0;
+        let totalNumber = 0;
+        for (let item in patients) {
+            totalNumber++;
+            switch(get(patients, '[' + item + '].department', null)) {
+                case "Community Care":
+                    CommunityCareCount++;
+                    break;
+                case "Hospital":
+                    HospitalCount++;
+                    break;
+                case "Mental Health":
+                    MentalHealthCount++;
+                    break;
+                case "Neighbourhood":
+                    NeighbourhoodCount++;
+                    break;
+                case "Primary Care":
+                    PrimaryCareCount++;
+                    break;
+            }
+        }
+        const CommunityCarePercentage = (totalNumber > 0) ? Math.round(((100 * CommunityCareCount) / totalNumber)) : 0;
+        const HospitalPercentage = (totalNumber > 0) ? Math.round(((100 * HospitalCount) / totalNumber)) : 0;
+        const MentalHealthPercentage = (totalNumber > 0) ? Math.round(((100 * MentalHealthCount) / totalNumber)) : 0;
+        const NeighbourhoodPercentage = (totalNumber > 0) ? Math.round(((100 * NeighbourhoodCount) / totalNumber)) : 0;
+        const PrimaryCarePercentage = (totalNumber > 0) ? Math.round(((100 * PrimaryCareCount) / totalNumber)) : 0;
+        return {
+            CommunityCare: CommunityCarePercentage,
+            Hospital: HospitalPercentage,
+            MentalHealth: MentalHealthPercentage,
+            Neighbourhood: NeighbourhoodPercentage,
+            PrimaryCare: PrimaryCarePercentage
+        };
+    }
+
+    /**
+     * This function calculates percentage of patients by age
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {array} patients
+     * @return {array}
+     */
+    getAgePercentage(patients) {
+        let firstCount = 0;
+        let secondCount = 0;
+        let thirdCount = 0;
+        let fourthCount = 0;
+        let totalNumber = 0;
+        const currentDate = new Date().getTime();
+        const endDate = new moment(currentDate);
+        for (let item in patients) {
+            totalNumber++;
+            let birthDate = get(patients, '[' + item + '].dateOfBirth', null);
+            let startDate = new moment(birthDate);
+            let duration = moment.duration(endDate.diff(startDate)).get('year');
+            if (duration >= 19 && duration <= 30) {
+                firstCount++;
+            } else if (duration >= 31 && duration <= 60) {
+                secondCount++;
+            } else if (duration >= 61 && duration <= 80) {
+                thirdCount++;
+            } else if (duration > 80) {
+                fourthCount++;
+            }
+        }
+        const firstPercentage = (totalNumber > 0) ? Math.round(((100 * firstCount) / totalNumber)) : 0;
+        const secondPercentage = (totalNumber > 0) ? Math.round(((100 * secondCount) / totalNumber)) : 0;
+        const thirdPercentage = (totalNumber > 0) ? Math.round(((100 * thirdCount) / totalNumber)) : 0;
+        const fourthPercentage = (totalNumber > 0) ? Math.round(((100 * fourthCount) / totalNumber)) : 0;
+        return {
+            first: firstPercentage,
+            second: secondPercentage,
+            third: thirdPercentage,
+            fourth: fourthPercentage,
+        };
+    }
+
     render() {
         const { patients } = this.props;
 
-        console.log(patients)
-
+        const DepartmentPercentage = this.getDepartmentPercentage(patients);
         const dataGreen = [
-            {
-                AnswerRef: "one",
-                Text: "Community Care",
-                Score: 0,
-                RespondentPercentage: 25,
-                Rank: 1
-            },
-            {
-                AnswerRef: "two",
-                Text: "Hospital",
-                Score: 0,
-                RespondentPercentage: 16,
-                Rank: 2
-            },
-            {
-                AnswerRef: "three",
-                Text: "Mental Health",
-                Score: 1,
-                RespondentPercentage: 9,
-                Rank: 3
-            },
-            {
-                AnswerRef: "four",
-                Text: "Neighbourhood",
-                Score: 0,
-                RespondentPercentage: 20,
-                Rank: 4
-            },
-            {
-                AnswerRef: "five",
-                Text: "Primary Care",
-                Score: 0,
-                RespondentPercentage: 29,
-                Rank: 5
-            }
+            { Text: "Community Care", RespondentPercentage: get(DepartmentPercentage, 'CommunityCare', 0) },
+            { Text: "Hospital", RespondentPercentage: get(DepartmentPercentage, 'Hospital', 0) },
+            { Text: "Mental Health", RespondentPercentage: get(DepartmentPercentage, 'MentalHealth', 0) },
+            { Text: "Neighbourhood", RespondentPercentage: get(DepartmentPercentage, 'Neighbourhood', 0) },
+            { Text: "Primary Care", RespondentPercentage: get(DepartmentPercentage, 'PrimaryCare', 0) }
         ];
 
+        const AgePercentage = this.getAgePercentage(patients);
         const dataViolet = [
-            {
-                AnswerRef: "one",
-                Text: "19-30",
-                Score: 0,
-                RespondentPercentage: 16,
-                Rank: 1
-            },
-            {
-                AnswerRef: "two",
-                Text: "31-60",
-                Score: 0,
-                RespondentPercentage: 37,
-                Rank: 2
-            },
-            {
-                AnswerRef: "three",
-                Text: "61-80",
-                Score: 1,
-                RespondentPercentage: 33,
-                Rank: 3
-            },
-            {
-                AnswerRef: "four",
-                Text: ">80",
-                Score: 0,
-                RespondentPercentage: 12,
-                Rank: 4
-            }
+            { Text: "19-30", RespondentPercentage: get(AgePercentage, 'first', 0) },
+            { Text: "31-60", RespondentPercentage: get(AgePercentage, 'second', 0) },
+            { Text: "61-80", RespondentPercentage: get(AgePercentage, 'third', 0) },
+            { Text: ">80", RespondentPercentage: get(AgePercentage, 'fourth', 0) }
         ];
 
         return (
@@ -111,11 +142,7 @@ class Charts extends Component {
                         <XAxis dataKey="Text" fontFamily="sans-serif" tickSize dy="25" />
                         <YAxis hide />
                         <CartesianGrid vertical={false} stroke="#E8E8E8" />
-                        <Bar
-                            dataKey="RespondentPercentage"
-                            barSize={170}
-                            fontFamily="sans-serif"
-                            label={<CustomLabel />} >
+                        <Bar dataKey="RespondentPercentage" barSize={170} fontFamily="sans-serif" >
                             {dataGreen.map((entry, index) => (
                                 <Cell fill={"#c5e29f"} />
                             ))}
@@ -133,13 +160,9 @@ class Charts extends Component {
                         <XAxis dataKey="Text" fontFamily="sans-serif" tickSize dy="25" />
                         <YAxis hide />
                         <CartesianGrid vertical={false} stroke="#E8E8E8" />
-                        <Bar
-                            dataKey="RespondentPercentage"
-                            barSize={170}
-                            fontFamily="sans-serif"
-                            label={<CustomLabel />} >
+                        <Bar dataKey="RespondentPercentage" barSize={170} fontFamily="sans-serif" >
                             {dataViolet.map((entry, index) => (
-                            <Cell fill={"#d3b2f4"} />
+                                <Cell fill={"#d3b2f4"} />
                             ))}
                         </Bar>
                     </BarChart>
