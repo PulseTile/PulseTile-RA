@@ -62,7 +62,7 @@ export default () => {
             }
 
             case GET_ONE:
-                url = `${domainName}/${apiPatientsUser}/${resource}/${params.id}`;
+                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
                 options.method = "GET";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
@@ -74,7 +74,7 @@ export default () => {
 
             case UPDATE:
                 let data = Object.assign({userId: currentUserID}, params.data);
-                url = `${domainName}/${apiPatientsUser}/${resource}/${params.id}`;
+                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
                 options.method = "PUT";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
@@ -88,7 +88,7 @@ export default () => {
 
             case CREATE:
                 data = Object.assign({userId: currentUserID}, params.data);
-                url = `${domainName}/${apiPatientsUser}/${resource}`;
+                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
                 options.method = "POST";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
