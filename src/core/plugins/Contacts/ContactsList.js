@@ -27,37 +27,35 @@ const listStyles = {
  * This component returns block with Contacts list
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} props
+ * @param {shape} classes
+ * @param {shape} rest
  * @constructor
  */
-export const ContactsList = props => {
-    const { classes } = props;
-    return (
-        <div>
-            <Card>
-                <CardMedia
-                    component="img"
-                    height="160"
-                    image={ContactsBanner}
-                    title="Contacts"
-                />
-            </Card>
-            <div style={{ display: "flex" }}>
-                <List title="Contacts" className={classes.list} {...props}>
-                    <Datagrid rowClick="edit">
-                        <TextField source="name" />
-                        <TextField source="relationship" />
-                        <TextField source="nextOfKin" />
-                        <TextField source="source" />
-                    </Datagrid>
-                </List>
-                <Route
-                    path="/contacts/:id"
-                    render={({ match }) => <ContactsEdit {...props} id={match.params.id} />}
-                />
-            </div>
+export const ContactsList = ({ classes, ...rest }) => (
+    <div>
+        <Card>
+            <CardMedia
+                component="img"
+                height="160"
+                image={ContactsBanner}
+                title="Contacts"
+            />
+        </Card>
+        <div style={{ display: "flex" }}>
+            <List title="Contacts" className={classes.list} {...rest}>
+                <Datagrid rowClick="edit">
+                    <TextField source="name" />
+                    <TextField source="relationship" />
+                    <TextField source="nextOfKin" />
+                    <TextField source="source" />
+                </Datagrid>
+            </List>
+            <Route
+                path="/contacts/:id"
+                render={({ match }) => <ContactsEdit classes={classes} {...rest} id={match.params.id} />}
+            />
         </div>
-    );
-};
+    </div>
+);
 
 export default withStyles(listStyles)(ContactsList);

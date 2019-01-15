@@ -26,36 +26,34 @@ const listStyles = {
  * This component returns block with Allergies list
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} props
+ * @param {shape} classes
+ * @param {shape} rest
  * @constructor
  */
-export const Allergies = props => {
-  const { classes } = props;
-  return (
-      <div>
+export const Allergies = ({ classes, ...rest }) => (
+    <div>
         <Card>
-          <CardMedia
+            <CardMedia
               component="img"
               height="160"
               image={AllergyBanner}
               title="Allergy"
-          />
+            />
         </Card>
         <div style={{ display: "flex" }}>
-            <List title="Allergies" className={classes.list} {...props}>
-              <Datagrid rowClick="edit">
-                <TextField source="cause" />
-                <TextField source="reaction" />
-                <TextField source="source" />
-              </Datagrid>
+            <List title="Allergies" className={classes.list} {...rest}>
+                <Datagrid rowClick="edit">
+                    <TextField source="cause" />
+                    <TextField source="reaction" />
+                    <TextField source="source" />
+                </Datagrid>
             </List>
             <Route
                 path="/allergies/:id"
-                render={({ match }) => <AllergiesEdit {...props} id={match.params.id} />}
+                render={({ match }) => <AllergiesEdit classes={classes} {...rest} id={match.params.id} />}
             />
         </div>
-      </div>
-  );
-};
+    </div>
+);
 
 export default withStyles(listStyles)(Allergies);
