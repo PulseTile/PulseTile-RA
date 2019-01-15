@@ -17,16 +17,20 @@ import EditToolbar from "../../common/EditToolbar";
  * @param {shape} props
  * @constructor
  */
-const AllergiesEdit = props => (
-    <Edit title="Edit Allergy" {...props}>
-        <SimpleForm toolbar={<EditToolbar />}>
-            <TextInput source="cause" label="Cause" />
-            <LongTextInput source="reaction" label="Reaction / Description" />
-            <DisabledInput source="source" label="Source" />
-            <DisabledInput source="author" label="Author" />
-            <DisabledInput source="date" label="Date" />
-        </SimpleForm>
-    </Edit>
-);
+const AllergiesEdit = props => {
+    const { classes } = props;
+    return (
+        <Edit className={classes.edit} title="Edit Allergy" {...props}>
+            <SimpleForm toolbar={<EditToolbar />}>
+                <TextInput source="cause" label="Cause" />
+                <LongTextInput source="reaction" label="Reaction / Description" />
+                <DisabledInput source="source" label="Source" />
+                <DisabledInput source="author" label="Author" />
+                <DisabledInput source="date" label="Date" />
+            </SimpleForm>
+        </Edit>
+    );
+}
+
 
 export default AllergiesEdit;

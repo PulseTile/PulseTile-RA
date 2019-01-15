@@ -19,18 +19,21 @@ import EditToolbar from "../../common/EditToolbar";
  * @param {shape} props
  * @constructor
  */
-const ContactsEdit = props => (
-    <Edit title="Edit Contact" {...props}>
-        <SimpleForm toolbar={<EditToolbar />}>
-            <TextInput source="name" label="Name" />
-            <SelectInput source="relationship" label="Relationship" choices={relationshipArray} />
-            <SelectInput source="relationshipType" label="Relationship Type" choices={relationshipTypeArray} />
-            <TextInput source="notes" label="Comment" />
-            <DisabledInput source="source" label="Source" />
-            <DisabledInput source="source" label="Source" />
-            <DisabledInput source="date" label="Date" />
-        </SimpleForm>
-    </Edit>
-);
+const ContactsEdit = props => {
+    const { classes } = props;
+    return (
+        <Edit className={classes.edit} title="Edit Contact" {...props}>
+            <SimpleForm toolbar={<EditToolbar />}>
+                <TextInput source="name" label="Name" />
+                <SelectInput source="relationship" label="Relationship" choices={relationshipArray} />
+                <SelectInput source="relationshipType" label="Relationship Type" choices={relationshipTypeArray} />
+                <TextInput source="notes" label="Comment" />
+                <DisabledInput source="source" label="Source" />
+                <DisabledInput source="source" label="Source" />
+                <DisabledInput source="date" label="Date" />
+            </SimpleForm>
+        </Edit>
+    );
+}
 
 export default ContactsEdit;

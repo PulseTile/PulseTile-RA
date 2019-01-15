@@ -17,6 +17,9 @@ const listStyles = {
     list: {
         width: '100%',
     },
+    edit: {
+        width: '100%',
+    }
 };
 
 /**

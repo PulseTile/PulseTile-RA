@@ -11,16 +11,19 @@ import {
 import EditToolbar from "../../common/EditToolbar";
 
 
-const DiagnosisEdit = props => (
-    <Edit title="Edit Problem / Diagnosis" {...props}>
-        <SimpleForm toolbar={<EditToolbar />}>
-            <TextInput source="problem" label="Problem issue" />
-            <LongTextInput source="description" label="Description" />
-            <DisabledInput source="author" label="Author" />
-            <DisabledInput source="source" label="Source" />
-            <DisabledInput source="dateOfOnset" label="Date" />
-        </SimpleForm>
-    </Edit>
-);
+const DiagnosisEdit = props => {
+    const { classes } = props;
+    return (
+        <Edit className={classes.edit} title="Edit Problem / Diagnosis" {...props}>
+            <SimpleForm toolbar={<EditToolbar />}>
+                <TextInput source="problem" label="Problem issue" />
+                <LongTextInput source="description" label="Description" />
+                <DisabledInput source="author" label="Author" />
+                <DisabledInput source="source" label="Source" />
+                <DisabledInput source="dateOfOnset" label="Date" />
+            </SimpleForm>
+        </Edit>
+    );
+}
 
 export default DiagnosisEdit;

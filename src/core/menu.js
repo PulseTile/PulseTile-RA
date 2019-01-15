@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import HomeIcon from '@material-ui/icons/Home';
 import LabelIcon from '@material-ui/icons/Timeline';
+import PatientsIcon from '@material-ui/icons/People';
 
 import { resourseOrder } from "../version/config/theme.config";
 
@@ -31,40 +32,70 @@ function sortResourcesArray(resources) {
 }
 
 /**
+ * This function defines is sidebar menu shown at the current page
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} location
+ * @return {boolean}
+ */
+function isMenuVisible(location) {
+    const pathname = get(location, 'pathname', null);
+    const pagesWithoutMenu = [
+        "/",
+        "/charts",
+        "/patients"
+    ];
+    return (-1 === pagesWithoutMenu.indexOf(pathname));
+}
+
+/**
  * This component returns custom menu
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} resources
- * @param {func} onMenuClick
- * @return {boolean}
+ * @param {shape} props
  * @constructor
  */
-const Menu = ({ resources, onMenuClick }) => {
+const Menu = props => {
+    const { resources, onMenuClick, location } = props;
     const sortResources = sortResourcesArray(resources);
-    return (
-        <div>
-            <MenuItemLink
-                to="/charts"
-                primaryText="Charts"
-                leftIcon={<LabelIcon />}
-                onClick={onMenuClick}
-            />
-            <MenuItemLink
-                to="/summary"
-                primaryText="Patient Summary"
-                leftIcon={<HomeIcon />}
-                onClick={onMenuClick}
-            />
-            {sortResources.map(resource => (
+    if (isMenuVisible(location)) {
+        return (
+            <div>
                 <MenuItemLink
-                    to={`/${resource.name}`}
-                    primaryText={resource.options.label}
-                    leftIcon={createElement(resource.icon)}
+                    to="/charts"
+                    primaryText="Charts"
+                    leftIcon={<LabelIcon />}
                     onClick={onMenuClick}
                 />
-            ))}
-        </div>
-    );
+                <MenuItemLink
+                    to="/patients"
+                    primaryText="Patients"
+                    leftIcon={<PatientsIcon />}
+                    onClick={onMenuClick}
+                />
+                <MenuItemLink
+                    to="/summary"
+                    primaryText="Patient Summary"
+                    leftIcon={<HomeIcon />}
+                    onClick={onMenuClick}
+                />
+                {sortResources.map(resource => {
+                        if ("patients" !== resource.name) {
+                            return (
+                                <MenuItemLink
+                                    to={`/${resource.name}`}
+                                    primaryText={resource.options.label}
+                                    leftIcon = {createElement(resource.icon)}
+                                    onClick = {onMenuClick}
+                                />
+                            );
+                        }
+                    }
+                )}
+            </div>
+        );
+    }
+    return null;
 };
 
 const mapStateToProps = state => ({
