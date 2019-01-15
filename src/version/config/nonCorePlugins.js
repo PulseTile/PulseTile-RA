@@ -18,7 +18,6 @@ export default [
         label: "Vaccinations",
         list: VaccinationsList,
         show: VaccinationsShow,
-        edit: VaccinationsEdit,
         create: VaccinationsCreate,
     },
     {

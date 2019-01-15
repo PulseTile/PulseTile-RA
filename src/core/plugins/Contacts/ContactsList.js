@@ -1,18 +1,34 @@
 import React from "react";
+import { Route } from "react-router";
 import {
     List,
     Datagrid,
     TextField,
-    EditButton,
     DateField,
-    ShowButton
 } from "react-admin";
 
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
-import ContactsBanner from "../../images/banners/contacts.jpg";
+import { withStyles } from "@material-ui/core/styles";
 
+import ContactsBanner from "../../images/banners/contacts.jpg";
+import ContactsEdit from "./ContactsEdit";
+
+const listStyles = {
+    list: {
+        width: '100%',
+    },
+};
+
+/**
+ * This component returns block with Contacts list
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} props
+ * @constructor
+ */
 export const ContactsList = props => {
+    const { classes } = props;
     return (
         <div>
             <Card>
@@ -23,18 +39,22 @@ export const ContactsList = props => {
                     title="Contacts"
                 />
             </Card>
-            <List title="Contacts" {...props}>
-                <Datagrid>
-                    <TextField source="name" />
-                    <TextField source="relationship" />
-                    <TextField source="nextOfKin" />
-                    <TextField source="source" />
-                    <ShowButton />
-                    <EditButton />
-                </Datagrid>
-            </List>
+            <div style={{ display: "flex" }}>
+                <List title="Contacts" className={classes.list} {...props}>
+                    <Datagrid rowClick="edit">
+                        <TextField source="name" />
+                        <TextField source="relationship" />
+                        <TextField source="nextOfKin" />
+                        <TextField source="source" />
+                    </Datagrid>
+                </List>
+                <Route
+                    path="/contacts/:id"
+                    render={({ match }) => <ContactsEdit {...props} id={match.params.id} />}
+                />
+            </div>
         </div>
     );
 };
 
-export default ContactsList;
+export default withStyles(listStyles)(ContactsList);

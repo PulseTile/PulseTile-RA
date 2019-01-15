@@ -36,7 +36,7 @@ class PatientSummaryInfo extends Component {
     }
 
     render() {
-        const { patientInfo } = this.props;
+        const { patientInfo, loading } = this.props;
 
         const coreSynopsisData = [
             { title: "Allergies", list: "allergies", items: get(patientInfo, 'allergies', []), icon: allergiesIcon },
@@ -52,6 +52,7 @@ class PatientSummaryInfo extends Component {
                         <DashboardCard
                             title={item.title}
                             list={item.list}
+                            loading={loading}
                             items={item.items}
                             icon={item.icon}
                             {...this.props}
@@ -64,8 +65,10 @@ class PatientSummaryInfo extends Component {
 }
 
 const mapStateToProps = state => {
+
     return {
-        patientInfo: get(state, 'custom.patientInfo.data', null)
+        patientInfo: get(state, 'custom.patientInfo.data', null),
+        loading: get(state, 'custom.patientInfo.loading', false)
     };
 };
 

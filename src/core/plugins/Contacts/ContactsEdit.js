@@ -8,11 +8,20 @@ import {
     DateInput,
     LongTextInput
 } from "react-admin";
-import { relationshipArray, relationshipTypeArray } from "./selects";
 
+import { relationshipArray, relationshipTypeArray } from "./selects";
+import EditToolbar from "../../common/EditToolbar";
+
+/**
+ * This component returns block with edit form for Contacts
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} props
+ * @constructor
+ */
 const ContactsEdit = props => (
     <Edit title="Edit Contact" {...props}>
-        <SimpleForm>
+        <SimpleForm toolbar={<EditToolbar />}>
             <TextInput source="name" label="Name" />
             <SelectInput source="relationship" label="Relationship" choices={relationshipArray} />
             <SelectInput source="relationshipType" label="Relationship Type" choices={relationshipTypeArray} />

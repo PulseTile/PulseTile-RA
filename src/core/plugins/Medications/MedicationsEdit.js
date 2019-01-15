@@ -8,11 +8,20 @@ import {
     LongTextInput,
     DisabledInput
 } from "react-admin";
-import  { routesArray } from "./selects";
 
+import  { routesArray } from "./selects";
+import EditToolbar from "../../common/EditToolbar";
+
+/**
+ * This component returns block with edit form for Medication
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} props
+ * @constructor
+ */
 const MedicationsEdit = props => (
     <Edit title="Edit Medication" {...props}>
-        <SimpleForm>
+        <SimpleForm toolbar={<EditToolbar />}>
             <TextInput source="name" label="Name" />
             <SelectInput source="route" label="Route" choices={routesArray} />
             <LongTextInput source="doseAmount" label="Dose Amount" />

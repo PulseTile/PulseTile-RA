@@ -1,18 +1,34 @@
 import React from "react";
+import { Route } from "react-router";
 import {
     List,
     Datagrid,
     DateField,
-    TextField,
-    EditButton,
-    ShowButton
+    TextField
 } from "react-admin";
 
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
-import DiagnosisBanner from "../../images/banners/problems.jpg";
+import { withStyles } from "@material-ui/core/styles";
 
+import DiagnosisBanner from "../../images/banners/problems.jpg";
+import DiagnosisEdit from "./DiagnosisEdit";
+
+const listStyles = {
+    list: {
+        width: '100%',
+    },
+};
+
+/**
+ * This component returns block with Diagnosis list
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} props
+ * @constructor
+ */
 export const Diagnosis = props => {
+    const { classes } = props;
     return (
         <div>
             <Card>
@@ -20,20 +36,24 @@ export const Diagnosis = props => {
                     component="img"
                     height="160"
                     image={DiagnosisBanner}
-                    title="Diagnosis"
+                    title="Problems / Issues"
                 />
             </Card>
-            <List title="Diagnosis" {...props}>
-                <Datagrid>
-                    <TextField source="problem" />
-                    <DateField source="dateOfOnset" />
-                    <TextField source="source" />
-                    <ShowButton />
-                    <EditButton />
-                </Datagrid>
-            </List>
+            <div style={{ display: "flex" }}>
+                <List title="Problems / Issues" className={classes.list} {...props}>
+                    <Datagrid rowClick="edit">
+                        <TextField source="problem" />
+                        <DateField source="dateOfOnset" />
+                        <TextField source="source" />
+                    </Datagrid>
+                </List>
+                <Route
+                    path="/problems/:id"
+                    render={({ match }) => <DiagnosisEdit {...props} id={match.params.id} />}
+                />
+            </div>
         </div>
     );
 };
 
-export default Diagnosis;
+export default withStyles(listStyles)(Diagnosis);

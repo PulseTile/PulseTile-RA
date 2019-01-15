@@ -18,7 +18,7 @@ import { token } from '../token';
 
 const domainName = "http://dev.ripple.foundation";
 const apiPatientsUser = 'api/patients';
-const currentUserID = "9999999000";
+const currentUserID = localStorage.getItem('userId');
 
 /**
  * Maps react-admin queries to a json-server powered REST API

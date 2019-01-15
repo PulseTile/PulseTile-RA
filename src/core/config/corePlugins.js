@@ -40,7 +40,6 @@ export default [
         label: "Allergies",
         list: AllergiesList,
         show: AllergiesShow,
-        edit: AllergiesEdit,
         create: AllergiesCreate,
     },
     {
@@ -49,7 +48,6 @@ export default [
         label: "Contacts",
         list: ContactsList,
         show: ContactsShow,
-        edit: ContactsEdit,
         create: ContactsCreate,
     },
     {
@@ -58,7 +56,6 @@ export default [
         label: "Medications",
         list: MedicationsList,
         show: MedicationsShow,
-        edit: MedicationsEdit,
         create: MedicationsCreate,
     },
     {
@@ -67,7 +64,6 @@ export default [
         label: "Problems / Issues",
         list: DiagnosisList,
         show: DiagnosisShow,
-        edit: DiagnosisEdit,
         create: DiagnosisCreate,
     },
     {

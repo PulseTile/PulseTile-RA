@@ -14,28 +14,38 @@ import ListItemText from "@material-ui/core/ListItemText";
  * @param {array}  items
  * @param {string} list
  * @param {shape} history
+ * @constructor
  */
 const ItemsList = ({ items, list, history }) => {
-    return (
-        <List>
-            {items.slice(0, 4).map((item, key) => {
-                const showRoute = "/" + list + "/" + item.sourceId + "/show";
-                return (
-                    <ListItem button divider onClick={() => history.push(showRoute)}>
-                        <ListItemText primary={item.text} />
+    if (items.length > 0) {
+        return (
+            <List>
+                {items.slice(0, 4).map((item, key) => {
+                    const showRoute = "/" + list + "/" + item.sourceId + "/show";
+                    return (
+                        <ListItem button divider onClick={() => history.push(showRoute)}>
+                    <ListItemText primary={item.text} />
                     </ListItem>
-                );
-            })}
-        </List>
-    )
+                    );
+                })}
+            </List>
+        );
+    } else {
+        return (
+            <ListItem button divider>
+                <ListItemText primary="No data" />
+            </ListItem>
+        );
+    }
 }
 
 /**
  * This component returns list of empty rows if information is loading
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @constructor
  */
-const NoItems = () => {
+const LoadingItems = () => {
     return (
         <List>
             <ListItem button divider>
@@ -53,9 +63,10 @@ const NoItems = () => {
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param props
+ * @constructor
  */
 export default props => {
-    const { classes, title, items, icon, list, history } = props;
+    const { classes, title, items, loading, icon, list, history } = props;
     return (
         <Card className={classes.card}>
             <CardMedia
@@ -70,7 +81,7 @@ export default props => {
                 <Typography gutterBottom variant="h5" component="h2">
                     {title}
                 </Typography>
-                { items ? <ItemsList items={items} list={list} history={history} /> : <NoItems /> }
+                { loading ? <LoadingItems /> : <ItemsList items={items} list={list} history={history} /> }
             </CardContent>
         </Card>
     );

@@ -1,9 +1,34 @@
 import React, { createElement } from 'react';
+import { get } from "lodash";
 import { withRouter } from 'react-router-dom';
 import { MenuItemLink, getResources } from 'react-admin';
 import { connect } from 'react-redux';
+
 import HomeIcon from '@material-ui/icons/Home';
 import LabelIcon from '@material-ui/icons/Timeline';
+
+import { resourseOrder } from "../version/config/theme.config";
+
+/**
+ * This function sorts resources by theme settings
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {array} resources
+ * @return {array}
+ */
+function sortResourcesArray(resources) {
+    let sortResource = [];
+    for (let i = 0, n = resourseOrder.length; i < n; i++) {
+        let currentItem = resourseOrder[i];
+        for (let j = 0, m = resources.length; j < m; j++) {
+            if (currentItem === get(resources, '[' + j + '].name', null)) {
+                sortResource[i] = resources[j];
+                break;
+            }
+        }
+    }
+    return sortResource;
+}
 
 /**
  * This component returns custom menu
@@ -15,15 +40,22 @@ import LabelIcon from '@material-ui/icons/Timeline';
  * @constructor
  */
 const Menu = ({ resources, onMenuClick }) => {
+    const sortResources = sortResourcesArray(resources);
     return (
         <div>
             <MenuItemLink
-                to="/"
+                to="/charts"
+                primaryText="Charts"
+                leftIcon={<LabelIcon />}
+                onClick={onMenuClick}
+            />
+            <MenuItemLink
+                to="/summary"
                 primaryText="Patient Summary"
                 leftIcon={<HomeIcon />}
                 onClick={onMenuClick}
             />
-            {resources.map(resource => (
+            {sortResources.map(resource => (
                 <MenuItemLink
                     to={`/${resource.name}`}
                     primaryText={resource.options.label}
@@ -31,12 +63,6 @@ const Menu = ({ resources, onMenuClick }) => {
                     onClick={onMenuClick}
                 />
             ))}
-            <MenuItemLink
-                to="/charts"
-                primaryText="Charts"
-                leftIcon={<LabelIcon />}
-                onClick={onMenuClick}
-             />
         </div>
     );
 };

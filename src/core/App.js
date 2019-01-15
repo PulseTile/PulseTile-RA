@@ -13,7 +13,7 @@ import customReducers from "./reducers";
 import customRoutes from "./routes";
 import customMenu from "./menu";
 
-import PatientSummary from "./pages/PatientSummaryInfo";
+import Charts from "./pages/Charts";
 
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
@@ -30,7 +30,7 @@ export default class App extends Component {
         customReducers={{custom: customReducers}}
         customRoutes={customRoutes}
         dataProvider={dataProvider}
-        dashboard={PatientSummary}
+        dashboard={Charts}
       >
           {
               plugins.map(item => {
