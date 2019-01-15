@@ -8,7 +8,7 @@ import { Toolbar, SaveButton } from "react-admin";
  * @param {shape} props
  * @constructor
  */
-const EditToolbar = props => {
+const EditToolbar = ({...props}) => {
     return (
         <Toolbar {...props} >
             <SaveButton />

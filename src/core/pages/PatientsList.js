@@ -20,18 +20,15 @@ function redirectToSummary(id, history) {
     history.push('/summary');
 }
 
-export const PatientsList = props => {
-    const { history } = props;
-    return (
-        <List title="Patients" {...props}>
-            <Datagrid rowClick={(id, basePath, record) => redirectToSummary(id, history)}>
-                <TextField source="name" />
-                <TextField source="address" />
-                <DateField source="dateOfBirth" />
-                <ShowButton />
-            </Datagrid>
-        </List>
-    );
-};
+export const PatientsList = ({ history, ...rest }) => (
+    <List title="Patients" {...rest}>
+        <Datagrid rowClick={(id, basePath, record) => redirectToSummary(id, history)}>
+            <TextField source="name" />
+            <TextField source="address" />
+            <DateField source="dateOfBirth" />
+            <ShowButton />
+        </Datagrid>
+    </List>
+);
 
 export default PatientsList;
