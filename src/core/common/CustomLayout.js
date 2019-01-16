@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { get } from "lodash";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
     AppBar,
     Menu,
@@ -10,8 +9,12 @@ import {
     Sidebar,
     setSidebarVisibility,
 } from 'react-admin';
+import createHistory from 'history/createBrowserHistory';
+
+import { withStyles } from '@material-ui/core/styles';
 
 import CustomMenu from "./CustomMenu";
+import CustomTopBar from "./CustomTopBar";
 
 const styles = theme => ({
     root: {
@@ -25,9 +28,6 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
         overflowX: 'auto',
-    },
-    appBar: {
-        backgroundColor: "#0D672F",
     },
     contentWithSidebar: {
         display: 'flex',
@@ -76,18 +76,27 @@ class CustomLayout extends Component {
     };
 
     render() {
-        const { children, classes, dashboard, isLoading, logout, open, title } = this.props;
+        const { children, location, classes, dashboard, isLoading, logout, isSidebarOpen, title, setSidebarVisibility, patientInfo } = this.props;
+        const history = createHistory();
+        const isMenuVisible = this.isMenuVisible();
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
-                    <AppBar className={classes.appBar} title={title} open={open} logout={logout} />
+                    <CustomTopBar
+                        history={history}
+                        location={location}
+                        isMenuVisible={isMenuVisible}
+                        title={title}
+                        isSidebarOpen={isSidebarOpen}
+                        setSidebarVisibility={setSidebarVisibility}
+                        logout={logout}
+                        patientInfo={patientInfo}
+                    />
                     <main className={classes.contentWithSidebar}>
-                        {
-                            this.isMenuVisible() &&
+                        { isMenuVisible &&
                                 <Sidebar>
                                     <CustomMenu />
-                                </Sidebar>
-                        }
+                                </Sidebar> }
                         <div className={classes.content}>
                             {children}
                         </div>
@@ -103,6 +112,8 @@ const mapStateToProps = state => {
     return {
         isLoading: get(state, 'admin.loading', false),
         location: get(state, 'router.location', null),
+        isSidebarOpen: get(state, 'admin.ui.sidebarOpen', true),
+        patientInfo: get(state, 'custom.patientInfo.data', null),
     }
 };
 

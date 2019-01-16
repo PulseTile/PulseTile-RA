@@ -13,3 +13,5 @@ export const resourseOrder = [
     'contacts',
     'top3Things'
 ];
+
+export const themeHasTopBar = true;

@@ -24,8 +24,8 @@ const ItemsList = ({ items, list, history }) => {
                     const showRoute = "/" + list + "/" + item.sourceId + "/show";
                     return (
                         <ListItem button divider onClick={() => history.push(showRoute)}>
-                    <ListItemText primary={item.text} />
-                    </ListItem>
+                            <ListItemText primary={item.text} />
+                        </ListItem>
                     );
                 })}
             </List>
