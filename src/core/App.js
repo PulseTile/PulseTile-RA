@@ -11,9 +11,9 @@ import nonCorePlugins from "../version/config/nonCorePlugins";
 import customSagas from "./sagas";
 import customReducers from "./reducers";
 import customRoutes from "./routes";
-import customMenu from "./menu";
 
 import Charts from "./pages/Charts";
+import CustomLayout from "./common/CustomLayout";
 
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
@@ -24,13 +24,13 @@ export default class App extends Component {
     return (
       <Admin
         authProvider={authProvider}
-        menu={customMenu}
         title="PulseTile"
         customSagas={[customSagas]}
         customReducers={{custom: customReducers}}
         customRoutes={customRoutes}
         dataProvider={dataProvider}
         dashboard={Charts}
+        appLayout={CustomLayout}
       >
           {
               plugins.map(item => {
