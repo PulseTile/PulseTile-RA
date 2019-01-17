@@ -9,9 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 import { resourseOrder } from "../../../version/config/theme.config";
-import themeStyles from "../../../version/styles";
-
-const menuStyles = get(themeStyles, 'menu', {});
+import styles from "../../styles";
 
 /**
  * This function sorts resources by theme settings
@@ -94,4 +92,4 @@ const mapStateToProps = state => ({
     resources: getResources(state),
 });
 
-export default withRouter(connect(mapStateToProps)(withStyles(menuStyles)(Menu)));
+export default withRouter(connect(mapStateToProps)(withStyles(styles.menu)(Menu)));

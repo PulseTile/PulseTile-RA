@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 
-import WhitePart from "./fragments/WhitePart";
-import GreenPart from "./fragments/GreenPart";
+import TopPart from "./fragments/TopPart";
+import LowPart from "./fragments/LowPart";
 
 import { themeHasTopBar } from "../../../version/config/theme.config";
 import ThemeTopBar from "../../../version/common/Topbar";
@@ -21,8 +21,8 @@ const CustomTopbar = props => {
     }
     return (
         <AppBar position="static">
-            <WhitePart {...props} />
-            <GreenPart {...props} />
+            <TopPart {...props} />
+            <LowPart {...props} />
         </AppBar>
     );
 };

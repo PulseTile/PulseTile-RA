@@ -7,22 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 
 import PageTitle from "./PageTitle";
-
-const styles = {
-    greenPart: {
-        backgroundColor: "#0D672F",
-    },
-    logo: {
-        width: "auto",
-    },
-    menuButton: {
-        marginRight: 20,
-    },
-    title: {
-        flexGrow: 1,
-        color: "white"
-    },
-};
+import styles from "../../../styles";
 
 /**
  * This component returns green (bottom) part of Showcase TopBar
@@ -42,4 +27,4 @@ const GreenPart = ({ classes, setSidebarVisibility, isSidebarOpen, isMenuVisible
     );
 }
 
-export default withStyles(styles)(GreenPart);
+export default withStyles(styles.topbarLowPart)(GreenPart);

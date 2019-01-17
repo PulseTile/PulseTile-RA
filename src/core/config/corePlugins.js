@@ -14,12 +14,6 @@ import MedicationsShow from "../plugins/Medications/MedicationsShow";
 import DiagnosisShow from "../plugins/Diagnosis/DiagnosisShow";
 import PatientsShow from "../pages/PatientInfo";
 
-// EDIT PAGES
-import AllergiesEdit from "../plugins/Allergies/AllergiesEdit";
-import ContactsEdit from "../plugins/Contacts/ContactsEdit";
-import DiagnosisEdit from "../plugins/Diagnosis/DiagnosisEdit";
-import MedicationsEdit from "../plugins/Medications/MedicationsEdit";
-
 // CREATE PAGES
 import AllergiesCreate from "../plugins/Allergies/AllergiesCreate";
 import ContactsCreate from "../plugins/Contacts/ContactsCreate";

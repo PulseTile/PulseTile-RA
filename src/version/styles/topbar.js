@@ -75,7 +75,7 @@ export const lowPartStyles = {
     lowPart: {
         display: "flex",
         border: "1px solid #e5e5e5",
-        minHeight: "90px",
+        // minHeight: "90px",
         padding: 0,
         backgroundColor: "white",
         justifyContent: "space-between",
@@ -83,7 +83,7 @@ export const lowPartStyles = {
     menuButtonBlock: {
         display: "inline-flex",
         position: "relative",
-        minWidth: "240px",
+        minWidth: "238px",
         minHeight: "90px",
         borderRight: "1px solid #e5e5e5",
         justifyContent: "center",
