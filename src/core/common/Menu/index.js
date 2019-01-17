@@ -4,11 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { MenuItemLink, getResources } from 'react-admin';
 import { connect } from 'react-redux';
 
-import HomeIcon from '@material-ui/icons/Home';
-import LabelIcon from '@material-ui/icons/Timeline';
-import PatientsIcon from '@material-ui/icons/People';
+import { withStyles } from '@material-ui/core/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { resourseOrder } from "../../version/config/theme.config";
+import { resourseOrder } from "../../../version/config/theme.config";
+import styles from "../../styles";
 
 /**
  * This function sorts resources by theme settings
@@ -39,36 +40,45 @@ function sortResourcesArray(resources) {
  * @constructor
  */
 const Menu = props => {
-    const { resources, onMenuClick } = props;
+    const { classes, resources, onMenuClick, location } = props;
+    const currentPathname = get(location, 'pathname', null);
     const sortResources = sortResourcesArray(resources);
     return (
-        <div>
+        <div className={classes.menuBlock}>
             <MenuItemLink
+                className={(currentPathname === "/charts") ? classes.menuItemSelected : classes.menuItem}
                 to="/charts"
                 primaryText="Charts"
-                leftIcon={<LabelIcon />}
+                leftIcon={(currentPathname === "/charts") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
                 onClick={onMenuClick}
+                selected={currentPathname === "/charts"}
             />
             <MenuItemLink
+                className={(currentPathname === "/patients") ? classes.menuItemSelected : classes.menuItem}
                 to="/patients"
                 primaryText="Patients"
-                leftIcon={<PatientsIcon />}
+                leftIcon={(currentPathname === "/patients") ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
                 onClick={onMenuClick}
+                selected={currentPathname === "/patients"}
             />
             <MenuItemLink
+                className={(currentPathname === "/summary") ? classes.menuItemSelected : classes.menuItem}
                 to="/summary"
                 primaryText="Patient Summary"
-                leftIcon={<HomeIcon />}
+                leftIcon={(currentPathname === "/summary") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
                 onClick={onMenuClick}
+                selected={currentPathname === "/summary"}
             />
             {sortResources.map(resource => {
                     if ("patients" !== resource.name) {
                         return (
                             <MenuItemLink
+                                className={(currentPathname === `/${resource.name}`) ? classes.menuItemSelected : classes.menuItem}
                                 to={`/${resource.name}`}
                                 primaryText={resource.options.label}
-                                leftIcon = {createElement(resource.icon)}
-                                onClick = {onMenuClick}
+                                leftIcon={(currentPathname === `/${resource.name}`) ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
+                                onClick={onMenuClick}
+                                selected={currentPathname === `/${resource.name}`}
                             />
                         );
                     }
@@ -82,4 +92,4 @@ const mapStateToProps = state => ({
     resources: getResources(state),
 });
 
-export default withRouter(connect(mapStateToProps)(Menu));
+export default withRouter(connect(mapStateToProps)(withStyles(styles.menu)(Menu)));

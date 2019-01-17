@@ -13,34 +13,10 @@ import createHistory from 'history/createBrowserHistory';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import CustomMenu from "./CustomMenu";
-import CustomTopBar from "./CustomTopBar";
-
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        zIndex: 1,
-        minHeight: '100vh',
-        position: 'relative',
-    },
-    appFrame: {
-        display: 'flex',
-        flexDirection: 'column',
-        overflowX: 'auto',
-    },
-    contentWithSidebar: {
-        display: 'flex',
-        flexGrow: 1,
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        flexGrow: 2,
-        padding: theme.spacing.unit * 3,
-        paddingLeft: 5,
-    },
-});
+import CustomMenu from "./Menu";
+import CustomTopBar from "./Topbar";
+import Breadcrumbs from "./Breadcrumbs";
+import styles from "../styles";
 
 class CustomLayout extends Component {
 
@@ -93,11 +69,12 @@ class CustomLayout extends Component {
                         patientInfo={patientInfo}
                     />
                     <main className={classes.contentWithSidebar}>
-                        { isMenuVisible &&
-                                <Sidebar>
-                                    <CustomMenu />
+                        { (isMenuVisible && isSidebarOpen) &&
+                                <Sidebar className={classes.sidebarBlock}>
+                                    <CustomMenu classes={classes} />
                                 </Sidebar> }
                         <div className={classes.content}>
+                            { isMenuVisible && <Breadcrumbs location={location} /> }
                             {children}
                         </div>
                     </main>
@@ -117,4 +94,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, { setSidebarVisibility })(withStyles(styles)(CustomLayout));
+export default connect(mapStateToProps, { setSidebarVisibility })(withStyles(styles.layoutStyles)(CustomLayout));

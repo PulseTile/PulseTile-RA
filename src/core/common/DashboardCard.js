@@ -1,11 +1,13 @@
 import React from "react";
+
 import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 /**
  * This component returns synopsis list
@@ -16,10 +18,10 @@ import ListItemText from "@material-ui/core/ListItemText";
  * @param {shape} history
  * @constructor
  */
-const ItemsList = ({ items, list, history }) => {
+const ItemsList = ({ classes, items, list, history }) => {
     if (items.length > 0) {
         return (
-            <List>
+            <List className={classes.list}>
                 {items.slice(0, 4).map((item, key) => {
                     const showRoute = "/" + list + "/" + item.sourceId + "/show";
                     return (
@@ -45,9 +47,9 @@ const ItemsList = ({ items, list, history }) => {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @constructor
  */
-const LoadingItems = () => {
+const LoadingItems = ({ classes }) => {
     return (
-        <List>
+        <List className={classes.list}>
             <ListItem button divider>
                 <ListItemText primary="Loading..." />
                 <ListItemText primary="" />
@@ -69,20 +71,13 @@ export default props => {
     const { classes, title, items, loading, icon, list, history } = props;
     return (
         <Card className={classes.card}>
-            <CardMedia
-                component="img"
-                alt={title}
-                className={classes.media}
-                height="180"
-                image={icon}
-                title={title}
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
+            <div className={classes.topBlock}>
+                <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
+                <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
                     {title}
                 </Typography>
-                { loading ? <LoadingItems /> : <ItemsList items={items} list={list} history={history} /> }
-            </CardContent>
+            </div>
+            { loading ? <LoadingItems classes={classes} /> : <ItemsList classes={classes} items={items} list={list} history={history} /> }
         </Card>
     );
 }

@@ -8,19 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 
-import logo from "../../images/pulsetile-core-logo.png";
-
-const styles = {
-    whitePart: {
-        backgroundColor: "white",
-    },
-    backButton: {
-        color: "#0D672F",
-    },
-    userNemuButton: {
-        color: "#0D672F",
-    },
-};
+import logo from "../../../images/pulsetile-core-logo.png";
+import styles from "../../../styles";
 
 /**
  * This component returns white (top) part of Showcase TopBar
@@ -86,4 +75,4 @@ class WhitePart extends Component {
     }
 }
 
-export default withStyles(styles)(WhitePart);
+export default withStyles(styles.topbarTopPart)(WhitePart);
