@@ -13,8 +13,8 @@ import createHistory from 'history/createBrowserHistory';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import CustomMenu from "./CustomMenu";
-import CustomTopBar from "./CustomTopBar";
+import CustomMenu from "./Menu";
+import CustomTopBar from "./Topbar";
 
 const styles = theme => ({
     root: {
@@ -28,6 +28,9 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
         overflowX: 'auto',
+    },
+    sidebarBlock: {
+        maxWidth: "240px",
     },
     contentWithSidebar: {
         display: 'flex',
@@ -94,8 +97,8 @@ class CustomLayout extends Component {
                     />
                     <main className={classes.contentWithSidebar}>
                         { isMenuVisible &&
-                                <Sidebar>
-                                    <CustomMenu />
+                                <Sidebar className={classes.sidebarBlock}>
+                                    <CustomMenu classes={classes} />
                                 </Sidebar> }
                         <div className={classes.content}>
                             {children}

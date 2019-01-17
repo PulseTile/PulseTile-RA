@@ -5,8 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import WhitePart from "./fragments/WhitePart";
 import GreenPart from "./fragments/GreenPart";
 
-import { themeHasTopBar } from "../../version/config/theme.config";
-import ThemeTopBar from "../../version/common/ThemeTopBar";
+import { themeHasTopBar } from "../../../version/config/theme.config";
+import ThemeTopBar from "../../../version/common/Topbar";
 
 /**
  * This is common component for custom core TopBar

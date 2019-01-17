@@ -8,7 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 
-import logo from "../../images/pulsetile-core-logo.png";
+import logo from "../../../images/pulsetile-core-logo.png";
 
 const styles = {
     whitePart: {

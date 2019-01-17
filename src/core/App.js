@@ -37,7 +37,6 @@ export default class App extends Component {
                             <Resource
                                 name={item.name}
                                 options={{ label: item.label }}
-                                icon={item.icon}
                                 list={item.list}
                                 show={get(item, 'show', false) ? item.show : null}
                                 edit={get(item, 'edit', false) ? item.edit : null}

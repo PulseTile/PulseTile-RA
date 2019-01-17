@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { get } from "lodash";
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -11,33 +12,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 
-import helmLogo from "../../images/helm-logo.png";
-import nhs from "../../images/nhs.png";
+import helmLogo from "../../../images/helm-logo.png";
+import nhsLogo from "../../../images/nhs.png";
+import styles from "../../../styles";
 
-const styles = {
-    whitePart: {
-        backgroundColor: "white",
-        justifyContent: "space-around",
-    },
-    image: {
-        width: "auto",
-    },
-    backButton: {
-        color: "#3596f4",
-    },
-    helpButton: {
-        color: "#3596f4",
-    },
-    contrastButton: {
-        color: "#3596f4",
-    },
-    userNemuButton: {
-        color: "#3596f4",
-    },
-    emptyBlock: {
-        flexGrow: 1,
-    }
-};
+const topPartTopbarStyles = get(styles, 'topTopBar', null);
 
 /**
  * This component returns Top part of Helm Topbar
@@ -59,46 +38,56 @@ class WhitePart extends Component {
     };
 
     render() {
-        const { classes, history, logout } = this.props;
+        const { classes, logout } = this.props;
         const { anchorEl } = this.state;
         const isTopbarMenuOpen = Boolean(anchorEl);
         return (
-            <Toolbar className={classes.whitePart}>
-                <Link to="/charts" className={classes.backButton} color="inherit" >
-                    <HomeIcon />
-                </Link>
-                <CardMedia
-                    className={classes.image}
-                    component="img"
-                    alt="Pulse Tile"
-                    height="38px"
-                    image={helmLogo}
-                    title="Pulse Tile"
-                />
+            <Toolbar className={classes.topPart}>
+                <div className={classes.homeButtonItem}>
+                    <Link to="/charts" className={classes.homeButton} color="inherit" >
+                        <HomeIcon />
+                    </Link>
+                </div>
+                <div className={classes.mainLogoItem}>
+                    <Link to="/summary" className={classes.homeButton} color="inherit" >
+                        <CardMedia
+                            className={classes.image}
+                            component="img"
+                            alt="Pulse Tile"
+                            height="38px"
+                            image={helmLogo}
+                            title="Pulse Tile"
+                        />
+                    </Link>
+                </div>
                 <div className={classes.emptyBlock}></div>
                 <CardMedia
-                    className={classes.image}
+                    className={classes.nhsLogo}
                     component="img"
                     alt="Pulse Tile"
-                    height="38px"
-                    image={nhs}
+                    height="29px"
+                    image={nhsLogo}
                     title="Pulse Tile"
                 />
-                <IconButton
-                    className={classes.helpButton}
-                    aria-haspopup="true"
-                    color="inherit" >
-                    <HelpIcon />
-                </IconButton>
-                <IconButton
-                    className={classes.contrastButton}
-                    aria-haspopup="true"
-                    color="inherit" >
-                    <ContrastIcon />
-                </IconButton>
-                <div>
+                <div className={classes.rightBlockItem}>
                     <IconButton
-                        className={classes.userNemuButton}
+                        className={classes.rightBlockButton}
+                        aria-haspopup="true"
+                        color="inherit" >
+                        <HelpIcon />
+                    </IconButton>
+                </div>
+                <div className={classes.rightBlockItem}>
+                    <IconButton
+                        className={classes.rightBlockButton}
+                        aria-haspopup="true"
+                        color="inherit" >
+                        <ContrastIcon />
+                    </IconButton>
+                </div>
+                <div className={classes.rightBlockItem}>
+                    <IconButton
+                        className={classes.rightBlockButton}
                         aria-owns={isTopbarMenuOpen ? 'menu-appbar' : undefined}
                         aria-haspopup="true"
                         onClick={this.handleMenu}
@@ -121,4 +110,4 @@ class WhitePart extends Component {
 
 }
 
-export default withStyles(styles)(WhitePart);
+export default withStyles(topPartTopbarStyles)(WhitePart);
