@@ -4,6 +4,7 @@ import layoutStyles from "./customLayout";
 import topbarTopPart from "./topbarTopPart";
 import topbarLowPart from "./topbarLowPart";
 import patientSummaryPanelCore from "./patientSummaryPanel";
+import breadcrumbs from "./breadcrumbs";
 
 import themeStyles from "../../version/styles";
 
@@ -21,5 +22,6 @@ export default {
     topbarTopPart,
     topbarLowPart,
     menu,
+    breadcrumbs,
     patientSummaryPanel,
 };

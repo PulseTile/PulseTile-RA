@@ -15,6 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import CustomMenu from "./Menu";
 import CustomTopBar from "./Topbar";
+import Breadcrumbs from "./Breadcrumbs";
 import styles from "../styles";
 
 class CustomLayout extends Component {
@@ -73,6 +74,7 @@ class CustomLayout extends Component {
                                     <CustomMenu classes={classes} />
                                 </Sidebar> }
                         <div className={classes.content}>
+                            { isMenuVisible && <Breadcrumbs location={location} /> }
                             {children}
                         </div>
                     </main>

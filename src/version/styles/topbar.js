@@ -75,7 +75,6 @@ export const lowPartStyles = {
     lowPart: {
         display: "flex",
         border: "1px solid #e5e5e5",
-        // minHeight: "90px",
         padding: 0,
         backgroundColor: "white",
         justifyContent: "space-between",

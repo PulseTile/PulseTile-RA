@@ -32,6 +32,5 @@ export default {
         flexDirection: 'column',
         flexGrow: 2,
         padding: 0,
-        paddingLeft: 5,
     },
 };
