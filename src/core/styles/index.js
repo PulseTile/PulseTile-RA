@@ -8,6 +8,7 @@ import topbarTopPart from "./topbarTopPart";
 import topbarLowPart from "./topbarLowPart";
 import patientSummaryPanelCore from "./patientSummaryPanel";
 import breadcrumbs from "./breadcrumbs";
+import charts from "./charts";
 
 // NON-CORE stylesheets
 import themeStyles from "../../version/styles";
@@ -34,4 +35,5 @@ export default {
     breadcrumbs,
     patientSummaryPanel,
     tableHeader,
+    charts,
 };
