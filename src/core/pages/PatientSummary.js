@@ -22,15 +22,16 @@ class PatientSummaryInfo extends Component {
         const { patientInfo, loading } = this.props;
 
         const coreSynopsisData = [
-            { title: "Allergies", list: "allergies", items: get(patientInfo, 'allergies', []), icon: faAllergies },
-            { title: "Contacts", list: "contacts", items: get(patientInfo, 'contacts', []), icon: faPhone },
-            { title: "Medications", list: "medications", items: get(patientInfo, 'medications', []), icon: faCapsules },
-            { title: "Problems / Issues", list: "problems", items: get(patientInfo, 'problems', []), icon: faNotesMedical },
+            { id: "block-problems", title: "Problems / Issues", list: "problems", items: get(patientInfo, 'problems', []), icon: faNotesMedical },
+            { id: "block-medications", title: "Medications", list: "medications", items: get(patientInfo, 'medications', []), icon: faCapsules },
+            { id: "block-allergies", title: "Allergies", list: "allergies", items: get(patientInfo, 'allergies', []), icon: faAllergies },
+            { id: "block-contacts", title: "Contacts", list: "contacts", items: get(patientInfo, 'contacts', []), icon: faPhone },
         ];
 
         return coreSynopsisData.map(item => {
             return (
                 <DashboardCard
+                    id={item.id}
                     title={item.title}
                     list={item.list}
                     loading={loading}

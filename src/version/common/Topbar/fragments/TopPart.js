@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import PersonIcon from '@material-ui/icons/Person';
-import HelpIcon from '@material-ui/icons/Help';
 import ContrastIcon from '@material-ui/icons/Tonality';
 import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
@@ -14,6 +13,7 @@ import Menu from '@material-ui/core/Menu';
 
 import helmLogo from "../../../images/helm-logo.png";
 import nhsLogo from "../../../images/nhs.png";
+import UserTour from "../../../features/UserTour";
 import styles from "../../../styles";
 
 const topPartTopbarStyles = get(styles, 'topTopBar', null);
@@ -38,19 +38,20 @@ class WhitePart extends Component {
     };
 
     render() {
-        const { classes, logout } = this.props;
+        const { classes, logout, location } = this.props;
         const { anchorEl } = this.state;
         const isTopbarMenuOpen = Boolean(anchorEl);
         return (
             <Toolbar className={classes.topPart}>
                 <div className={classes.homeButtonItem}>
-                    <Link to="/charts" className={classes.homeButton} color="inherit" >
+                    <Link id="icon-home" to="/charts" className={classes.homeButton} color="inherit" >
                         <HomeIcon />
                     </Link>
                 </div>
                 <div className={classes.mainLogoItem}>
                     <Link to="/summary" className={classes.homeButton} color="inherit" >
                         <CardMedia
+                            id="logo-image"
                             className={classes.image}
                             component="img"
                             alt="Pulse Tile"
@@ -69,14 +70,7 @@ class WhitePart extends Component {
                     image={nhsLogo}
                     title="Pulse Tile"
                 />
-                <div className={classes.rightBlockItem}>
-                    <IconButton
-                        className={classes.rightBlockButton}
-                        aria-haspopup="true"
-                        color="inherit" >
-                        <HelpIcon />
-                    </IconButton>
-                </div>
+                <UserTour classes={classes} location={location} />
                 <div className={classes.rightBlockItem}>
                     <IconButton
                         className={classes.rightBlockButton}
@@ -87,6 +81,7 @@ class WhitePart extends Component {
                 </div>
                 <div className={classes.rightBlockItem}>
                     <IconButton
+                        id="icon-profile"
                         className={classes.rightBlockButton}
                         aria-owns={isTopbarMenuOpen ? 'menu-appbar' : undefined}
                         aria-haspopup="true"

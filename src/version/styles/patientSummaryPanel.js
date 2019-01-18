@@ -1,3 +1,5 @@
+import backgroundImage from "../images/blue-ring-01.png";
+
 /**
  * This component returns stylesheet for Patient Summary panel
  *
@@ -17,6 +19,8 @@ export default {
         flexDirection: "column",
         height: "100px",
         backgroundColor: "#2196f3",
+        background: 'url(' + backgroundImage + ') 0 0 repeat',
+        backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",
         color: "white",

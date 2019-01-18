@@ -7,11 +7,9 @@ import {
     DateField
 } from "react-admin";
 
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import { withStyles } from "@material-ui/core/styles";
 
-import TopThreeThingsBanner from "../../images/banners/top3.jpg";
+import TableHeader from "../../../core/common/TableHeader";
 import TopThreeThingsEdit from "./TopThreeThingsEdit";
 
 const listStyles = {
@@ -33,14 +31,7 @@ const listStyles = {
  */
 export const TopThreeThingsList = ({ classes, ...rest }) => (
     <div>
-        <Card>
-            <CardMedia
-                component="img"
-                height="160"
-                image={TopThreeThingsBanner}
-                title="Top Three Things"
-            />
-        </Card>
+        <TableHeader resourse="top3Things" />
         <div style={{ display: "flex" }}>
             <List title="Vaccinations" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">

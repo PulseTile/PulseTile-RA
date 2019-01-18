@@ -2,6 +2,8 @@ import header from "./header";
 import { lowPartStyles, topPartStyles } from "./topbar";
 import menuStyles from "./menu";
 import patientSummaryPanel from "./patientSummaryPanel";
+import tableHeader from "./tableHeader";
+import customLayout from "./customLayout";
 
 /**
  * This component returns total list of theme styles
@@ -14,5 +16,7 @@ export default {
     topTopBar: topPartStyles,
     lowTopBar: lowPartStyles,
     menu: menuStyles,
+    customLayout: customLayout,
     patientSummaryPanel: patientSummaryPanel,
+    tableHeader: tableHeader,
 }

@@ -68,9 +68,9 @@ const LoadingItems = ({ classes }) => {
  * @constructor
  */
 export default props => {
-    const { classes, title, items, loading, icon, list, history } = props;
+    const { id, classes, title, items, loading, icon, list, history } = props;
     return (
-        <Card className={classes.card}>
+        <Card id={id} className={classes.card}>
             <div className={classes.topBlock}>
                 <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
                 <Typography gutterBottom variant="h5" component="h3" className={classes.title} >

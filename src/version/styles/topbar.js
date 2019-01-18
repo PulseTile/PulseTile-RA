@@ -56,9 +56,18 @@ export const topPartStyles = {
         '&:active button': {
             color: "white",
         },
+        '&:hover a': {
+            color: "white",
+        },
+        '&:active a': {
+            color: "white",
+        },
     },
     rightBlockButton: {
         color: "#3596f4",
+        '&:hover': {
+            color: "white",
+        },
     },
     emptyBlock: {
         flexGrow: 1,
