@@ -7,12 +7,10 @@ import {
     DateField,
 } from "react-admin";
 
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import { withStyles } from "@material-ui/core/styles";
 
-import ContactsBanner from "../../images/banners/contacts.jpg";
 import ContactsEdit from "./ContactsEdit";
+import TableHeader from "../../common/TableHeader";
 
 const listStyles = {
     list: {
@@ -33,14 +31,7 @@ const listStyles = {
  */
 export const ContactsList = ({ classes, ...rest }) => (
     <div>
-        <Card>
-            <CardMedia
-                component="img"
-                height="160"
-                image={ContactsBanner}
-                title="Contacts"
-            />
-        </Card>
+        <TableHeader resourse="contacts" />
         <div style={{ display: "flex" }}>
             <List title="Contacts" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">

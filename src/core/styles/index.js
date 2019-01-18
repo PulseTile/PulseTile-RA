@@ -9,6 +9,7 @@ import breadcrumbs from "./breadcrumbs";
 import themeStyles from "../../version/styles";
 
 const menu = get(themeStyles, 'menu', {});
+const tableHeader = get(themeStyles, 'tableHeader', {});
 const patientSummaryPanel = get(themeStyles, 'patientSummaryPanel', patientSummaryPanelCore);
 
 /**
@@ -24,4 +25,5 @@ export default {
     menu,
     breadcrumbs,
     patientSummaryPanel,
+    tableHeader,
 };

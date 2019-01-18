@@ -7,11 +7,9 @@ import {
     TextField
 } from "react-admin";
 
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import { withStyles } from "@material-ui/core/styles";
 
-import MedicationsBanner from "../../images/banners/medications.jpg";
+import TableHeader from "../../common/TableHeader";
 import MedicationsEdit from "./MedicationsEdit";
 
 const listStyles = {
@@ -33,14 +31,7 @@ const listStyles = {
  */
 export const Medications = ({ classes, ...rest }) => (
     <div>
-        <Card>
-            <CardMedia
-                component="img"
-                height="160"
-                image={MedicationsBanner}
-                title="Medications"
-            />
-        </Card>
+        <TableHeader resourse="medications" />
         <div style={{ display: "flex" }}>
             <List title="Medications" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">
