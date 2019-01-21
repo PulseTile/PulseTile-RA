@@ -4,7 +4,7 @@
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @return {array}
  */
-export const resourseOrder = [
+export const resourceOrder = [
     'patients',
     'problems',
     'medications',

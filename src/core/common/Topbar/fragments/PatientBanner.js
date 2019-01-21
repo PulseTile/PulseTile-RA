@@ -2,6 +2,7 @@ import React from "react";
 import { get } from "lodash";
 import moment from "moment";
 
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 /**
@@ -14,27 +15,41 @@ import Typography from '@material-ui/core/Typography';
  */
 const PatientBanner = ({ classes, patientInfo }) => {
     return (
-        <div className={classes.patientInfo}>
-            <div>
-                <div className={classes.patientRightColumn}>
-                    <div className={classes.rightFirstColumn}>
-                        <Typography>D.O.B.: { moment(get(patientInfo, 'dateOfBirth', null)).format('DD-MMM-YYYY') }</Typography>
-                        <Typography>Phone: {get(patientInfo, 'telephone', null)}</Typography>
-                    </div>
-                    <div className={classes.rightSecondColumn}>
-                        <Typography>Gender: { get(patientInfo, 'gender', null) }</Typography>
-                        <Typography>NHS No.: { get(patientInfo, 'nhsNumber', null) }</Typography>
-                    </div>
-                </div>
-                <div className={classes.patientLeftColumn}>
-                    <Typography variant="h6">{get(patientInfo, 'name', null)}</Typography>
-                    <Typography>Doctor: {get(patientInfo, 'gpName', null)}</Typography>
-                </div>
-            </div>
-            <div>
-                <Typography>Address: {get(patientInfo, 'address', null)}</Typography>
-            </div>
-        </div>
+        <Grid className={classes.patientInfo} container spacing={24}>
+            <Grid className={classes.gridBlock} item xs={12} lg={8}>
+                <Typography>
+                    {get(patientInfo, 'name', null)}
+                </Typography>
+                <Typography>
+                    <span className={classes.keyName}>Doctor: </span>
+                    {get(patientInfo, 'gpName', null)}
+                </Typography>
+            </Grid>
+            <Grid className={classes.gridBlock} item xs={6} lg={2}>
+                <Typography>
+                    <span className={classes.keyName}>D.O.B.: </span>
+                    { moment(get(patientInfo, 'dateOfBirth', null)).format('DD-MMM-YYYY') }</Typography>
+                <Typography>
+                    <span className={classes.keyName}>Phone: </span>
+                    {get(patientInfo, 'telephone', null)}
+                </Typography>
+            </Grid>
+            <Grid className={classes.gridBlock} item xs={6} lg={2}>
+                <Typography>
+                    <span className={classes.keyName}>Gender: </span>
+                    { get(patientInfo, 'gender', null) }
+                </Typography>
+                <Typography>
+                    <span className={classes.keyName}>NHS No.: </span>
+                    { get(patientInfo, 'nhsNumber', null) }</Typography>
+            </Grid>
+            <Grid className={classes.gridBlock} item xs={12}>
+                <Typography>
+                    <span className={classes.keyName}>Address: </span>
+                    {get(patientInfo, 'address', null)}
+                </Typography>
+            </Grid>
+        </Grid>
     );
 };
 

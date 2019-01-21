@@ -12,12 +12,12 @@ import logo from "../../../images/pulsetile-core-logo.png";
 import styles from "../../../styles";
 
 /**
- * This component returns white (top) part of Showcase TopBar
+ * This component returns top part of Showcase TopBar
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @constructor
  */
-class WhitePart extends Component {
+class TopPart extends Component {
 
     state = {
         anchorEl: null,
@@ -75,4 +75,4 @@ class WhitePart extends Component {
     }
 }
 
-export default withStyles(styles.topbarTopPart)(WhitePart);
+export default withStyles(styles.topbarTopPart)(TopPart);
