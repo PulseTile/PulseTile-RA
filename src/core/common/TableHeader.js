@@ -21,8 +21,8 @@ const styles = mergeStyles(coreStyles, get(themeStyles, 'tableHeader', {}));
  */
 const TableHeader = ({ classes, resource }) => (
     <div className={classes.tableHeaderBlock} >
-        <h1 className={classes.title}>{get(tableHeaders[resource], 'title', null)}</h1>
-        <p>{get(tableHeaders, '[' + resource + '].description', null)}</p>
+        <h1 className={classes.title}>{get(tableHeaders, [resource, 'title'], null)}</h1>
+        <p>{get(tableHeaders, [resource, 'description'], null)}</p>
     </div>
 );
 

@@ -28,7 +28,7 @@ function sortResourcesArray(resources) {
     for (let i = 0, n = resourceOrder.length; i < n; i++) {
         let currentItem = resourceOrder[i];
         for (let j = 0, m = resources.length; j < m; j++) {
-            if (currentItem === get(resources[j], 'name', null)) {
+            if (currentItem === get(resources, [j, 'name'], null)) {
                 sortResource[i] = resources[j];
                 break;
             }
