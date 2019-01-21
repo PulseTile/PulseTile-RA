@@ -31,7 +31,7 @@ const listStyles = {
  */
 export const Medications = ({ classes, ...rest }) => (
     <div>
-        <TableHeader resourse="medications" />
+        <TableHeader resource="medications" />
         <div style={{ display: "flex" }}>
             <List title="Medications" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">

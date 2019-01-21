@@ -16,13 +16,13 @@ const styles = mergeStyles(coreStyles, get(themeStyles, 'tableHeader', {}));
  * This component returns header for table
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {string} resourse
+ * @param {string} resource
  * @constructor
  */
-const TableHeader = ({ classes, resourse }) => (
+const TableHeader = ({ classes, resource }) => (
     <div className={classes.tableHeaderBlock} >
-        <h1 className={classes.title}>{get(tableHeaders[resourse], 'title', null)}</h1>
-        <p>{get(tableHeaders, '[' + resourse + '].description', null)}</p>
+        <h1 className={classes.title}>{get(tableHeaders[resource], 'title', null)}</h1>
+        <p>{get(tableHeaders, '[' + resource + '].description', null)}</p>
     </div>
 );
 
