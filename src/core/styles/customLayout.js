@@ -6,7 +6,6 @@
  */
 export default {
     root: {
-        display: 'flex',
         flexDirection: 'column',
         zIndex: 1,
         minHeight: '100vh',

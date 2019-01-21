@@ -19,7 +19,7 @@ class PatientSummaryInfo extends Component {
     }
 
     render() {
-        const { patientInfo, loading } = this.props;
+        const { classes, patientInfo, loading } = this.props;
 
         const coreSynopsisData = [
             { id: "block-problems", title: "Problems / Issues", list: "problems", items: get(patientInfo, 'problems', []), icon: faNotesMedical },
@@ -28,19 +28,24 @@ class PatientSummaryInfo extends Component {
             { id: "block-contacts", title: "Contacts", list: "contacts", items: get(patientInfo, 'contacts', []), icon: faPhone },
         ];
 
-        return coreSynopsisData.map(item => {
-            return (
-                <DashboardCard
-                    id={item.id}
-                    title={item.title}
-                    list={item.list}
-                    loading={loading}
-                    items={item.items}
-                    icon={item.icon}
-                    {...this.props}
-                />
-            );
-        });
+        return (
+            <div className={classes.container}>
+                {coreSynopsisData.map(item => {
+                        return (
+                            <DashboardCard
+                                id={item.id}
+                                title={item.title}
+                                list={item.list}
+                                loading={loading}
+                                items={item.items}
+                                icon={item.icon}
+                                {...this.props}
+                            />
+                        );
+                    })
+                }
+            </div>
+        );
     }
 }
 

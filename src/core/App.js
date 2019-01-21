@@ -13,7 +13,7 @@ import customReducers from "./reducers";
 import customRoutes from "./routes";
 
 import Charts from "./pages/Charts";
-import CustomLayout from "./common/CustomLayout";
+import Layout from "./common/Layout";
 
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
@@ -29,7 +29,7 @@ export default class App extends Component {
                 customRoutes={customRoutes}
                 dataProvider={dataProvider}
                 dashboard={Charts}
-                appLayout={CustomLayout}
+                appLayout={Layout}
             >
                 {
                     plugins.map(item => {

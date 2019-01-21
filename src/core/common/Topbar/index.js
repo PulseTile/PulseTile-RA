@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { get } from "lodash";
+import { setSidebarVisibility } from 'react-admin';
+import { connect } from 'react-redux';
 
 import AppBar from '@material-ui/core/AppBar';
 
@@ -27,4 +30,15 @@ const CustomTopbar = props => {
     );
 };
 
-export default CustomTopbar;
+const mapStateToProps = state => {
+    return {
+        isLoading: get(state, 'admin.loading', false),
+        location: get(state, 'router.location', null),
+        isSidebarOpen: get(state, 'admin.ui.sidebarOpen', true),
+        patientInfo: get(state, 'custom.patientInfo.data', null),
+    }
+};
+
+
+export default connect(mapStateToProps, { setSidebarVisibility })(CustomTopbar);
+

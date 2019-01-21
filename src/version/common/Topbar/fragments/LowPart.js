@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { get } from "lodash";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Menu from '@material-ui/core/Menu';
 
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
+import { isMenuVisible } from "../../../../core/common/functions";
 import styles from "../../../styles";
 
 const lowPartTopbarStyles = get(styles, 'lowTopBar', null);
@@ -34,20 +35,29 @@ const MenuButton = ({ classes, setSidebarVisibility, isSidebarOpen }) => {
 };
 
 /**
- * This component returns green (bottom) part of Showcase TopBar
+ * This component returns low part of Showcase TopBar
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @constructor
  */
-const GreenPart = ({ classes, isSidebarOpen, setSidebarVisibility, isMenuVisible, location, patientInfo }) => {
-    return (
-        <Toolbar className={classes.lowPart}>
-            { isMenuVisible &&
-                <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
-            }
-            <PageTitle location={location} classes={classes} patientInfo={patientInfo} />
-        </Toolbar>
-    );
+class LowPart extends Component {
+
+    componentWillMount() {
+        this.props.setSidebarVisibility(true);
+    }
+
+    render() {
+        const { classes, isSidebarOpen, setSidebarVisibility, location, patientInfo } = this.props;
+        return (
+            <Toolbar className={classes.lowPart}>
+                { (isMenuVisible(location)) &&
+                    <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
+                }
+                <PageTitle location={location} classes={classes} patientInfo={patientInfo} />
+            </Toolbar>
+        );
+    }
+
 };
 
-export default withStyles(lowPartTopbarStyles)(GreenPart);
+export default withStyles(lowPartTopbarStyles)(LowPart);

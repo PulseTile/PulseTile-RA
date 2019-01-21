@@ -7,6 +7,9 @@ import backgroundImage from "../images/blue-ring-01.png";
  * @return {shape}
  */
 export default {
+    container: {
+
+    },
     card: {
         display: "inline-block",
         width: "calc(25% - 20px)",

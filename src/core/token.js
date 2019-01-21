@@ -1,1 +1,1 @@
-export const token = "JSESSIONID=2dd4a60e-9604-4fb7-8b23-9a556002e0e7";
+export const token = "JSESSIONID=6af92e2f-68e0-4d79-9ce6-3c2f41a685c7";

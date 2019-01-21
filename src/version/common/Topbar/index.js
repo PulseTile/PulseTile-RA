@@ -13,9 +13,6 @@ import styles from "../../styles";
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const ThemeTopBar = ({ classes, ...rest }) => {
-
-    console.log(classes)
-
     return (
         <AppBar position="static" className={classes.appBar}>
             <TopPart {...rest} />
