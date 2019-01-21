@@ -16,12 +16,6 @@ export default {
         flexDirection: 'column',
         overflowX: 'auto',
     },
-    sidebarBlock: {
-        maxWidth: "240px",
-        '& div': {
-            marginTop: "0px",
-        },
-    },
     contentWithSidebar: {
         display: 'flex',
         flexGrow: 1,

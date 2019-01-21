@@ -1,4 +1,10 @@
 export default {
+    sidebarBlock: {
+        maxWidth: "240px",
+        '& div': {
+            marginTop: "0px",
+        },
+    },
     menuBlock: {
         border: "1px solid #e5e5e5",
     },

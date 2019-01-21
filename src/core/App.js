@@ -13,39 +13,39 @@ import customReducers from "./reducers";
 import customRoutes from "./routes";
 
 import Charts from "./pages/Charts";
-import Layout from "./common/Layout";
+import Layout from "./common/CustomLayout";
 
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
 const plugins = corePlugins.concat(nonCorePlugins);
 
-export default class App extends Component {
-    render() {
-        return (
-            <Admin
-                authProvider={authProvider}
-                customSagas={[customSagas]}
-                customReducers={{custom: customReducers}}
-                customRoutes={customRoutes}
-                dataProvider={dataProvider}
-                dashboard={Charts}
-                appLayout={Layout}
-            >
-                {
-                    plugins.map(item => {
-                        return (
-                            <Resource
-                                name={item.name}
-                                options={{ label: item.label }}
-                                list={item.list}
-                                show={get(item, 'show', false) ? item.show : null}
-                                edit={get(item, 'edit', false) ? item.edit : null}
-                                create={get(item, 'create', false) ? item.create : null}
-                            />
-                        );
-                    })
-                }
-            </Admin>
-        );
-    }
+const App = () => {
+    return (
+        <Admin
+            authProvider={authProvider}
+            customSagas={[customSagas]}
+            customReducers={{custom: customReducers}}
+            customRoutes={customRoutes}
+            dataProvider={dataProvider}
+            dashboard={Charts}
+            appLayout={Layout}
+        >
+            {
+                plugins.map(item => {
+                    return (
+                        <Resource
+                            name={item.name}
+                            options={{ label: item.label }}
+                            list={item.list}
+                            show={get(item, 'show', false) ? item.show : null}
+                            edit={get(item, 'edit', false) ? item.edit : null}
+                            create={get(item, 'create', false) ? item.create : null}
+                        />
+                );
+            })
+            }
+        </Admin>
+    );
 }
+
+export default App;
