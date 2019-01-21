@@ -10,7 +10,7 @@ import {
 } from "react-admin";
 
 import { relationshipArray, relationshipTypeArray } from "./selects";
-import EditToolbar from "../../common/EditToolbar";
+import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
 
 /**
  * This component returns block with edit form for Contacts
@@ -22,7 +22,7 @@ import EditToolbar from "../../common/EditToolbar";
  */
 const ContactsEdit = ({ classes, ...rest }) => (
     <Edit className={classes.edit} title="Edit Contact" {...rest}>
-        <SimpleForm toolbar={<EditToolbar />}>
+        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
             <TextInput source="name" label="Name" />
             <SelectInput source="relationship" label="Relationship" choices={relationshipArray} />
             <SelectInput source="relationshipType" label="Relationship Type" choices={relationshipTypeArray} />

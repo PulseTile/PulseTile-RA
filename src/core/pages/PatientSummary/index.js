@@ -5,11 +5,10 @@ import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 
-import { faAllergies, faPhone, faCapsules, faNotesMedical  } from '@fortawesome/free-solid-svg-icons';
-
-import DashboardCard from "../common/DashboardCard";
-import { patientInfoAction } from "../actions/patientInfoAction";
-import styles from "../styles";
+import DashboardCard from "../../common/DashboardCard";
+import { patientInfoAction } from "../../actions/patientInfoAction";
+import { getSynopsisData } from "./funtions";
+import styles from "../../styles";
 
 class PatientSummaryInfo extends Component {
 
@@ -20,14 +19,7 @@ class PatientSummaryInfo extends Component {
 
     render() {
         const { classes, patientInfo, loading } = this.props;
-
-        const coreSynopsisData = [
-            { id: "block-problems", title: "Problems / Issues", list: "problems", items: get(patientInfo, 'problems', []), icon: faNotesMedical },
-            { id: "block-medications", title: "Medications", list: "medications", items: get(patientInfo, 'medications', []), icon: faCapsules },
-            { id: "block-allergies", title: "Allergies", list: "allergies", items: get(patientInfo, 'allergies', []), icon: faAllergies },
-            { id: "block-contacts", title: "Contacts", list: "contacts", items: get(patientInfo, 'contacts', []), icon: faPhone },
-        ];
-
+        const coreSynopsisData = getSynopsisData(patientInfo);
         return (
             <div className={classes.container}>
                 {coreSynopsisData.map(item => {

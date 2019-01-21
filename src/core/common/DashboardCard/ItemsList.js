@@ -14,24 +14,24 @@ import ListItemText from "@material-ui/core/ListItemText";
  * @constructor
  */
 const ItemsList = ({ classes, items, list, history }) => {
-    if (items.length > 0) {
+    if (items.length === 0) {
+        return (
+            <ListItem button divider>
+                <ListItemText primary="No data" />
+            </ListItem>
+        );
+    } else {
         return (
             <List className={classes.list}>
                 {items.slice(0, 4).map((item, key) => {
                     const showRoute = "/" + list + "/" + item.sourceId + "/show";
                     return (
-                        <ListItem button divider onClick={() => history.push(showRoute)}>
+                        <ListItem key={key} button divider onClick={() => history.push(showRoute)}>
                             <ListItemText primary={item.text} />
                         </ListItem>
                     );
                 })}
             </List>
-        );
-    } else {
-        return (
-            <ListItem button divider>
-                <ListItemText primary="No data" />
-            </ListItem>
         );
     }
 };

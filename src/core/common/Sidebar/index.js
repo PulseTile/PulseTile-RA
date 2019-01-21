@@ -24,7 +24,7 @@ function sortResourcesArray(resources) {
     for (let i = 0, n = resourceOrder.length; i < n; i++) {
         let currentItem = resourceOrder[i];
         for (let j = 0, m = resources.length; j < m; j++) {
-            if (currentItem === get(resources, '[' + j + '].name', null)) {
+            if (currentItem === get(resources[j], 'name', null)) {
                 sortResource[i] = resources[j];
                 break;
             }
@@ -72,19 +72,18 @@ const CustomSidebar = props => {
                         onClick={onMenuClick}
                         selected={currentPathname === "/summary"}
                     />
-                    {sortResources.map(resource => {
-                            if ("patients" !== resource.name) {
-                                return (
-                                    <MenuItemLink
-                                        className={(currentPathname === `/${resource.name}`) ? classes.menuItemSelected : classes.menuItem}
-                                        to={`/${resource.name}`}
-                                        primaryText={resource.options.label}
-                                        leftIcon={(currentPathname === `/${resource.name}`) ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
-                                        onClick={onMenuClick}
-                                        selected={currentPathname === `/${resource.name}`}
-                                    />
-                                );
-                            }
+                    {
+                        sortResources.map(resource => {
+                            return (
+                                <MenuItemLink
+                                    className={(currentPathname === `/${resource.name}`) ? classes.menuItemSelected : classes.menuItem}
+                                    to={`/${resource.name}`}
+                                    primaryText={resource.options.label}
+                                    leftIcon={(currentPathname === `/${resource.name}`) ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
+                                    onClick={onMenuClick}
+                                    selected={currentPathname === `/${resource.name}`}
+                                />
+                            );
                         }
                     )}
                 </div>

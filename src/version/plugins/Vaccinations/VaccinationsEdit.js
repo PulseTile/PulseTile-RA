@@ -8,7 +8,7 @@ import {
     LongTextInput,
 } from "react-admin";
 
-import EditToolbar from "../../../core/common/EditToolbar";
+import EditToolbarWithoutDelete from "../../../core/common/EditToolbarWithoutDelete";
 
 /**
  * This component returns block with edit form for Vaccination
@@ -20,7 +20,7 @@ import EditToolbar from "../../../core/common/EditToolbar";
  */
 const VaccinationsCreate = ({ classes, ...rest }) => (
     <Edit className={classes.edit} title="Edit information about Vaccination" {...rest}>
-        <SimpleForm toolbar={<EditToolbar />}>
+        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
             <TextInput source="vaccinationName" label="Name" />
             <DateInput source="vaccinationDateTime" label="Date and Time" />
             <TextInput source="series" label="Series" />

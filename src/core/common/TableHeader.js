@@ -15,7 +15,7 @@ import styles from "../styles";
  */
 const TableHeader = ({ classes, resourse }) => (
     <div className={classes.tableHeaderBlock} >
-        <h1 className={classes.title}>{get(tableHeaders, '[' + resourse + '].title', null)}</h1>
+        <h1 className={classes.title}>{get(tableHeaders[resourse], 'title', null)}</h1>
         <p>{get(tableHeaders, '[' + resourse + '].description', null)}</p>
     </div>
 );

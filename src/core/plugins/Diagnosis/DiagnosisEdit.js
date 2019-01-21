@@ -8,7 +8,7 @@ import {
     LongTextInput
 } from "react-admin";
 
-import EditToolbar from "../../common/EditToolbar";
+import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
 
 /**
  * This component returns block with edit form for Diagnosis
@@ -20,7 +20,7 @@ import EditToolbar from "../../common/EditToolbar";
  */
 const DiagnosisEdit = ({ classes, ...rest }) => (
     <Edit className={classes.edit} title="Edit Problem / Diagnosis" {...rest}>
-        <SimpleForm toolbar={<EditToolbar />}>
+        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
             <TextInput source="problem" label="Problem issue" />
             <LongTextInput source="description" label="Description" />
             <DisabledInput source="author" label="Author" />

@@ -5,7 +5,6 @@
  * @return {array}
  */
 export const resourceOrder = [
-    'patients',
     'problems',
     'medications',
     'vaccinations',
