@@ -4,7 +4,13 @@ import { get } from "lodash";
 import { withStyles } from '@material-ui/core/styles';
 
 import tableHeaders from "../config/tableHeaders";
-import styles from "../styles";
+
+import themeStyles from "../../version/styles";
+import { mergeStyles } from "../helpers";
+
+const coreStyles = {};
+
+const styles = mergeStyles(coreStyles, get(themeStyles, 'tableHeader', {}));
 
 /**
  * This component returns header for table
@@ -20,4 +26,4 @@ const TableHeader = ({ classes, resourse }) => (
     </div>
 );
 
-export default withStyles(styles.tableHeader)(TableHeader);
+export default withStyles(styles)(TableHeader);

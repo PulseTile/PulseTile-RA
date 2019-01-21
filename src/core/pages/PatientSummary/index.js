@@ -7,8 +7,27 @@ import { withStyles } from "@material-ui/core/styles";
 
 import DashboardCard from "../../common/DashboardCard";
 import { patientInfoAction } from "../../actions/patientInfoAction";
-import { getSynopsisData } from "./funtions";
-import styles from "../../styles";
+import { getSynopsisData } from "./functions";
+import { mergeStyles } from "../../helpers";
+
+import themeStyles from "../../../version/styles";
+
+const coreStyles = {
+    card: {
+        display: "inline-block",
+        width: "calc(25% - 20px)",
+        float: "left",
+        minHeight: "300px",
+        margin: "10px",
+        padding: "5px",
+        boxSizing: "border-box"
+    },
+    media: {
+        "background-color": "#2196f3"
+    }
+};
+
+const styles = mergeStyles(coreStyles, get(themeStyles, 'patientSummaryPanel', {}))
 
 class PatientSummaryInfo extends Component {
 
@@ -22,7 +41,8 @@ class PatientSummaryInfo extends Component {
         const coreSynopsisData = getSynopsisData(patientInfo);
         return (
             <div className={classes.container}>
-                {coreSynopsisData.map(item => {
+                {
+                    coreSynopsisData.map(item => {
                         return (
                             <DashboardCard
                                 id={item.id}
@@ -57,6 +77,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default compose(
-    withStyles(styles.patientSummaryPanel),
+    withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps)
 )(PatientSummaryInfo);

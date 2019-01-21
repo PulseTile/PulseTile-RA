@@ -6,7 +6,29 @@ import { withStyles } from '@material-ui/core/styles';
 import CustomSidebar from "./Sidebar";
 import CustomTopBar from "./Topbar";
 
-import styles from "../styles";
+const styles = {
+    root: {
+        flexDirection: 'column',
+        zIndex: 1,
+        minHeight: '100vh',
+        position: 'relative',
+    },
+    appFrame: {
+        display: 'flex',
+        flexDirection: 'column',
+        overflowX: 'auto',
+    },
+    contentWithSidebar: {
+        display: 'flex',
+        flexGrow: 1,
+    },
+    content: {
+        display: "block",
+        flexDirection: 'column',
+        flexGrow: 2,
+        padding: 0,
+    },
+};
 
 /**
  * This component returns custom layout
@@ -25,4 +47,4 @@ const CustomLayout = ({ classes, ...rest }) => {
     );
 };
 
-export default withStyles(styles.layoutStyles)(CustomLayout);
+export default withStyles(styles)(CustomLayout);

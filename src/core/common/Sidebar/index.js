@@ -9,8 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 import { resourceOrder } from "../../../version/config/theme.config";
-import styles from "../../styles";
+import themeStyles from "../../../version/styles";
+import { mergeStyles } from "../../helpers";
 import { isMenuVisible } from "../functions";
+
+const coreStyles = {};
+const styles = mergeStyles(coreStyles, get(themeStyles, 'sidebar', {}));
 
 /**
  * This function sorts resources by theme settings
@@ -97,4 +101,4 @@ const mapStateToProps = state => ({
     resources: getResources(state),
 });
 
-export default withRouter(connect(mapStateToProps)(withStyles(styles.menu)(CustomSidebar)));
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(CustomSidebar)));

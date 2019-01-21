@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { get } from "lodash";
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -14,9 +13,76 @@ import Menu from '@material-ui/core/Menu';
 import helmLogo from "../../../images/helm-logo.png";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
-import styles from "../../../styles";
 
-const topPartTopbarStyles = get(styles, 'topTopBar', null);
+const styles = {
+    topPart: {
+        display: "flex",
+        backgroundColor: "white",
+        justifyContent: "space-around",
+        border: "1px solid #e5e5e5",
+        minHeight: "54px",
+        padding: 0,
+    },
+    homeButtonItem: {
+        display: "inline-flex",
+        position: "relative",
+        minHeight: "54px",
+        minWidth: "54px",
+        backgroundColor: "#3596f4",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    homeButton : {
+        color: "white",
+    },
+    mainLogoItem: {
+        display: "inline-flex",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingLeft: "9px",
+    },
+    nhsLogo: {
+        width: "auto",
+        maxWidth: "100%",
+        marginRight: "24px"
+    },
+    rightBlockItem: {
+        display: "inline-flex",
+        position: "relative",
+        minHeight: "54px",
+        minWidth: "54px",
+        justifyContent: "center",
+        alignItems: "center",
+        borderLeft: "1px solid #e5e5e5",
+        '&:hover': {
+            backgroundColor: "#3596f4",
+        },
+        '&:active': {
+            backgroundColor: "#3596f4",
+        },
+        '&:hover button': {
+            color: "white",
+        },
+        '&:active button': {
+            color: "white",
+        },
+        '&:hover a': {
+            color: "white",
+        },
+        '&:active a': {
+            color: "white",
+        },
+    },
+    rightBlockButton: {
+        color: "#3596f4",
+        '&:hover': {
+            color: "white",
+        },
+    },
+    emptyBlock: {
+        flexGrow: 1,
+    }
+};
 
 /**
  * This component returns Top part of Helm Topbar
@@ -105,4 +171,4 @@ class WhitePart extends Component {
 
 }
 
-export default withStyles(topPartTopbarStyles)(WhitePart);
+export default withStyles(styles)(WhitePart);

@@ -1,4 +1,5 @@
-import backgroundImage from "../images/blue-ring-01.png";
+import backgroundImage from "../images/Artboard.png";
+import cardBackgroundImage from "../images/blue-ring-01.png";
 
 /**
  * This component returns stylesheet for Patient Summary panel
@@ -8,21 +9,15 @@ import backgroundImage from "../images/blue-ring-01.png";
  */
 export default {
     container: {
-
-    },
-    card: {
-        display: "inline-block",
-        width: "calc(25% - 20px)",
-        float: "left",
-        margin: "10px",
-        boxSizing: "border-box"
+        background: 'url(' + backgroundImage + ')',
+        backgroundSize: "cover",
     },
     topBlock: {
         display: "flex",
         flexDirection: "column",
         height: "100px",
         backgroundColor: "#2196f3",
-        background: 'url(' + backgroundImage + ') 0 0 repeat',
+        background: 'url(' + cardBackgroundImage + ') 0 0 repeat',
         backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",

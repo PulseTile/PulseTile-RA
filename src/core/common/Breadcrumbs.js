@@ -3,7 +3,15 @@ import React from "react";
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import styles from "../styles";
+const styles = {
+    breadcrumbsBlock: {
+        display: "flex",
+        height: "48px",
+        alignItems: "center",
+        border: "1px solid #e5e5e5",
+        paddingLeft: "10px",
+    }
+};
 
 const Breadcrumbs = ({ classes, location }) => {
     return (
@@ -21,4 +29,4 @@ const Breadcrumbs = ({ classes, location }) => {
     );
 };
 
-export default withStyles(styles.breadcrumbs)(Breadcrumbs);
+export default withStyles(styles)(Breadcrumbs);
