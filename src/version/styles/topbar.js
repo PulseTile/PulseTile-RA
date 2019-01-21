@@ -118,25 +118,13 @@ export const lowPartStyles = {
         color: "black"
     },
     patientInfo: {
-        width: "100%",
-        justifyContent: "space-around",
         color: "black",
         padding: "11px 14px",
+        marginLeft: "5px",
     },
-    patientLeftColumn: {
-        display: "inline-block",
-    },
-    rightFirstColumn: {
-        display: "inline-block",
-        marginRight: "34px",
-    },
-    rightSecondColumn: {
-        display: "inline-block",
-        paddingRight: "3px",
-        textAlign: "right",
-    },
-    patientRightColumn: {
-        display: "block",
-        float: "right",
+    gridBlock: {
+        padding: "0px !important",
+        marginTop: "5px",
+        marginBottom: "5px",
     },
 };

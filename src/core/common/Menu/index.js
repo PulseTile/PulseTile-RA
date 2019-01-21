@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { resourseOrder } from "../../../version/config/theme.config";
+import { resourceOrder } from "../../../version/config/theme.config";
 import styles from "../../styles";
 
 /**
@@ -20,8 +20,8 @@ import styles from "../../styles";
  */
 function sortResourcesArray(resources) {
     let sortResource = [];
-    for (let i = 0, n = resourseOrder.length; i < n; i++) {
-        let currentItem = resourseOrder[i];
+    for (let i = 0, n = resourceOrder.length; i < n; i++) {
+        let currentItem = resourceOrder[i];
         for (let j = 0, m = resources.length; j < m; j++) {
             if (currentItem === get(resources, '[' + j + '].name', null)) {
                 sortResource[i] = resources[j];

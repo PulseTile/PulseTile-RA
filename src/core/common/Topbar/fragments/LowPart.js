@@ -10,12 +10,12 @@ import PageTitle from "./PageTitle";
 import styles from "../../../styles";
 
 /**
- * This component returns green (bottom) part of Showcase TopBar
+ * This component returns low part of Showcase TopBar
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @constructor
  */
-const GreenPart = ({ classes, setSidebarVisibility, isSidebarOpen, isMenuVisible, location, patientInfo }) => {
+const LowPart = ({ classes, setSidebarVisibility, isSidebarOpen, isMenuVisible, location, patientInfo }) => {
     return (
         <Toolbar className={classes.greenPart}>
             { isMenuVisible &&
@@ -27,4 +27,4 @@ const GreenPart = ({ classes, setSidebarVisibility, isSidebarOpen, isMenuVisible
     );
 }
 
-export default withStyles(styles.topbarLowPart)(GreenPart);
+export default withStyles(styles.topbarLowPart)(LowPart);
