@@ -14,5 +14,5 @@ export function isMenuVisible(location) {
         "/charts",
         "/patients"
     ];
-    return (-1 === pagesWithoutMenu.indexOf(pathname));
+    return (pagesWithoutMenu.indexOf(pathname) === -1);
 }

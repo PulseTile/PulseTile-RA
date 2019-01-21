@@ -46,7 +46,7 @@ export default () => {
         const options = {};
         switch (type) {
             case GET_LIST: {
-                if ('patients' === resource) {
+                if (resource === 'patients') {
                     url = `${domainName}/api/${resource}`;
                 } else {
                     url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
@@ -140,7 +140,7 @@ export default () => {
 
         const filter = get(params, 'sort.field', null);
         let results = [];
-        if (-1 !== departmentsArray.indexOf(filter)) {
+        if (departmentsArray.indexOf(filter) !== -1) {
             results = Object.values(response).filter(item => {
                 let filterWithSpaces = filter
                     .replace(/([A-Z])/g, ' $1')
@@ -148,7 +148,7 @@ export default () => {
                     .trim();
                 return (item.department === filterWithSpaces);
             });
-        } else if (-1 !== ageArray.indexOf(filter)) {
+        } else if (ageArray.indexOf(filter) !== -1) {
             const currentDate = new Date().getTime();
             const endDate = new moment(currentDate);
             results = Object.values(response).filter(item => {
