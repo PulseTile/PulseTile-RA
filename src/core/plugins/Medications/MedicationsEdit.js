@@ -10,7 +10,7 @@ import {
 } from "react-admin";
 
 import  { routesArray } from "./selects";
-import EditToolbar from "../../common/EditToolbar";
+import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
 
 /**
  * This component returns block with edit form for Medication
@@ -22,7 +22,7 @@ import EditToolbar from "../../common/EditToolbar";
  */
 const MedicationsEdit = ({ classes, ...rest }) => (
     <Edit className={classes.edit} title="Edit Medication" {...rest}>
-        <SimpleForm toolbar={<EditToolbar />}>
+        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
             <TextInput source="name" label="Name" />
             <SelectInput source="route" label="Route" choices={routesArray} />
             <LongTextInput source="doseAmount" label="Dose Amount" />

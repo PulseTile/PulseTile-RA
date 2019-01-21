@@ -1,97 +1,50 @@
-import React, { Component } from 'react';
-import { get } from "lodash";
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-    AppBar,
-    Menu,
-    Notification,
-    Sidebar,
-    setSidebarVisibility,
-} from 'react-admin';
-import createHistory from 'history/createBrowserHistory';
+import React, { Component } from "react";
+import { Layout } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import CustomMenu from "./Menu";
+import CustomSidebar from "./Sidebar";
 import CustomTopBar from "./Topbar";
-import Breadcrumbs from "./Breadcrumbs";
-import styles from "../styles";
 
-class CustomLayout extends Component {
-
-    static propTypes = {
-        children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-        dashboard: PropTypes.oneOfType([
-            PropTypes.func,
-            PropTypes.string,
-        ]),
-        isLoading: PropTypes.bool.isRequired,
-        setSidebarVisibility: PropTypes.func.isRequired,
-        title: PropTypes.string.isRequired,
-    };
-
-    componentWillMount() {
-        this.props.setSidebarVisibility(true);
-    }
-
-    /**
-     * This function defines is sidebar menu shown at the current page
-     *
-     * @author Bogdan Shcherban <bsc@piogroup.net>
-     * @return {boolean}
-     */
-    isMenuVisible = () => {
-        const pathname = get(this.props, 'location.pathname', null);
-        const pagesWithoutMenu = [
-            "/",
-            "/charts",
-            "/patients"
-        ];
-        return (-1 === pagesWithoutMenu.indexOf(pathname));
-    };
-
-    render() {
-        const { children, location, classes, dashboard, isLoading, logout, isSidebarOpen, title, setSidebarVisibility, patientInfo } = this.props;
-        const history = createHistory();
-        const isMenuVisible = this.isMenuVisible();
-        return (
-            <div className={classes.root}>
-                <div className={classes.appFrame}>
-                    <CustomTopBar
-                        history={history}
-                        location={location}
-                        isMenuVisible={isMenuVisible}
-                        title={title}
-                        isSidebarOpen={isSidebarOpen}
-                        setSidebarVisibility={setSidebarVisibility}
-                        logout={logout}
-                        patientInfo={patientInfo}
-                    />
-                    <main className={classes.contentWithSidebar}>
-                        { (isMenuVisible && isSidebarOpen) &&
-                                <Sidebar className={classes.sidebarBlock}>
-                                    <CustomMenu classes={classes} />
-                                </Sidebar> }
-                        <div className={classes.content}>
-                            { isMenuVisible && <Breadcrumbs location={location} /> }
-                            {children}
-                        </div>
-                    </main>
-                    <Notification />
-                </div>
-            </div>
-        );
-    }
-}
-
-const mapStateToProps = state => {
-    return {
-        isLoading: get(state, 'admin.loading', false),
-        location: get(state, 'router.location', null),
-        isSidebarOpen: get(state, 'admin.ui.sidebarOpen', true),
-        patientInfo: get(state, 'custom.patientInfo.data', null),
-    }
+const styles = {
+    root: {
+        flexDirection: 'column',
+        zIndex: 1,
+        minHeight: '100vh',
+        position: 'relative',
+    },
+    appFrame: {
+        display: 'flex',
+        flexDirection: 'column',
+        overflowX: 'auto',
+    },
+    contentWithSidebar: {
+        display: 'flex',
+        flexGrow: 1,
+    },
+    content: {
+        display: "block",
+        flexDirection: 'column',
+        flexGrow: 2,
+        padding: 0,
+    },
 };
 
-export default connect(mapStateToProps, { setSidebarVisibility })(withStyles(styles.layoutStyles)(CustomLayout));
+/**
+ * This component returns custom layout
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @constructor
+ */
+const CustomLayout = ({ classes, ...rest }) => {
+    return (
+        <Layout
+            {...rest}
+            className={classes.root}
+            appBar={CustomTopBar}
+            sidebar={CustomSidebar}
+        />
+    );
+};
+
+export default withStyles(styles)(CustomLayout);

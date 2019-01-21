@@ -15,7 +15,17 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 
 import { patientStatisticAction } from "../actions/patientsStatisticAction";
-import styles from "../styles";
+
+const styles = {
+    chartsContainer: {
+        display: "flex",
+        justifyContent: "space-around",
+        backgroundColor: "white",
+    },
+    chartBlock: {
+        display: "inline-block",
+    }
+};
 
 class Charts extends Component {
 
@@ -208,6 +218,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default compose(
-    withStyles(styles.charts),
+    withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps)
 )(Charts);

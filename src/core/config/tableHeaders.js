@@ -25,4 +25,4 @@ const coreTableHeaders = {
     },
 };
 
-export default Object.assign(coreTableHeaders, nonCoreTableHeaders);
+export default Object.assign({}, coreTableHeaders, nonCoreTableHeaders);

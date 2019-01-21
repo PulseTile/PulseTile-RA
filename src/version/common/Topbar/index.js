@@ -5,7 +5,12 @@ import { withStyles } from '@material-ui/core/styles';
 
 import TopPart from "./fragments/TopPart";
 import LowPart from "./fragments/LowPart";
-import styles from "../../styles";
+
+const styles = {
+    appBar: {
+        boxShadow: "none",
+    }
+};
 
 /**
  * This is common component for theme TopBar
@@ -13,9 +18,6 @@ import styles from "../../styles";
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const ThemeTopBar = ({ classes, ...rest }) => {
-
-    console.log(classes)
-
     return (
         <AppBar position="static" className={classes.appBar}>
             <TopPart {...rest} />
@@ -24,4 +26,4 @@ const ThemeTopBar = ({ classes, ...rest }) => {
     );
 };
 
-export default withStyles(styles.header)(ThemeTopBar);
+export default withStyles(styles)(ThemeTopBar);

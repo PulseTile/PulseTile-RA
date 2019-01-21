@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash";
 
 import Typography from '@material-ui/core/Typography';
 
@@ -17,8 +16,8 @@ const titlesArray = {
 };
 
 const PageTitle = ({ classes, location, patientInfo }) => {
-    const pathName = get(location, 'pathname', null);
-    if (-1 !== pagesWithTitle.indexOf(pathName)) {
+    const pathName = location.pathname;
+    if (pagesWithTitle.indexOf(pathName) !== -1) {
         const title = titlesArray[pathName.replace('/', '')];
         return (
             <Typography className={classes.title}>

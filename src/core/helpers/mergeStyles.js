@@ -1,11 +1,19 @@
-export function mergeStyles(coreStyles, nonCoreStyles) {
+/**
+ * This function merge core and version styles
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {array} coreStyles
+ * @param {array}nonCoreStyles
+ * @return {array}
+ */
+function mergeStyles(coreStyles, nonCoreStyles) {
     const coreClasses = Object.keys(coreStyles);
     const nonCoreClasses = Object.keys(nonCoreStyles);
     let mergeResult = [];
     for (let i = 0, n = coreClasses.length; i < n; i++) {
         let item = coreClasses[i];
         if (-1 !== nonCoreClasses.indexOf(item)) {
-            mergeResult[item] = Object.assign(coreStyles[item], nonCoreStyles[item]);
+            mergeResult[item] = Object.assign({}, coreStyles[item], nonCoreStyles[item]);
         } else {
             mergeResult[item] = coreStyles[item];
         }
@@ -18,3 +26,5 @@ export function mergeStyles(coreStyles, nonCoreStyles) {
     }
     return mergeResult;
 }
+
+export default mergeStyles;

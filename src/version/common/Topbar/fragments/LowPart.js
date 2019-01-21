@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { get } from "lodash";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -9,9 +9,56 @@ import CloseIcon from '@material-ui/icons/Close';
 import Menu from '@material-ui/core/Menu';
 
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
-import styles from "../../../styles";
+import { isMenuVisible } from "../../../../core/common/functions";
 
-const lowPartTopbarStyles = get(styles, 'lowTopBar', null);
+const styles = {
+    lowPart: {
+        display: "flex",
+        border: "1px solid #e5e5e5",
+        padding: 0,
+        backgroundColor: "white",
+        justifyContent: "space-between",
+    },
+    menuButtonBlock: {
+        display: "inline-flex",
+        position: "relative",
+        minWidth: "238px",
+        minHeight: "90px",
+        borderRight: "1px solid #e5e5e5",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    menuButton: {
+        borderRadius: "15px",
+        maxHeight: "20px",
+        minWidth: "64px",
+        color: "#3596f4",
+        textTransform: "none",
+        backgroundColor: "white",
+        '&:hover': {
+            backgroundColor: "#3596f4",
+            color: "white",
+        },
+        '&:active': {
+            backgroundColor: "#3596f4",
+            color: "white",
+        },
+    },
+    title: {
+        flexGrow: 1,
+        color: "black"
+    },
+    patientInfo: {
+        color: "black",
+        padding: "11px 14px",
+        marginLeft: "5px",
+    },
+    gridBlock: {
+        padding: "0px !important",
+        marginTop: "5px",
+        marginBottom: "5px",
+    },
+};
 
 /**
  * This component returns button which toggle sidebar menu
@@ -34,20 +81,29 @@ const MenuButton = ({ classes, setSidebarVisibility, isSidebarOpen }) => {
 };
 
 /**
- * This component returns green (bottom) part of Showcase TopBar
+ * This component returns low part of Showcase TopBar
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @constructor
  */
-const GreenPart = ({ classes, isSidebarOpen, setSidebarVisibility, isMenuVisible, location, patientInfo }) => {
-    return (
-        <Toolbar className={classes.lowPart}>
-            { isMenuVisible &&
-                <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
-            }
-            <PageTitle location={location} classes={classes} patientInfo={patientInfo} />
-        </Toolbar>
-    );
+class LowPart extends Component {
+
+    componentWillMount() {
+        this.props.setSidebarVisibility(true);
+    }
+
+    render() {
+        const { classes, isSidebarOpen, setSidebarVisibility, location, patientInfo } = this.props;
+        return (
+            <Toolbar className={classes.lowPart}>
+                { (isMenuVisible(location)) &&
+                    <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
+                }
+                <PageTitle location={location} classes={classes} patientInfo={patientInfo} />
+            </Toolbar>
+        );
+    }
+
 };
 
-export default withStyles(lowPartTopbarStyles)(GreenPart);
+export default withStyles(styles)(LowPart);
