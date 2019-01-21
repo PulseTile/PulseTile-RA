@@ -30,7 +30,7 @@ const listStyles = {
  */
 export const Allergies = ({ classes, ...rest }) => (
     <div>
-        <TableHeader resourse="allergies" />
+        <TableHeader resource="allergies" />
         <div style={{ display: "flex" }}>
             <List title="Allergies" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">
