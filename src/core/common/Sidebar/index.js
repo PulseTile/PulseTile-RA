@@ -45,10 +45,10 @@ function sortResourcesArray(resources) {
  * @constructor
  */
 const CustomSidebar = props => {
-    const { classes, resources, onMenuClick, location } = props;
+    const { classes, resources, isSidebarOpen, onMenuClick, location } = props;
     const currentPathname = get(location, 'pathname', null);
     const sortResources = sortResourcesArray(resources);
-    if (isMenuVisible(location)) {
+    if (isMenuVisible(location) && isSidebarOpen) {
         return (
             <Sidebar className={classes.sidebarBlock}>
                 <div className={classes.menuBlock}>
@@ -99,6 +99,7 @@ const CustomSidebar = props => {
 
 const mapStateToProps = state => ({
     resources: getResources(state),
+    isSidebarOpen: get(state, 'admin.ui.sidebarOpen', true),
 });
 
 export default withRouter(connect(mapStateToProps)(withStyles(styles)(CustomSidebar)));
