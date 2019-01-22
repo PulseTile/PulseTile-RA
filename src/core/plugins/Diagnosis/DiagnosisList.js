@@ -1,39 +1,51 @@
 import React from "react";
+import { Route } from "react-router";
 import {
     List,
     Datagrid,
     DateField,
-    TextField,
-    EditButton,
-    ShowButton
+    TextField
 } from "react-admin";
 
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import DiagnosisBanner from "../../images/banners/problems.jpg";
+import { withStyles } from "@material-ui/core/styles";
 
-export const Diagnosis = props => {
-    return (
-        <div>
-            <Card>
-                <CardMedia
-                    component="img"
-                    height="160"
-                    image={DiagnosisBanner}
-                    title="Diagnosis"
-                />
-            </Card>
-            <List title="Diagnosis" {...props}>
-                <Datagrid>
+import TableHeader from "../../common/TableHeader";
+import DiagnosisEdit from "./DiagnosisEdit";
+
+const listStyles = {
+    list: {
+        width: '100%',
+    },
+    edit: {
+        width: '100%',
+    }
+};
+
+/**
+ * This component returns block with Diagnosis list
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} classes
+ * @param {shape} rest
+ * @constructor
+ */
+export const Diagnosis = ({ classes, ...rest }) => (
+    <div>
+        <TableHeader resource="problems" />
+        <div style={{ display: "flex" }}>
+            <List title="Problems / Issues" className={classes.list} {...rest}>
+                <Datagrid rowClick="edit">
                     <TextField source="problem" />
                     <DateField source="dateOfOnset" />
                     <TextField source="source" />
-                    <ShowButton />
-                    <EditButton />
                 </Datagrid>
             </List>
+            <Route
+                path="/problems/:id"
+                render={({ match }) => <DiagnosisEdit {...rest} classes={classes} id={match.params.id} />}
+            />
         </div>
-    );
-};
+    </div>
+);
 
-export default Diagnosis;
+export default withStyles(listStyles)(Diagnosis);

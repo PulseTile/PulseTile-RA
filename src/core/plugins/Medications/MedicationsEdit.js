@@ -8,11 +8,21 @@ import {
     LongTextInput,
     DisabledInput
 } from "react-admin";
-import  { routesArray } from "./selects";
 
-const MedicationsEdit = props => (
-    <Edit title="Edit Medication" {...props}>
-        <SimpleForm>
+import  { routesArray } from "./selects";
+import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
+
+/**
+ * This component returns block with edit form for Medication
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} classes
+ * @param {shape} rest
+ * @constructor
+ */
+const MedicationsEdit = ({ classes, ...rest }) => (
+    <Edit className={classes.edit} title="Edit Medication" {...rest}>
+        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
             <TextInput source="name" label="Name" />
             <SelectInput source="route" label="Route" choices={routesArray} />
             <LongTextInput source="doseAmount" label="Dose Amount" />

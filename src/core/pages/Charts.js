@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import { get } from "lodash";
 import { connect } from 'react-redux';
+import compose from 'recompose/compose';
 import {
     BarChart,
     XAxis,
@@ -11,7 +12,20 @@ import {
     Bar
 } from "recharts";
 
+import { withStyles } from '@material-ui/core/styles';
+
 import { patientStatisticAction } from "../actions/patientsStatisticAction";
+
+const styles = {
+    chartsContainer: {
+        display: "flex",
+        justifyContent: "space-around",
+        backgroundColor: "white",
+    },
+    chartBlock: {
+        display: "inline-block",
+    }
+};
 
 class Charts extends Component {
 
@@ -122,7 +136,7 @@ class Charts extends Component {
     }
 
     render() {
-        const { patients, history } = this.props;
+        const { classes, patients, history } = this.props;
 
         const DepartmentPercentage = this.getDepartmentPercentage(patients);
         const dataGreen = [
@@ -142,8 +156,8 @@ class Charts extends Component {
         ];
 
         return (
-            <div>
-                <div>
+            <div className={classes.chartsContainer}>
+                <div className={classes.chartBlock}>
                     <h3>Patients By Setting</h3>
                     <p>This is a brief description of patients by setting.</p>
                     <BarChart
@@ -166,7 +180,7 @@ class Charts extends Component {
                         </Bar>
                     </BarChart>
                 </div>
-                <div>
+                <div className={classes.chartBlock}>
                     <h3>Patients By Age</h3>
                     <p>This is a brief description of patients by age.</p>
                     <BarChart
@@ -203,4 +217,7 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Charts);
+export default compose(
+    withStyles(styles),
+    connect(mapStateToProps, mapDispatchToProps)
+)(Charts);

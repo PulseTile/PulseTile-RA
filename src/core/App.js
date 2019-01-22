@@ -11,43 +11,41 @@ import nonCorePlugins from "../version/config/nonCorePlugins";
 import customSagas from "./sagas";
 import customReducers from "./reducers";
 import customRoutes from "./routes";
-import customMenu from "./menu";
 
-import PatientSummary from "./pages/PatientSummaryInfo";
+import Charts from "./pages/Charts";
+import Layout from "./common/CustomLayout";
 
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
 const plugins = corePlugins.concat(nonCorePlugins);
 
-export default class App extends Component {
-  render() {
+const App = () => {
     return (
-      <Admin
-        authProvider={authProvider}
-        menu={customMenu}
-        title="PulseTile"
-        customSagas={[customSagas]}
-        customReducers={{custom: customReducers}}
-        customRoutes={customRoutes}
-        dataProvider={dataProvider}
-        dashboard={PatientSummary}
-      >
-          {
-              plugins.map(item => {
-                  return (
-                      <Resource
-                        name={item.name}
-                        options={{ label: item.label }}
-                        icon={item.icon}
-                        list={item.list}
-                        show={get(item, 'show', false) ? item.show : null}
-                        edit={get(item, 'edit', false) ? item.edit : null}
-                        create={get(item, 'create', false) ? item.create : null}
-                      />
-                  );
-              })
-          }
-      </Admin>
+        <Admin
+            authProvider={authProvider}
+            customSagas={[customSagas]}
+            customReducers={{custom: customReducers}}
+            customRoutes={customRoutes}
+            dataProvider={dataProvider}
+            dashboard={Charts}
+            appLayout={Layout}
+        >
+            {
+                plugins.map(item => {
+                    return (
+                        <Resource
+                            name={item.name}
+                            options={{ label: item.label }}
+                            list={item.list}
+                            show={get(item, 'show', false) ? item.show : null}
+                            edit={get(item, 'edit', false) ? item.edit : null}
+                            create={get(item, 'create', false) ? item.create : null}
+                        />
+                );
+            })
+            }
+        </Admin>
     );
-  }
 }
+
+export default App;
