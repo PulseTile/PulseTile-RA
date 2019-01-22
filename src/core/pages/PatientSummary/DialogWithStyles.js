@@ -37,7 +37,7 @@ class DialogContent extends Component {
 
     state = {
         selectedMode: this.props.showMode ? this.props.showMode : SHOW_ALL,
-        selectedHeadings: this.props.showHeadings ? this.props.showHeadings : getHeadingsLists(),
+        selectedHeadings: this.props.showHeadings ? Object.values(this.props.showHeadings) : getHeadingsLists(),
     };
 
     /**

@@ -36,7 +36,6 @@ class PatientSummaryInfo extends Component {
     }
 
     render() {
-        console.log(this.props)
         const { classes, patientInfo, loading, showMode, showHeadings } = this.props;
         return (
             <div className={classes.container}>
