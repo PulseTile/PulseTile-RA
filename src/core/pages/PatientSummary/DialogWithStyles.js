@@ -33,6 +33,11 @@ const styles = {
     }
 };
 
+/**
+ * This component returns content and functionality of dialog window
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ */
 class DialogContent extends Component {
 
     state = {
