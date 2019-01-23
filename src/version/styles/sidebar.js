@@ -1,3 +1,5 @@
+import { MAIN_THEME_COLOR } from "../config/theme.config";
+
 export default {
     sidebarBlock: {
         maxWidth: "240px",
@@ -10,16 +12,16 @@ export default {
     },
     menuItem: {
         display: "block",
-        color: "#3596f4",
+        color: MAIN_THEME_COLOR,
         borderBottom: "1px solid #e5e5e5",
         '&:hover': {
-            backgroundColor: "#3596f4",
+            backgroundColor: MAIN_THEME_COLOR,
             color: "white",
         },
     },
     menuItemSelected: {
         display: "block",
-        backgroundColor: "#3596f4 !important",
+        backgroundColor: MAIN_THEME_COLOR + " !important",
         color: "white",
         borderBottom: "1px solid #e5e5e5",
     },

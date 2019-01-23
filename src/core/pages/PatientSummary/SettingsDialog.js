@@ -27,7 +27,7 @@ export default class SettingsDialog extends Component {
         const { open } = this.state;
         return (
             <div>
-                <IconButton aria-haspopup="true" color="inherit" onClick={() => this.toggleDialog()}>
+                <IconButton id="icon-settings" aria-haspopup="true" color="inherit" onClick={() => this.toggleDialog()}>
                     <SettingsIcon />
                 </IconButton>
                 <span>Home</span>

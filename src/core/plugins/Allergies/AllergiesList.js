@@ -8,6 +8,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 
+import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import AllergiesEdit from "./AllergiesEdit";
 
@@ -20,6 +21,10 @@ const listStyles = {
     }
 };
 
+const breadcrumbsResource = [
+    { url: "/allergies", title: "Allergies", isActive: false },
+];
+
 /**
  * This component returns block with Allergies list
  *
@@ -30,6 +35,7 @@ const listStyles = {
  */
 export const Allergies = ({ classes, ...rest }) => (
     <div>
+        <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="allergies" />
         <div style={{ display: "flex" }}>
             <List title="Allergies" className={classes.list} {...rest}>

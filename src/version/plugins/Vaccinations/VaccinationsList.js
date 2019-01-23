@@ -9,6 +9,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 
+import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import VaccinationsEdit from "./VaccinationsEdit";
 import TableHeader from "../../../core/common/TableHeader";
 
@@ -21,6 +22,10 @@ const listStyles = {
     }
 };
 
+const breadcrumbsResource = [
+    { url: "/vaccinations", title: "Vaccinations", isActive: false },
+];
+
 /**
  * This component returns block with Vaccinations list
  *
@@ -31,6 +36,7 @@ const listStyles = {
  */
 export const Vaccinations = ({ classes, ...rest }) => (
     <div>
+        <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="vaccinations" />
         <div style={{ display: "flex" }}>
             <List title="Vaccinations" className={classes.list} {...rest}>

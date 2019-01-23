@@ -9,6 +9,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 
+import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import MedicationsEdit from "./MedicationsEdit";
 
@@ -21,6 +22,10 @@ const listStyles = {
     },
 };
 
+const breadcrumbsResource = [
+    { url: "/medications", title: "Medications", isActive: false },
+];
+
 /**
  * This component returns block with Medications list
  *
@@ -31,6 +36,7 @@ const listStyles = {
  */
 export const Medications = ({ classes, ...rest }) => (
     <div>
+        <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="medications" />
         <div style={{ display: "flex" }}>
             <List title="Medications" className={classes.list} {...rest}>

@@ -9,6 +9,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 
+import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import DiagnosisEdit from "./DiagnosisEdit";
 
@@ -21,6 +22,10 @@ const listStyles = {
     }
 };
 
+const breadcrumbsResource = [
+    { url: "/problems", title: "Problems / Issues", isActive: false },
+];
+
 /**
  * This component returns block with Diagnosis list
  *
@@ -31,6 +36,7 @@ const listStyles = {
  */
 export const Diagnosis = ({ classes, ...rest }) => (
     <div>
+        <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="problems" />
         <div style={{ display: "flex" }}>
             <List title="Problems / Issues" className={classes.list} {...rest}>

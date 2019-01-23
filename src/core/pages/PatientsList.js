@@ -8,6 +8,8 @@ import {
     ShowButton
 } from "react-admin";
 
+import Breadcrumbs from "../common/Breadcrumbs";
+
 /**
  * This function redirects user to PatientSummary and update userID
  *
@@ -20,15 +22,31 @@ function redirectToSummary(id, history) {
     history.push('/summary');
 }
 
-export const PatientsList = ({ history, ...rest }) => (
-    <List title="Patients" {...rest}>
-        <Datagrid rowClick={(id, basePath, record) => redirectToSummary(id, history)}>
-            <TextField source="name" />
-            <TextField source="address" />
-            <DateField source="dateOfBirth" />
-            <ShowButton />
-        </Datagrid>
-    </List>
-);
+/**
+ * This component returns block with Patients list
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} history
+ * @param {shape} rest
+ * @constructor
+ */
+export const PatientsList = ({ history, ...rest }) => {
+    const breadcrumbsResource = [
+        { url: "/patients", title: "Patients list", isActive: false }
+    ];
+    return (
+        <div>
+            <Breadcrumbs resource={breadcrumbsResource} />
+            <List title="Patients" {...rest}>
+                <Datagrid rowClick={(id, basePath, record) => redirectToSummary(id, history)}>
+                    <TextField source="name" />
+                    <TextField source="address" />
+                    <DateField source="dateOfBirth" />
+                    <ShowButton />
+                </Datagrid>
+            </List>
+        </div>
+    );
+}
 
 export default PatientsList;
