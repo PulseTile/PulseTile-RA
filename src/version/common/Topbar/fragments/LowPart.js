@@ -15,6 +15,7 @@ import { MAIN_THEME_COLOR } from "../../../config/theme.config";
 const styles = {
     lowPart: {
         display: "flex",
+        minHeight: "auto",
         border: "1px solid #e5e5e5",
         padding: 0,
         backgroundColor: "white",
