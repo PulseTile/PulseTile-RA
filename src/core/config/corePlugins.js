@@ -25,8 +25,6 @@ export default [
         name: "allergies",
         label: "Allergies",
         list: AllergiesList,
-        show: AllergiesShow,
-        create: AllergiesCreate,
     },
     {
         name: "contacts",
