@@ -12,9 +12,9 @@ import Typography from '@material-ui/core/Typography';
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
+import ListToolbar from "../../common/ListToolbar";
 import AllergiesCreate from "./AllergiesCreate";
 import DetailsBlock from "./DetailsBlock";
-
 import { MAIN_COLOR } from "../../config/styles";
 
 const listStyles = {
@@ -61,12 +61,9 @@ class Allergies extends Component {
         return (this.props.location.pathname === "/allergies/create");
     };
 
-    redirectToCreate = pathname => {
-        this.props.history.push(pathname)
-    };
-
     render() {
-        const { classes, location } = this.props;
+        const { classes, history, location } = this.props;
+        const isCreatePage = (this.props.location.pathname === "/allergies/create");
         return (
             <div>
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -74,7 +71,7 @@ class Allergies extends Component {
                 <div style={{ display: "flex" }}>
                     <div className={classes.list}>
                         <Typography className={classes.blockTitle} >Allergies</Typography>
-                        <List title="Allergies" actions={null} bulkActions={false} {...this.props}>
+                        <List title="Allergies" actions={null} bulkActions={false} pagination={<ListToolbar history={history} isCreatePage={this.isCreatePage()} createPath="/allergies/create" />} {...this.props}>
                             <Datagrid className={classes.tableList} rowClick="edit">
                                 <TextField source="cause" />
                                 <TextField source="reaction" />
@@ -96,10 +93,6 @@ class Allergies extends Component {
                             />
                     }
                 </div>
-                {
-                    (!this.isCreatePage()) &&
-                        <Button color="danger" onClick={() => this.redirectToCreate("/allergies/create")}>CREATE</Button>
-                }
             </div>
         );
     }
