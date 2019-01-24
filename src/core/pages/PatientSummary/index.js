@@ -42,9 +42,10 @@ class PatientSummaryInfo extends Component {
                 <SettingsDialog />
                 <div>
                     {
-                        synopsisData.map(item => {
+                        synopsisData.map((item, key) => {
                             return (
                                 <DashboardCard
+                                    key={key}
                                     showMode={showMode}
                                     showHeadings={showHeadings}
                                     id={item.id}
@@ -66,10 +67,10 @@ class PatientSummaryInfo extends Component {
 
 const mapStateToProps = state => {
     return {
-        patientInfo: get(state, 'custom.patientInfo.data', null),
-        loading: get(state, 'custom.patientInfo.loading', false),
-        showMode: get(state, 'custom.showMode.data', null),
-        showHeadings: get(state, 'custom.showHeadings.data', null),
+        patientInfo: state.custom.patientInfo.data,
+        loading: state.custom.patientInfo.loading,
+        showMode: state.custom.showMode.data,
+        showHeadings: state.custom.showHeadings.data,
     };
 };
 
