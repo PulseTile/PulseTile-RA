@@ -65,7 +65,7 @@ export default props => {
     }
     return (
         <Card id={id} className={classes.card}>
-            <div className={classes.topBlock}>
+            <div className={classes.topBlock} onClick={() => history.push('/' + list)}>
                 <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
                 <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
                     {title}
