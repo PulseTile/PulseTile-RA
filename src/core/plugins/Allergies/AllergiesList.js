@@ -8,24 +8,41 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import AllergiesCreate from "./AllergiesCreate";
-import AllergiesShow from "./AllergiesShow";
+import DetailsBlock from "./DetailsBlock";
+
+import { MAIN_COLOR } from "../../config/styles";
 
 const listStyles = {
     list: {
         width: '100%',
+        margin: "15px",
     },
     edit: {
         width: '100%',
     },
-    show: {
-        width: '100%',
-    },
     create: {
         width: '100%',
+    },
+    blockTitle: {
+        display: "flex",
+        alignItems: "center",
+        height: "49px",
+        color: "white",
+        backgroundColor: MAIN_COLOR,
+        fontSize: "18px",
+        fontWeight: "700",
+        paddingLeft: "15px",
+    },
+    tableList: {
+        '& thead': {
+            backgroundColor: "#e5e5e5",
+            color: "black !important"
+        }
     }
 };
 
@@ -58,19 +75,22 @@ class Allergies extends Component {
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <TableHeader resource="allergies" />
                 <div style={{ display: "flex" }}>
-                    <List title="Allergies" className={classes.list} {...this.props}>
-                        <Datagrid rowClick="edit">
-                            <TextField source="cause" />
-                            <TextField source="reaction" />
-                            <TextField source="source" />
-                        </Datagrid>
-                    </List>
+                    <div className={classes.list}>
+                        <Typography className={classes.blockTitle} >Allergies</Typography>
+                        <List title="Allergies" actions={null} bulkActions={false} {...this.props}>
+                            <Datagrid className={classes.tableList} rowClick="edit">
+                                <TextField source="cause" />
+                                <TextField source="reaction" />
+                                <TextField source="source" />
+                            </Datagrid>
+                        </List>
+                    </div>
                     {
                         (!this.isCreatePage())
                             ?
                             <Route
                                 path="/allergies/:id"
-                                render={({ match }) => <AllergiesShow mode="show" {...this.props} id={match.params.id} />}
+                                render={({ match }) => <DetailsBlock mode="show" {...this.props} id={match.params.id} />}
                             />
                             :
                             <Route

@@ -1,73 +1,52 @@
 import React, { Component } from "react";
-import { Show, SimpleShowLayout, TextField, DateField, EditButton } from "react-admin";
 import {
-    Edit, Create,
-    SimpleForm,
-    BooleanInput,
-    TextInput,
-    DisabledInput,
-    DateInput,
-    LongTextInput
+    Show,
+    SimpleShowLayout,
+    TextField,
+    DateField
 } from "react-admin";
-import { Route } from "react-router";
 
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
+import Typography from '@material-ui/core/Typography';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-/**
- * This component returns page which show Allergies details
- *
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {shape} rest
- */
-export default class AllergiesShow extends Component {
+import { MAIN_COLOR } from "../../config/styles";
 
-    state = {
-        view: this.props.mode,
-    };
-
-    changeViewType = viewType => {
-        this.setState({
-            view: viewType,
-        })
-    };
-
-    render() {
-        const { classes, mode, ...rest } = this.props;
-        const { view } = this.state;
-        if (view === 'show') {
-            return (
-                <div className={classes.show}>
-                    <Show title="Allergies Details" {...rest}>
-                        <SimpleShowLayout>
-                            <TextField source="cause" />
-                            <TextField source="reaction" />
-                            <TextField source="author" />
-                            <DateField source="dateCreated" />
-                            <TextField source="source" />
-                        </SimpleShowLayout>
-                    </Show>
-                    <Button color="primary" onClick={() => this.changeViewType('edit')}>Edit</Button>
-                </div>
-            );
-        } else if (view === 'edit') {
-            return (
-                <div className={classes.show}>
-                    <Edit className={classes.edit} title="Edit Allergy" {...this.props}>
-                        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
-                            <TextInput source="cause" label="Cause" />
-                            <LongTextInput source="reaction" label="Reaction / Description" />
-                            <DisabledInput source="source" label="Source" />
-                            <DisabledInput source="author" label="Author" />
-                            <DisabledInput source="date" label="Date" />
-                        </SimpleForm>
-                    </Edit>
-                    <Button color="danger" onClick={() => this.changeViewType('show')}>Cancel</Button>
-                </div>
-            );
+const styles = {
+    showBlock: {
+        width: '100%',
+        backgroundColor: "white",
+        margin: "15px 15px 15px 0px",
+    },
+    details: {
+        '& > div': {
+            boxShadow: "none",
         }
-        return null;
     }
+};
+
+const AllergiesShow = ({ classes, changeViewType, ...rest }) => {
+
+    return (
+        <div className={classes.showBlock}>
+            <Typography className={classes.blockTitle} >Allergy</Typography>
+            <Show className={classes.details} title="Allergies Details" {...rest}>
+                <SimpleShowLayout>
+                    <TextField source="cause" />
+                    <TextField source="reaction" />
+                    <TextField source="author" />
+                    <DateField source="dateCreated" />
+                    <TextField source="source" />
+                </SimpleShowLayout>
+            </Show>
+            <Button color="primary" onClick={() => changeViewType('edit')}>Edit</Button>
+        </div>
+    );
 }
+
+export default withStyles(styles)(AllergiesShow);
