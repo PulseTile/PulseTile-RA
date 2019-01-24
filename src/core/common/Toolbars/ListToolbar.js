@@ -3,7 +3,7 @@ import { Pagination } from 'react-admin';
 
 import { withStyles } from "@material-ui/core/styles";
 
-import CreateButton from "../common/Buttons/CreateButton";
+import CreateButton from "../../common/Buttons/CreateButton";
 
 const styles = {
     paginationBlock: {

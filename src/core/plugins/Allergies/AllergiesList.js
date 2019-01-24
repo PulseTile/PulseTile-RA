@@ -7,12 +7,11 @@ import {
 } from "react-admin";
 
 import { withStyles } from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
-import ListToolbar from "../../common/ListToolbar";
+import ListToolbar from "../../common/Toolbars/ListToolbar";
 import AllergiesCreate from "./AllergiesCreate";
 import DetailsBlock from "./DetailsBlock";
 import { MAIN_COLOR } from "../../config/styles";
@@ -21,9 +20,6 @@ const listStyles = {
     list: {
         width: '100%',
         margin: "15px",
-    },
-    create: {
-        width: '100%',
     },
     blockTitle: {
         display: "flex",
@@ -38,7 +34,14 @@ const listStyles = {
     tableList: {
         '& thead': {
             backgroundColor: "#e5e5e5",
-            color: "black !important"
+            color: "black !important",
+            '& tr': {
+                height: "48px !important",
+            },
+        },
+        '& tbody tr:hover': {
+            backgroundColor: MAIN_COLOR + " !important",
+            color: "white !important"
         }
     }
 };
