@@ -9,6 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import ItemsList from "./ItemsList";
+import { SHOW_ALL } from "../../pages/PatientSummary/config";
 
 /**
  * This component returns list of empty rows if information is loading
@@ -30,6 +31,27 @@ const LoadingItems = ({ classes }) => {
 }
 
 /**
+ * This component returns list block
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {boolean} loading
+ * @param {shape}   classes
+ * @param {array}   items
+ * @param {shape}   list
+ * @param {shape}   history
+ */
+const ListBlock = ({ loading, classes, items, list, history }) => {
+    if (loading) {
+        return (
+            <LoadingItems classes={classes} />
+        );
+    }
+    return (
+        <ItemsList classes={classes} items={items} list={list} history={history} />
+    );
+};
+
+/**
  * This component returns one single Dashboard Card
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
@@ -37,18 +59,20 @@ const LoadingItems = ({ classes }) => {
  * @constructor
  */
 export default props => {
-    const { id, classes, title, items, loading, icon, list, history } = props;
+    const { id, classes, title, items, loading, icon, list, history, showMode, showHeadings } = props;
+    if (Object.values(showHeadings).indexOf(list) === -1) {
+        return null;
+    }
     return (
         <Card id={id} className={classes.card}>
-            <div className={classes.topBlock}>
+            <div className={classes.topBlock} onClick={() => history.push('/' + list)}>
                 <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
                 <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
                     {title}
                 </Typography>
             </div>
-            { loading
-                    ? <LoadingItems classes={classes} />
-                    : <ItemsList classes={classes} items={items} list={list} history={history} />
+            { (showMode === SHOW_ALL || !showMode) &&
+                <ListBlock loading={loading} classes={classes} items={items} list={list} history={history} />
             }
         </Card>
     );
