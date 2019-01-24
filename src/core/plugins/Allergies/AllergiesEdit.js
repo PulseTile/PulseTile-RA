@@ -8,9 +8,41 @@ import {
     LongTextInput
 } from "react-admin";
 
-import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
+import { MAIN_COLOR } from "../../config/styles";
+
+const styles = {
+    editBlock: {
+        width: '100%',
+        backgroundColor: "white",
+        margin: "15px 15px 15px 0px",
+    },
+    blockTitle: {
+        display: "flex",
+        alignItems: "center",
+        height: "49px",
+        color: "white",
+        backgroundColor: MAIN_COLOR,
+        fontSize: "18px",
+        fontWeight: "700",
+        paddingLeft: "15px",
+    },
+    editForm: {
+        '& > div': {
+            paddingTop: "0px !important",
+            paddingLeft: "10px !important",
+            paddingRight: "10px !important",
+        },
+    },
+    labelBlock: {
+        '& > div': {
+            marginBottom: "0px !important",
+        },
+    },
+};
 
 /**
  * This component returns block with edit form for Allergies
@@ -22,18 +54,17 @@ import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
  * @constructor
  */
 const AllergiesEdit = ({ classes, changeViewType, ...rest }) => (
-    <div className={classes.show}>
-        <Edit className={classes.edit} title="Edit Allergy" {...rest}>
-            <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
-                <TextInput source="cause" label="Cause" />
-                <LongTextInput source="reaction" label="Reaction / Description" />
-                <DisabledInput source="source" label="Source" />
-                <DisabledInput source="author" label="Author" />
-                <DisabledInput source="date" label="Date" />
+    <div className={classes.editBlock}>
+        <Typography className={classes.blockTitle} >Allergy</Typography>
+        <Edit title="Edit Allergy" {...rest}>
+            <SimpleForm className={classes.editForm} toolbar={<EditToolbarWithoutDelete changeViewType={changeViewType} />}>
+                <TextInput className={classes.labelBlock} source="cause" label="Cause" />
+                <LongTextInput className={classes.labelBlock} source="reaction" label="Reaction / Description" />
+                <DisabledInput className={classes.labelBlock} source="author" label="Author" />
+                <DisabledInput className={classes.labelBlock} source="dateCreated" label="Date" />
             </SimpleForm>
         </Edit>
-        <Button color="danger" onClick={() => changeViewType('show')}>Cancel</Button>
     </div>
 );
 
-export default AllergiesEdit;
+export default withStyles(styles)(AllergiesEdit);

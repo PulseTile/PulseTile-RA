@@ -22,9 +22,6 @@ const listStyles = {
         width: '100%',
         margin: "15px",
     },
-    edit: {
-        width: '100%',
-    },
     create: {
         width: '100%',
     },

@@ -6,6 +6,7 @@ import AllergiesShow from "./AllergiesShow";
 
 /**
  * This component returns Details block for Allergies
+ * (fork to Edit and Show)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
