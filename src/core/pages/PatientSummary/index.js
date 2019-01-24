@@ -45,23 +45,24 @@ class PatientSummaryInfo extends Component {
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <SettingsDialog />
                 <div>
-                {
-                    synopsisData.map(item => {
-                        return (
-                            <DashboardCard
-                                showMode={showMode}
-                                showHeadings={showHeadings}
-                                id={item.id}
-                                title={item.title}
-                                list={item.list}
-                                loading={loading}
-                                items={get(patientInfo, item.list, [])}
-                                icon={item.icon}
-                                {...this.props}
-                            />
-                        );
-                })
-                }
+                    {
+                        synopsisData.map((item, key) => {
+                            return (
+                                <DashboardCard
+                                    key={key}
+                                    showMode={showMode}
+                                    showHeadings={showHeadings}
+                                    id={item.id}
+                                    title={item.title}
+                                    list={item.list}
+                                    loading={loading}
+                                    items={get(patientInfo, item.list, [])}
+                                    icon={item.icon}
+                                    {...this.props}
+                                />
+                            );
+                        })
+                    }
                 </div>
             </div>
         );
@@ -70,10 +71,10 @@ class PatientSummaryInfo extends Component {
 
 const mapStateToProps = state => {
     return {
-        patientInfo: get(state, 'custom.patientInfo.data', null),
-        loading: get(state, 'custom.patientInfo.loading', false),
-        showMode: get(state, 'custom.showMode.data', null),
-        showHeadings: get(state, 'custom.showHeadings.data', null),
+        patientInfo: state.custom.patientInfo.data,
+        loading: state.custom.patientInfo.loading,
+        showMode: state.custom.showMode.data,
+        showHeadings: state.custom.showHeadings.data,
     };
 };
 

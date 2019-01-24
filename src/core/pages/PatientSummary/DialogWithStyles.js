@@ -63,19 +63,20 @@ class DialogContent extends Component {
      * @author Bogdan Shcherban <bsc@piogroup.net>
      * @param {string} itemName
      */
-    selectHeading = itemName => {
-        const { selectedHeadings } = this.state;
-        let headingsArray = selectedHeadings;
-        if (this.isHeadingChecked(itemName)) {
-            let index = headingsArray.indexOf(itemName);
-            headingsArray.splice(index, 1)
-        } else {
-            headingsArray.push(itemName);
-        }
-        this.setState({
-            selectedHeadings: headingsArray,
-        });
-        this.props.setHeadingsAction(headingsArray);
+    toggleVisibility = itemName => {
+        this.setState(state => {
+            const { selectedHeadings } = state;
+            let headingsArray = selectedHeadings;
+            if (Object.values(selectedHeadings).indexOf(itemName) !== -1) {
+                let index = headingsArray.indexOf(itemName);
+                headingsArray.splice(index, 1)
+            } else {
+                headingsArray.push(itemName);
+            }
+            return {
+                selectedHeadings: headingsArray,
+            };
+        }, () => this.props.setHeadingsAction(this.state.selectedHeadings));
     };
 
     /**
@@ -85,10 +86,10 @@ class DialogContent extends Component {
      * @param {string} mode
      */
     selectShowMode = mode => {
-        this.setState({
-            selectedMode: mode,
-        });
-        this.props.setModeAction(mode);
+        this.setState(
+            { selectedMode: mode },
+            () => this.props.setModeAction(mode)
+        );
     };
 
     render() {
@@ -101,10 +102,10 @@ class DialogContent extends Component {
                     <Divider />
                     <div className={classes.dialogItem}>
                         {
-                            synopsisData.map(item => {
+                            synopsisData.map((item, key) => {
                                 return (
-                                    <div className={classes.dialogLabel}>
-                                        <Checkbox checked={this.isHeadingChecked(item.list)} color="primary" onChange={() => this.selectHeading(item.list)} />
+                                    <div key={key} className={classes.dialogLabel}>
+                                        <Checkbox checked={this.isHeadingChecked(item.list)} color="primary" onChange={() => this.toggleVisibility(item.list)} />
                                         <span>{item.title}</span>
                                     </div>
                                 );
@@ -118,9 +119,9 @@ class DialogContent extends Component {
                     <Divider />
                     <div className={classes.dialogItemColumn}>
                     {
-                        showModesArray.map(item => {
+                        showModesArray.map((item, key) => {
                             return (
-                                <label className={classes.dialogLabel}>
+                                <label key={key} className={classes.dialogLabel}>
                                     <Radio checked={selectedMode === item.type} color="primary" onChange={() => this.selectShowMode(item.type)} />
                                     <span>{item.label}</span>
                                 </label>
