@@ -26,13 +26,13 @@ export default class SettingsDialog extends Component {
     render() {
         const { open } = this.state;
         return (
-            <div>
-                <IconButton aria-haspopup="true" color="inherit" onClick={() => this.toggleDialog()}>
+            <React.Fragment>
+                <IconButton id="icon-settings" aria-haspopup="true" color="inherit" onClick={() => this.toggleDialog()}>
                     <SettingsIcon />
                 </IconButton>
                 <span>Home</span>
                 <DialogWithStyles open={open} onClose={this.toggleDialog} />
-            </div>
+            </React.Fragment>
         );
     }
 }

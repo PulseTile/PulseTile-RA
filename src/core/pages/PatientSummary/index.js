@@ -1,4 +1,3 @@
-// For common request about patient (for dev.ripple.foundation without 8000)
 import React, { Component } from "react";
 import { get } from "lodash";
 import { connect } from 'react-redux';
@@ -11,6 +10,7 @@ import { synopsisData, SHOW_ALL } from "./config";
 import { mergeStyles } from "../../helpers";
 import SettingsDialog from "./SettingsDialog";
 import themeStyles from "../../../version/styles";
+import Breadcrumbs from "../../common/Breadcrumbs";
 
 const coreStyles = {
     card: {
@@ -23,7 +23,7 @@ const coreStyles = {
     },
     media: {
         "background-color": "#2196f3"
-    }
+    },
 };
 
 const styles = mergeStyles(coreStyles, get(themeStyles, 'patientSummaryPanel', {}))
@@ -36,10 +36,14 @@ class PatientSummaryInfo extends Component {
     }
 
     render() {
-        const { classes, patientInfo, loading, showMode, showHeadings } = this.props;
+        const { classes, patientInfo, loading, showMode, showHeadings, location } = this.props;
+        const breadcrumbsResource = [
+            { url: location.pathname, title: "Patient Summary", isActive: false }
+        ];
         return (
-            <div className={classes.container}>
-                <SettingsDialog />
+            <div className={classes.container} >
+                <Breadcrumbs resource={breadcrumbsResource} />
+                <SettingsDialog className={classes.settingsIcon} />
                 <div>
                     {
                         synopsisData.map((item, key) => {

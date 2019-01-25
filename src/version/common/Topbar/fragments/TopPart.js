@@ -13,6 +13,7 @@ import Menu from '@material-ui/core/Menu';
 import helmLogo from "../../../images/helm-logo.png";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
+import { MAIN_THEME_COLOR } from "../../../config/theme.config";
 
 const styles = {
     topPart: {
@@ -28,7 +29,7 @@ const styles = {
         position: "relative",
         minHeight: "54px",
         minWidth: "54px",
-        backgroundColor: "#3596f4",
+        backgroundColor: MAIN_THEME_COLOR,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -55,10 +56,10 @@ const styles = {
         alignItems: "center",
         borderLeft: "1px solid #e5e5e5",
         '&:hover': {
-            backgroundColor: "#3596f4",
+            backgroundColor: MAIN_THEME_COLOR,
         },
         '&:active': {
-            backgroundColor: "#3596f4",
+            backgroundColor: MAIN_THEME_COLOR,
         },
         '&:hover button': {
             color: "white",
@@ -74,7 +75,7 @@ const styles = {
         },
     },
     rightBlockButton: {
-        color: "#3596f4",
+        color: MAIN_THEME_COLOR,
         '&:hover': {
             color: "white",
         },

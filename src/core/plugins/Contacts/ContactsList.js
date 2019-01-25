@@ -9,6 +9,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 
+import Breadcrumbs from "../../common/Breadcrumbs";
 import ContactsEdit from "./ContactsEdit";
 import TableHeader from "../../common/TableHeader";
 
@@ -18,8 +19,15 @@ const listStyles = {
     },
     edit: {
         width: '100%',
+    },
+    mainBlock: {
+        display: "flex",
     }
 };
+
+const breadcrumbsResource = [
+    { url: "/contacts", title: "Contacts", isActive: false },
+];
 
 /**
  * This component returns block with Contacts list
@@ -30,9 +38,10 @@ const listStyles = {
  * @constructor
  */
 export const ContactsList = ({ classes, ...rest }) => (
-    <div>
+    <React.Fragment>
+        <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="contacts" />
-        <div style={{ display: "flex" }}>
+        <div className={classes.mainBlock}>
             <List title="Contacts" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">
                     <TextField source="name" />
@@ -46,7 +55,7 @@ export const ContactsList = ({ classes, ...rest }) => (
                 render={({ match }) => <ContactsEdit classes={classes} {...rest} id={match.params.id} />}
             />
         </div>
-    </div>
+    </React.Fragment>
 );
 
 export default withStyles(listStyles)(ContactsList);

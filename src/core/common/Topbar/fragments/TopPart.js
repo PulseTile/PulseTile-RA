@@ -62,7 +62,7 @@ class TopPart extends Component {
                     image={logo}
                     title="Pulse Tile"
                 />
-                <div>
+                <React.Fragment>
                     <IconButton
                         className={classes.userNemuButton}
                         aria-owns={isTopbarMenuOpen ? 'menu-appbar' : undefined}
@@ -80,7 +80,7 @@ class TopPart extends Component {
                         onClose={this.handleClose} >
                         {logout}
                     </Menu>
-                </div>
+                </React.Fragment>
             </Toolbar>
         );
     }

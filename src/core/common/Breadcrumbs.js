@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -10,21 +11,51 @@ const styles = {
         alignItems: "center",
         border: "1px solid #e5e5e5",
         paddingLeft: "10px",
+        backgroundColor: "white",
+    },
+    separator: {
+        width: 0,
+        height: 0,
+        borderTop: "5px solid transparent",
+        borderBottom: "5px solid transparent",
+        borderLeft: "5px solid black",
+        marginLeft: "8px",
+        marginRight: "8px",
+        marginTop: "5px",
+    },
+    link: {
+        textDecoration: "none",
+        color: "#2196f3",
+    },
+    breadcrumbsItem: {
+        display: "flex",
     }
 };
 
-const Breadcrumbs = ({ classes, location }) => {
+/**
+ * This component returns breadcrumbs block
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} classes
+ * @param {shape} resource
+ */
+const Breadcrumbs = ({ classes, resource }) => {
     return (
         <div className={classes.breadcrumbsBlock}>
-            <Typography>
-                Home
-            </Typography>
-            <Typography>
-             -
-            </Typography>
-            <Typography>
-                Patient Summary
-            </Typography>
+            <Link to="/charts" className={classes.link} color="inherit">Home</Link>
+            {
+                resource.map((item, key) => {
+                    return (
+                        <div key={key} className={classes.breadcrumbsItem}>
+                            <div className={classes.separator}></div>
+                            {item.isActive
+                                ? <Link to={item.url} className={classes.link} color="inherit">{item.title}</Link>
+                                : <Typography>{item.title}</Typography>
+                            }
+                        </div>
+                    );
+                })
+            }
         </div>
     );
 };

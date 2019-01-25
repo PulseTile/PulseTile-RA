@@ -9,6 +9,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 
+import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import TableHeader from "../../../core/common/TableHeader";
 import TopThreeThingsEdit from "./TopThreeThingsEdit";
 
@@ -19,7 +20,14 @@ const listStyles = {
     edit: {
         width: '100%',
     },
+    mainBlock: {
+        display: "flex",
+    }
 };
+
+const breadcrumbsResource = [
+    { url: "/top3Things", title: "Top Three Things", isActive: false },
+];
 
 /**
  * This component returns block with TopThreeThings list
@@ -30,10 +38,11 @@ const listStyles = {
  * @constructor
  */
 export const TopThreeThingsList = ({ classes, ...rest }) => (
-    <div>
+    <React.Fragment>
+        <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="top3Things" />
-        <div style={{ display: "flex" }}>
-            <List title="Vaccinations" className={classes.list} {...rest}>
+        <div className={classes.mainBlock}>
+            <List title="Top Three Things" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">
                     <DateField source="dateCreated" />
                     <TextField source="name1" label="Issue #1" />
@@ -47,7 +56,7 @@ export const TopThreeThingsList = ({ classes, ...rest }) => (
                 render={({ match }) => <TopThreeThingsEdit {...rest} classes={classes} id={match.params.id} />}
             />
         </div>
-    </div>
+    </React.Fragment>
 );
 
 export default withStyles(listStyles)(TopThreeThingsList);

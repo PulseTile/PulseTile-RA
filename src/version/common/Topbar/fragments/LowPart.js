@@ -10,10 +10,12 @@ import Menu from '@material-ui/core/Menu';
 
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
 import { isMenuVisible } from "../../../../core/common/functions";
+import { MAIN_THEME_COLOR } from "../../../config/theme.config";
 
 const styles = {
     lowPart: {
         display: "flex",
+        minHeight: "auto",
         border: "1px solid #e5e5e5",
         padding: 0,
         backgroundColor: "white",
@@ -32,21 +34,26 @@ const styles = {
         borderRadius: "15px",
         maxHeight: "20px",
         minWidth: "64px",
-        color: "#3596f4",
+        color: MAIN_THEME_COLOR,
         textTransform: "none",
         backgroundColor: "white",
         '&:hover': {
-            backgroundColor: "#3596f4",
+            backgroundColor: MAIN_THEME_COLOR,
             color: "white",
         },
         '&:active': {
-            backgroundColor: "#3596f4",
+            backgroundColor: MAIN_THEME_COLOR,
             color: "white",
         },
     },
     title: {
         flexGrow: 1,
-        color: "black"
+        color: "white",
+        backgroundColor: MAIN_THEME_COLOR,
+        textAlign: "center",
+        paddingTop: "5px",
+        paddingBottom: "5px",
+        fontWeight: "800"
     },
     patientInfo: {
         color: "black",

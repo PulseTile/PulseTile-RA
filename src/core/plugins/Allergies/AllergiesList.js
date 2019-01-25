@@ -8,6 +8,7 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 
+import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import AllergiesEdit from "./AllergiesEdit";
 
@@ -17,8 +18,15 @@ const listStyles = {
     },
     edit: {
         width: '100%',
+    },
+    mainBlock: {
+        display: "flex",
     }
 };
+
+const breadcrumbsResource = [
+    { url: "/allergies", title: "Allergies", isActive: false },
+];
 
 /**
  * This component returns block with Allergies list
@@ -29,9 +37,10 @@ const listStyles = {
  * @constructor
  */
 export const Allergies = ({ classes, ...rest }) => (
-    <div>
+    <React.Fragment>
+        <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="allergies" />
-        <div style={{ display: "flex" }}>
+        <div className={classes.mainBlock}>
             <List title="Allergies" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">
                     <TextField source="cause" />
@@ -44,7 +53,7 @@ export const Allergies = ({ classes, ...rest }) => (
                 render={({ match }) => <AllergiesEdit classes={classes} {...rest} id={match.params.id} />}
             />
         </div>
-    </div>
+    </React.Fragment>
 );
 
 export default withStyles(listStyles)(Allergies);

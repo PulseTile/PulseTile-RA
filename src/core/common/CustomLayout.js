@@ -12,6 +12,9 @@ const styles = {
         zIndex: 1,
         minHeight: '100vh',
         position: 'relative',
+        '& main > div': {
+            padding: 0,
+        },
     },
     appFrame: {
         display: 'flex',

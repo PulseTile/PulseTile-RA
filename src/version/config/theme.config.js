@@ -14,3 +14,5 @@ export const resourceOrder = [
 ];
 
 export const themeHasTopBar = true;
+
+export const MAIN_THEME_COLOR = "#3596f4";
