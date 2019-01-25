@@ -1,22 +1,21 @@
 import React from "react";
 import {
-    Create,
+    Edit,
     SimpleForm,
     TextInput,
-    BooleanInput,
-    DateInput,
     DisabledInput,
-    LongTextInput,
+    DateInput,
+    LongTextInput
 } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import CreateFormToolbar from "../../common/Toolbars/CreateFormToolbar";
+import EditFormToolbar from "../../common/Toolbars/EditFormToolbar";
 import { MAIN_COLOR } from "../../config/styles";
 
 const styles = {
-    createBlock: {
+    editBlock: {
         width: '100%',
         backgroundColor: "white",
         margin: "15px 15px 15px 0px",
@@ -31,7 +30,7 @@ const styles = {
         fontWeight: "700",
         paddingLeft: "15px",
     },
-    createForm: {
+    editForm: {
         '& > div': {
             paddingTop: "0px !important",
             paddingLeft: "10px !important",
@@ -41,21 +40,23 @@ const styles = {
 };
 
 /**
- * This component returns common template for plugin Create form
+ * This component returns block with template for plugin edit form
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
+ * @param {func}  changeViewType
  * @param {shape} rest
+ * @constructor
  */
-const CreateTemplate = ({ classes, blockTitle, children, ...rest }) => (
-    <div className={classes.createBlock}>
+const EditTemplate = ({ classes, blockTitle, children, changeViewType, ...rest }) => (
+    <div className={classes.editBlock}>
         <Typography className={classes.blockTitle}>{blockTitle}</Typography>
-        <Create {...rest}>
-            <SimpleForm className={classes.createForm} toolbar={<CreateFormToolbar />}>
+        <Edit {...rest}>
+            <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
                 {children}
             </SimpleForm>
-        </Create>
+        </Edit>
     </div>
 );
 
-export default withStyles(styles)(CreateTemplate);
+export default withStyles(styles)(EditTemplate);

@@ -43,7 +43,7 @@ const CreateFormToolbar = ({ classes, changeViewType, ...props}) => {
     return (
         <Toolbar {...props} >
             <ListButton label="Cancel" icon={<BlockIcon />} className={classes.listButton} />
-            <CustomSaveButton />
+            <CustomSaveButton {...props} />
         </Toolbar>
     );
 }

@@ -38,8 +38,8 @@ const styles = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
  */
-const CustomSaveButton = ({ classes }) => (
-    <SaveButton label="Complete" icon={<DoneIcon />} className={classes.saveButton} />
+const CustomSaveButton = ({ classes, ...rest }) => (
+    <SaveButton label="Complete" icon={<DoneIcon />} className={classes.saveButton} {...rest} />
 );
 
 export default withStyles(styles)(CustomSaveButton);

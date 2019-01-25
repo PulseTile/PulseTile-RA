@@ -21,7 +21,7 @@ const styles = {
  * @param {shape} rest
  */
 const AllergiesCreate = ({ classes, ...rest }) => (
-    <CreateTemplate {...rest} >
+    <CreateTemplate blockTitle="Allergy" {...rest}>
         <TextInput className={classes.labelBlock} source="cause" label="Cause" />
         <LongTextInput className={classes.labelBlock} source="reaction" label="Reaction / Description" />
         <DisabledInput className={classes.labelBlock} source="author" label="Author" />
