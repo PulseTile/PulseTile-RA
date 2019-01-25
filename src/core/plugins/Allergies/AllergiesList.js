@@ -28,6 +28,7 @@ const listStyles = {
     },
     mainBlock: {
         display: "flex",
+    },
     blockTitle: {
         display: "flex",
         alignItems: "center",

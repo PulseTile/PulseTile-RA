@@ -60,7 +60,7 @@ const AllergiesCreate = ({ classes, ...rest }) => (
                 <TextInput className={classes.labelBlock} source="cause" label="Cause" />
                 <LongTextInput className={classes.labelBlock} source="reaction" label="Reaction / Description" />
                 <DisabledInput className={classes.labelBlock} source="author" label="Author" />
-                <DisabledInput className={classes.labelBlock} source="dateCreated" label="Date" />
+                <DateInput className={classes.labelBlock} source="dateCreated" label="Date" disabled={true} />
             </SimpleForm>
         </Create>
     </div>
