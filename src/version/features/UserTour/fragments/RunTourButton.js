@@ -19,7 +19,7 @@ import toursStyles from "../styles";
  */
 const RunUserTour = ({ classes, runTour, isPassed, callback }) => {
     return (
-        <div>
+        <React.Fragment>
             <IconButton
                 id="icon-tour"
                 className={classes.rightBlockButton}
@@ -39,7 +39,7 @@ const RunUserTour = ({ classes, runTour, isPassed, callback }) => {
                 styles={toursStyles}
                 callback={callback}
             />
-        </div>
+        </React.Fragment>
     );
 };
 

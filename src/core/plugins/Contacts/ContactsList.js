@@ -19,6 +19,9 @@ const listStyles = {
     },
     edit: {
         width: '100%',
+    },
+    mainBlock: {
+        display: "flex",
     }
 };
 
@@ -35,10 +38,10 @@ const breadcrumbsResource = [
  * @constructor
  */
 export const ContactsList = ({ classes, ...rest }) => (
-    <div>
+    <React.Fragment>
         <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="contacts" />
-        <div style={{ display: "flex" }}>
+        <div className={classes.mainBlock}>
             <List title="Contacts" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">
                     <TextField source="name" />
@@ -52,7 +55,7 @@ export const ContactsList = ({ classes, ...rest }) => (
                 render={({ match }) => <ContactsEdit classes={classes} {...rest} id={match.params.id} />}
             />
         </div>
-    </div>
+    </React.Fragment>
 );
 
 export default withStyles(listStyles)(ContactsList);

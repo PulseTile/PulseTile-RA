@@ -13,7 +13,7 @@ const styles = {
         minHeight: '100vh',
         position: 'relative',
         '& main > div': {
-            padding: "0px",
+            padding: 0,
         },
     },
     appFrame: {

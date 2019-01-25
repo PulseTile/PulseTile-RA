@@ -23,7 +23,7 @@ const coreStyles = {
     },
     media: {
         "background-color": "#2196f3"
-    }
+    },
 };
 
 const styles = mergeStyles(coreStyles, get(themeStyles, 'patientSummaryPanel', {}))
@@ -43,7 +43,7 @@ class PatientSummaryInfo extends Component {
         return (
             <div className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
-                <SettingsDialog />
+                <SettingsDialog className={classes.settingsIcon} />
                 <div>
                     {
                         synopsisData.map((item, key) => {

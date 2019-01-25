@@ -19,6 +19,9 @@ const listStyles = {
     },
     edit: {
         width: '100%',
+    },
+    mainBlock: {
+        display: "flex",
     }
 };
 
@@ -35,10 +38,10 @@ const breadcrumbsResource = [
  * @constructor
  */
 export const Diagnosis = ({ classes, ...rest }) => (
-    <div>
+    <React.Fragment>
         <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="problems" />
-        <div style={{ display: "flex" }}>
+        <div className={classes.mainBlock}>
             <List title="Problems / Issues" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">
                     <TextField source="problem" />
@@ -51,7 +54,7 @@ export const Diagnosis = ({ classes, ...rest }) => (
                 render={({ match }) => <DiagnosisEdit {...rest} classes={classes} id={match.params.id} />}
             />
         </div>
-    </div>
+    </React.Fragment>
 );
 
 export default withStyles(listStyles)(Diagnosis);
