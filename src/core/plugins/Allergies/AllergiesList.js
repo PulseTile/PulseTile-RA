@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Route } from "react-router";
 import {
   List,
+  Filter,
+  TextInput,
   Datagrid,
   TextField
 } from "react-admin";
@@ -50,6 +52,14 @@ const breadcrumbsResource = [
     { url: "/allergies", title: "Allergies", isActive: false },
 ];
 
+const PostFilter = props => {
+    return (
+        <Filter {...props}>
+            <TextInput label="Cause" source="cause" />
+        </Filter>
+    );
+}
+
 /**
  * This component returns block with Allergies list
  *
@@ -74,7 +84,13 @@ class Allergies extends Component {
                 <div style={{ display: "flex" }}>
                     <div className={classes.list}>
                         <Typography className={classes.blockTitle} >Allergies</Typography>
-                        <List title="Allergies" actions={null} bulkActions={false} pagination={<ListToolbar history={history} isCreatePage={this.isCreatePage()} createPath="/allergies/create" />} {...this.props}>
+                        <List
+                            title="Allergies"
+                            actions={null}
+                            bulkActions={false}
+                            pagination={<ListToolbar history={history} isCreatePage={this.isCreatePage()} createPath="/allergies/create" />}
+                            {...this.props}
+                        >
                             <Datagrid className={classes.tableList} rowClick="edit">
                                 <TextField source="cause" />
                                 <TextField source="reaction" />

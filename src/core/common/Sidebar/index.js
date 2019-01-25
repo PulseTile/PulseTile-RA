@@ -47,45 +47,47 @@ function sortResourcesArray(resources) {
 const CustomSidebar = props => {
     const { classes, resources, isSidebarOpen, onMenuClick, location } = props;
     const currentPathname = get(location, 'pathname', null);
+    const pathNameArray = currentPathname.split('/')
+    const currentList = '/' + pathNameArray[1];
     const sortResources = sortResourcesArray(resources);
     if (isMenuVisible(location) && isSidebarOpen) {
         return (
             <Sidebar className={classes.sidebarBlock}>
                 <div className={classes.menuBlock}>
                     <MenuItemLink
-                        className={(currentPathname === "/charts") ? classes.menuItemSelected : classes.menuItem}
+                        className={(currentList === "/charts") ? classes.menuItemSelected : classes.menuItem}
                         to="/charts"
                         primaryText="Charts"
-                        leftIcon={(currentPathname === "/charts") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
+                        leftIcon={(currentList === "/charts") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
                         onClick={onMenuClick}
-                        selected={currentPathname === "/charts"}
+                        selected={currentList === "/charts"}
                     />
                     <MenuItemLink
-                        className={(currentPathname === "/patients") ? classes.menuItemSelected : classes.menuItem}
+                        className={(currentList === "/patients") ? classes.menuItemSelected : classes.menuItem}
                         to="/patients"
                         primaryText="Patients"
-                        leftIcon={(currentPathname === "/patients") ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
+                        leftIcon={(currentList === "/patients") ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
                         onClick={onMenuClick}
-                        selected={currentPathname === "/patients"}
+                        selected={currentList === "/patients"}
                     />
                     <MenuItemLink
-                        className={(currentPathname === "/summary") ? classes.menuItemSelected : classes.menuItem}
+                        className={(currentList === "/summary") ? classes.menuItemSelected : classes.menuItem}
                         to="/summary"
                         primaryText="Patient Summary"
-                        leftIcon={(currentPathname === "/summary") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
+                        leftIcon={(currentList === "/summary") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
                         onClick={onMenuClick}
-                        selected={currentPathname === "/summary"}
+                        selected={currentList === "/summary"}
                     />
                     {
                         sortResources.map(resource => {
                             return (
                                 <MenuItemLink
-                                    className={(currentPathname === `/${resource.name}`) ? classes.menuItemSelected : classes.menuItem}
+                                    className={(currentList === `/${resource.name}`) ? classes.menuItemSelected : classes.menuItem}
                                     to={`/${resource.name}`}
                                     primaryText={resource.options.label}
-                                    leftIcon={(currentPathname === `/${resource.name}`) ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
+                                    leftIcon={(currentList === `/${resource.name}`) ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
                                     onClick={onMenuClick}
-                                    selected={currentPathname === `/${resource.name}`}
+                                    selected={currentList === `/${resource.name}`}
                                 />
                             );
                         }

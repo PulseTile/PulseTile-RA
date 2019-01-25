@@ -91,7 +91,7 @@ class AllergiesShow extends Component {
     };
 
     render() {
-        const { classes, changeViewType, ...rest } = this.props;
+        const { classes, changeViewType, ...rest } = this.props;         
         const { currentPanel } = this.state;
         return (
             <div className={classes.showBlock}>
