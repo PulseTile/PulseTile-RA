@@ -52,14 +52,6 @@ const breadcrumbsResource = [
     { url: "/allergies", title: "Allergies", isActive: false },
 ];
 
-const PostFilter = props => {
-    return (
-        <Filter {...props}>
-            <TextInput label="Cause" source="cause" />
-        </Filter>
-    );
-}
-
 /**
  * This component returns block with Allergies list
  *
