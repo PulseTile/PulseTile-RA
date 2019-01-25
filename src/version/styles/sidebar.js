@@ -4,7 +4,7 @@ export default {
     sidebarBlock: {
         maxWidth: "240px",
         '& div': {
-            marginTop: "0px",
+            marginTop: 0,
         },
     },
     menuBlock: {

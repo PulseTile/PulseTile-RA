@@ -23,6 +23,11 @@ const listStyles = {
         width: '100%',
         margin: "15px",
     },
+    edit: {
+        width: '100%',
+    },
+    mainBlock: {
+        display: "flex",
     blockTitle: {
         display: "flex",
         alignItems: "center",
@@ -70,7 +75,7 @@ class Allergies extends Component {
         const { classes, history, location } = this.props;
         const isCreatePage = (this.props.location.pathname === "/allergies/create");
         return (
-            <div>
+            <React.Fragment>
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <TableHeader resource="allergies" />
                 <div style={{ display: "flex" }}>
@@ -104,7 +109,7 @@ class Allergies extends Component {
                             />
                     }
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }

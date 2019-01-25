@@ -20,6 +20,9 @@ const listStyles = {
     edit: {
         width: '100%',
     },
+    mainBlock: {
+        display: "flex",
+    }
 };
 
 const breadcrumbsResource = [
@@ -35,10 +38,10 @@ const breadcrumbsResource = [
  * @constructor
  */
 export const TopThreeThingsList = ({ classes, ...rest }) => (
-    <div>
+    <React.Fragment>
         <Breadcrumbs resource={breadcrumbsResource} />
         <TableHeader resource="top3Things" />
-        <div style={{ display: "flex" }}>
+        <div className={classes.mainBlock}>
             <List title="Top Three Things" className={classes.list} {...rest}>
                 <Datagrid rowClick="edit">
                     <DateField source="dateCreated" />
@@ -53,7 +56,7 @@ export const TopThreeThingsList = ({ classes, ...rest }) => (
                 render={({ match }) => <TopThreeThingsEdit {...rest} classes={classes} id={match.params.id} />}
             />
         </div>
-    </div>
+    </React.Fragment>
 );
 
 export default withStyles(listStyles)(TopThreeThingsList);

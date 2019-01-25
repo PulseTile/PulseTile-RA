@@ -14,8 +14,8 @@ const styles = {
         backgroundColor: "white",
     },
     separator: {
-        width: "0px",
-        height: "0px",
+        width: 0,
+        height: 0,
         borderTop: "5px solid transparent",
         borderBottom: "5px solid transparent",
         borderLeft: "5px solid black",
@@ -44,9 +44,9 @@ const Breadcrumbs = ({ classes, resource }) => {
         <div className={classes.breadcrumbsBlock}>
             <Link to="/charts" className={classes.link} color="inherit">Home</Link>
             {
-                resource.map(item => {
+                resource.map((item, key) => {
                     return (
-                        <div className={classes.breadcrumbsItem}>
+                        <div key={key} className={classes.breadcrumbsItem}>
                             <div className={classes.separator}></div>
                             {item.isActive
                                 ? <Link to={item.url} className={classes.link} color="inherit">{item.title}</Link>

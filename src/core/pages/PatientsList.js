@@ -35,7 +35,7 @@ export const PatientsList = ({ history, ...rest }) => {
         { url: "/patients", title: "Patients list", isActive: false }
     ];
     return (
-        <div>
+        <React.Fragment>
             <Breadcrumbs resource={breadcrumbsResource} />
             <List title="Patients" {...rest}>
                 <Datagrid rowClick={(id, basePath, record) => redirectToSummary(id, history)}>
@@ -45,7 +45,7 @@ export const PatientsList = ({ history, ...rest }) => {
                     <ShowButton />
                 </Datagrid>
             </List>
-        </div>
+        </React.Fragment>
     );
 }
 

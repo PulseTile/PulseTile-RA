@@ -16,7 +16,6 @@ export default {
         paddingBottom: "14px"
     },
     title: {
-        marginTop: "0px",
-
+        marginTop: 0,
     }
 };

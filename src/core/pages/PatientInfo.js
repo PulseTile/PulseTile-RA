@@ -14,7 +14,7 @@ const breadcrumbsResource = [
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const PatientInfo = props => (
-    <div>
+    <React.Fragment>
         <Breadcrumbs resource={breadcrumbsResource} />
         <Show title="Patient Information" {...props}>
             <SimpleShowLayout>
@@ -29,7 +29,7 @@ const PatientInfo = props => (
                 <DateField source="dateOfBirth" label="Date of birth" />
             </SimpleShowLayout>
         </Show>
-    </div>
+    </React.Fragment>
 );
 
 export default PatientInfo;

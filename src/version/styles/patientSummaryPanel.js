@@ -27,10 +27,10 @@ export default {
         marginBottom: "10px",
     },
     title: {
-        marginBottom: "0px",
+        marginBottom: 0,
     },
     list: {
-        padding: "0px",
+        padding: 0,
     },
     media: {
         "background-color": "#2196f3"
