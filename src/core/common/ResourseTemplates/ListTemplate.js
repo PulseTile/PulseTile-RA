@@ -15,7 +15,7 @@ import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import ListToolbar from "../../common/Toolbars/ListToolbar";
 import DetailsTemplate from "./DetailsTemplate";
-import { MAIN_COLOR } from "../../config/styles";
+import { MAIN_COLOR, ITEMS_PER_PAGE } from "../../config/styles";
 
 const listStyles = {
     mainBlock: {
@@ -106,6 +106,7 @@ class ListTemplate extends Component {
                         <Typography className={classes.blockTitle}>{title}</Typography>
                         <List
                             title={title}
+                            perPage={ITEMS_PER_PAGE}
                             actions={null}
                             bulkActions={false}
                             pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
