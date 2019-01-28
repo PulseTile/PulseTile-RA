@@ -3,8 +3,9 @@ import { Route } from "react-router";
 import { TextField } from "react-admin";
 
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
-import DetailsBlock from "./DetailsBlock";
 import AllergiesCreate from "./AllergiesCreate";
+import AllergiesEdit from "./AllergiesEdit";
+import AllergiesShow from "./AllergiesShow";
 
 /**
  * This component returns block with Allergies list
@@ -14,8 +15,9 @@ import AllergiesCreate from "./AllergiesCreate";
  */
 const AllergiesList = props => (
     <ListTemplate
-      details={DetailsBlock}
       create={AllergiesCreate}
+      edit={AllergiesEdit}
+      show={AllergiesShow}
       resourceUrl="allergies"
       title="Allergies"
       {...props}

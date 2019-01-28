@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import ListToolbar from "../../common/Toolbars/ListToolbar";
+import DetailsTemplate from "./DetailsTemplate";
 import { MAIN_COLOR } from "../../config/styles";
 
 const listStyles = {
@@ -94,7 +95,6 @@ class ListTemplate extends Component {
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
         ];
-        const DetailsBlock = details;
         const CreateBlock = create;
         const createUrl = this.getCreateUrl();
         return (
@@ -121,7 +121,7 @@ class ListTemplate extends Component {
                         ?
                             <Route
                                 path={this.getDetailsUrl()}
-                                render={({ match }) => <DetailsBlock mode="show" {...this.props} id={match.params.id} />}
+                                render={({ match }) => <DetailsTemplate mode="show" {...this.props} id={match.params.id} />}
                             />
                         :
                             <Route

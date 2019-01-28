@@ -18,13 +18,13 @@ const styles = {
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-const AllergiesShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Allergy" {...rest}>
-        <TextField className={classes.labelBlock} label="Cause" source="cause" />
-        <TextField className={classes.labelBlock} label="Reaction / Description" source="reaction" />
+const ProblemsShow = ({ classes, ...rest }) => (
+    <ShowTemplate pageTitle="Problem / Diagnosis" {...rest}>
+        <TextField className={classes.labelBlock} label="Problem / Issue" source="problem" />
+        <TextField className={classes.labelBlock} label="Description" source="description" />
         <TextField className={classes.labelBlock} label="Author" source="author" />
         <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
     </ShowTemplate>
 );
 
-export default withStyles(styles)(AllergiesShow);
+export default withStyles(styles)(ProblemsShow);

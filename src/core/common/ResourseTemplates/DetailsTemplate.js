@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 
-import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
-import AllergiesEdit from "./AllergiesEdit";
-import AllergiesShow from "./AllergiesShow";
-
 /**
- * This component returns Details block for Allergies
+ * This component returns Details block template
  * (fork to Edit and Show)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-export default class DetailsBlock extends Component {
+class DetailsTemplate extends Component {
 
     state = {
         view: this.props.mode,
@@ -23,17 +19,21 @@ export default class DetailsBlock extends Component {
     };
 
     render() {
-        const { classes, ...rest } = this.props;
+        const { classes, show, edit, ...rest } = this.props;
         const { view } = this.state;
+        const ShowTemplate = show;
+        const EditTemplate = edit;
         if (view === 'show') {
             return (
-                <AllergiesShow changeViewType={this.changeViewType} {...this.props} />
+                <ShowTemplate changeViewType={this.changeViewType} {...this.props} />
             );
         } else if (view === 'edit') {
             return (
-                <AllergiesEdit changeViewType={this.changeViewType} {...this.props} />
+                <EditTemplate changeViewType={this.changeViewType} {...this.props} />
             );
         }
         return null;
     }
 }
+
+export default DetailsTemplate;

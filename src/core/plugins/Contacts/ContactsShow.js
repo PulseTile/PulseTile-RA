@@ -1,20 +1,31 @@
 import React from "react";
-import { Show, SimpleShowLayout, TextField, DateField } from "react-admin";
+import { TextField, DateField } from "react-admin";
+import { withStyles } from '@material-ui/core/styles';
 
-const ContactsShow = props => {
-    return (
-        <Show title="Contacts Details" {...props}>
-            <SimpleShowLayout>
-                <TextField source="name" label="Name" />
-                <TextField source="relationship" label="Relationship" />
-                <TextField source="relationshipType" label="Relationship Type" />
-                <TextField source="notes" />
-                <TextField source="author" />
-                <DateField source="dateCreated" />
-                <TextField source="source" />
-            </SimpleShowLayout>
-        </Show>
-    );
+import ShowTemplate from "../../common/ResourseTemplates/ShowTemplate";
+
+const styles = {
+    labelBlock: {
+        '& > div': {
+            marginTop: "0px !important",
+            marginBottom: "0px !important",
+        },
+    },
 };
 
-export default ContactsShow;
+/**
+ * This component returns block with Contact details component
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ */
+const ContactsShow = ({ classes, ...rest }) => (
+    <ShowTemplate pageTitle="Contact" {...rest}>
+        <TextField className={classes.labelBlock} source="name" label="Name" />
+        <TextField className={classes.labelBlock} source="relationship" label="Relationship" />
+        <TextField className={classes.labelBlock} source="relationshipType" label="Relationship Type" />
+        <TextField className={classes.labelBlock} source="notes" />
+        <TextField className={classes.labelBlock} source="author" />
+    </ShowTemplate>
+);
+
+export default withStyles(styles)(ContactsShow);

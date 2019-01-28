@@ -37,12 +37,9 @@ const App = () => {
                             name={item.name}
                             options={{ label: item.label }}
                             list={item.list}
-                            show={get(item, 'show', false) ? item.show : null}
-                            edit={get(item, 'edit', false) ? item.edit : null}
-                            create={get(item, 'create', false) ? item.create : null}
                         />
-                );
-            })
+                    );
+                })
             }
         </Admin>
     );

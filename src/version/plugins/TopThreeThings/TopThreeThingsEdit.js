@@ -8,7 +8,6 @@ import {
     LongTextInput,
 } from "react-admin";
 
-import EditToolbarWithoutDelete from "../../../core/common/EditToolbarWithoutDelete";
 
 /**
  * This component returns block with edit form for TopThreeThings
@@ -20,7 +19,7 @@ import EditToolbarWithoutDelete from "../../../core/common/EditToolbarWithoutDel
  */
 const TopThreeThingsEdit = ({ classes, ...rest }) => (
     <Edit className={classes.edit} title="Edit information about Top Three Things" {...rest}>
-        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
+        <SimpleForm>
             <TextInput source="name1" label="Issue #1" />
             <TextInput source="name2" label="Issue #2" />
             <TextInput source="name3" label="Issue #3" />

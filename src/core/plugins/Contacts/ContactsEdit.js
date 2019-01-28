@@ -1,16 +1,19 @@
 import React from "react";
-import {
-    Edit,
-    SimpleForm,
-    SelectInput,
-    DisabledInput,
-    TextInput,
-    DateInput,
-    LongTextInput
-} from "react-admin";
+import { SelectInput, DisabledInput, TextInput } from "react-admin";
 
+import { withStyles } from '@material-ui/core/styles';
+
+import EditTemplate from "../../common/ResourseTemplates/EditTemplate";
 import { relationshipArray, relationshipTypeArray } from "./selects";
-import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
+
+const styles = {
+    labelBlock: {
+        '& > div': {
+            marginBottom: "0px !important",
+        },
+    },
+};
+
 
 /**
  * This component returns block with edit form for Contacts
@@ -21,17 +24,15 @@ import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
  * @constructor
  */
 const ContactsEdit = ({ classes, ...rest }) => (
-    <Edit className={classes.edit} title="Edit Contact" {...rest}>
-        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
-            <TextInput source="name" label="Name" />
-            <SelectInput source="relationship" label="Relationship" choices={relationshipArray} />
-            <SelectInput source="relationshipType" label="Relationship Type" choices={relationshipTypeArray} />
-            <TextInput source="notes" label="Comment" />
-            <DisabledInput source="source" label="Source" />
-            <DisabledInput source="source" label="Source" />
-            <DisabledInput source="date" label="Date" />
-        </SimpleForm>
-    </Edit>
+    <EditTemplate blockTitle="Contact"  {...rest}>
+        <TextInput className={classes.labelBlock} source="name" label="Name" />
+        <SelectInput className={classes.labelBlock} source="relationship" label="Relationship" choices={relationshipArray} />
+        <SelectInput className={classes.labelBlock} source="relationshipType" label="Relationship Type" choices={relationshipTypeArray} />
+        <TextInput className={classes.labelBlock} source="notes" label="Comment" />
+        <DisabledInput className={classes.labelBlock} source="source" label="Source" />
+        <DisabledInput className={classes.labelBlock} source="source" label="Source" />
+        <DisabledInput className={classes.labelBlock} source="date" label="Date" />
+    </EditTemplate>
 );
 
-export default ContactsEdit;
+export default withStyles(styles)(ContactsEdit);
