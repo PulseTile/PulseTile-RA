@@ -108,7 +108,7 @@ class ListTemplate extends Component {
                             title={title}
                             actions={null}
                             bulkActions={false}
-                            pagination={<ListToolbar history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
+                            pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
                             {...this.props}
                         >
                             <Datagrid className={classes.tableList} rowClick="edit">

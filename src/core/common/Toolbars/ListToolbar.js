@@ -22,11 +22,11 @@ const styles = {
  * @param {shape}   history
  * @param {shape}   rest
  */
-const ListToolbar = ({ classes, isCreatePage, createPath, history, ...rest }) => (
+const ListToolbar = ({ classes, isCreatePage, resourceUrl, createPath, history, ...rest }) => (
     <div className={classes.paginationBlock}>
         <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...rest} />
         {
-            !isCreatePage &&
+            (!isCreatePage && resourceUrl !== "top3Things") &&
                 <CreateButton history={history} createPath={createPath} />
         }
     </div>
