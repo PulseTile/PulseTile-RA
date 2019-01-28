@@ -13,11 +13,11 @@ import EditTemplate from "../../common/ResourseTemplates/EditTemplate";
  */
 const ProblemsEdit = ({ classes, ...rest }) => (
     <EditTemplate blockTitle="Problem / Issue"  {...rest}>
-        <TextInput source="problem" label="Problem issue" />
-        <LongTextInput source="description" label="Description" />
-        <DisabledInput source="author" label="Author" />
-        <DisabledInput source="source" label="Source" />
-        <DisabledInput source="dateOfOnset" label="Date" />
+        <TextInput className={classes.labelBlock} source="problem" label="Problem issue" />
+        <LongTextInput className={classes.labelBlock} source="description" label="Description" />
+        <DisabledInput className={classes.labelBlock} source="author" label="Author" />
+        <DisabledInput className={classes.labelBlock} source="source" label="Source" />
+        <DisabledInput className={classes.labelBlock} source="dateOfOnset" label="Date" />
     </EditTemplate>
 );
 

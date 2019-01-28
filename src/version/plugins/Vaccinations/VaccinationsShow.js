@@ -1,18 +1,31 @@
 import React from "react";
-import { Show, SimpleShowLayout, TextField, DateField } from "react-admin";
+import { TextField, DateField } from "react-admin";
+import { withStyles } from '@material-ui/core/styles';
 
-const VaccinationsShow = props => {
-    return (
-        <Show title="Vaccinations Details"  {...props}>
-            <SimpleShowLayout>
-                <TextField source="vaccinationName" />
-                <TextField source="route" />
-                <TextField source="author" />
-                <DateField source="vaccinationDateTime" />
-                <TextField source="source" />
-            </SimpleShowLayout>
-        </Show>
-    );
+import ShowTemplate from "../../../core/common/ResourseTemplates/ShowTemplate";
+
+const styles = {
+    labelBlock: {
+        '& > div': {
+            marginTop: "0px !important",
+            marginBottom: "0px !important",
+        },
+    },
 };
+
+/**
+ * This component returns block with Allergies details component
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ */
+const VaccinationsShow = ({ classes, ...rest }) => (
+    <ShowTemplate pageTitle="Problem / Diagnosis" {...rest}>
+        <TextField className={classes.labelBlock} source="vaccinationName" />
+        <TextField className={classes.labelBlock} source="route" />
+        <TextField className={classes.labelBlock} source="author" />
+        <DateField className={classes.labelBlock} source="vaccinationDateTime" />
+        <TextField className={classes.labelBlock} source="source" />
+    </ShowTemplate>
+);
 
 export default VaccinationsShow;
