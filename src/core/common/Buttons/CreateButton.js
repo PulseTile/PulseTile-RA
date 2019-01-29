@@ -4,26 +4,24 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 
-import { MAIN_COLOR } from "../../config/styles";
-
-const styles = {
+const styles = theme => ({
     createButton: {
         display: "block",
         width: "100px",
         height: "40px",
         margin: "8px !important",
         backgroundColor: "white",
-        color: MAIN_COLOR,
-        border: "1px solid " + MAIN_COLOR,
+        color: theme.buttons.createButton.color,
+        border: theme.buttons.createButton.border,
         borderRadius: "20px",
         fontSize: "16px",
         fontWeight: "800",
         "&:hover": {
-            backgroundColor: MAIN_COLOR,
+            backgroundColor: theme.buttons.createButton.backgroundColorHover,
             color: "white",
         }
     }
-};
+});
 
 /**
  * This component returns Edit button

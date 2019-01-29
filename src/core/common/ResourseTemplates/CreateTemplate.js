@@ -13,9 +13,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import CreateFormToolbar from "../../common/Toolbars/CreateFormToolbar";
-import { MAIN_COLOR } from "../../config/styles";
 
-const styles = {
+const styles = theme => ({
     createBlock: {
         width: '100%',
         backgroundColor: "white",
@@ -26,7 +25,7 @@ const styles = {
         alignItems: "center",
         height: "49px",
         color: "white",
-        backgroundColor: MAIN_COLOR,
+        backgroundColor: theme.templates.createTemplate.blockTitle.backgroundColor,
         fontSize: "18px",
         fontWeight: "700",
         paddingLeft: "15px",
@@ -38,7 +37,7 @@ const styles = {
             paddingRight: "10px !important",
         },
     },
-};
+});
 
 /**
  * This component returns common template for plugin Create form

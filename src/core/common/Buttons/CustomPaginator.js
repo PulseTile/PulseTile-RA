@@ -10,9 +10,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
 
-import { MAIN_COLOR } from "../../config/styles";
-
-const styles = {
+const styles = theme => ({
     paginatorRoot: {
         display: "flex",
         flexDirection: "row",
@@ -23,10 +21,10 @@ const styles = {
         height: "100%",
         width: "35px !important",
         borderRadius: 0,
-        color: MAIN_COLOR,
+        color: theme.buttons.pagination.color,
         '&:hover': {
             color: "white",
-            backgroundColor: MAIN_COLOR
+            backgroundColor: theme.buttons.pagination.backgroundColorHover
         }
     },
     activeButton: {
@@ -36,13 +34,13 @@ const styles = {
         width: "35px !important",
         borderRadius: 0,
         color: "white",
-        backgroundColor: MAIN_COLOR,
+        backgroundColor: theme.buttons.pagination.backgroundColorActive,
         '&:hover': {
             color: "white",
-            backgroundColor: MAIN_COLOR
+            backgroundColor: theme.buttons.pagination.backgroundColorHover
         }
     }
-};
+});
 
 /**
  * This component returns custom paginator

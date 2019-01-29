@@ -8,10 +8,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import { MAIN_COLOR } from "../../config/styles";
 import EditButton from "../../common/Buttons/EditButton";
 
-const styles = {
+const styles = theme => ({
     showBlock: {
         width: '100%',
         backgroundColor: "white",
@@ -20,17 +19,17 @@ const styles = {
     expansionPanel: {
         height: "49px !important",
         '& > div': {
-            minHeight: "49px",
+            minHeight: "49px !important",
         }
     },
     currentExpansionPanel: {
         margin: "0px !important",
         '& > div': {
-            minHeight: "49px",
+            minHeight: "49px !important",
         }
     },
     expansionPanelSummary: {
-        backgroundColor: MAIN_COLOR,
+        backgroundColor: theme.templates.showTemplate.expansionPanelSummary.backgroundColor,
         paddingLeft: "16px",
         '& > div': {
             margin: "0px !important",
@@ -66,7 +65,7 @@ const styles = {
             marginBottom: "0px !important",
         },
     },
-};
+});
 
 /**
  * This component returns template for details block

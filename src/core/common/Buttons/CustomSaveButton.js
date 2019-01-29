@@ -4,17 +4,15 @@ import { SaveButton } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 import DoneIcon from '@material-ui/icons/Done';
 
-import { MAIN_COLOR } from "../../config/styles";
-
-const styles = {
+const styles = theme => ({
     saveButton: {
         display: "block",
         width: "130px",
         height: "40px",
         margin: "8px !important",
-        backgroundColor: MAIN_COLOR,
+        backgroundColor: theme.buttons.saveButton.backgroundColor,
         color: "white",
-        border: "1px solid " + MAIN_COLOR,
+        border: theme.buttons.saveButton.border,
         borderRadius: "20px",
         fontSize: "16px",
         fontWeight: "800",
@@ -27,10 +25,10 @@ const styles = {
         },
         "&:hover": {
             backgroundColor: "white",
-            color: MAIN_COLOR,
+            color: theme.buttons.saveButton.colorHover,
         }
     },
-};
+});
 
 /**
  * This component returns Save button with custom styles

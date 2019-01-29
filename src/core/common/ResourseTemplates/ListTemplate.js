@@ -15,9 +15,9 @@ import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import ListToolbar from "../../common/Toolbars/ListToolbar";
 import DetailsTemplate from "./DetailsTemplate";
-import { MAIN_COLOR, ITEMS_PER_PAGE } from "../../config/styles";
+import { ITEMS_PER_PAGE } from "../../config/styles";
 
-const listStyles = {
+const listStyles = theme => ({
     mainBlock: {
         display: "flex",
     },
@@ -33,7 +33,7 @@ const listStyles = {
         alignItems: "center",
         height: "49px",
         color: "white",
-        backgroundColor: MAIN_COLOR,
+        backgroundColor: theme.templates.listTemplate.blockTitle.backgroundColor,
         fontSize: "18px",
         fontWeight: "700",
         paddingLeft: "15px",
@@ -47,11 +47,11 @@ const listStyles = {
             },
         },
         '& tbody tr:hover': {
-            backgroundColor: MAIN_COLOR + " !important",
+            backgroundColor: theme.templates.listTemplate.tableList.backgroundColorHover,
             color: "white !important"
         }
     }
-};
+});
 
 /**
  * This component returns template for List page

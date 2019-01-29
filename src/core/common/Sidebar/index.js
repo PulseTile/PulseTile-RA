@@ -9,12 +9,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 import { resourceOrder } from "../../../version/config/theme.config";
-import themeStyles from "../../../version/styles";
-import { mergeStyles } from "../../helpers";
 import { isMenuVisible } from "../functions";
 
-const coreStyles = {};
-const styles = mergeStyles(coreStyles, get(themeStyles, 'sidebar', {}));
+const styles = theme => ({
+    sidebarBlock: {
+        maxWidth: "240px",
+        '& div': {
+            marginTop: 0,
+        },
+    },
+    menuBlock: {
+        border: "1px solid #e5e5e5",
+    },
+    menuItem: {
+        display: "block",
+        color: theme.sidebar.menuItem.color,
+        borderBottom: "1px solid #e5e5e5",
+        '&:hover': {
+            backgroundColor: theme.sidebar.menuItem.backgroundColorHover,
+            color: "white",
+        },
+    },
+    menuItemSelected: {
+        display: "block",
+        backgroundColor: theme.sidebar.menuItemSelected.backgroundColor,
+        color: "white",
+        borderBottom: "1px solid #e5e5e5",
+    },
+});
 
 /**
  * This function sorts resources by theme settings
