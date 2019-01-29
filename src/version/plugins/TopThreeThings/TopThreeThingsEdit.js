@@ -1,17 +1,10 @@
 import React from "react";
-import {
-    Edit,
-    SimpleForm,
-    DisabledInput,
-    TextInput,
-    DateInput,
-    LongTextInput,
-} from "react-admin";
+import { DisabledInput, TextInput, DateInput } from "react-admin";
 
-import EditToolbarWithoutDelete from "../../../core/common/EditToolbarWithoutDelete";
+import EditTemplate from "../../../core/common/ResourseTemplates/EditTemplate";
 
 /**
- * This component returns block with edit form for TopThreeThings
+ * This component returns block with edit form for Top Three Things
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
@@ -19,15 +12,13 @@ import EditToolbarWithoutDelete from "../../../core/common/EditToolbarWithoutDel
  * @constructor
  */
 const TopThreeThingsEdit = ({ classes, ...rest }) => (
-    <Edit className={classes.edit} title="Edit information about Top Three Things" {...rest}>
-        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
-            <TextInput source="name1" label="Issue #1" />
-            <TextInput source="name2" label="Issue #2" />
-            <TextInput source="name3" label="Issue #3" />
-            <DisabledInput source="dateCreated" label="Date created" />
-            <DisabledInput source="source" label="Source" />
-        </SimpleForm>
-    </Edit>
+    <EditTemplate blockTitle="Top Three Things"  {...rest}>
+        <TextInput source="name1" label="Issue #1" />
+        <TextInput source="name2" label="Issue #2" />
+        <TextInput source="name3" label="Issue #3" />
+        <DateInput className={classes.labelBlock} source="dateCreated" label="Date created" disabled={true}  />
+        <DisabledInput className={classes.labelBlock} source="source" label="Source" />
+    </EditTemplate>
 );
 
 export default TopThreeThingsEdit;

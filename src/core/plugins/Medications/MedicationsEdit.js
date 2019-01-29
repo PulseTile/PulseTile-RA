@@ -1,16 +1,19 @@
 import React from "react";
-import {
-    Edit,
-    SimpleForm,
-    SelectInput,
-    TextInput,
-    DateInput,
-    LongTextInput,
-    DisabledInput
-} from "react-admin";
+import { TextInput, SelectInput, DisabledInput, DateInput, LongTextInput } from "react-admin";
 
+import { withStyles } from '@material-ui/core/styles';
+
+import EditTemplate from "../../common/ResourseTemplates/EditTemplate";
 import  { routesArray } from "./selects";
-import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
+
+const styles = {
+    labelBlock: {
+        '& > div': {
+            marginBottom: "0px !important",
+        },
+    },
+};
+
 
 /**
  * This component returns block with edit form for Medication
@@ -21,21 +24,17 @@ import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
  * @constructor
  */
 const MedicationsEdit = ({ classes, ...rest }) => (
-    <Edit className={classes.edit} title="Edit Medication" {...rest}>
-        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
-            <TextInput source="name" label="Name" />
-            <SelectInput source="route" label="Route" choices={routesArray} />
-            <LongTextInput source="doseAmount" label="Dose Amount" />
-            <LongTextInput source="doseDirections" label="Dose Description" />
-            <LongTextInput source="doseTiming" label="Dose Timing" />
-            <TextInput source="medicationCode" label="Medication Description" />
-            <DateInput source="startDate" label="Start date" />
-            <DateInput source="startTime" label="Start time" />
-            <DisabledInput source="author" label="Author" />
-            <DisabledInput source="source" label="Source" />
-            <DisabledInput source="date" label="Date" />
-        </SimpleForm>
-    </Edit>
+    <EditTemplate blockTitle="Medication"  {...rest}>
+        <TextInput className={classes.labelBlock} source="name" label="Name" />
+        <SelectInput className={classes.labelBlock} source="route" label="Route" choices={routesArray} />
+        <LongTextInput className={classes.labelBlock} source="doseAmount" label="Dose Amount" />
+        <LongTextInput className={classes.labelBlock} source="doseDirections" label="Dose Description" />
+        <LongTextInput className={classes.labelBlock} source="doseTiming" label="Dose Timing" />
+        <TextInput className={classes.labelBlock} source="medicationCode" label="Medication Description" />
+        <DateInput className={classes.labelBlock} source="startDate" label="Start date" />
+        <DateInput className={classes.labelBlock} source="startTime" label="Start time" />
+        <DisabledInput className={classes.labelBlock} source="author" label="Author" />
+    </EditTemplate>
 );
 
-export default MedicationsEdit;
+export default withStyles(styles)(MedicationsEdit);

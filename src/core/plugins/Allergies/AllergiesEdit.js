@@ -1,14 +1,17 @@
 import React from "react";
-import {
-    Edit,
-    SimpleForm,
-    TextInput,
-    DisabledInput,
-    DateInput,
-    LongTextInput
-} from "react-admin";
+import { TextInput, DisabledInput, DateInput, LongTextInput } from "react-admin";
 
-import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
+import { withStyles } from '@material-ui/core/styles';
+
+import EditTemplate from "../../common/ResourseTemplates/EditTemplate";
+
+const styles = {
+    labelBlock: {
+        '& > div': {
+            marginBottom: "0px !important",
+        },
+    },
+};
 
 /**
  * This component returns block with edit form for Allergies
@@ -19,15 +22,12 @@ import EditToolbarWithoutDelete from "../../common/EditToolbarWithoutDelete";
  * @constructor
  */
 const AllergiesEdit = ({ classes, ...rest }) => (
-    <Edit className={classes.edit} title="Edit Allergy" {...rest}>
-        <SimpleForm toolbar={<EditToolbarWithoutDelete />}>
-            <TextInput source="cause" label="Cause" />
-            <LongTextInput source="reaction" label="Reaction / Description" />
-            <DisabledInput source="source" label="Source" />
-            <DisabledInput source="author" label="Author" />
-            <DisabledInput source="date" label="Date" />
-        </SimpleForm>
-    </Edit>
+    <EditTemplate blockTitle="Allergy"  {...rest}>
+        <TextInput className={classes.labelBlock} source="cause" label="Cause" />
+        <LongTextInput className={classes.labelBlock} source="reaction" label="Reaction / Description" />
+        <DisabledInput className={classes.labelBlock} source="author" label="Author" />
+        <DateInput className={classes.labelBlock} source="dateCreated" label="Date" disabled={true} />
+    </EditTemplate>
 );
 
-export default AllergiesEdit;
+export default withStyles(styles)(AllergiesEdit);

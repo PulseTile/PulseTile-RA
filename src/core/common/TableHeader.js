@@ -5,12 +5,19 @@ import { withStyles } from '@material-ui/core/styles';
 
 import tableHeaders from "../config/tableHeaders";
 
-import themeStyles from "../../version/styles";
-import { mergeStyles } from "../helpers";
-
-const coreStyles = {};
-
-const styles = mergeStyles(coreStyles, get(themeStyles, 'tableHeader', {}));
+const styles = theme => ({
+    tableHeaderBlock: {
+        background: theme.tableHeader.tableHeaderBlock.background,
+        backgroundSize: "cover",
+        color: "white",
+        paddingLeft: "14px",
+        paddingTop: "25px",
+        paddingBottom: "14px"
+    },
+    title: {
+        marginTop: 0,
+    }
+});
 
 /**
  * This component returns header for table

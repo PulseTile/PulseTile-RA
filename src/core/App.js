@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { get } from "lodash";
 import { Admin, Resource } from "react-admin";
 
 import customDataProvider from "./dataProviders/dataProvider";
@@ -15,6 +14,8 @@ import customRoutes from "./routes";
 import Charts from "./pages/Charts";
 import Layout from "./common/CustomLayout";
 
+import { currentTheme } from "./config/styles";
+
 const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
 
 const plugins = corePlugins.concat(nonCorePlugins);
@@ -29,6 +30,7 @@ const App = () => {
             dataProvider={dataProvider}
             dashboard={Charts}
             appLayout={Layout}
+            theme={currentTheme}
         >
             {
                 plugins.map(item => {
@@ -37,12 +39,9 @@ const App = () => {
                             name={item.name}
                             options={{ label: item.label }}
                             list={item.list}
-                            show={get(item, 'show', false) ? item.show : null}
-                            edit={get(item, 'edit', false) ? item.edit : null}
-                            create={get(item, 'create', false) ? item.create : null}
                         />
-                );
-            })
+                    );
+                })
             }
         </Admin>
     );
