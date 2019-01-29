@@ -28,10 +28,10 @@ const styles = theme => ({
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
- * @param {func}  onClickFunction
+ * @param {func}  redirectTo
  */
-const EditButton = ({ classes, onClickFunction }) => (
-    <IconButton className={classes.editButton} onClick={() => onClickFunction('edit')}>
+const EditButton = ({ classes, redirectTo }) => (
+    <IconButton className={classes.editButton} onClick={() => redirectTo('edit')}>
         <EditIcon /> Edit
     </IconButton>
 );

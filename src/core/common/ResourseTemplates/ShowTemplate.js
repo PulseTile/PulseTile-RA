@@ -102,7 +102,7 @@ class ShowTemplate extends Component {
                                     {children}
                                 </SimpleShowLayout>
                             </Show>
-                            <EditButton onClickFunction={changeViewType} />
+                            <EditButton redirectTo={changeViewType} />
                         </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>
