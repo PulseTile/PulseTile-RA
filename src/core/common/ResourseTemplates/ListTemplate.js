@@ -10,6 +10,11 @@ import {
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from '@material-ui/core/Typography';
+import FilterIcon from '@material-ui/icons/FilterList';
+import SearchIcon from '@material-ui/icons/Search';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
@@ -23,13 +28,15 @@ const listStyles = theme => ({
     },
     list: {
         width: '100%',
-        margin: "15px",
+        margin: 15,
     },
     edit: {
         width: '100%',
     },
     blockTitle: {
         display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center",
         height: 49,
         color: "white",
@@ -37,6 +44,15 @@ const listStyles = theme => ({
         fontSize: 18,
         fontWeight: 700,
         paddingLeft: 15,
+    },
+    title: {
+        color: "white",
+        backgroundColor: theme.templates.listTemplate.title.backgroundColor,
+        fontSize: 18,
+        fontWeight: 700,
+    },
+    filterIcon: {
+        paddingRight: 15,
     },
     tableList: {
         '& thead': {
@@ -60,6 +76,12 @@ const listStyles = theme => ({
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 class ListTemplate extends Component {
+
+    state = {
+        isFilterOpened: false,
+        filterText: null,
+        key: 0,
+    };
 
     /**
      * This function returns create page URL
@@ -91,8 +113,33 @@ class ListTemplate extends Component {
         return (this.props.location.pathname === this.getCreateUrl());
     };
 
+    /**
+     * This function toggle filter input
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     */
+    toggleFilter = () => {
+        this.setState({
+            isFilterOpened: !this.state.isFilterOpened,
+        })
+    };
+
+    /**
+     * This function set filter string to state
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {shape} e
+     */
+    filterByText = e => {
+        this.setState({
+            filterText: e.target.value,
+            key: this.state.key + 1,
+        })
+    };
+
     render() {
         const { details, create, resourceUrl, title, children, classes, history } = this.props;
+        const { isFilterOpened, key, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
         ];
@@ -104,8 +151,27 @@ class ListTemplate extends Component {
                 <TableHeader resource={resourceUrl} />
                 <div className={classes.mainBlock}>
                     <div className={classes.list}>
-                        <Typography className={classes.blockTitle}>{title}</Typography>
+                        <React.Fragment>
+                            <div className={classes.blockTitle}>
+                                <Typography className={classes.title}>{title}</Typography>
+                                <FilterIcon className={classes.filterIcon} onClick={() => this.toggleFilter()} />
+                            </div>
+                            {
+                                isFilterOpened &&
+                                    <Paper className={classes.filterInput} elevation={1}>
+                                        <IconButton className={classes.iconButton} aria-label="Menu">
+                                            <FilterIcon />
+                                        </IconButton>
+                                        <InputBase className={classes.input} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                        <IconButton className={classes.iconButton} aria-label="Search">
+                                            <SearchIcon />
+                                        </IconButton>
+                                    </Paper>
+                            }
+                        </React.Fragment>
                         <List
+                            key={key}
+                            filter={{ filterText: filterText }}
                             title={title}
                             perPage={ITEMS_PER_PAGE}
                             actions={null}

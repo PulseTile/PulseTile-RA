@@ -34,6 +34,9 @@ export const currentTheme = createMuiTheme({
             blockTitle: {
                 backgroundColor: currentThemeColor,
             },
+            title: {
+                backgroundColor: currentThemeColor,
+            },
             tableList: {
                 backgroundColorHover: currentThemeColor + " !important",
             },
