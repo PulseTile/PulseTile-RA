@@ -31,19 +31,19 @@ const listStyles = theme => ({
     blockTitle: {
         display: "flex",
         alignItems: "center",
-        height: "49px",
+        height: 49,
         color: "white",
         backgroundColor: theme.templates.listTemplate.blockTitle.backgroundColor,
-        fontSize: "18px",
-        fontWeight: "700",
-        paddingLeft: "15px",
+        fontSize: 18,
+        fontWeight: 700,
+        paddingLeft: 15,
     },
     tableList: {
         '& thead': {
             backgroundColor: "#e5e5e5",
             color: "black !important",
             '& tr': {
-                height: "48px !important",
+                height: 48,
             },
         },
         '& tbody tr:hover': {

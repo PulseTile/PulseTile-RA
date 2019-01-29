@@ -30,7 +30,7 @@ const styles = theme => ({
     },
     expansionPanelSummary: {
         backgroundColor: theme.templates.showTemplate.expansionPanelSummary.backgroundColor,
-        paddingLeft: "16px",
+        paddingLeft: 16,
         '& > div': {
             margin: "0px !important",
             marginTop: "0px",
@@ -42,13 +42,13 @@ const styles = theme => ({
     },
     expansionTypography: {
         color: "white",
-        fontSize: "18px",
-        fontWeight: "700",
+        fontSize: 18,
+        fontWeight: 700,
     },
     expansionPanelDetails: {
         display: "flex",
         flexDirection: "column",
-        padding: "0px"
+        padding: 0,
     },
     showDetails: {
         '& > div': {
@@ -56,13 +56,13 @@ const styles = theme => ({
         }
     },
     showLayoutDetails: {
-        paddingTop: "10px !important",
-        paddingLeft: "10px !important",
+        paddingTop: 10,
+        paddingLeft: 10,
     },
     labelBlock: {
         '& > div': {
-            marginTop: "0px !important",
-            marginBottom: "0px !important",
+            marginTop: 0,
+            marginBottom: 0,
         },
     },
 });

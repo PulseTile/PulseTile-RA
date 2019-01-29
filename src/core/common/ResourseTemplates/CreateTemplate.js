@@ -23,18 +23,18 @@ const styles = theme => ({
     blockTitle: {
         display: "flex",
         alignItems: "center",
-        height: "49px",
+        height: 49,
         color: "white",
         backgroundColor: theme.templates.createTemplate.blockTitle.backgroundColor,
-        fontSize: "18px",
-        fontWeight: "700",
-        paddingLeft: "15px",
+        fontSize: 18,
+        fontWeight: 700,
+        paddingLeft: 15,
     },
     createForm: {
         '& > div': {
-            paddingTop: "0px !important",
-            paddingLeft: "10px !important",
-            paddingRight: "10px !important",
+            paddingTop: 0,
+            paddingLeft: 10,
+            paddingRight: 10,
         },
     },
 });

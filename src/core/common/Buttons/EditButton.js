@@ -7,15 +7,15 @@ import EditIcon from '@material-ui/icons/Edit';
 const styles = theme => ({
     editButton: {
         display: "block",
-        width: "85px",
-        height: "40px",
-        margin: "8px !important",
+        width: 85,
+        height: 40,
+        margin: 8,
         backgroundColor: "white",
         color: theme.buttons.editButton.color,
         border: theme.buttons.editButton.border,
-        borderRadius: "20px",
-        fontSize: "16px",
-        fontWeight: "800",
+        borderRadius: 20,
+        fontSize: 16,
+        fontWeight: 800,
         "&:hover": {
             backgroundColor: theme.buttons.editButton.backgroundColorHover,
             color: "white",

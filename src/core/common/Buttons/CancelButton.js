@@ -7,15 +7,15 @@ import BlockIcon from '@material-ui/icons/Block';
 const styles = {
     button: {
         display: "block",
-        width: "100px",
-        height: "40px",
+        width: 100,
+        height: 40,
         margin: "8px !important",
         color: "white",
         backgroundColor: "#da534f",
         border: "1px solid #da534f",
-        borderRadius: "20px",
+        borderRadius: 20,
         fontSize: "16px",
-        fontWeight: "800",
+        fontWeight: 800,
         "&:hover": {
             color: "#da534f",
             backgroundColor: "white",

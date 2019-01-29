@@ -7,15 +7,15 @@ import AddIcon from '@material-ui/icons/Add';
 const styles = theme => ({
     createButton: {
         display: "block",
-        width: "100px",
-        height: "40px",
-        margin: "8px !important",
+        width: 100,
+        height: 40,
+        margin: 8,
         backgroundColor: "white",
         color: theme.buttons.createButton.color,
         border: theme.buttons.createButton.border,
-        borderRadius: "20px",
-        fontSize: "16px",
-        fontWeight: "800",
+        borderRadius: 20,
+        fontSize: 16,
+        fontWeight: 800,
         "&:hover": {
             backgroundColor: theme.buttons.createButton.backgroundColorHover,
             color: "white",

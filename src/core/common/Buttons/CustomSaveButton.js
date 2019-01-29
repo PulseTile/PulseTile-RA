@@ -7,18 +7,18 @@ import DoneIcon from '@material-ui/icons/Done';
 const styles = theme => ({
     saveButton: {
         display: "block",
-        width: "130px",
-        height: "40px",
-        margin: "8px !important",
+        width: 130,
+        height: 40,
+        margin: 8,
         backgroundColor: theme.buttons.saveButton.backgroundColor,
         color: "white",
         border: theme.buttons.saveButton.border,
-        borderRadius: "20px",
-        fontSize: "16px",
-        fontWeight: "800",
-        padding: "0px",
+        borderRadius: 20,
+        fontSize: 16,
+        fontWeight: 800,
+        padding: 0,
         "& svg": {
-            marginRight: "2px"
+            marginRight: 2,
         },
         "& span": {
             textTransform: "capitalize"
