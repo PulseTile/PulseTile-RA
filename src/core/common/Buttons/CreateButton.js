@@ -31,10 +31,10 @@ const styles = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape}  classes
  * @param {shape}  history
- * @param {string} createPath
+ * @param {string} redirectPath
  */
-const CreateButton = ({ classes, history, createPath }) => (
-    <IconButton className={classes.createButton} onClick={() => history.push(createPath)}>
+const CreateButton = ({ classes, history, redirectPath }) => (
+    <IconButton className={classes.createButton} onClick={() => history.push(redirectPath)}>
         <AddIcon /> Create
     </IconButton>
 );

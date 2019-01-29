@@ -42,6 +42,7 @@ const styles = {
 
 /**
  * This component returns common template for plugin Create form
+ * (it used in Create blocks for the plugins Allergies, Contacts, Medications, Problems etc.)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes

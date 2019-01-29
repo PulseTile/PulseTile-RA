@@ -41,6 +41,7 @@ const styles = {
 
 /**
  * This component returns block with template for plugin edit form
+ * (it used in Edit blocks for the plugins Allergies, Contacts, Medications, Problems etc.)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes

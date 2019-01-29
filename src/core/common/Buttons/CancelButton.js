@@ -28,10 +28,10 @@ const styles = {
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
- * @param {func}  onClickFunction
+ * @param {func}  redirectTo
  */
-const CancelButton = ({ classes, onClickFunction }) => (
-    <IconButton className={classes.button} onClick={() => onClickFunction('show')}>
+const CancelButton = ({ classes, redirectTo }) => (
+    <IconButton className={classes.button} onClick={() => redirectTo('show')}>
         <BlockIcon /> Cancel
     </IconButton>
 );

@@ -20,13 +20,13 @@ const styles = {
     expansionPanel: {
         height: "49px !important",
         '& > div': {
-            minHeight: "49px !important",
+            minHeight: "49px",
         }
     },
     currentExpansionPanel: {
         margin: "0px !important",
         '& > div': {
-            minHeight: "49px !important",
+            minHeight: "49px",
         }
     },
     expansionPanelSummary: {
@@ -70,6 +70,7 @@ const styles = {
 
 /**
  * This component returns template for details block
+ * (it used in Show details blocks for the plugins Allergies, Contacts, Medications, Problems etc.)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */

@@ -14,7 +14,7 @@ import CustomSaveButton from "../Buttons/CustomSaveButton";
 const EditToolbar = ({ changeViewType, ...props }) => {
     return (
         <Toolbar {...props} >
-            <CancelButton onClickFunction={changeViewType} />
+            <CancelButton redirectTo={changeViewType} />
             <CustomSaveButton {...props} />
         </Toolbar>
     );

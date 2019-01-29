@@ -55,6 +55,7 @@ const listStyles = {
 
 /**
  * This component returns template for List page
+ * (it used in List blocks for the plugins Allergies, Contacts, Medications, Problems etc.)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */

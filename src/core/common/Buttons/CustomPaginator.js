@@ -10,7 +10,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
 
-import { ITEMS_PER_PAGE, MAIN_COLOR } from "../../config/styles";
+import { MAIN_COLOR } from "../../config/styles";
 
 const styles = {
     paginatorRoot: {
@@ -65,17 +65,17 @@ class CustomPaginator extends Component {
         this.setState(
             { page: page },
             () => {
-                const { resourceUrl, history } = this.props;
+                const { resourceUrl, history, itemsPerPage } = this.props;
                 const { page} = this.state;
-                history.push("/" + resourceUrl + "?page=" + page + "&perPage=" + ITEMS_PER_PAGE)
+                history.push("/" + resourceUrl + "?page=" + page + "&perPage=" + itemsPerPage)
             }
         );
     };
 
     render() {
-        const { classes, rowsNumber } = this.props;
+        const { classes, rowsNumber, itemsPerPage } = this.props;
         const { page } = this.state;
-        const buttonsNumber = Math.ceil(rowsNumber / ITEMS_PER_PAGE);
+        const buttonsNumber = Math.ceil(rowsNumber / itemsPerPage);
         let buttons = [];
         for (let i = 0; i < buttonsNumber; i++) {
             buttons.push(

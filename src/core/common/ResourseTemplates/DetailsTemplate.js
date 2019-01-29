@@ -9,25 +9,25 @@ import React, { Component } from "react";
 class DetailsTemplate extends Component {
 
     state = {
-        view: this.props.mode,
+        viewType: this.props.mode,
     };
 
     changeViewType = viewType => {
         this.setState({
-            view: viewType,
+            viewType: viewType,
         })
     };
 
     render() {
         const { classes, show, edit, ...rest } = this.props;
-        const { view } = this.state;
+        const { viewType } = this.state;
         const ShowTemplate = show;
         const EditTemplate = edit;
-        if (view === 'show') {
+        if (viewType === 'show') {
             return (
                 <ShowTemplate changeViewType={this.changeViewType} {...this.props} />
             );
-        } else if (view === 'edit') {
+        } else if (viewType === 'edit') {
             return (
                 <EditTemplate changeViewType={this.changeViewType} {...this.props} />
             );
