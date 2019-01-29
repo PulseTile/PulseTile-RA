@@ -10,6 +10,8 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
 
+const MAXIMAL_BUTTONS_NUMBER = 5;
+
 const styles = theme => ({
     paginatorRoot: {
         display: "flex",
@@ -70,19 +72,58 @@ class CustomPaginator extends Component {
         );
     };
 
+    /**
+     * This function add spaces to the button array if digit buttons number is more than maximal
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {number} buttonsNumber
+     * @param {number} page
+     * @param {shape} classes
+     * @return {array}
+     */
+    getDigitButtons = (buttonsNumber, page, classes) => {
+        let buttons = [];
+        if (buttonsNumber > MAXIMAL_BUTTONS_NUMBER) {
+            const half = Math.ceil(MAXIMAL_BUTTONS_NUMBER / 2) - 1;
+            for (let i = 0; i < half; i++) {
+                buttons.push(
+                    <Button
+                        onClick={() => this.goToPage(i + 1)}
+                        className={(page === i + 1) ? classes.activeButton : classes.button}>
+                        { i + 1 }
+                    </Button>
+                );
+            }
+            buttons.push(<Button className={classes.button}>{'...'}</Button>);
+            for (let i = buttonsNumber - half; i < buttonsNumber; i++) {
+                buttons.push(
+                    <Button
+                        onClick={() => this.goToPage(i + 1)}
+                        className={(page === i + 1) ? classes.activeButton : classes.button}>
+                        { i + 1 }
+                    </Button>
+                );
+            }
+        } else {
+            for (let i = 0; i < buttonsNumber; i++) {
+                buttons.push(
+                <Button
+                    onClick={() => this.goToPage(i + 1)}
+                    className={(page === i + 1) ? classes.activeButton : classes.button}>
+                    { i + 1 }
+                </Button>
+                );
+            }
+        }
+
+        return buttons;
+    };
+
     render() {
         const { classes, rowsNumber, itemsPerPage } = this.props;
         const { page } = this.state;
         const buttonsNumber = Math.ceil(rowsNumber / itemsPerPage);
-        let buttons = [];
-        for (let i = 0; i < buttonsNumber; i++) {
-            buttons.push(
-                <Button
-                  onClick={() => this.goToPage(i + 1)}
-                  className={(page === i + 1) ? classes.activeButton : classes.button}>
-                    { i + 1 }
-                </Button>);
-        }
+        const buttons = this.getDigitButtons(buttonsNumber, page, classes);
         return (
             <div className={classes.paginatorRoot}>
                 <IconButton onClick={() => this.goToPage(1)} className={classes.button} disabled={page === 1}>
