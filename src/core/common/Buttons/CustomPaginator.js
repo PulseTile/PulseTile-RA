@@ -19,7 +19,7 @@ const styles = theme => ({
         display: "block",
         border: "1px solid #e5e5e5",
         height: "100%",
-        width: "35px !important",
+        width: "35px",
         borderRadius: 0,
         color: theme.buttons.pagination.color,
         '&:hover': {
@@ -31,7 +31,7 @@ const styles = theme => ({
         display: "block",
         border: "1px solid #e5e5e5",
         height: "100%",
-        width: "35px !important",
+        width: "35px",
         borderRadius: 0,
         color: "white",
         backgroundColor: theme.buttons.pagination.backgroundColorActive,
