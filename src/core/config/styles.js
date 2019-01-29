@@ -40,6 +40,9 @@ export const currentTheme = createMuiTheme({
             tableList: {
                 backgroundColorHover: currentThemeColor + " !important",
             },
+            filterInput: {
+                backgroundColor: currentThemeColor,
+            },
         },
         createTemplate: {
             blockTitle: {

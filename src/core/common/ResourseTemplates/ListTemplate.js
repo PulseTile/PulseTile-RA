@@ -54,6 +54,20 @@ const listStyles = theme => ({
     filterIcon: {
         paddingRight: 15,
     },
+    filterInput: {
+        backgroundColor: theme.templates.listTemplate.filterInput.backgroundColor,
+        borderRadius: 0,
+        boxShadow: "none",
+        '& button': {
+            color: "white",
+        },
+    },
+    inputBlock: {
+        width: 'calc(100% - 105px)',
+        backgroundColor: "white",
+        borderRadius: 2,
+        paddingLeft: 5,
+    },
     tableList: {
         '& thead': {
             backgroundColor: "#e5e5e5",
@@ -162,7 +176,7 @@ class ListTemplate extends Component {
                                         <IconButton className={classes.iconButton} aria-label="Menu">
                                             <FilterIcon />
                                         </IconButton>
-                                        <InputBase className={classes.input} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                        <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
                                         <IconButton className={classes.iconButton} aria-label="Search">
                                             <SearchIcon />
                                         </IconButton>
