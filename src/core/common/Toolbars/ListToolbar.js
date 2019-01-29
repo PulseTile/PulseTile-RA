@@ -23,11 +23,10 @@ const styles = {
  * @param {string}  resourceUrl
  * @param {string}  createPath
  * @param {shape}   history
- * @param {shape}   rest
  */
-const ListToolbar = ({ classes, isCreatePage, resourceUrl, createPath, history, ...rest }) => (
+const ListToolbar = ({ classes, isCreatePage, resourceUrl, createPath, history, total }) => (
     <div className={classes.paginationBlock}>
-        <CustomPaginator resourceUrl={resourceUrl} history={history} itemsPerPage={10} />
+        <CustomPaginator resourceUrl={resourceUrl} history={history} itemsPerPage={10} total={total} />
         {
             (!isCreatePage && resourceUrl !== "top3Things") &&
                 <CreateButton history={history} redirectPath={createPath} />

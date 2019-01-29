@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
-import compose from 'recompose/compose';
 
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from '@material-ui/core/IconButton';
@@ -120,9 +118,9 @@ class CustomPaginator extends Component {
     };
 
     render() {
-        const { classes, rowsNumber, itemsPerPage } = this.props;
+        const { classes, itemsPerPage, total } = this.props;
         const { page } = this.state;
-        const buttonsNumber = Math.ceil(rowsNumber / itemsPerPage);
+        const buttonsNumber = Math.ceil(total / itemsPerPage);
         const buttons = this.getDigitButtons(buttonsNumber, page, classes);
         return (
             <div className={classes.paginatorRoot}>
@@ -144,14 +142,4 @@ class CustomPaginator extends Component {
     }
 };
 
-const mapStateToProps = (state, ownProps) => {
-    const currentResource = ownProps.resourceUrl;
-    return {
-        rowsNumber: state.admin.resources[currentResource].list.total,
-    }
-};
-
-export default compose(
-    withStyles(styles),
-    connect(mapStateToProps, null)
-)(CustomPaginator);
+export default withStyles(styles)(CustomPaginator);
