@@ -105,7 +105,7 @@ export function getCurrentTheme(isContrastMode) {
         },
         tableHeader: {
             tableHeaderBlock: {
-                background: 'url(' + cardBackgroundImage + ') 0 0 repeat',
+                background: isContrastMode ? '#000' : 'url(' + cardBackgroundImage + ') 0 0 repeat',
             },
         },
         patientSummaryPanel: {
@@ -117,7 +117,7 @@ export function getCurrentTheme(isContrastMode) {
             },
             topBlock: {
                 backgroundColor: currentThemeColor,
-                background: 'url(' + cardBackgroundImage + ') 0 0 repeat',
+                background: isContrastMode ? '#000' : 'url(' + cardBackgroundImage + ') 0 0 repeat',
             },
         },
     });
