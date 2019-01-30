@@ -1,10 +1,14 @@
 import React, { Component } from "react";
+import { get } from "lodash";
+import { connect } from 'react-redux';
 import { Layout } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 
 import CustomSidebar from "./Sidebar";
 import CustomTopBar from "./Topbar";
+
+import { getCurrentTheme } from "../config/styles";
 
 const styles = {
     root: {
@@ -50,4 +54,11 @@ const CustomLayout = ({ classes, ...rest }) => {
     );
 };
 
-export default withStyles(styles)(CustomLayout);
+const mapStateToProps = state => {
+    const isContrastMode = get(state, 'custom.contrastMode.data', false);
+    return {
+        theme: getCurrentTheme(isContrastMode),
+    }
+};
+
+export default connect(mapStateToProps, null)(withStyles(styles)(CustomLayout));

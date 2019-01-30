@@ -39,14 +39,14 @@ const listStyles = theme => ({
         justifyContent: "space-between",
         alignItems: "center",
         height: 49,
-        color: "white",
+        color: "#fff",
         backgroundColor: theme.templates.listTemplate.blockTitle.backgroundColor,
         fontSize: 18,
         fontWeight: 700,
         paddingLeft: 15,
     },
     title: {
-        color: "white",
+        color: "#fff",
         backgroundColor: theme.templates.listTemplate.title.backgroundColor,
         fontSize: 18,
         fontWeight: 700,
@@ -59,26 +59,33 @@ const listStyles = theme => ({
         borderRadius: 0,
         boxShadow: "none",
         '& button': {
-            color: "white",
+            color: "#fff",
         },
     },
     inputBlock: {
         width: 'calc(100% - 105px)',
-        backgroundColor: "white",
+        backgroundColor: "#fff",
         borderRadius: 2,
         paddingLeft: 5,
     },
     tableList: {
         '& thead': {
             backgroundColor: "#e5e5e5",
-            color: "black !important",
+            '& tr th span span': {
+                color: "#000",
+            },
+            '& tr th': {
+                paddingLeft: 10,
+            },
             '& tr': {
                 height: 48,
             },
         },
         '& tbody tr:hover': {
             backgroundColor: theme.templates.listTemplate.tableList.backgroundColorHover,
-            color: "white !important"
+        },
+        '& tbody tr:hover td span': {
+            color: "#fff"
         }
     }
 });
