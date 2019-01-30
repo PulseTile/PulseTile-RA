@@ -16,6 +16,6 @@ const coreReducers = {
     showHeadings,
 };
 
-const reducers = Object.assign(coreReducers, nonCoreReducers);
+const reducers = Object.assign({}, coreReducers, nonCoreReducers);
 
 export default combineReducers(reducers);

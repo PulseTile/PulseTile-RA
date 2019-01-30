@@ -1,7 +1,5 @@
-import topThreeThingsSynopsis from "./topThreeThingsSynopsisReducer";
-import vaccinationsSynopsis from "./vaccinationsSynopsisReducer";
+import contrastMode from "./contrastModeReducer";
 
 export default {
-    topThreeThingsSynopsis,
-    vaccinationsSynopsis
+    contrastMode,
 };

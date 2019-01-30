@@ -18,7 +18,7 @@ const currentThemeColor = MAIN_THEME_COLOR ? MAIN_THEME_COLOR : CORE_MAIN_COLOR;
  */
 export const currentTheme = createMuiTheme({
     global: {
-        fontColor: currentThemeColor,
+        mainColor: currentThemeColor,
     },
     sidebar: {
         menuItem: {

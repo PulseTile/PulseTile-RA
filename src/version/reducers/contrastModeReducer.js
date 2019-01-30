@@ -1,5 +1,6 @@
 import { get } from "lodash";
-import { topThreeThingsSynopsisAction } from "../actions/synopsisActions";
+
+import { CONTRAST_MODE_ACTION } from "../actions/contrastModeAction";
 
 const initialState = {
     data: null,
@@ -7,24 +8,24 @@ const initialState = {
     error: null,
 };
 
-export default (state = initialState, { type, payload }) => {
-    switch (type) {
-        case topThreeThingsSynopsisAction.REQUEST:
+export default (state = initialState, action) => {
+    switch (action.type) {
+        case CONTRAST_MODE_ACTION.REQUEST:
             return {
                 ...state,
                 loading: true,
             };
-        case topThreeThingsSynopsisAction.SUCCESS:
+        case CONTRAST_MODE_ACTION.SUCCESS:
             return {
                 ...state,
                 loading: false,
-                data: get(payload, "synopsis", []),
+                data: get(action, "data", null),
             };
-        case topThreeThingsSynopsisAction.FAILURE:
+        case CONTRAST_MODE_ACTION.FAILURE:
             return {
                 ...state,
                 loading: false,
-                error: payload,
+                error: get(action, "error", null),
             };
         default:
             return state;

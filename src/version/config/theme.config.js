@@ -1,3 +1,5 @@
+import { connect } from 'react-redux';
+
 /**
  * Order of menu items for the current theme
  *
