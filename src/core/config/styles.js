@@ -102,6 +102,10 @@ export function getCurrentTheme(isContrastMode) {
                 backgroundColorHover: currentThemeColor,
                 backgroundColorActive: currentThemeColor,
             },
+            logout: {
+                backgroundColor: currentThemeColor,
+                border: "1px solid " + currentThemeColor,
+            }
         },
         tableHeader: {
             tableHeaderBlock: {
