@@ -162,9 +162,9 @@ export default () => {
      * @param {shape}  params
      * @return {array}
      */
-    function getResultsFromResponce(resource, response, params) {
+    function getResultsFromResponse(resource, response, params) {
         let results = [];
-        if ('patients' !== resource) {
+        if (resource !== 'patients') {
             results = response.map((item, id) => {
                 return Object.assign({id: item.sourceId}, item);
             });
@@ -187,7 +187,7 @@ export default () => {
         let result = false;
         filters.forEach(filterItem => {
             let string = item[filterItem];
-            if (string.toLowerCase().search(filterText) >= 0) {
+            if (String(string).toLowerCase().search(filterText) >= 0) {
                 result = true;
             }
         });
@@ -226,7 +226,7 @@ export default () => {
                 const pageNumber = get(params, 'pagination.page', 1);
                 const numberPerPage = get(params, 'pagination.perPage', 10);
 
-                const results = getResultsFromResponce(resource, response, params);
+                const results = getResultsFromResponse(resource, response, params);
                 const resultsFiltering = getFilterResults(resource, results, params);
 
                 const startItem = (pageNumber - 1) * numberPerPage;
