@@ -8,12 +8,19 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import Menu from '@material-ui/core/Menu';
 
+import { isPageHasTitle } from "../../../../core/common/Topbar/functions";
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
-import { isMenuVisible } from "../../../../core/common/functions";
+import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
 
 const styles = theme => ({
     lowPart: {
         display: "flex",
+        flexDirection: "column",
+        padding: 0,
+    },
+    menuAndBanner: {
+        display: "flex",
+        width: "100%",
         minHeight: "auto",
         border: "1px solid #e5e5e5",
         padding: 0,
@@ -46,6 +53,8 @@ const styles = theme => ({
         },
     },
     title: {
+        display: "block",
+        width: "100%",
         flexGrow: 1,
         color: "white",
         backgroundColor: theme.global.mainColor,
@@ -100,12 +109,20 @@ class LowPart extends Component {
 
     render() {
         const { classes, isSidebarOpen, setSidebarVisibility, location, patientInfo } = this.props;
+        const pageHasTitle = isPageHasTitle(location);
         return (
             <Toolbar className={classes.lowPart}>
-                { (isMenuVisible(location)) &&
-                    <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
+                {
+                    pageHasTitle &&
+                        <PageTitle classes={classes} location={location} />
                 }
-                <PageTitle location={location} classes={classes} patientInfo={patientInfo} />
+                <div className={classes.menuAndBanner}>
+                    <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
+                    {
+                        !pageHasTitle &&
+                            <PatientBanner location={location} classes={classes} patientInfo={patientInfo} />
+                    }
+                </div>
             </Toolbar>
         );
     }

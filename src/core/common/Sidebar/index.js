@@ -5,15 +5,14 @@ import { MenuItemLink, Sidebar, getResources } from 'react-admin';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { resourceOrder } from "../../../version/config/theme.config";
-import { isMenuVisible } from "../functions";
+import { SHORT_MENU, FULL_MENU, getMenuType } from "./functions";
+import ShortMenu from "./ShortMenu";
+import FullMenu from "./FullMenu";
 
 const styles = theme => ({
     sidebarBlock: {
-        maxWidth: "240px",
+        maxWidth: 240,
         '& div': {
             marginTop: 0,
         },
@@ -27,37 +26,16 @@ const styles = theme => ({
         borderBottom: "1px solid #e5e5e5",
         '&:hover': {
             backgroundColor: theme.sidebar.menuItem.backgroundColorHover,
-            color: "white",
+            color: "#fff",
         },
     },
     menuItemSelected: {
         display: "block",
         backgroundColor: theme.sidebar.menuItemSelected.backgroundColor,
-        color: "white",
+        color: "#fff",
         borderBottom: "1px solid #e5e5e5",
     },
 });
-
-/**
- * This function sorts resources by theme settings
- *
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {array} resources
- * @return {array}
- */
-function sortResourcesArray(resources) {
-    let sortResource = [];
-    for (let i = 0, n = resourceOrder.length; i < n; i++) {
-        let currentItem = resourceOrder[i];
-        for (let j = 0, m = resources.length; j < m; j++) {
-            if (currentItem === get(resources, [j, 'name'], null)) {
-                sortResource[i] = resources[j];
-                break;
-            }
-        }
-    }
-    return sortResource;
-}
 
 /**
  * This component returns custom menu
@@ -69,53 +47,25 @@ function sortResourcesArray(resources) {
 const CustomSidebar = props => {
     const { classes, resources, isSidebarOpen, onMenuClick, location } = props;
     const currentPathname = get(location, 'pathname', null);
-    const pathNameArray = currentPathname.split('/')
+    const pathNameArray = currentPathname.split('/');
     const currentList = '/' + pathNameArray[1];
-    const sortResources = sortResourcesArray(resources);
-    if (isMenuVisible(location) && isSidebarOpen) {
+    const menuType = getMenuType(currentPathname);
+    if (isSidebarOpen && menuType === SHORT_MENU) {
         return (
-            <Sidebar className={classes.sidebarBlock}>
-                <div className={classes.menuBlock}>
-                    <MenuItemLink
-                        className={(currentList === "/charts") ? classes.menuItemSelected : classes.menuItem}
-                        to="/charts"
-                        primaryText="Charts"
-                        leftIcon={(currentList === "/charts") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
-                        onClick={onMenuClick}
-                        selected={currentList === "/charts"}
-                    />
-                    <MenuItemLink
-                        className={(currentList === "/patients") ? classes.menuItemSelected : classes.menuItem}
-                        to="/patients"
-                        primaryText="Patients"
-                        leftIcon={(currentList === "/patients") ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
-                        onClick={onMenuClick}
-                        selected={currentList === "/patients"}
-                    />
-                    <MenuItemLink
-                        className={(currentList === "/summary") ? classes.menuItemSelected : classes.menuItem}
-                        to="/summary"
-                        primaryText="Patient Summary"
-                        leftIcon={(currentList === "/summary") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
-                        onClick={onMenuClick}
-                        selected={currentList === "/summary"}
-                    />
-                    {
-                        sortResources.map(resource => {
-                            return (
-                                <MenuItemLink
-                                    className={(currentList === `/${resource.name}`) ? classes.menuItemSelected : classes.menuItem}
-                                    to={`/${resource.name}`}
-                                    primaryText={resource.options.label}
-                                    leftIcon={(currentList === `/${resource.name}`) ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
-                                    onClick={onMenuClick}
-                                    selected={currentList === `/${resource.name}`}
-                                />
-                            );
-                        }
-                    )}
-                </div>
-            </Sidebar>
+            <ShortMenu
+              classes={classes}
+              currentList={currentList}
+              onMenuClick={onMenuClick}
+            />
+        );
+    } else if (isSidebarOpen && menuType === FULL_MENU) {
+        return (
+            <FullMenu
+              classes={classes}
+              resources={resources}
+              currentList={currentList}
+              onMenuClick={onMenuClick}
+            />
         );
     }
     return null;
@@ -123,7 +73,7 @@ const CustomSidebar = props => {
 
 const mapStateToProps = state => ({
     resources: getResources(state),
-    isSidebarOpen: get(state, 'admin.ui.sidebarOpen', true),
+    isSidebarOpen: state.admin.ui.sidebarOpen,
 });
 
 export default withRouter(connect(mapStateToProps)(withStyles(styles)(CustomSidebar)));
