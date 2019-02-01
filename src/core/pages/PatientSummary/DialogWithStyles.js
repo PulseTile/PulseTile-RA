@@ -13,15 +13,16 @@ import Typography from "@material-ui/core/Typography";
 import { showModeAction } from "../../actions/showModeAction";
 import { showHeadingsAction } from "../../actions/showHeadingsAction";
 import { synopsisData, showModesArray, SHOW_ALL, getHeadingsLists } from "./config";
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = {
     dialogBlock: {
-        minHeight: "300px",
-        minWidth: "500px",
-        margin: "20px",
+        minHeight: 300,
+        minWidth: 500,
+        margin: 20,
     },
     dialogItem: {
-        height: "100px",
+        minHeight: 100,
     },
     dialogItemColumn: {
         display: "flex",
@@ -29,7 +30,7 @@ const styles = {
     },
     dialogLabel: {
         display: "inline-block",
-        minWidth: "200px",
+        minWidth: 200,
     }
 };
 
@@ -95,6 +96,7 @@ class DialogContent extends Component {
     render() {
         const { classes, onClose, showMode, ...rest } = this.props;
         const { selectedMode, selectedHeadings } = this.state;
+        const NonCoreSelectors = get(themeCommonElements, 'nonCoreSelectors', false);
         return (
             <Dialog onBackdropClick={() => onClose()} {...rest}>
                 <div className={classes.dialogBlock} >
@@ -112,9 +114,7 @@ class DialogContent extends Component {
                             })
                         }
                     </div>
-                    <Typography>FEEDS</Typography>
-                    <Divider />
-                    <div className={classes.dialogItem}></div>
+                    <NonCoreSelectors classes={classes} />
                     <Typography>VIEW OF BOARDS</Typography>
                     <Divider />
                     <div className={classes.dialogItemColumn}>
