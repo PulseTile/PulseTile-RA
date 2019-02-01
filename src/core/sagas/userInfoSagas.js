@@ -1,10 +1,9 @@
 import { takeEvery, put } from 'redux-saga/effects';
 
-import { token } from "../token";
+import { token, domainName } from "../token";
 import { USER_INFO_ACTION, userInfoAction } from "../actions/userInfoAction";
 
 export default takeEvery(USER_INFO_ACTION.REQUEST, function*(action) {
-    const domainName = "http://dev.ripple.foundation";
     const apiPatientsUser = 'api/user';
     const url = domainName + '/' + apiPatientsUser;
     let options = {};

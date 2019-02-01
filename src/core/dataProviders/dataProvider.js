@@ -14,9 +14,8 @@ import {
 } from "react-admin";
 
 import pluginFilters from "../config/pluginFilters";
-import { token } from '../token';
+import { token, domainName } from '../token';
 
-const domainName = "http://dev.ripple.foundation";
 const apiPatientsUser = 'api/patients';
 const currentUserID = localStorage.getItem('userId');
 
