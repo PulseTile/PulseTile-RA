@@ -9,6 +9,7 @@ import { patientInfoAction } from "../../actions/patientInfoAction";
 import { synopsisData, SHOW_ALL } from "./config";
 import SettingsDialog from "./SettingsDialog";
 import Breadcrumbs from "../../common/Breadcrumbs";
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
     card: {
@@ -60,6 +61,7 @@ class PatientSummaryInfo extends Component {
         const breadcrumbsResource = [
             { url: location.pathname, title: "Patient Summary", isActive: false }
         ];
+        const NonCorePanels = get(themeCommonElements, 'nonCorePanels', false);
         return (
             <div className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -83,6 +85,7 @@ class PatientSummaryInfo extends Component {
                             );
                         })
                     }
+                    <NonCorePanels />
                 </div>
             </div>
         );

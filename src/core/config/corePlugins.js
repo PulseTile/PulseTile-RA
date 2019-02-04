@@ -8,13 +8,7 @@ import ProblemsList from "../plugins/Problems/ProblemsList";
 import PatientsList from "../pages/PatientsList";
 
 // SHOW PAGES
-import ContactsShow from "../plugins/Contacts/ContactsShow";
-import MedicationsShow from "../plugins/Medications/MedicationsShow";
 import PatientsShow from "../pages/PatientInfo";
-
-// CREATE PAGES
-import ContactsCreate from "../plugins/Contacts/ContactsCreate";
-import MedicationsCreate from "../plugins/Medications/MedicationsCreate";
 
 export default [
     {
