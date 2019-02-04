@@ -1,3 +1,9 @@
+/**
+ * This function extract token from COOKIE and returns it
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @return {string}
+ */
 function getTokenFromCookie() {
     let result = null;
     const decodedCookie = decodeURIComponent(document.cookie).split(';');

@@ -12,6 +12,7 @@ export default takeEvery(PATIENTS_STATISTIC.REQUEST, function*() {
     }
     options.headers = {
         Authorization: "Bearer " + token,
+        'X-Requested-With': "XMLHttpRequest",
     };
     try {
         const result = yield fetch(url, options).then(res => res.json());
