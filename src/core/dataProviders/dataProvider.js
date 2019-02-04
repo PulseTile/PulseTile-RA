@@ -14,9 +14,8 @@ import {
 } from "react-admin";
 
 import pluginFilters from "../config/pluginFilters";
-import { token } from '../token';
+import { token, domainName } from '../token';
 
-const domainName = "http://dev.ripple.foundation";
 const apiPatientsUser = 'api/patients';
 const currentUserID = localStorage.getItem('userId');
 
@@ -57,6 +56,7 @@ export default () => {
                 }
                 options.headers = {
                     Authorization: "Bearer " + token,
+                    'X-Requested-With': "XMLHttpRequest",
                 };
                 break;
             }
@@ -69,6 +69,7 @@ export default () => {
                 }
                 options.headers = {
                     Authorization: "Bearer " + token,
+                    'X-Requested-With': "XMLHttpRequest",
                 };
                 break;
 
@@ -81,7 +82,8 @@ export default () => {
                 }
                 options.headers = {
                     Authorization: "Bearer " + token,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': "XMLHttpRequest",
                 };
                 options.body = JSON.stringify(data);
                 break;
@@ -95,7 +97,8 @@ export default () => {
                 }
                 options.headers = {
                     Authorization: "Bearer " + token,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': "XMLHttpRequest",
                 };
                 options.body = JSON.stringify(params.data);
                 break;
