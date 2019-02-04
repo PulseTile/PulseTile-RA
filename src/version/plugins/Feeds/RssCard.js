@@ -71,13 +71,13 @@ const styles = theme => ({
     topBlock: {
         display: "flex",
         flexDirection: "column",
-        height: "100px",
+        height: 100,
         backgroundColor: theme.patientSummaryPanel.topBlock.backgroundColor,
         background: theme.patientSummaryPanel.topBlock.background,
         backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",
-        color: "white",
+        color: "#fff",
     },
     icon: {
         marginBottom: 10,
@@ -91,6 +91,9 @@ const styles = theme => ({
             textDecoration: "none",
         }
     },
+    feedsItem: {
+        fontSize: "1rem",
+    }
 });
 
 /**
