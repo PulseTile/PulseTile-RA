@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
+import { withStyles } from "@material-ui/core/styles";
 import RssIcon from '@material-ui/icons/RssFeed';
 
 import ItemsList from "./RssItemsList";
@@ -40,16 +41,54 @@ const LoadingItems = ({ classes }) => {
  * @param {shape}   list
  * @param {shape}   history
  */
-const ListBlock = ({ loading, classes, items, list, history }) => {
+const ListBlock = ({ loading, classes, items, history }) => {
     if (loading) {
         return (
             <LoadingItems classes={classes} />
     );
     }
     return (
-        <ItemsList classes={classes} items={items} list={list} history={history} />
+        <ItemsList classes={classes} items={items} history={history} />
     );
 };
+
+const styles = theme => ({
+    card: {
+        display: "inline-block",
+        width: "calc(25% - 20px)",
+        float: "left",
+        margin: "10px",
+        padding: "5px",
+        boxSizing: "border-box"
+    },
+    media: {
+        backgroundColor: theme.patientSummaryPanel.media.backgroundColor,
+    },
+    container: {
+        background: theme.patientSummaryPanel.container.background,
+        backgroundSize: "cover",
+    },
+    topBlock: {
+        display: "flex",
+        flexDirection: "column",
+        height: "100px",
+        backgroundColor: theme.patientSummaryPanel.topBlock.backgroundColor,
+        background: theme.patientSummaryPanel.topBlock.background,
+        backgroundSize: "cover",
+        justifyContent: "center",
+        alignItems: "center",
+        color: "white",
+    },
+    icon: {
+        marginBottom: "10px",
+    },
+    title: {
+        marginBottom: 0,
+    },
+    list: {
+        padding: 0,
+    },
+});
 
 /**
  * This component returns one single Dashboard Card
@@ -58,11 +97,11 @@ const ListBlock = ({ loading, classes, items, list, history }) => {
  * @param props
  * @constructor
  */
-export default props => {
-    const { id, classes, title, items, loading, icon, link, history, showMode, showHeadings } = props;
-    if (Object.values(showHeadings).indexOf(list) === -1) {
-        return null;
-    }
+const RssCard = props => {
+    const { classes, id, title, items, loading, icon, link, history, showMode, showHeadings } = props;
+    // if (Object.values(showHeadings).indexOf(list) === -1) {
+    //     return null;
+    // }
     return (
         <Card id={id} className={classes.card}>
             <div className={classes.topBlock}>
@@ -72,8 +111,10 @@ export default props => {
                 </Typography>
             </div>
             { (showMode === SHOW_ALL || !showMode) &&
-                <ListBlock loading={loading} classes={classes} items={items} list={list} history={history} />
+                <ListBlock loading={loading} classes={classes} items={items} history={history} />
             }
         </Card>
     );
 }
+
+export default withStyles(styles)(RssCard);

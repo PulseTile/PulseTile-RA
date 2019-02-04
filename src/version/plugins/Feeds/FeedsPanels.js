@@ -28,7 +28,7 @@ const FeedsPanels = ({ feeds, rssFeeds, showMode, showHeadings, loading  }) => {
     console.log('rssFeedsArray', rssFeedsArray);
 
 
-    return rssFeedsArray.length > 0 ? rssFeedsArray.map(item => {
+    return rssFeedsArray.length > 0 ? rssFeedsArray.map((item, key) => {
         const sourceId = item[0];
         const rssItems = item[1];
 
@@ -43,20 +43,15 @@ const FeedsPanels = ({ feeds, rssFeeds, showMode, showHeadings, loading  }) => {
                 showMode={showMode}
                 showHeadings={showHeadings}
                 id={item.id}
-        title = {currentFeed.name
-    }
-        link = {currentFeed.landingPageUrl
-    }
-        loading = {loading}
-        items = {rssItems}
-        {...
-            this.props
-        }
-        />
-        )
-        ;
+                title={currentFeed.name}
+                link={currentFeed.landingPageUrl}
+                loading={loading}
+                items={rssItems}
+                {...this.props}
+            />
+        );
     })
-        : null;
+    : null;
 };
 
 const mapStateToProps = state => {

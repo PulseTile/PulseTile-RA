@@ -13,7 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
  * @param {shape} history
  * @constructor
  */
-const ItemsList = ({ classes, items, list, history }) => {
+const ItemsList = ({ classes, items, history }) => {
     if (items.length === 0) {
         return (
             <ListItem button divider>
@@ -24,10 +24,9 @@ const ItemsList = ({ classes, items, list, history }) => {
         return (
             <List className={classes.list}>
                 {items.slice(0, 4).map((item, key) => {
-                    const showRoute = "/" + list + "/" + item.sourceId + "/show";
                     return (
-                        <ListItem key={key} button divider onClick={() => history.push(showRoute)}>
-                            <ListItemText primary={item.text} />
+                        <ListItem key={key} button divider>
+                            <ListItemText primary={item.title} />
                         </ListItem>
                     );
                 })}
