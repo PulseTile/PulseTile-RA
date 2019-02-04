@@ -9,11 +9,9 @@ import ListItemText from "@material-ui/core/ListItemText";
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {array}  items
- * @param {string} list
- * @param {shape} history
  * @constructor
  */
-const ItemsList = ({ classes, items, history }) => {
+const ItemsList = ({ classes, items }) => {
     if (items.length === 0) {
         return (
             <ListItem button divider>
@@ -25,9 +23,11 @@ const ItemsList = ({ classes, items, history }) => {
             <List className={classes.list}>
                 {items.slice(0, 4).map((item, key) => {
                     return (
-                        <ListItem key={key} button divider>
-                            <ListItemText primary={item.title} />
-                        </ListItem>
+                        <a href={item.link} target="_blank">
+                            <ListItem key={key} button divider>
+                                <ListItemText primary={item.title} />
+                            </ListItem>
+                        </a>
                     );
                 })}
             </List>

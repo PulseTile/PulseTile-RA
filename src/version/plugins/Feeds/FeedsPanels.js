@@ -15,34 +15,29 @@ function getCurrentFeedInfo(feedsArray, sourceId) {
     return result;
 }
 
-
-const FeedsPanels = ({ feeds, rssFeeds, showMode, showHeadings, loading  }) => {
-
-    console.log('rssFeeds', rssFeeds);
-
+/**
+ * This component returns set of Feeds panels
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape}   feeds
+ * @param {shape}   rssFeeds
+ * @param {string}  showMode
+ * @param {shape}   showHeadings
+ * @param {boolean} loading
+ */
+const FeedsPanels = ({ feeds, rssFeeds, showMode, showHeadings, loading }) => {
     const rssFeedsArray = Object.entries(rssFeeds);
     const feedsArray = (feeds.length > 0) ? feeds.length : dummyFeeds;
-
-    console.log('feedsArray', feedsArray);
-
-    console.log('rssFeedsArray', rssFeedsArray);
-
-
     return rssFeedsArray.length > 0 ? rssFeedsArray.map((item, key) => {
         const sourceId = item[0];
         const rssItems = item[1];
-
         const currentFeed = getCurrentFeedInfo(feedsArray, sourceId);
-
-        console.log('sourceId', sourceId);
-        console.log('items', rssItems);
-
         return (
             <RssCard
                 key={key}
                 showMode={showMode}
                 showHeadings={showHeadings}
-                id={item.id}
+                sourceId={sourceId}
                 title={currentFeed.name}
                 link={currentFeed.landingPageUrl}
                 loading={loading}

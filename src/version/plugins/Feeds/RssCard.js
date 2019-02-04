@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
@@ -38,7 +39,6 @@ const LoadingItems = ({ classes }) => {
  * @param {boolean} loading
  * @param {shape}   classes
  * @param {array}   items
- * @param {shape}   list
  * @param {shape}   history
  */
 const ListBlock = ({ loading, classes, items, history }) => {
@@ -57,8 +57,8 @@ const styles = theme => ({
         display: "inline-block",
         width: "calc(25% - 20px)",
         float: "left",
-        margin: "10px",
-        padding: "5px",
+        margin: 10,
+        padding: 5,
         boxSizing: "border-box"
     },
     media: {
@@ -80,41 +80,50 @@ const styles = theme => ({
         color: "white",
     },
     icon: {
-        marginBottom: "10px",
+        marginBottom: 10,
     },
     title: {
         marginBottom: 0,
     },
     list: {
         padding: 0,
+        "& a": {
+            textDecoration: "none",
+        }
     },
 });
 
 /**
- * This component returns one single Dashboard Card
+ * This component returns one single Feeds RSS Card
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param props
  * @constructor
  */
 const RssCard = props => {
-    const { classes, id, title, items, loading, icon, link, history, showMode, showHeadings } = props;
-    // if (Object.values(showHeadings).indexOf(list) === -1) {
-    //     return null;
-    // }
-    return (
-        <Card id={id} className={classes.card}>
-            <div className={classes.topBlock}>
-                <RssIcon />
-                <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
-                    {title}
-                </Typography>
-            </div>
-            { (showMode === SHOW_ALL || !showMode) &&
-                <ListBlock loading={loading} classes={classes} items={items} history={history} />
-            }
-        </Card>
-    );
-}
+    const { classes, sourceId, title, items, loading, icon, link, history, showMode, showHeadings, selectedFeeds } = props;
+    if (selectedFeeds.indexOf(sourceId) !== -1) {
+        return (
+            <Card id={sourceId} className={classes.card} onClick={() => window.open(link, "_blank")}>
+                <div className={classes.topBlock}>
+                    <RssIcon />
+                    <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
+                        {title}
+                    </Typography>
+                </div>
+                { (showMode === SHOW_ALL || !showMode) &&
+                    <ListBlock loading={loading} classes={classes} items={items} history={history} />
+                }
+            </Card>
+        );
+    }
+    return null;
+};
 
-export default withStyles(styles)(RssCard);
+const mapStateToProps = state => {
+    return {
+        selectedFeeds: state.custom.selectedFeedsList.data,
+    };
+};
+
+export default connect(mapStateToProps, null)(withStyles(styles)(RssCard));

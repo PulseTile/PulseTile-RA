@@ -17,6 +17,7 @@ const initialState = {
  * @return {shape}
  */
 export default (state = initialState, action) => {
+    const currentRss = get(state, 'data', {});
     switch (action.type) {
 
         case FEEDS_RSS_ACTION.REQUEST:
@@ -26,7 +27,6 @@ export default (state = initialState, action) => {
             };
 
         case FEEDS_RSS_ACTION.SUCCESS:
-            const currentRss = get(state, 'data', {});
             return {
                 ...state,
                 loading: false,

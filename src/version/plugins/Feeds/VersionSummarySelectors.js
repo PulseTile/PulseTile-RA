@@ -50,11 +50,11 @@ class VersionSummarySelectors extends Component {
                 let feedsArray = selectedFeeds;
                 if (Object.values(selectedFeeds).indexOf(item.sourceId) !== -1) {
                     let index = selectedFeeds.indexOf(item.sourceId);
-                    feedsArray.splice(index, 1)
+                    feedsArray.splice(index, 1);
                 } else {
                     feedsArray.push(item.sourceId);
+                    this.props.getRssData(item.sourceId, item.rssFeedUrl);
                 }
-                this.props.getRssData(item.sourceId, item.rssFeedUrl);
                 return {
                     selectedFeeds: feedsArray,
                 };

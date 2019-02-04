@@ -1,6 +1,7 @@
 import contrastModeSagas from "./contrastModeSagas";
 import feedsListSagas from "./feedsListSagas";
 import feedsRssSagas from "./feedsRssSagas";
+import selectedFeedsSagas from "./selectedFeedsSagas";
 
 /**
  * This componenr returns array of version sagas
@@ -12,4 +13,5 @@ export default [
     contrastModeSagas,
     feedsListSagas,
     feedsRssSagas,
+    selectedFeedsSagas,
 ];
