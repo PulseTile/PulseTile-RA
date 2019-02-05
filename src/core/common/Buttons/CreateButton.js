@@ -3,6 +3,7 @@ import React from "react";
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
     createButton: {
@@ -32,9 +33,11 @@ const styles = theme => ({
  * @param {string} redirectPath
  */
 const CreateButton = ({ classes, history, redirectPath }) => (
-    <IconButton className={classes.createButton} onClick={() => history.push(redirectPath)}>
-        <AddIcon /> Create
-    </IconButton>
+    <Tooltip title="Create">
+        <IconButton className={classes.createButton} onClick={() => history.push(redirectPath)}>
+            <AddIcon /> Create
+        </IconButton>
+    </Tooltip>
 );
 
 export default withStyles(styles)(CreateButton);

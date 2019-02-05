@@ -7,6 +7,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const MAXIMAL_BUTTONS_NUMBER = 5;
 
@@ -124,19 +125,27 @@ class CustomPaginator extends Component {
         const buttons = this.getDigitButtons(buttonsNumber, page, classes);
         return (
             <div className={classes.paginatorRoot}>
-                <IconButton onClick={() => this.goToPage(1)} className={classes.button} disabled={page === 1}>
-                    <FirstPageIcon />
-                </IconButton>
-                <IconButton onClick={() => this.goToPage(page - 1)} className={classes.button} disabled={page === 1}>
-                    <KeyboardArrowLeft />
-                </IconButton>
+                <Tooltip title="First page">
+                    <IconButton onClick={() => this.goToPage(1)} className={classes.button} disabled={page === 1}>
+                        <FirstPageIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Previous page">
+                    <IconButton onClick={() => this.goToPage(page - 1)} className={classes.button} disabled={page === 1}>
+                        <KeyboardArrowLeft />
+                    </IconButton>
+                </Tooltip>
                 { buttons }
-                <IconButton onClick={() => this.goToPage(page + 1)} className={classes.button} disabled={page === buttonsNumber}>
-                    <KeyboardArrowRight />
-                </IconButton>
-                <IconButton onClick={() => this.goToPage(buttonsNumber)} className={classes.button} disabled={page === buttonsNumber}>
-                   <LastPageIcon />
-                </IconButton>
+                <Tooltip title="Next page">
+                    <IconButton onClick={() => this.goToPage(page + 1)} className={classes.button} disabled={page === buttonsNumber}>
+                        <KeyboardArrowRight />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Last page">
+                    <IconButton onClick={() => this.goToPage(buttonsNumber)} className={classes.button} disabled={page === buttonsNumber}>
+                       <LastPageIcon />
+                    </IconButton>
+                </Tooltip>
             </div>
         );
     }

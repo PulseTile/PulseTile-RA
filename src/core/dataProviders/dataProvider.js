@@ -14,7 +14,7 @@ import {
 } from "react-admin";
 
 import pluginFilters from "../config/pluginFilters";
-import { token, domainName } from '../token';
+import { token, domainName } from "../token";
 
 const apiPatientsUser = 'api/patients';
 const currentUserID = localStorage.getItem('userId');

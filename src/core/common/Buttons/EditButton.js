@@ -3,6 +3,7 @@ import React from "react";
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
     editButton: {
@@ -31,9 +32,11 @@ const styles = theme => ({
  * @param {func}  redirectTo
  */
 const EditButton = ({ classes, redirectTo }) => (
-    <IconButton className={classes.editButton} onClick={() => redirectTo('edit')}>
-        <EditIcon /> Edit
-    </IconButton>
+    <Tooltip title="Edit">
+        <IconButton className={classes.editButton} onClick={() => redirectTo('edit')}>
+            <EditIcon /> Edit
+        </IconButton>
+    </Tooltip>
 );
 
 export default withStyles(styles)(EditButton);
