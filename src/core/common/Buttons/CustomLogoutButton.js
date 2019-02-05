@@ -37,19 +37,15 @@ const styles = theme => ({
  */
 const CustomLogoutButton = ({ classes, userLogout }) => {
     return (
-        <IconButton className={classes.button} onClick={userLogout}>
+        <IconButton className={classes.button} onClick={() => userLogout()}>
             Sign Out
             <ExitIcon className={classes.icon} />
         </IconButton>
     );
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        userLogout() {
-            dispatch( userLogout());
-        }
-    }
+const mapDispatchToProps = {
+    userLogout,
 };
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(CustomLogoutButton));
