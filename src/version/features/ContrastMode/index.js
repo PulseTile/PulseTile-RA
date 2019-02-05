@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import IconButton from '@material-ui/core/IconButton';
 import ContrastIcon from '@material-ui/icons/Tonality';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { contrastModeAction } from "../../actions/contrastModeAction";
 
@@ -28,13 +29,15 @@ class ContrastMode extends Component {
         const { classes, contrastMode } = this.props;
         return (
             <div className={classes.rightBlockItem}>
-                <IconButton
-                    className={classes.rightBlockButton}
-                    aria-haspopup="true"
-                    color="inherit"
-                    onClick={() => this.toggleContrastMode()}>
-                    <ContrastIcon />
-                </IconButton>
+                <Tooltip title="Contrast mode">
+                    <IconButton
+                        className={classes.rightBlockButton}
+                        aria-haspopup="true"
+                        color="inherit"
+                        onClick={() => this.toggleContrastMode()}>
+                        <ContrastIcon />
+                    </IconButton>
+                </Tooltip>
             </div>
         );
     }
