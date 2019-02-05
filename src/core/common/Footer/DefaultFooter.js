@@ -50,7 +50,7 @@ const DefaultFooter = ({ classes }) => {
         <footer className={classes.footerBlock}>
             <Typography className={classes.copyright}>Transforming Usability</Typography>
             <div className={classes.emptyBlock}></div>
-            <React.Fragment>
+            <div>
                 <Typography className={classes.supportedBy}>Supported by</Typography>
                 <Link to="/">
                     <CardMedia
@@ -62,7 +62,7 @@ const DefaultFooter = ({ classes }) => {
                         title="Pulse Tile"
                     />
                 </Link>
-            </React.Fragment>
+            </div>
         </footer>
     );
 };

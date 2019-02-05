@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { SHORT_MENU, FULL_MENU, getMenuType } from "./functions";
-import ShortMenu from "./ShortMenu";
-import FullMenu from "./FullMenu";
+import { SHORT_MENU, FULL_MENU, getMenuType } from "./getMenuType";
+import SidebarWithShortMenu from "./SidebarWithShortMenu";
+import SidebarWithFullMenu from "./SidebarWithFullMenu";
 
 const styles = theme => ({
     sidebarBlock: {
@@ -52,7 +52,7 @@ const CustomSidebar = props => {
     const menuType = getMenuType(currentPathname);
     if (isSidebarOpen && menuType === SHORT_MENU) {
         return (
-            <ShortMenu
+            <SidebarWithShortMenu
               classes={classes}
               currentList={currentList}
               onMenuClick={onMenuClick}
@@ -60,7 +60,7 @@ const CustomSidebar = props => {
         );
     } else if (isSidebarOpen && menuType === FULL_MENU) {
         return (
-            <FullMenu
+            <SidebarWithFullMenu
               classes={classes}
               resources={resources}
               currentList={currentList}
