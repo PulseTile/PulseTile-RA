@@ -35,16 +35,28 @@ const styles = {
  */
 class UserPanelButton extends Component {
 
+    constructor(props) {
+        super(props);
+        this.button = React.createRef();
+    }
+
     state = {
         anchorEl: null,
+        isOpen: false,
     };
 
-    handleMenu = event => {
-        this.setState({ anchorEl: event.currentTarget });
+    handleMenu = () => {
+        this.setState(state => ({
+            anchorEl: this.button.current,
+            isOpen: !state.isOpen,
+        }));
     };
 
     handleClose = () => {
-        this.setState({ anchorEl: null });
+        this.setState(state => ({
+            anchorEl: null,
+            isOpen: !state.isOpen,
+        }));
     };
 
     componentDidMount() {
@@ -52,17 +64,16 @@ class UserPanelButton extends Component {
     }
 
     render() {
-        const { classes, logout, userInfo } = this.props;
-        const { anchorEl } = this.state;
-        const isTopbarMenuOpen = Boolean(anchorEl);
+        const { classes, userInfo } = this.props;
+        const { isOpen, anchorEl } = this.state;
         return (
-            <div className={classes.rightBlockItem}>
+            <div className={classes.rightBlockItem} ref={this.button}>
                 <IconButton
                     id="icon-profile"
                     className={classes.rightBlockButton}
-                    aria-owns={isTopbarMenuOpen ? 'menu-appbar' : undefined}
+                    aria-owns={isOpen ? 'menu-appbar' : undefined}
                     aria-haspopup="true"
-                    onClick={this.handleMenu}
+                    onClick={this.handleMenu.bind(this)}
                     color="inherit" >
                     <PersonIcon />
                 </IconButton>
@@ -71,7 +82,7 @@ class UserPanelButton extends Component {
                     anchorEl={anchorEl}
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    open={isTopbarMenuOpen}
+                    open={isOpen}
                     onClose={this.handleClose} >
                     <Card className={classes.userPanel}>
                         <Typography className={classes.userName}>
