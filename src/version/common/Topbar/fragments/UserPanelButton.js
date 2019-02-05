@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { get } from "lodash";
-import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -60,12 +59,8 @@ class UserPanelButton extends Component {
         }));
     };
 
-    componentDidMount() {
-        this.props.getUserInfo();
-    }
-
     render() {
-        const { classes, userInfo } = this.props;
+        const { classes } = this.props;
         const { isOpen, anchorEl } = this.state;
         return (
             <div className={classes.rightBlockItem} ref={this.button}>
@@ -89,10 +84,10 @@ class UserPanelButton extends Component {
                     onClose={this.handleClose} >
                     <Card className={classes.userPanel}>
                         <Typography className={classes.userName}>
-                            {get(userInfo, 'given_name', null) + ' ' + get(userInfo, 'family_name', null)}
+                            {localStorage.getItem('username')}
                         </Typography>
                         <Typography className={classes.userRole}>
-                            <span>User role:</span> {get(userInfo, 'role', null)}
+                            <span>User role:</span> {localStorage.getItem('role')}
                         </Typography>
                         <CustomLogoutButton classes={classes} />
                     </Card>
@@ -102,18 +97,4 @@ class UserPanelButton extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        userInfo: state.custom.userInfo.data,
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getUserInfo() {
-            dispatch(userInfoAction.request());
-        }
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(UserPanelButton));
+export default withStyles(styles)(UserPanelButton);

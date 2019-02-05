@@ -1,1 +1,21 @@
-export const token = "JSESSIONID=bfdb98be-8c6f-4356-be82-2dd6baa3aafa";
+/**
+ * This function extract token from COOKIE and returns it
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @return {string}
+ */
+function getTokenFromCookie() {
+    let result = null;
+    const decodedCookie = decodeURIComponent(document.cookie).split(';');
+    decodedCookie.forEach(item => {
+        let itemArray = item.split('=');
+        let parameterName = itemArray[0];
+        if (parameterName.trim() === "JSESSIONID") {
+            result = itemArray[1];
+        }
+    });
+    return "JSESSIONID=" + result;
+}
+
+export const token = getTokenFromCookie();
+export const domainName = "http://dev.ripple.foundation";
