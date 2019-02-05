@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { get } from "lodash";
-import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Popover from '@material-ui/core/Popover';
 import Card from '@material-ui/core/Card';
 import PersonIcon from '@material-ui/icons/Person';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { userInfoAction } from "../../../../core/actions/userInfoAction";
 import CustomLogoutButton from "../../../../core/common/Buttons/CustomLogoutButton";
@@ -35,50 +35,59 @@ const styles = {
  */
 class UserPanelButton extends Component {
 
+    constructor(props) {
+        super(props);
+        this.button = React.createRef();
+    }
+
     state = {
         anchorEl: null,
+        isOpen: false,
     };
 
-    handleMenu = event => {
-        this.setState({ anchorEl: event.currentTarget });
+    handleMenu = () => {
+        this.setState(state => ({
+            anchorEl: this.button.current,
+            isOpen: !state.isOpen,
+        }));
     };
 
     handleClose = () => {
-        this.setState({ anchorEl: null });
+        this.setState(state => ({
+            anchorEl: null,
+            isOpen: !state.isOpen,
+        }));
     };
 
-    componentDidMount() {
-        this.props.getUserInfo();
-    }
-
     render() {
-        const { classes, logout, userInfo } = this.props;
-        const { anchorEl } = this.state;
-        const isTopbarMenuOpen = Boolean(anchorEl);
+        const { classes } = this.props;
+        const { isOpen, anchorEl } = this.state;
         return (
-            <div className={classes.rightBlockItem}>
-                <IconButton
-                    id="icon-profile"
-                    className={classes.rightBlockButton}
-                    aria-owns={isTopbarMenuOpen ? 'menu-appbar' : undefined}
-                    aria-haspopup="true"
-                    onClick={this.handleMenu}
-                    color="inherit" >
-                    <PersonIcon />
-                </IconButton>
+            <div className={classes.rightBlockItem} ref={this.button}>
+                <Tooltip title="User panel">
+                    <IconButton
+                        id="icon-profile"
+                        className={classes.rightBlockButton}
+                        aria-owns={isOpen ? 'menu-appbar' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.handleMenu.bind(this)}
+                        color="inherit" >
+                        <PersonIcon />
+                    </IconButton>
+                </Tooltip>
                 <Popover
                     id="menu-appbar"
                     anchorEl={anchorEl}
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    open={isTopbarMenuOpen}
+                    open={isOpen}
                     onClose={this.handleClose} >
                     <Card className={classes.userPanel}>
                         <Typography className={classes.userName}>
-                            {get(userInfo, 'given_name', null) + ' ' + get(userInfo, 'family_name', null)}
+                            {localStorage.getItem('username')}
                         </Typography>
                         <Typography className={classes.userRole}>
-                            <span>User role:</span> {get(userInfo, 'role', null)}
+                            <span>User role:</span> {localStorage.getItem('role')}
                         </Typography>
                         <CustomLogoutButton classes={classes} />
                     </Card>
@@ -88,18 +97,4 @@ class UserPanelButton extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        userInfo: state.custom.userInfo.data,
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getUserInfo() {
-            dispatch(userInfoAction.request());
-        }
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(UserPanelButton));
+export default withStyles(styles)(UserPanelButton);

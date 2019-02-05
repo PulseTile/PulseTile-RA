@@ -3,6 +3,7 @@ import Joyride from 'react-joyride';
 
 import IconButton from '@material-ui/core/IconButton';
 import HelpIcon from '@material-ui/icons/Help';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { tourSteps, locale } from '../content';
 import toursStyles from "../styles";
@@ -20,14 +21,16 @@ import toursStyles from "../styles";
 const RunUserTour = ({ classes, runTour, isPassed, callback }) => {
     return (
         <React.Fragment>
-            <IconButton
-                id="icon-tour"
-                className={classes.rightBlockButton}
-                aria-haspopup="true"
-                color="inherit"
-                onClick={() => runTour()} >
-                <HelpIcon />
-            </IconButton>
+            <Tooltip title="User Tour">
+                <IconButton
+                    id="icon-tour"
+                    className={classes.rightBlockButton}
+                    aria-haspopup="true"
+                    color="inherit"
+                    onClick={() => runTour()} >
+                    <HelpIcon />
+                </IconButton>
+            </Tooltip>
             <Joyride
                 continuous
                 disableOverlayClose={true}
