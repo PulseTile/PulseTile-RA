@@ -15,12 +15,12 @@ import { contrastModeAction } from "../../actions/contrastModeAction";
 class ContrastMode extends Component {
 
     state = {
-        isContrastMode: this.props.contrastMode,
+        isContrastMode: false,
     };
 
     toggleContrastMode = () => {
         this.setState(
-            { isContrastMode: !this.state.isContrastMode },
+            state => ({ isContrastMode: !this.state.isContrastMode }),
             () => this.props.contrastModeAction(this.state.isContrastMode)
         );
     };
@@ -34,7 +34,7 @@ class ContrastMode extends Component {
                         className={classes.rightBlockButton}
                         aria-haspopup="true"
                         color="inherit"
-                        onClick={() => this.toggleContrastMode()}>
+                        onClick={this.toggleContrastMode}>
                         <ContrastIcon />
                     </IconButton>
                 </Tooltip>
