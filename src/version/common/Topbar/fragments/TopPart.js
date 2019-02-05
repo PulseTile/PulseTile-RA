@@ -7,6 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import helmLogo from "../../../images/helm-logo.png";
 import nhsLogo from "../../../images/nhs.png";
@@ -120,12 +121,14 @@ const TopPart = ({ classes, logout, location }) => {
             />
             <UserTour classes={classes} location={location} />
             <div className={classes.rightBlockItem}>
-                <IconButton
-                    className={classes.rightBlockButton}
-                    aria-haspopup="true"
-                    color="inherit" >
-                    <ContrastIcon />
-                </IconButton>
+                <Tooltip title="Contrast mode">
+                    <IconButton
+                        className={classes.rightBlockButton}
+                        aria-haspopup="true"
+                        color="inherit" >
+                        <ContrastIcon />
+                    </IconButton>
+                </Tooltip>
             </div>
             <UserPanelButton classes={classes} />
         </Toolbar>

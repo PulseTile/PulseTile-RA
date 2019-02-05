@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Popover from '@material-ui/core/Popover';
 import Card from '@material-ui/core/Card';
 import PersonIcon from '@material-ui/icons/Person';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { userInfoAction } from "../../../../core/actions/userInfoAction";
 import CustomLogoutButton from "../../../../core/common/Buttons/CustomLogoutButton";
@@ -68,15 +69,17 @@ class UserPanelButton extends Component {
         const { isOpen, anchorEl } = this.state;
         return (
             <div className={classes.rightBlockItem} ref={this.button}>
-                <IconButton
-                    id="icon-profile"
-                    className={classes.rightBlockButton}
-                    aria-owns={isOpen ? 'menu-appbar' : undefined}
-                    aria-haspopup="true"
-                    onClick={this.handleMenu.bind(this)}
-                    color="inherit" >
-                    <PersonIcon />
-                </IconButton>
+                <Tooltip title="User panel">
+                    <IconButton
+                        id="icon-profile"
+                        className={classes.rightBlockButton}
+                        aria-owns={isOpen ? 'menu-appbar' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.handleMenu.bind(this)}
+                        color="inherit" >
+                        <PersonIcon />
+                    </IconButton>
+                </Tooltip>
                 <Popover
                     id="menu-appbar"
                     anchorEl={anchorEl}

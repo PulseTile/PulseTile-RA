@@ -5,6 +5,7 @@ import { userLogout } from 'react-admin';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import ExitIcon from '@material-ui/icons/ExitToApp';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
     button: {
@@ -37,10 +38,12 @@ const styles = theme => ({
  */
 const CustomLogoutButton = ({ classes, userLogout }) => {
     return (
-        <IconButton className={classes.button} onClick={() => userLogout()}>
-            Sign Out
-            <ExitIcon className={classes.icon} />
-        </IconButton>
+        <Tooltip title="Sign Out">
+            <IconButton className={classes.button} onClick={() => userLogout()}>
+                Sign Out
+                <ExitIcon className={classes.icon} />
+            </IconButton>
+        </Tooltip>
     );
 };
 
