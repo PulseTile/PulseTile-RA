@@ -15,6 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
@@ -173,13 +174,17 @@ class ListTemplate extends Component {
                             {
                                 isFilterOpened &&
                                     <Paper className={classes.filterInput} elevation={1}>
-                                        <IconButton className={classes.iconButton} aria-label="Menu">
-                                            <FilterIcon />
-                                        </IconButton>
+                                        <Tooltip title="Menu">
+                                            <IconButton className={classes.iconButton}>
+                                                <FilterIcon />
+                                            </IconButton>
+                                        </Tooltip>
                                         <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                        <IconButton className={classes.iconButton} aria-label="Search">
-                                            <SearchIcon />
-                                        </IconButton>
+                                        <Tooltip title="Search">
+                                            <IconButton className={classes.iconButton}>
+                                                <SearchIcon />
+                                            </IconButton>
+                                        </Tooltip>
                                     </Paper>
                             }
                         </React.Fragment>

@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import PageTitle from "./PageTitle";
 
@@ -35,9 +36,11 @@ const LowPart = ({ classes, setSidebarVisibility, isSidebarOpen, isMenuVisible, 
     return (
         <Toolbar className={classes.greenPart}>
             { isMenuVisible &&
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                <MenuIcon onClick={() => setSidebarVisibility(!isSidebarOpen)} />
-            </IconButton> }
+            <Tooltip title="Menu">
+                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                    <MenuIcon onClick={() => setSidebarVisibility(!isSidebarOpen)} />
+                </IconButton>
+            </Tooltip> }
             <PageTitle location={location} classes={classes} patientInfo={patientInfo} />
         </Toolbar>
     );

@@ -10,9 +10,8 @@ import Menu from '@material-ui/core/Menu';
 
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
 import { isMenuVisible } from "../../../../core/common/functions";
-import { MAIN_THEME_COLOR } from "../../../config/theme.config";
 
-const styles = {
+const styles = theme => ({
     lowPart: {
         display: "flex",
         minHeight: "auto",
@@ -24,48 +23,48 @@ const styles = {
     menuButtonBlock: {
         display: "inline-flex",
         position: "relative",
-        minWidth: "238px",
-        minHeight: "90px",
+        minWidth: 238,
+        minHeight: 90,
         borderRight: "1px solid #e5e5e5",
         justifyContent: "center",
         alignItems: "center",
     },
     menuButton: {
-        borderRadius: "15px",
-        maxHeight: "20px",
-        minWidth: "64px",
-        color: MAIN_THEME_COLOR,
+        borderRadius: 15,
+        maxHeight: 20,
+        minWidth: 64,
+        color: theme.global.mainColor,
         textTransform: "none",
         backgroundColor: "white",
         '&:hover': {
-            backgroundColor: MAIN_THEME_COLOR,
+            backgroundColor: theme.global.mainColor,
             color: "white",
         },
         '&:active': {
-            backgroundColor: MAIN_THEME_COLOR,
+            backgroundColor: theme.global.mainColor,
             color: "white",
         },
     },
     title: {
         flexGrow: 1,
         color: "white",
-        backgroundColor: MAIN_THEME_COLOR,
+        backgroundColor: theme.global.mainColor,
         textAlign: "center",
-        paddingTop: "5px",
-        paddingBottom: "5px",
-        fontWeight: "800"
+        paddingTop: 5,
+        paddingBottom: 5,
+        fontWeight: 800,
     },
     patientInfo: {
         color: "black",
         padding: "11px 14px",
-        marginLeft: "5px",
+        marginLeft: 5,
     },
     gridBlock: {
         padding: "0px !important",
-        marginTop: "5px",
-        marginBottom: "5px",
+        marginTop: 5,
+        marginBottom: 5,
     },
-};
+});
 
 /**
  * This component returns button which toggle sidebar menu

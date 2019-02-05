@@ -1,13 +1,11 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import { get } from "lodash";
 
 import { token, domainName } from "../token";
-import { PATIENT_INFO, patientInfoAction } from "../actions/patientInfoAction";
+import { USER_INFO_ACTION, userInfoAction } from "../actions/userInfoAction";
 
-export default takeEvery(PATIENT_INFO.REQUEST, function*(action) {
-    const userId = get(action, 'data', null);
-    const apiPatientsUser = 'api/patients';
-    const url = domainName + '/' + apiPatientsUser + '/' + userId;
+export default takeEvery(USER_INFO_ACTION.REQUEST, function*(action) {
+    const apiPatientsUser = 'api/user';
+    const url = domainName + '/' + apiPatientsUser;
     let options = {};
     options.method = "GET";
     if (!options.headers) {
@@ -18,8 +16,8 @@ export default takeEvery(PATIENT_INFO.REQUEST, function*(action) {
     };
     try {
         const result = yield fetch(url, options).then(res => res.json());
-        yield put(patientInfoAction.success(result))
+        yield put(userInfoAction.success(result))
     } catch(e) {
-        yield put(patientInfoAction.error(e))
+        yield put(userInfoAction.error(e))
     }
 });

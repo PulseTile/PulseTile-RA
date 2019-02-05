@@ -3,6 +3,7 @@ import React from "react";
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import BlockIcon from '@material-ui/icons/Block';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = {
     button: {
@@ -31,9 +32,11 @@ const styles = {
  * @param {func}  redirectTo
  */
 const CancelButton = ({ classes, redirectTo }) => (
-    <IconButton className={classes.button} onClick={() => redirectTo('show')}>
-        <BlockIcon /> Cancel
-    </IconButton>
+    <Tooltip title="Cancel">
+        <IconButton className={classes.button} onClick={() => redirectTo('show')}>
+            <BlockIcon /> Cancel
+        </IconButton>
+    </Tooltip>
 );
 
 export default withStyles(styles)(CancelButton);
