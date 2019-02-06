@@ -12,7 +12,7 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons'
  * @param {string} currentList
  * @param {func}   onMenuClick
  */
-const ShortMenu = ({ classes, currentList, onMenuClick }) => {
+const SidebarWithShortMenu = ({ classes, currentList, onMenuClick }) => {
 
     return (
         <Sidebar className={classes.sidebarBlock}>
@@ -38,4 +38,4 @@ const ShortMenu = ({ classes, currentList, onMenuClick }) => {
     );
 }
 
-export default ShortMenu;
+export default SidebarWithShortMenu;

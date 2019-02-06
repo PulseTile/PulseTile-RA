@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import DialogWithStyles from "./DialogWithStyles";
 
@@ -27,9 +28,11 @@ export default class SettingsDialog extends Component {
         const { open } = this.state;
         return (
             <React.Fragment>
-                <IconButton id="icon-settings" aria-haspopup="true" color="inherit" onClick={() => this.toggleDialog()}>
-                    <SettingsIcon />
-                </IconButton>
+                <Tooltip title="Settings">
+                    <IconButton id="icon-settings" aria-haspopup="true" color="inherit" onClick={() => this.toggleDialog()}>
+                        <SettingsIcon />
+                    </IconButton>
+                </Tooltip>
                 <span>Home</span>
                 <DialogWithStyles open={open} onClose={this.toggleDialog} />
             </React.Fragment>

@@ -1,4 +1,3 @@
-import contrastModeSagas from "./contrastModeSagas";
 import feedsListSagas from "./feedsListSagas";
 import feedsRssSagas from "./feedsRssSagas";
 import selectedFeedsSagas from "./selectedFeedsSagas";
@@ -10,7 +9,6 @@ import selectedFeedsSagas from "./selectedFeedsSagas";
  * @return {array}
  */
 export default [
-    contrastModeSagas,
     feedsListSagas,
     feedsRssSagas,
     selectedFeedsSagas,

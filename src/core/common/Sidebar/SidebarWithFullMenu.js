@@ -4,7 +4,7 @@ import { MenuItemLink, Sidebar, getResources } from 'react-admin';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { sortResourcesArray } from "./functions";
+import { sortResourcesArray } from "./sortResourcesArray";
 
 /**
  * This component returns full menu (Patient Summary + Plugins)
@@ -15,7 +15,7 @@ import { sortResourcesArray } from "./functions";
  * @param {string} currentList
  * @param {func}   onMenuClick
  */
-const FullMenu = ({ classes, resources, currentList, onMenuClick }) => {
+const SidebarWithFullMenu = ({ classes, resources, currentList, onMenuClick }) => {
     const sortResources = sortResourcesArray(resources);
     return (
         <Sidebar className={classes.sidebarBlock}>
@@ -48,4 +48,4 @@ const FullMenu = ({ classes, resources, currentList, onMenuClick }) => {
     );
 };
 
-export default FullMenu;
+export default SidebarWithFullMenu;

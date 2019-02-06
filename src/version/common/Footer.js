@@ -58,7 +58,7 @@ class Footer extends Component {
     toggleContrastMode = e => {
         e.preventDefault();
         this.setState(
-            { isContrastMode: !this.state.isContrastMode },
+            state => ({ isContrastMode: !this.state.isContrastMode }),
             () => this.props.contrastModeAction(this.state.isContrastMode)
         );
     };

@@ -17,8 +17,9 @@ const styles = {
         zIndex: 1,
         minHeight: '100vh',
         position: 'relative',
-        '& main': {
-            minHeight: "calc(100vh - 54px - 190px)",
+        '& > div': {
+            minHeight: '100vh',
+            overflowX: 'hidden !important',
         },
         '& main > div': {
             padding: 0,
