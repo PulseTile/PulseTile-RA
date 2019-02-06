@@ -6,7 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
 
-import helmLogo from "../../../images/helm-logo.png";
+import mainLogo from "../../../images/main-logo.jpg";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
 import ContrastMode from "../../../features/ContrastMode";
@@ -38,6 +38,10 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         paddingLeft: 9,
+    },
+    mainLogo: {
+        width: "auto",
+        maxWidth: "100%",
     },
     nhsLogo: {
         width: "auto",
@@ -99,11 +103,11 @@ const TopPart = ({ classes, logout, location }) => {
                 <Link to="/" className={classes.homeButton} color="inherit" >
                     <CardMedia
                         id="logo-image"
-                        className={classes.image}
+                        className={classes.mainLogo}
                         component="img"
                         alt="Pulse Tile"
                         height="38px"
-                        image={helmLogo}
+                        image={mainLogo}
                         title="Pulse Tile"
                     />
                 </Link>

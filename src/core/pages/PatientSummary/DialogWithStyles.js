@@ -114,7 +114,7 @@ class DialogContent extends Component {
                             })
                         }
                     </div>
-                    <NonCoreSelectors classes={classes} />
+                    { NonCoreSelectors && <NonCoreSelectors classes={classes} /> }
                     <Typography>VIEW OF BOARDS</Typography>
                     <Divider />
                     <div className={classes.dialogItemColumn}>

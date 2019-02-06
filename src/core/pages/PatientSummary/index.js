@@ -85,7 +85,7 @@ class PatientSummaryInfo extends Component {
                             );
                         })
                     }
-                    <NonCorePanels />
+                    { NonCorePanels && <NonCorePanels /> }
                 </div>
             </div>
         );

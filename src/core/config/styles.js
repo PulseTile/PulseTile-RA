@@ -1,13 +1,14 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import { get } from "lodash";
 
-import backgroundImage from "../../version/images/Artboard.png";
-import cardBackgroundImage from "../../version/images/blue-ring-01.png";
-
-import { MAIN_THEME_COLOR } from "../../version/config/theme.config";
+import { MAIN_THEME_COLOR, themeCommonElements } from "../../version/config/theme.config";
 
 export const ITEMS_PER_PAGE = 10;
 
 const CORE_MAIN_COLOR = "#0D672F";
+
+const backgroundImage = get(themeCommonElements, 'backgroundImage', null);
+const cardBackgroundImage = get(themeCommonElements, 'cardBackgroundImage', null);
 
 function getCurrentThemeColor(isContrastMode) {
     let currentThemeColor = CORE_MAIN_COLOR;
@@ -19,6 +20,9 @@ function getCurrentThemeColor(isContrastMode) {
     return currentThemeColor;
 }
 
+function getTableHeaderBackground(cardBackgroundImage, currentThemeColor) {
+    return cardBackgroundImage ? 'url(' + cardBackgroundImage + ') 0 0 repeat' : currentThemeColor;
+}
 /**
  * This function returns current theme settings
  *
@@ -109,7 +113,7 @@ export function getCurrentTheme(isContrastMode) {
         },
         tableHeader: {
             tableHeaderBlock: {
-                background: isContrastMode ? '#000' : 'url(' + cardBackgroundImage + ') 0 0 repeat',
+                background: isContrastMode ? '#000' : getTableHeaderBackground(cardBackgroundImage, currentThemeColor),
             },
         },
         patientSummaryPanel: {

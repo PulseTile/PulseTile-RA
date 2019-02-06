@@ -1,7 +1,4 @@
 import contrastMode from "./contrastModeReducer";
-import feedsList from "./feedsListReducer";
-import selectedFeedsList from "./selectedFeedsReducer";
-import feedsRss from "./feedsRssReducer";
 
 /**
  * This component returns version reducers
@@ -11,7 +8,4 @@ import feedsRss from "./feedsRssReducer";
  */
 export default {
     contrastMode,
-    feedsList,
-    selectedFeedsList,
-    feedsRss,
 };
