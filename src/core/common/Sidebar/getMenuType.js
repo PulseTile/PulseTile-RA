@@ -1,3 +1,6 @@
+import { get } from "lodash";
+import { themeCommonElements } from "../../../version/config/theme.config";
+
 export const SHORT_MENU = "short";
 export const FULL_MENU = "full";
 
@@ -9,9 +12,13 @@ export const FULL_MENU = "full";
 export function getMenuType(currentPathname) {
     let result = SHORT_MENU;
     const ShortMenuPages = [
+        "/",
         "/charts",
         "/patients"
     ];
+
+
+
     if (ShortMenuPages.indexOf(currentPathname) === -1) {
         result = FULL_MENU;
     }

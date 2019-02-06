@@ -61,12 +61,17 @@ class CustomPaginator extends Component {
      * @param {number} page
      */
     goToPage = page => {
+        const { onClick } = this.props;
         this.setState(
             { page: page },
             () => {
                 const { resourceUrl, history, itemsPerPage } = this.props;
                 const { page} = this.state;
-                history.push("/" + resourceUrl + "?page=" + page + "&perPage=" + itemsPerPage)
+                if (!onClick) {
+                    history.push("/" + resourceUrl + "?page=" + page + "&perPage=" + itemsPerPage)
+                } else {
+                    onClick(page)
+                }
             }
         );
     };
