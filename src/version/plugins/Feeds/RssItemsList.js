@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
  * @constructor
  */
 const ItemsList = ({ classes, items }) => {
-    if (items.length === 0) {
+    if (!items) {
         return (
             <ListItem button divider>
                 <ListItemText primary="No data" />
