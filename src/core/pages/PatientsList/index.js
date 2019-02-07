@@ -90,12 +90,7 @@ class PatientsList extends Component   {
         const breadcrumbsResource = [
             { url: "/patients", title: "Patients list", isActive: false }
         ];
-        // const data = patientsList ?  Object.values(patientsList) : [];
-
-        const data = dummyPatients;
-        console.log('dummyPatients', dummyPatients);
-
-
+        const data = patientsList ?  Object.values(patientsList) : [];
         const total = data.length;
         return (
             <React.Fragment>
