@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-const styles = {
+const styles = theme => ({
     breadcrumbsBlock: {
         display: "flex",
-        height: "48px",
+        height: 48,
         alignItems: "center",
         border: "1px solid #e5e5e5",
-        paddingLeft: "10px",
-        backgroundColor: "white",
+        paddingLeft: 10,
+        backgroundColor: "#fff",
     },
     separator: {
         width: 0,
@@ -19,18 +19,18 @@ const styles = {
         borderTop: "5px solid transparent",
         borderBottom: "5px solid transparent",
         borderLeft: "5px solid black",
-        marginLeft: "8px",
-        marginRight: "8px",
-        marginTop: "5px",
+        marginLeft: 8,
+        marginRight: 8,
+        marginTop: 5,
     },
     link: {
         textDecoration: "none",
-        color: "#2196f3",
+        color: theme.global.mainColor,
     },
     breadcrumbsItem: {
         display: "flex",
     }
-};
+});
 
 /**
  * This component returns breadcrumbs block

@@ -14,9 +14,7 @@ import customRoutes from "./routes";
 import Charts from "./pages/Charts";
 import Layout from "./common/CustomLayout";
 
-import { currentTheme } from "./config/styles";
-
-const dataProvider = customDataProvider("http://dev.ripple.foundation:8000");
+const dataProvider = customDataProvider();
 
 const plugins = corePlugins.concat(nonCorePlugins);
 
@@ -30,7 +28,6 @@ const App = () => {
             dataProvider={dataProvider}
             dashboard={Charts}
             appLayout={Layout}
-            theme={currentTheme}
         >
             {
                 plugins.map(item => {

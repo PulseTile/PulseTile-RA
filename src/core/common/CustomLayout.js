@@ -1,10 +1,15 @@
 import React, { Component } from "react";
+import { get } from "lodash";
+import { connect } from 'react-redux';
 import { Layout } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 
 import CustomSidebar from "./Sidebar";
 import CustomTopBar from "./Topbar";
+import CustomFooter from "./Footer";
+
+import { getCurrentTheme } from "../config/styles";
 
 const styles = {
     root: {
@@ -12,24 +17,13 @@ const styles = {
         zIndex: 1,
         minHeight: '100vh',
         position: 'relative',
+        '& > div': {
+            minHeight: '100vh',
+            overflowX: 'hidden !important',
+        },
         '& main > div': {
             padding: 0,
         },
-    },
-    appFrame: {
-        display: 'flex',
-        flexDirection: 'column',
-        overflowX: 'auto',
-    },
-    contentWithSidebar: {
-        display: 'flex',
-        flexGrow: 1,
-    },
-    content: {
-        display: "block",
-        flexDirection: 'column',
-        flexGrow: 2,
-        padding: 0,
     },
 };
 
@@ -46,8 +40,16 @@ const CustomLayout = ({ classes, ...rest }) => {
             className={classes.root}
             appBar={CustomTopBar}
             sidebar={CustomSidebar}
+            notification={CustomFooter}
         />
     );
 };
 
-export default withStyles(styles)(CustomLayout);
+const mapStateToProps = state => {
+    const isContrastMode = get(state, 'custom.contrastMode.data', false);
+    return {
+        theme: getCurrentTheme(isContrastMode),
+    }
+};
+
+export default connect(mapStateToProps, null)(withStyles(styles)(CustomLayout));

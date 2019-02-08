@@ -6,31 +6,31 @@ import BlockIcon from '@material-ui/icons/Block';
 
 import CustomSaveButton from "../../common/Buttons/CustomSaveButton";
 
-const styles = {
+const styles = theme => ({
     listButton: {
         display: "block",
-        width: "120px",
-        height: "40px",
+        width: 120,
+        height: 40,
         paddingTop: "6px !important",
         paddingLeft: "8px !important",
-        backgroundColor: "#da534f",
-        color: "white",
-        border: "1px solid " + "#da534f",
-        borderRadius: "20px",
-        fontSize: "16px",
-        fontWeight: "800",
+        backgroundColor: theme.buttons.cancelButton.backgroundColor,
+        border: theme.buttons.cancelButton.border,
+        color: "#fff",
+        borderRadius: 20,
+        fontSize: 16,
+        fontWeight: 800,
         "& svg": {
-            marginRight: "2px"
+            marginRight: 2,
         },
         "& span": {
-            textTransform: "capitalize"
+            textTransform: "capitalize",
         },
         "&:hover": {
-            backgroundColor: "white",
-            color: "#da534f",
+            backgroundColor: "#fff",
+            color: theme.buttons.cancelButton.colorHover,
         }
     }
-};
+});
 
 /**
  * This component returns toolbar without delete button for create forms

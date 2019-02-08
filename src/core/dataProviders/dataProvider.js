@@ -56,6 +56,7 @@ export default () => {
                 }
                 options.headers = {
                     Authorization: "Bearer " + token,
+                    'X-Requested-With': "XMLHttpRequest",
                 };
                 break;
             }
@@ -68,6 +69,7 @@ export default () => {
                 }
                 options.headers = {
                     Authorization: "Bearer " + token,
+                    'X-Requested-With': "XMLHttpRequest",
                 };
                 break;
 
@@ -80,7 +82,8 @@ export default () => {
                 }
                 options.headers = {
                     Authorization: "Bearer " + token,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': "XMLHttpRequest",
                 };
                 options.body = JSON.stringify(data);
                 break;
@@ -94,7 +97,8 @@ export default () => {
                 }
                 options.headers = {
                     Authorization: "Bearer " + token,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': "XMLHttpRequest",
                 };
                 options.body = JSON.stringify(params.data);
                 break;

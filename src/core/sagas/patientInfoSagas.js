@@ -15,6 +15,7 @@ export default takeEvery(PATIENT_INFO.REQUEST, function*(action) {
     }
     options.headers = {
         Authorization: "Bearer " + token,
+        'X-Requested-With': "XMLHttpRequest",
     };
     try {
         const result = yield fetch(url, options).then(res => res.json());

@@ -8,14 +8,18 @@ import showHeadingsSagas from "./showHeadingsSagas";
 import userInfoSagas from "./userInfoSagas";
 
 // LINK TO NON-CORE SAGAS
-// import nonCoreSagas from "../../version/sagas";
+import nonCoreSagas from "../../version/sagas";
+
+const coreSagas = [
+    patientInfoSagas,
+    patientsStatisticSagas,
+    showModeSagas,
+    showHeadingsSagas,
+    userInfoSagas,
+];
+
+const mergeSagas = coreSagas.concat(nonCoreSagas);
 
 export default function* rootSaga() {
-    yield all([
-        patientInfoSagas,
-        patientsStatisticSagas,
-        showModeSagas,
-        showHeadingsSagas,
-        userInfoSagas,
-    ]);
+    yield all(mergeSagas);
 }

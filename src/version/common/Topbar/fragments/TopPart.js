@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-import ContrastIcon from '@material-ui/icons/Tonality';
 import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,6 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import helmLogo from "../../../images/helm-logo.png";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
+import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
 
 const styles = theme => ({
@@ -120,16 +120,7 @@ const TopPart = ({ classes, logout, location }) => {
                 title="Pulse Tile"
             />
             <UserTour classes={classes} location={location} />
-            <div className={classes.rightBlockItem}>
-                <Tooltip title="Contrast mode">
-                    <IconButton
-                        className={classes.rightBlockButton}
-                        aria-haspopup="true"
-                        color="inherit" >
-                        <ContrastIcon />
-                    </IconButton>
-                </Tooltip>
-            </div>
+            <ContrastMode classes={classes} />
             <UserPanelButton classes={classes} />
         </Toolbar>
     );
