@@ -24,9 +24,6 @@ export default (state = initialState, action) => {
                 loading: true,
             };
         case SET_SELECTED_FEEDS_ACTION.SUCCESS:
-
-            console.log('action', action);
-
             return {
                 ...state,
                 loading: false,

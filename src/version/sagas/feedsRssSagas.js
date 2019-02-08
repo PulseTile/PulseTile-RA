@@ -1,32 +1,23 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import { createServer } from 'cors-anywhere';
-import RSSParser from "rss-parser";
 
 import { FEEDS_RSS_ACTION, feedsRssAction } from "../actions/feedsRssAction";
+import { getRssFeedsListFromXML } from "../plugins/Feeds/rss-helper";
+
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
 export default takeEvery(FEEDS_RSS_ACTION.REQUEST, function*(action) {
-    const data = action.data;
-    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-    const url = CORS_PROXY + data.replace("http://", "").replace("https://", "");
-
-    console.log('url', url);
-
+    const feedsUrl = action.rssFeedUrl;
+    const sourceId = action.sourceId;
+    const url = CORS_PROXY + feedsUrl.replace("http://", "").replace("https://", "");
     try {
-        let parser = new RSSParser();
-        const result = parser.parseURL(url, (err, feed) => {
-            let rss = [];
-            feed.items.forEach(function(entry) {
-                rss.push({
-                    title: entry.title,
-                    link: entry.link,
-                });
-            });
-            return rss;
-        });
-
-        console.log('result', result);
-
-        yield put(feedsRssAction.success(result))
+        const result = yield fetch(url)
+            .then(res => res.text())
+            .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+            .then(responseData => getRssFeedsListFromXML(responseData))
+            .then(res => res);
+        yield put(feedsRssAction.success({
+            [sourceId]: result,
+        }))
     } catch(e) {
         yield put(feedsRssAction.error(e))
     }

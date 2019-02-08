@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
 import NonCoreSelectors from "../plugins/Feeds/VersionSummarySelectors";
+import NonCorePanals from "../plugins/Feeds/FeedsPanels";
 
 /**
  * Order of menu items for the current theme
@@ -23,6 +24,7 @@ export const themeCommonElements = {
     topbar: ThemeTopbar,
     footer: ThemeFooter,
     nonCoreSelectors: NonCoreSelectors,
+    nonCorePanels: NonCorePanals,
 };
 
 export const MAIN_THEME_COLOR = "#3596f4";

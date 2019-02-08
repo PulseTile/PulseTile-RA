@@ -17,26 +17,23 @@ const initialState = {
  * @return {shape}
  */
 export default (state = initialState, action) => {
+    const currentRss = get(state, 'data', {});
     switch (action.type) {
+
         case FEEDS_RSS_ACTION.REQUEST:
             return {
                 ...state,
                 loading: true,
             };
+
         case FEEDS_RSS_ACTION.SUCCESS:
-
-            console.log('SUCCESS', action );
-
             return {
                 ...state,
                 loading: false,
-                data: get(action, "data", []),
+                data: Object.assign({}, currentRss, get(action, "data", [])),
             };
+
         case FEEDS_RSS_ACTION.FAILURE:
-
-
-            console.log('FAILURE', action);
-
             return {
                 ...state,
                 loading: false,
