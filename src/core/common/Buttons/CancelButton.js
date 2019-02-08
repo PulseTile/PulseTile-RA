@@ -5,24 +5,24 @@ import IconButton from '@material-ui/core/IconButton';
 import BlockIcon from '@material-ui/icons/Block';
 import Tooltip from '@material-ui/core/Tooltip';
 
-const styles = {
+const styles = theme => ({
     button: {
         display: "block",
         width: 100,
         height: 40,
         margin: "8px !important",
-        color: "white",
-        backgroundColor: "#da534f",
-        border: "1px solid #da534f",
+        color: "#fff",
+        backgroundColor: theme.buttons.cancelButton.backgroundColor,
+        border: theme.buttons.cancelButton.border,
         borderRadius: 20,
-        fontSize: "16px",
+        fontSize: 16,
         fontWeight: 800,
         "&:hover": {
-            color: "#da534f",
-            backgroundColor: "white",
+            color: theme.buttons.cancelButton.colorHover,
+            backgroundColor: "#fff",
         }
     }
-};
+});
 
 /**
  * This component returns Cancel button
