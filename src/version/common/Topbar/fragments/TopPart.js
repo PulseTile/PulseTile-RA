@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-import PersonIcon from '@material-ui/icons/Person';
-import ContrastIcon from '@material-ui/icons/Tonality';
 import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';

@@ -8,8 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import TopPart from "./fragments/TopPart";
 import LowPart from "./fragments/LowPart";
 
-import { themeHasTopBar } from "../../../version/config/theme.config";
-import ThemeTopBar from "../../../version/common/Topbar";
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 /**
  * This is common component for custom core TopBar
@@ -17,7 +16,8 @@ import ThemeTopBar from "../../../version/common/Topbar";
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const CustomTopbar = props => {
-    if (themeHasTopBar) {
+    const ThemeTopBar = get(themeCommonElements, 'topbar', false);
+    if (ThemeTopBar) {
         return (
             <ThemeTopBar {...props} />
         );

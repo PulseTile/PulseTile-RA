@@ -2,32 +2,26 @@ import React from "react";
 
 import Typography from '@material-ui/core/Typography';
 
-import PatientBanner from "./PatientBanner";
-
-const pagesWithTitle = [
-    '/',
-    '/charts',
-    '/patients',
-];
-
 const titlesArray = {
     charts: "System Dashboard",
     patients: "Patients Lists",
 };
 
-const PageTitle = ({ classes, location, patientInfo }) => {
+/**
+ * This component returns page title (for Charts and Patients pages)
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} classes
+ * @param {shape} location
+ */
+const PageTitle = ({ classes, location }) => {
     const pathName = location.pathname;
-    if (pagesWithTitle.indexOf(pathName) !== -1) {
-        const title = titlesArray[pathName.replace('/', '')];
-        return (
-            <Typography className={classes.title}>
-                {title ? title : "System Dashboard"}
-            </Typography>
-        );
-    }
+    const title = titlesArray[pathName.replace('/', '')];
     return (
-        <PatientBanner classes={classes} patientInfo={patientInfo} />
+        <Typography className={classes.title}>
+            {title ? title : "System Dashboard"}
+        </Typography>
     );
-}
+};
 
 export default PageTitle;
