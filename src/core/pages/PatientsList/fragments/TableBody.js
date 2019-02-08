@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -6,10 +7,14 @@ import TableRow from '@material-ui/core/TableRow';
 
 
 const TableBodyBlock = ({ data, rowsPerPage, page, onRowClick }) => {
+    const dataForPage = data.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage);
     return (
         <TableBody>
-            {data && data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(item => {
+            {dataForPage.map(item => {
+
+                    console.log('item', item);
+
+
                     return (
                         <TableRow onClick={() => onRowClick(item.id)}>
                             <TableCell scope="row" padding="none">
@@ -19,7 +24,7 @@ const TableBodyBlock = ({ data, rowsPerPage, page, onRowClick }) => {
                                 <span>{item.address}</span>
                             </TableCell>
                             <TableCell align="right">
-                                <span>{item.dateOfBirth}</span>
+                                <span>{moment(item.dateOfBirth).format('DD-MMM-YYYY')}</span>
                             </TableCell>
                             <TableCell align="right">
                                 <span>{item.gender}</span>

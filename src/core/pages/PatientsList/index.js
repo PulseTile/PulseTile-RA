@@ -72,7 +72,7 @@ class PatientsList extends Component   {
     };
 
     componentDidMount() {
-        this.props.getPatientsList();
+        // this.props.getPatientsList();
     }
 
     goToPage = page => {
@@ -90,7 +90,7 @@ class PatientsList extends Component   {
         const breadcrumbsResource = [
             { url: "/patients", title: "Patients list", isActive: false }
         ];
-        const data = patientsList ?  Object.values(patientsList) : [];
+        const data = dummyPatients;
         const total = data.length;
         return (
             <React.Fragment>
@@ -99,8 +99,8 @@ class PatientsList extends Component   {
                     <div className={classes.tableWrapper}>
                         <Table className={classes.tableList} aria-labelledby="tableTitle">
                             <TableHeadBlock />
-                            { patientsList &&
-                                <TableBodyBlock onRowClick={this.onRowClick} data={data} rowsPerPage={10} page={this.state.page} />
+                            { data &&
+                                <TableBodyBlock onRowClick={this.onRowClick} data={dummyPatients} rowsPerPage={10} page={this.state.page} />
                             }
                             <CustomPaginator onClick={this.goToPage} classes={classes} itemsPerPage={10} total={total} />
                         </Table>
