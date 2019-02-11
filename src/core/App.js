@@ -13,6 +13,7 @@ import customRoutes from "./routes";
 
 import Charts from "./pages/Charts";
 import Layout from "./common/CustomLayout";
+import InitializePage from "./pages/InitializePage";
 
 const dataProvider = customDataProvider();
 
@@ -28,6 +29,7 @@ const App = () => {
             dataProvider={dataProvider}
             dashboard={Charts}
             appLayout={Layout}
+            loginPage={InitializePage}
         >
             {
                 plugins.map(item => {

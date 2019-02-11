@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 
 // CORE SAGAS
+import initializeSagas from "./initializeSagas";
 import patientInfoSagas from "./patientInfoSagas";
 import patientsStatisticSagas from "./patientsStatisticSagas";
 import showModeSagas from "./showModeSagas";
@@ -11,6 +12,7 @@ import userInfoSagas from "./userInfoSagas";
 import nonCoreSagas from "../../version/sagas";
 
 const coreSagas = [
+    initializeSagas,
     patientInfoSagas,
     patientsStatisticSagas,
     showModeSagas,

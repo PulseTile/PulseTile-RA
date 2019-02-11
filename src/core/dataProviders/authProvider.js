@@ -1,5 +1,52 @@
+import { get } from "lodash";
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin';
 import { token, domainName } from "../token";
+
+const OLD_PATIENT_DELAY = 1000;
+const NEW_PATIENT_DELAY = 5000;
+
+const url = domainName + '/api/initialise';
+let options = {};
+options.method = "GET";
+if (!options.headers) {
+    options.headers = new Headers({ Accept: 'application/json' });
+}
+options.headers = {
+    'X-Requested-With': "XMLHttpRequest",
+};
+
+const FetchLogin = (resolve, reject) => fetch(url, options)
+    .then(res => res.json())
+    .then(response => {
+        if (get(response, 'status', null) !== 'loading_data') {
+            return;
+        }
+        const isNewPatient = get(response, 'new_patient', false);
+        const delay = isNewPatient ? NEW_PATIENT_DELAY : OLD_PATIENT_DELAY;
+        setTimeout((resolve, reject) => FetchLogin(resolve, reject), delay);
+    });
+
+// function getUserInfo() {
+//
+//     const urlUser = domainName + '/api/user';
+//
+//     let optionsUser = {};
+//     optionsUser.method = "GET";
+//     if (!optionsUser.headers) {
+//         optionsUser.headers = new Headers({ Accept: 'application/json' });
+//     }
+//     optionsUser.headers = {
+//         Authorization: "Bearer " + token,
+//         'X-Requested-With': "XMLHttpRequest",
+//     };
+//
+//     return fetch(urlUser, optionsUser)
+//         .then(res => res.json())
+//         .then(response => {
+//             console.log('USER INFO: ', response);
+//             return response;
+//         });
+// }
 
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
@@ -38,10 +85,29 @@ export default (type, params) => {
     if (type === AUTH_ERROR) {
         return Promise.resolve();
     }
+
     if (type === AUTH_CHECK) {
-        return localStorage.getItem('userId')
-            ? Promise.resolve()
-            : Promise.reject();
+
+        console.log('------------------------------------------------');
+        console.log('userId', localStorage.getItem('userId'));
+        console.log('token', token);
+
+
+        if (localStorage.getItem('userId') && token) {
+            return Promise.resolve();
+        } else if (token) {
+
+            const FetchInitialize = new Promise((resolve, reject) => FetchLogin(resolve, reject))
+                .then(res => {
+                    console.log('***********************************');
+
+                });
+
+        }
+        return Promise.reject();
+
+        // return localStorage.getItem('userId') ? Promise.resolve() : Promise.reject();
     }
+
     return Promise.reject("Wrong login or password");
 };
