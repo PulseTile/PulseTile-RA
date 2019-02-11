@@ -15,16 +15,18 @@ options.headers = {
     'X-Requested-With': "XMLHttpRequest",
 };
 
-const FetchLogin = (resolve, reject) => fetch(url, options)
-    .then(res => res.json())
-    .then(response => {
-        if (get(response, 'status', null) !== 'loading_data') {
-            return resolve(true);    // Error like "Uncaught (in promise) TypeError: t is not a function"
-        }
-        const isNewPatient = get(response, 'new_patient', false);
-        const delay = isNewPatient ? NEW_PATIENT_DELAY : OLD_PATIENT_DELAY;
-        setTimeout(() => FetchLogin(resolve, reject), delay);
-    });
+const FetchLogin = (resolve, reject) => {
+    fetch(url, options)
+        .then(res => res.json())
+        .then(response => {
+            if (get(response, 'status', null) !== 'loading_data') {
+                return resolve(true);    // Error like "Uncaught (in promise) TypeError: t is not a function"
+            }
+            const isNewPatient = get(response, 'new_patient', false);
+            const delay = isNewPatient ? NEW_PATIENT_DELAY : OLD_PATIENT_DELAY;
+            setTimeout(() => FetchLogin(resolve, reject), delay);
+        });
+};
 
 // function getUserInfo() {
 //
