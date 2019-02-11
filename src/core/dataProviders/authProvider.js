@@ -97,7 +97,7 @@ export default (type, params) => {
             return Promise.resolve();
         } else if (token) {
 
-            const FetchInitialize = () => new Promise((resolve, reject) => FetchLogin(resolve, reject))
+            const FetchInitialize = new Promise((resolve, reject) => FetchLogin(resolve, reject))
                 .then(res => {
                     console.log('***********************************');
 
