@@ -23,7 +23,7 @@ const FetchLogin = (resolve, reject) => fetch(url, options)
         }
         const isNewPatient = get(response, 'new_patient', false);
         const delay = isNewPatient ? NEW_PATIENT_DELAY : OLD_PATIENT_DELAY;
-        setTimeout((resolve, reject) => FetchLogin(resolve, reject), delay);
+        setTimeout(() => FetchLogin(resolve, reject), delay);
     });
 
 // function getUserInfo() {
