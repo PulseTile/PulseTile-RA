@@ -99,11 +99,12 @@ export default (type, params) => {
             return Promise.resolve();
         } else if (token) {
 
-            const FetchInitialize = new Promise((resolve, reject) => FetchLogin(resolve, reject))
-                .then(res => {
-                    console.log('***********************************');
+            return new Promise(FetchLogin).then(() => {
 
-                });
+
+                console.log('----------------------  PLACE FOR USER')
+
+            });
 
         }
         return Promise.reject();
