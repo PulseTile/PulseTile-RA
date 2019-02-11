@@ -19,7 +19,7 @@ const FetchLogin = (resolve, reject) => fetch(url, options)
     .then(res => res.json())
     .then(response => {
         if (get(response, 'status', null) !== 'loading_data') {
-            return;
+            return resolve(true);    // Error like "Uncaught (in promise) TypeError: t is not a function"
         }
         const isNewPatient = get(response, 'new_patient', false);
         const delay = isNewPatient ? NEW_PATIENT_DELAY : OLD_PATIENT_DELAY;
@@ -97,7 +97,7 @@ export default (type, params) => {
             return Promise.resolve();
         } else if (token) {
 
-            const FetchInitialize = new Promise((resolve, reject) => FetchLogin(resolve, reject))
+            const FetchInitialize = () => new Promise((resolve, reject) => FetchLogin(resolve, reject))
                 .then(res => {
                     console.log('***********************************');
 
