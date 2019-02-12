@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { get } from "lodash";
 import { connect } from 'react-redux';
 
 import { initializeAction } from "../actions/initializeAction";
+import { token } from "../token";
 
 class InitializePage extends Component {
 
     componentDidMount() {
-        if (!this.props.initialize) {
+        if (!token) {
             this.props.initializeAction();
         }
     }
@@ -18,12 +20,6 @@ class InitializePage extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        initialize: state.custom.initialize.data,
-    };
-};
-
 const mapDispatchToProps = dispatch => {
     return {
         initializeAction() {
@@ -32,4 +28,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(InitializePage);
+export default connect(null, mapDispatchToProps)(InitializePage);
