@@ -18,4 +18,4 @@ function getTokenFromCookie() {
 }
 
 export const token = getTokenFromCookie();
-export const domainName = "https://apple-cake.ripple.foundation";
+export const domainName = "https://192.168.88.38";

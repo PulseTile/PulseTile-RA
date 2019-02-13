@@ -37,7 +37,6 @@ const FetchLogin = (resolve, reject) => {
 };
 
 export default async (type, params) => {
-
     if (type === AUTH_LOGOUT) {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
@@ -55,7 +54,9 @@ export default async (type, params) => {
         if (localStorage.getItem('userId') && token) {
             return Promise.resolve();
         } else if (token) {
-            return new Promise(FetchLogin);
+            new Promise(FetchLogin).then(res => {
+                window.location.href = '/';
+            });
         }
         return Promise.reject();
     }
