@@ -1,6 +1,7 @@
 import React from "react";
 
-import Card from "@material-ui/core/Card";
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -22,13 +23,10 @@ const LoadingItems = ({ classes }) => {
         <List className={classes.list}>
             <ListItem button divider>
                 <ListItemText primary="Loading..." />
-                <ListItemText primary="" />
-                <ListItemText primary="" />
-                <ListItemText primary="" />
             </ListItem>
         </List>
     );
-}
+};
 
 /**
  * This component returns list block
@@ -64,16 +62,18 @@ export default props => {
         return null;
     }
     return (
-        <Card id={id} className={classes.card}>
-            <div className={classes.topBlock} onClick={() => history.push('/' + list)}>
-                <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
-                <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
-                    {title}
-                </Typography>
-            </div>
-            { (showMode === SHOW_ALL || !showMode) &&
-                <ListBlock loading={loading} classes={classes} items={items} list={list} history={history} />
-            }
-        </Card>
+        <Grid item xs={12} sm={6} md={6} lg={3}>
+            <Card className={classes.card}>
+                <div className={classes.topBlock} onClick={() => history.push('/' + list)}>
+                    <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
+                    <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
+                        {title}
+                    </Typography>
+                </div>
+                { (showMode === SHOW_ALL || !showMode) &&
+                    <ListBlock loading={loading} classes={classes} items={items} list={list} history={history} />
+                }
+            </Card>
+        </Grid>
     );
 }

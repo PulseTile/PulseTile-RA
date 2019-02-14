@@ -9,6 +9,7 @@ import {
 } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import EditFormToolbar from "../../common/Toolbars/EditFormToolbar";
@@ -17,7 +18,6 @@ const styles = theme => ({
     editBlock: {
         width: '100%',
         backgroundColor: "white",
-        margin: "15px 15px 15px 0px",
     },
     blockTitle: {
         display: "flex",
@@ -49,14 +49,14 @@ const styles = theme => ({
  * @constructor
  */
 const EditTemplate = ({ classes, blockTitle, children, changeViewType, ...rest }) => (
-    <div className={classes.editBlock}>
+    <Grid item xs={12} sm={6} className={classes.editBlock}>
         <Typography className={classes.blockTitle}>{blockTitle}</Typography>
         <Edit {...rest}>
             <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
                 {children}
             </SimpleForm>
         </Edit>
-    </div>
+    </Grid>
 );
 
 export default withStyles(styles)(EditTemplate);
