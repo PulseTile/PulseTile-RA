@@ -41,7 +41,7 @@ const LoadingItems = ({ classes }) => {
  * @param {shape}   history
  */
 const ListBlock = ({ loading, classes, items, list, history }) => {
-    if (loading) {
+    if (!items || loading) {
         return (
             <LoadingItems classes={classes} />
         );

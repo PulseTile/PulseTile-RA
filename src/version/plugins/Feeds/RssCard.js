@@ -24,9 +24,9 @@ const LoadingItems = ({ classes }) => {
         <List className={classes.list}>
             <ListItem button divider>
                 <ListItemText primary="Loading..." />
-                <ListItemText primary="" />
-                <ListItemText primary="" />
-                <ListItemText primary="" />
+                <ListItemText primary=" " />
+                <ListItemText primary=" " />
+                <ListItemText primary=" " />
             </ListItem>
         </List>
     );
@@ -55,6 +55,7 @@ const ListBlock = ({ loading, classes, items, history }) => {
 const styles = theme => ({
     card: {
         display: "inline-block",
+        minHeight: 302,
         width: "calc(25% - 20px)",
         float: "left",
         margin: 10,

@@ -1,14 +1,14 @@
-import vaccinationsIcon from "../images/covers/vaccinations.jpg";
-import topThreeThingsIcon from "../images/covers/top3.jpg";
+import { faSyringe, faUserMd } from '@fortawesome/free-solid-svg-icons';
 
-import { vaccinationsSynopsisAction, topThreeThingsSynopsisAction } from "../actions/synopsisActions";
+import { synopsisVaccinationsAction } from "../actions/synopsisVaccinationsAction";
+import { synopsisTopThreeThingsAction } from "../actions/synopsisTopThreeThingsAction";
 
-export const nonCoreSynopsisData = [
-    { title: "Vaccinations", list: "vaccinations", statePropsName: 'vaccinationsSynopsis', icon: vaccinationsIcon },
-    { title: "Top Three Things", list: "top3Things", statePropsName: 'topThreeThingsSynopsis', icon: topThreeThingsIcon },
+export const nonCoreSynopsisActions = [
+    synopsisVaccinationsAction,
+    synopsisTopThreeThingsAction,
 ];
 
-export const nonCoreSynopsisSagas = [
-    { heading: 'top3Things', action: vaccinationsSynopsisAction },
-    { heading: 'vaccinations', action: topThreeThingsSynopsisAction },
+export const nonCoreSynopsisData = [
+    { id: "block-vaccinations", title: "Vaccinations", list: "vaccinations", icon: faSyringe },
+    { id: "block-top3Things", title: "Top Three Things", list: "top3Things", icon: faUserMd },
 ];

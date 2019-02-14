@@ -6,7 +6,6 @@
 export function pageHasTitle(location) {
     const pathName = location.pathname;
     const pagesWithTitle = [
-        '/',
         '/charts',
         '/patients',
     ];
