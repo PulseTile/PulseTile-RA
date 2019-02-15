@@ -86,25 +86,21 @@ class VersionSummarySelectors extends Component {
     }
 };
 
-const mapStateToProps = state => {
-    return {
-        feeds: state.custom.feedsList.data,
-        selectedFeeds: state.custom.selectedFeedsList.data,
-    };
-};
+const mapStateToProps = state => ({
+    feeds: state.custom.feedsList.data,
+    selectedFeeds: state.custom.selectedFeedsList.data,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getUserFeeds() {
-            dispatch(feedsListAction.request());
-        },
-        setSelectedFeeds(feeds) {
-            dispatch(setSelectedFeedsAction.request(feeds));
-        },
-        getRssData(sourceId, rssFeedUrl) {
-            dispatch(feedsRssAction.request(sourceId, rssFeedUrl));
-        },
-    }
-};
+const mapDispatchToProps = dispatch => ({
+    getUserFeeds() {
+        dispatch(feedsListAction.request());
+    },
+    setSelectedFeeds(feeds) {
+        dispatch(setSelectedFeedsAction.request(feeds));
+    },
+    getRssData(sourceId, rssFeedUrl) {
+        dispatch(feedsRssAction.request(sourceId, rssFeedUrl));
+    },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(VersionSummarySelectors);

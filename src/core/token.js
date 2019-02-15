@@ -14,8 +14,8 @@ function getTokenFromCookie() {
             result = itemArray[1];
         }
     });
-    return "JSESSIONID=" + result;
+    return result;
 }
 
 export const token = getTokenFromCookie();
-export const domainName = "http://dev.ripple.foundation";
+export const domainName = "http://dev.ripple.foundation:8000";

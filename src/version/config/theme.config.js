@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 
 import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
-import NonCoreSelectors from "../plugins/Feeds/VersionSummarySelectors";
-import NonCorePanals from "../plugins/Feeds/FeedsPanels";
+import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
+import FeedsPanels from "../plugins/Feeds/FeedsPanels";
 
 /**
  * Order of menu items for the current theme
@@ -23,8 +23,8 @@ export const resourceOrder = [
 export const themeCommonElements = {
     topbar: ThemeTopbar,
     footer: ThemeFooter,
-    nonCoreSelectors: NonCoreSelectors,
-    nonCorePanels: NonCorePanals,
+    feedsSelectors: FeedsSelectors,
+    feedsPanels: FeedsPanels,
 };
 
 export const MAIN_THEME_COLOR = "#3596f4";

@@ -96,7 +96,7 @@ class DialogContent extends Component {
     render() {
         const { classes, onClose, showMode, ...rest } = this.props;
         const { selectedMode, selectedHeadings } = this.state;
-        const NonCoreSelectors = get(themeCommonElements, 'nonCoreSelectors', false);
+        const FeedSelector = get(themeCommonElements, 'feedsSelectors', false);
         return (
             <Dialog onBackdropClick={() => onClose()} {...rest}>
                 <div className={classes.dialogBlock} >
@@ -114,7 +114,7 @@ class DialogContent extends Component {
                             })
                         }
                     </div>
-                    <NonCoreSelectors classes={classes} />
+                    <FeedSelector classes={classes} />
                     <Typography>VIEW OF BOARDS</Typography>
                     <Divider />
                     <div className={classes.dialogItemColumn}>
