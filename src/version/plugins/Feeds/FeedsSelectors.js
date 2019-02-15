@@ -38,6 +38,10 @@ class FeedsSelectors extends Component {
         return selectedFeeds.indexOf(sourceId) !== -1;
     };
 
+    isFeedsPresented = item => {
+        return (Object.values(this.props.selectedFeeds).indexOf(item.sourceId) !== -1);
+    };
+
     /**
      * This function toggle Feeds visibility
      *
@@ -45,22 +49,23 @@ class FeedsSelectors extends Component {
      * @param {shape} item
      */
     toggleVisibility = item => {
-        this.setState(state => {
-                const { selectedFeeds } = state;
+        this.setState((state, props) => {
+                const { selectedFeeds } = props;
                 let feedsArray = selectedFeeds;
-                if (Object.values(selectedFeeds).indexOf(item.sourceId) !== -1) {
+                if (this.isFeedsPresented(item)) {
                     let index = selectedFeeds.indexOf(item.sourceId);
                     feedsArray.splice(index, 1);
                 } else {
                     feedsArray.push(item.sourceId);
-                    this.props.getRssData(item.sourceId, item.rssFeedUrl);
                 }
                 return {
                     selectedFeeds: feedsArray,
                 };
             },
             () => {
-
+                if (this.isFeedsPresented(item)) {
+                    this.props.getRssData(item.sourceId, item.rssFeedUrl);
+                }
                 this.props.setSelectedFeeds(this.state.selectedFeeds)
             }
         );
