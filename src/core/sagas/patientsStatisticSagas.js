@@ -6,7 +6,6 @@ export default takeEvery(PATIENTS_STATISTIC.REQUEST, function*() {
     const apiPatientsUser = 'api/patients';
     const url = domainName + '/' + apiPatientsUser;
     let options = {};
-    options.method = "GET";
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }

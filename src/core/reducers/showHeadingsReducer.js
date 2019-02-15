@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { SHOW_HEADINGS_ACTION } from "../actions/showHeadingsAction";
 import { getHeadingsLists } from "../pages/PatientSummary/config";

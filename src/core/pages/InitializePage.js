@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import { get } from "lodash";
 import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 
@@ -20,7 +19,7 @@ const styles = {
         backgroundColor: "#fff",
         transition: "opacity 1s ease, visibility 1s ease, background 1s ease",
     },
-    ldsCss: {
+    slidesAndRings: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -73,6 +72,7 @@ const styles = {
     slideWrapper: {
         width: 2800,
         WebkitAnimation: "slide 100.9s ease-out infinite",
+        animation: "slide 100.9s ease-out infinite",
     },
     slide: {
         float: "left",
@@ -85,22 +85,22 @@ const styles = {
     },
     '@keyframes rings': {
         "0%": {
-            "-webkit-transform": "rotate(0)",
-            "transform": "rotate(0)",
+            WebkitTransform: "rotate(0)",
+            transform: "rotate(0)",
         },
         "100%": {
-            "-webkit-transform": "rotate(360deg)",
-            "transform": "rotate(360deg)",
+            WebkitTransform: "rotate(360deg)",
+            transform: "rotate(360deg)",
         }
     },
     '@keyframes rings_reverse': {
         "0%": {
-            "-webkit-transform": "rotate(0)",
-            "transform": "rotate(0)",
+            WebkitTransform: "rotate(0)",
+            transform: "rotate(0)",
         },
         "100%": {
-            "-webkit-transform": "rotate(-360deg)",
-            "transform": "rotate(-360deg)",
+            WebkitTransform: "rotate(-360deg)",
+            transform: "rotate(-360deg)",
         }
     },
     rings: {
@@ -127,24 +127,6 @@ const styles = {
             animation: "rings_reverse 1s linear infinite",
         }
     },
-    progress: {
-        position: "absolute",
-        bottom: 0,
-        width: "100%",
-        marginBottom: 0,
-        borderRadius: 0,
-    },
-    '@keyframes progress': {
-        "50%": { width: "50%" },
-        "100%": { width: "100%" },
-    },
-    progressBar: {
-        backgroundColor: "#3596f4",
-        animationName: "progress",
-        animationDuration: "5s",
-        animationIterationCount: "infinite",
-        animationFillMode: "forwards",
-    },
 };
 
 class InitializePage extends Component {
@@ -159,9 +141,8 @@ class InitializePage extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.mainSpinner}>
-                <div className={classes.ldsCss}>
-                {
-                    token &&
+                <div className={classes.slidesAndRings}>
+                {token &&
                     <div className={classes.tips}>
                         <h2>Top Tips to a Healthy Life</h2>
                         <div className={classes.slideWrapper}>
@@ -253,9 +234,6 @@ class InitializePage extends Component {
                         <div></div>
                         <div></div>
                     </div>
-                </div>
-                <div className={classes.progress}>
-                    <div className={classes.progressBar} role="progressbar" style={{width: 0 + '%'}}></div>
                 </div>
             </div>
         )
