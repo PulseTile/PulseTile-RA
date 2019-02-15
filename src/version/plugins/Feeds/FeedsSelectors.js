@@ -70,16 +70,12 @@ class VersionSummarySelectors extends Component {
                 <Typography>FEEDS</Typography>
                 <Divider />
                 <div className={classes.dialogItem}>
-                {
-                    feedsArray.map((item, key) => {
-                        return (
-                            <div key={key} className={classes.dialogLabel}>
-                                <Checkbox checked={this.isFeedsChecked(item.sourceId)} color="primary" onChange={() => this.toggleVisibility(item)} />
-                                <span>{item.name}</span>
-                            </div>
-                        );
-                    })
-                }
+                {feedsArray.map((item, key) => (
+                    <div key={key} className={classes.dialogLabel}>
+                        <Checkbox checked={this.isFeedsChecked(item.sourceId)} color="primary" onChange={() => this.toggleVisibility(item)} />
+                        <span>{item.name}</span>
+                    </div>
+                ))}
                 </div>
             </React.Fragment>
         );
