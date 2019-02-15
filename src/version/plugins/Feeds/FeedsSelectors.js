@@ -16,7 +16,7 @@ import dummyFeeds from "./dummyFeeds";
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-class VersionSummarySelectors extends Component {
+class FeedsSelectors extends Component {
 
     state = {
         selectedFeeds: this.props.selectedFeeds ? Object.values(this.props.selectedFeeds) : [],
@@ -38,6 +38,10 @@ class VersionSummarySelectors extends Component {
         return selectedFeeds.indexOf(sourceId) !== -1;
     };
 
+    isFeedsPresented = item => {
+        return (Object.values(this.props.selectedFeeds).indexOf(item.sourceId) !== -1);
+    };
+
     /**
      * This function toggle Feeds visibility
      *
@@ -45,20 +49,25 @@ class VersionSummarySelectors extends Component {
      * @param {shape} item
      */
     toggleVisibility = item => {
-        this.setState(state => {
-                const { selectedFeeds } = state;
+        this.setState((state, props) => {
+                const { selectedFeeds } = props;
                 let feedsArray = selectedFeeds;
-                if (Object.values(selectedFeeds).indexOf(item.sourceId) !== -1) {
+                if (this.isFeedsPresented(item)) {
                     let index = selectedFeeds.indexOf(item.sourceId);
                     feedsArray.splice(index, 1);
                 } else {
                     feedsArray.push(item.sourceId);
-                    this.props.getRssData(item.sourceId, item.rssFeedUrl);
                 }
                 return {
                     selectedFeeds: feedsArray,
                 };
-            }, () => this.props.setSelectedFeeds(this.state.selectedFeeds)
+            },
+            () => {
+                if (this.isFeedsPresented(item)) {
+                    this.props.getRssData(item.sourceId, item.rssFeedUrl);
+                }
+                this.props.setSelectedFeeds(this.state.selectedFeeds)
+            }
         );
     };
 
@@ -70,41 +79,33 @@ class VersionSummarySelectors extends Component {
                 <Typography>FEEDS</Typography>
                 <Divider />
                 <div className={classes.dialogItem}>
-                {
-                    feedsArray.map((item, key) => {
-                        return (
-                            <div key={key} className={classes.dialogLabel}>
-                                <Checkbox checked={this.isFeedsChecked(item.sourceId)} color="primary" onChange={() => this.toggleVisibility(item)} />
-                                <span>{item.name}</span>
-                            </div>
-                        );
-                    })
-                }
+                {feedsArray.map((item, key) => (
+                    <div key={key} className={classes.dialogLabel}>
+                        <Checkbox checked={this.isFeedsChecked(item.sourceId)} color="primary" onChange={() => this.toggleVisibility(item)} />
+                        <span>{item.name}</span>
+                    </div>
+                ))}
                 </div>
             </React.Fragment>
         );
     }
 };
 
-const mapStateToProps = state => {
-    return {
-        feeds: state.custom.feedsList.data,
-        selectedFeeds: state.custom.selectedFeedsList.data,
-    };
-};
+const mapStateToProps = state => ({
+    feeds: state.custom.feedsList.data,
+    selectedFeeds: state.custom.selectedFeedsList.data,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getUserFeeds() {
-            dispatch(feedsListAction.request());
-        },
-        setSelectedFeeds(feeds) {
-            dispatch(setSelectedFeedsAction.request(feeds));
-        },
-        getRssData(sourceId, rssFeedUrl) {
-            dispatch(feedsRssAction.request(sourceId, rssFeedUrl));
-        },
-    }
-};
+const mapDispatchToProps = dispatch => ({
+    getUserFeeds() {
+        dispatch(feedsListAction.request());
+    },
+    setSelectedFeeds(feeds) {
+        dispatch(setSelectedFeedsAction(feeds));
+    },
+    getRssData(sourceId, rssFeedUrl) {
+        dispatch(feedsRssAction.request(sourceId, rssFeedUrl));
+    },
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(VersionSummarySelectors);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedsSelectors);

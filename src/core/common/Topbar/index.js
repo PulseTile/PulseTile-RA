@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { get } from "lodash";
+import get from "lodash/get";
 import { setSidebarVisibility } from 'react-admin';
 import { connect } from 'react-redux';
 

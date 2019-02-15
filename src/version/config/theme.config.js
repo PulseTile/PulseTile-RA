@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 
 import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
-import NonCoreSelectors from "../plugins/Feeds/VersionSummarySelectors";
-import NonCorePanals from "../plugins/Feeds/FeedsPanels";
+import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
+import FeedsPanels from "../plugins/Feeds/FeedsPanels";
 import PatientSummary from "../../core/pages/PatientSummary";
 
 /**
@@ -24,8 +24,8 @@ export const resourceOrder = [
 export const themeCommonElements = {
     topbar: ThemeTopbar,
     footer: ThemeFooter,
-    nonCoreSelectors: NonCoreSelectors,
-    nonCorePanels: NonCorePanals,
+    feedsSelectors: FeedsSelectors,
+    feedsPanels: FeedsPanels,
     homePage: PatientSummary,
 };
 

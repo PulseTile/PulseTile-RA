@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 import { Admin, Resource } from "react-admin";
 
 import customDataProvider from "./dataProviders/dataProvider";

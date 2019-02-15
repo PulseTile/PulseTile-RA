@@ -1,5 +1,5 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import  { get } from "lodash";
+import get from "lodash/get";
 
 import { domainName } from "../token";
 import { INITIALIZE_ACTION, initializeAction } from "../actions/initializeAction";
@@ -7,7 +7,6 @@ import { INITIALIZE_ACTION, initializeAction } from "../actions/initializeAction
 export default takeEvery(INITIALIZE_ACTION.REQUEST, function*(action) {
     const url = domainName + '/api/initialise';
     let options = {};
-    options.method = "GET";
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }

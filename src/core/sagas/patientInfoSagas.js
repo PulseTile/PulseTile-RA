@@ -1,5 +1,5 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { token, domainName } from "../token";
 import { PATIENT_INFO, patientInfoAction } from "../actions/patientInfoAction";
@@ -9,7 +9,6 @@ export default takeEvery(PATIENT_INFO.REQUEST, function*(action) {
     const apiPatientsUser = 'api/patients';
     const url = domainName + '/' + apiPatientsUser + '/' + userId;
     let options = {};
-    options.method = "GET";
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }

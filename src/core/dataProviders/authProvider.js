@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash/get";
 import jwt from "jsonwebtoken";
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin';
 
@@ -9,7 +9,6 @@ const NEW_PATIENT_DELAY = 5000;
 
 const url = domainName + '/api/initialise';
 let options = {};
-options.method = "GET";
 if (!options.headers) {
     options.headers = new Headers({ Accept: 'application/json' });
 }

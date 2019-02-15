@@ -3,54 +3,12 @@ import { connect } from 'react-redux';
 
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 
 import { withStyles } from "@material-ui/core/styles";
 import RssIcon from '@material-ui/icons/RssFeed';
 
-import ItemsList from "./RssItemsList";
+import ListBlock from "./ListBlock";
 import { SHOW_ALL } from "../../../core/pages/PatientSummary/config";
-
-/**
- * This component returns list of empty rows if information is loading
- *
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @constructor
- */
-const LoadingItems = ({ classes }) => {
-    return (
-        <List className={classes.list}>
-            <ListItem button divider>
-                <ListItemText primary="Loading..." />
-                <ListItemText primary=" " />
-                <ListItemText primary=" " />
-                <ListItemText primary=" " />
-            </ListItem>
-        </List>
-    );
-}
-
-/**
- * This component returns list block
- *
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {boolean} loading
- * @param {shape}   classes
- * @param {array}   items
- * @param {shape}   history
- */
-const ListBlock = ({ loading, classes, items, history }) => {
-    if (loading) {
-        return (
-            <LoadingItems classes={classes} />
-    );
-    }
-    return (
-        <ItemsList classes={classes} items={items} history={history} />
-    );
-};
 
 const styles = theme => ({
     card: {
