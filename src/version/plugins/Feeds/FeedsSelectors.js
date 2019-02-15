@@ -96,7 +96,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(feedsListAction.request());
     },
     setSelectedFeeds(feeds) {
-        dispatch(setSelectedFeedsAction.request(feeds));
+        dispatch(setSelectedFeedsAction(feeds));
     },
     getRssData(sourceId, rssFeedUrl) {
         dispatch(feedsRssAction.request(sourceId, rssFeedUrl));
