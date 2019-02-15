@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { SET_SELECTED_FEEDS_ACTION } from "../actions/setSelectedFeedsAction";
 

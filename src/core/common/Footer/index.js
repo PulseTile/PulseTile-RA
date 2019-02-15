@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 
 import DefaultFooter from "./DefaultFooter";
 import { themeCommonElements } from "../../../version/config/theme.config";

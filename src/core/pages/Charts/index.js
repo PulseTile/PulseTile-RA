@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { get } from "lodash";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import {

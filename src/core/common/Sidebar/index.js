@@ -1,5 +1,5 @@
 import React, { createElement } from 'react';
-import { get } from "lodash";
+import get from "lodash/get";
 import { withRouter } from 'react-router-dom';
 import { MenuItemLink, Sidebar, getResources } from 'react-admin';
 import { connect } from 'react-redux';

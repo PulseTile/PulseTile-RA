@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { FEEDS_RSS_ACTION } from "../actions/feedsRssAction";
 

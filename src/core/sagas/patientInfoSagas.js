@@ -1,5 +1,5 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { token, domainName } from "../token";
 import { PATIENT_INFO, patientInfoAction } from "../actions/patientInfoAction";

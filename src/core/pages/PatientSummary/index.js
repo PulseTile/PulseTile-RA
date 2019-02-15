@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";

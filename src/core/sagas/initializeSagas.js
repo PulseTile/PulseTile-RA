@@ -1,6 +1,5 @@
-
 import { takeEvery, put } from 'redux-saga/effects';
-import  { get } from "lodash";
+import get from "lodash/get";
 
 import { domainName } from "../token";
 import { INITIALIZE_ACTION, initializeAction } from "../actions/initializeAction";

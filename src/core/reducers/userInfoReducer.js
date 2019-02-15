@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash/get";
 import { USER_INFO_ACTION } from "../actions/userInfoAction";
 
 const initialState = {
