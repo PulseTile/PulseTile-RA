@@ -17,25 +17,24 @@ const ItemsList = ({ classes, items }) => {
     if (items.length === 0) {
         return (
             <ListItem button divider>
-                <ListItemText primary="No data" />
+                <ListItemText primary="No data"/>
             </ListItem>
         );
-    } else {
-        return (
-            <List className={classes.list}>
-                {items.slice(0, 4).map((item, key) => (
-                        <a href={item.link} target="_blank">
-                            <ListItem key={key} button divider>
-                                <Typography noWrap={true} className={classes.feedsItem}>
-                                    {item.title}
-                                </Typography>
-                            </ListItem>
-                        </a>
-                    )
-                )}
-            </List>
-        );
     }
+    return (
+        <List className={classes.list}>
+            {items.slice(0, 4).map((item, key) => (
+                    <a href={item.link} key={key} target="_blank">
+                        <ListItem key={key} button divider>
+                            <Typography noWrap={true} className={classes.feedsItem}>
+                                {item.title}
+                            </Typography>
+                        </ListItem>
+                    </a>
+                )
+            )}
+        </List>
+    );
 };
 
 export default ItemsList;

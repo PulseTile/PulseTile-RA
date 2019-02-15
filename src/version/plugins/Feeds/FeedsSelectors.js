@@ -16,7 +16,7 @@ import dummyFeeds from "./dummyFeeds";
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-class VersionSummarySelectors extends Component {
+class FeedsSelectors extends Component {
 
     state = {
         selectedFeeds: this.props.selectedFeeds ? Object.values(this.props.selectedFeeds) : [],
@@ -99,4 +99,4 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VersionSummarySelectors);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedsSelectors);
