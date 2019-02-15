@@ -9,7 +9,6 @@ export default takeEvery(PATIENT_INFO.REQUEST, function*(action) {
     const apiPatientsUser = 'api/patients';
     const url = domainName + '/' + apiPatientsUser + '/' + userId;
     let options = {};
-    options.method = "GET";
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }

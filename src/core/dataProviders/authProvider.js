@@ -9,7 +9,6 @@ const NEW_PATIENT_DELAY = 5000;
 
 const url = domainName + '/api/initialise';
 let options = {};
-options.method = "GET";
 if (!options.headers) {
     options.headers = new Headers({ Accept: 'application/json' });
 }

@@ -50,7 +50,6 @@ export default () => {
                 } else {
                     url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
                 }
-                options.method = "GET";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
                 }
@@ -63,7 +62,6 @@ export default () => {
 
             case GET_ONE:
                 url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
-                options.method = "GET";
                 if (!options.headers) {
                     options.headers = new Headers({ Accept: 'application/json' });
                 }

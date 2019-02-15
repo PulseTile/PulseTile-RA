@@ -8,7 +8,6 @@ import { INITIALIZE_ACTION, initializeAction } from "../actions/initializeAction
 export default takeEvery(INITIALIZE_ACTION.REQUEST, function*(action) {
     const url = domainName + '/api/initialise';
     let options = {};
-    options.method = "GET";
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }
