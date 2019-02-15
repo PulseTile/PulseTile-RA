@@ -17,5 +17,16 @@ function getTokenFromCookie() {
     return result;
 }
 
+/**
+ * This function returns domain name from windoe config settings
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @return {string}
+ */
+function getDomainName() {
+    return (window && window.config) ? window.config.domainName : null;
+}
+
 export const token = getTokenFromCookie();
-export const domainName = "https://192.168.88.38";
+export const domainName = getDomainName();
+

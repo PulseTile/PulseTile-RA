@@ -61,7 +61,7 @@ class PatientSummaryInfo extends Component {
         const breadcrumbsResource = [
             { url: location.pathname, title: "Patient Summary", isActive: false }
         ];
-        const NonCorePanels = get(themeCommonElements, 'nonCorePanels', false);
+        const FeedsPanels = get(themeCommonElements, 'feedsPanels', false);
         return (
             <div className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -85,7 +85,7 @@ class PatientSummaryInfo extends Component {
                             );
                         })
                     }
-                    <NonCorePanels />
+                    <FeedsPanels />
                 </div>
             </div>
         );

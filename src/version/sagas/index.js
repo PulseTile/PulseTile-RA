@@ -1,6 +1,5 @@
 import feedsListSagas from "./feedsListSagas";
 import feedsRssSagas from "./feedsRssSagas";
-import selectedFeedsSagas from "./selectedFeedsSagas";
 
 /**
  * This componenr returns array of version sagas
@@ -11,5 +10,4 @@ import selectedFeedsSagas from "./selectedFeedsSagas";
 export default [
     feedsListSagas,
     feedsRssSagas,
-    selectedFeedsSagas,
 ];

@@ -18,22 +18,11 @@ const initialState = {
  */
 export default (state = initialState, action) => {
     switch (action.type) {
-        case SET_SELECTED_FEEDS_ACTION.REQUEST:
-            return {
-                ...state,
-                loading: true,
-            };
-        case SET_SELECTED_FEEDS_ACTION.SUCCESS:
+        case SET_SELECTED_FEEDS_ACTION:
             return {
                 ...state,
                 loading: false,
                 data: get(action, "data", []),
-            };
-        case SET_SELECTED_FEEDS_ACTION.FAILURE:
-            return {
-                ...state,
-                loading: false,
-                error: get(action, "error", null),
             };
         default:
             return state;
