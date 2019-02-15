@@ -39,26 +39,35 @@ class FeedsSelectors extends Component {
     };
 
     /**
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {shape} item
+     * @param {shape} state
+     */
+    updateSelectedList = (item, state) => {
+        const { selectedFeeds } = state;
+        let feedsArray = selectedFeeds;
+        if (Object.values(selectedFeeds).indexOf(item.sourceId) !== -1) {
+            let index = selectedFeeds.indexOf(item.sourceId);
+            feedsArray.splice(index, 1);
+        } else {
+            feedsArray.push(item.sourceId);
+            this.props.getRssData(item.sourceId, item.rssFeedUrl);
+        }
+        return {
+            selectedFeeds: feedsArray,
+        };
+    };
+
+    /**
      * This function toggle Feeds visibility
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
      * @param {shape} item
      */
     toggleVisibility = item => {
-        this.setState(state => {
-                const { selectedFeeds } = state;
-                let feedsArray = selectedFeeds;
-                if (Object.values(selectedFeeds).indexOf(item.sourceId) !== -1) {
-                    let index = selectedFeeds.indexOf(item.sourceId);
-                    feedsArray.splice(index, 1);
-                } else {
-                    feedsArray.push(item.sourceId);
-                    this.props.getRssData(item.sourceId, item.rssFeedUrl);
-                }
-                return {
-                    selectedFeeds: feedsArray,
-                };
-            }, () => this.props.setSelectedFeeds(this.state.selectedFeeds)
+        this.setState(
+            state => this.updateSelectedList(item, state),
+            () => this.props.setSelectedFeeds(this.state.selectedFeeds)
         );
     };
 
