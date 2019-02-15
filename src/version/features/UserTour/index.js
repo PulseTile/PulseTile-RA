@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { PATIENT_SUMMARY } from "../../../core/config/clientUrls";
 import { homepage } from './content';

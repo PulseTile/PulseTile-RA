@@ -1,5 +1,5 @@
 import React from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 import moment from "moment";
 
 import Grid from '@material-ui/core/Grid';

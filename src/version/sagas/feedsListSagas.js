@@ -4,10 +4,8 @@ import { token, domainName } from "../../core/token";
 import { FEEDS_LIST_ACTION, feedsListAction } from "../actions/feedsListAction";
 
 export default takeEvery(FEEDS_LIST_ACTION.REQUEST, function*(action) {
-    const apiPatientsUser = 'api/feeds';
-    const url = domainName + '/' + apiPatientsUser;
+    const url = domainName + '/api/feeds';
     let options = {};
-    options.method = "GET";
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }

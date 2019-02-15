@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
@@ -70,7 +70,7 @@ class PatientSummaryInfo extends Component {
         const breadcrumbsResource = [
             { url: location.pathname, title: "Patient Summary", isActive: false }
         ];
-        const NonCorePanels = get(themeCommonElements, 'nonCorePanels', false);
+        const FeedsPanels = get(themeCommonElements, 'feedsPanels', false);
         return (
             <div className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -94,8 +94,8 @@ class PatientSummaryInfo extends Component {
                             );
                         })
                     }
-                    <NonCorePanels />
-                </Grid>
+                    <FeedsPanels />
+                </div>
             </div>
         );
     }
