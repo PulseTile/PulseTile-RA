@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { get } from "lodash";
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +8,6 @@ import Card from '@material-ui/core/Card';
 import PersonIcon from '@material-ui/icons/Person';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { userInfoAction } from "../../../../core/actions/userInfoAction";
 import CustomLogoutButton from "../../../../core/common/Buttons/CustomLogoutButton";
 
 const styles = {

@@ -10,6 +10,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "axios": "^0.18.0",
     "cors-anywhere": "^0.4.1",
+    "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "material-ui": "^0.20.2",
     "moment": "^2.23.0",

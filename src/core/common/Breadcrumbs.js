@@ -42,7 +42,7 @@ const styles = theme => ({
 const Breadcrumbs = ({ classes, resource }) => {
     return (
         <div className={classes.breadcrumbsBlock}>
-            <Link to="/charts" className={classes.link} color="inherit">Home</Link>
+            <Link to="/" className={classes.link} color="inherit">Home</Link>
             {
                 resource.map((item, key) => {
                     return (

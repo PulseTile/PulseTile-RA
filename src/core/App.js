@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { Admin, Resource } from "react-admin";
 
 import customDataProvider from "./dataProviders/dataProvider";
@@ -13,10 +14,12 @@ import customRoutes from "./routes";
 
 import Charts from "./pages/Charts";
 import Layout from "./common/CustomLayout";
+import InitializePage from "./pages/InitializePage";
+import { themeCommonElements } from "../version/config/theme.config";
 
 const dataProvider = customDataProvider();
-
 const plugins = corePlugins.concat(nonCorePlugins);
+const Homepage = get(themeCommonElements, 'homePage', Charts);
 
 const App = () => {
     return (
@@ -26,8 +29,9 @@ const App = () => {
             customReducers={{custom: customReducers}}
             customRoutes={customRoutes}
             dataProvider={dataProvider}
-            dashboard={Charts}
+            dashboard={Homepage}
             appLayout={Layout}
+            loginPage={InitializePage}
         >
             {
                 plugins.map(item => {

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 // CORE CUSTOM REDUCERS
+import initialize from "./initializeReducer";
 import patientsStatistic from "./patientsStatisticReducer";
 import patientInfo from "./patientInfoReducer";
 import showMode from "./showModeReducer";
@@ -11,6 +12,7 @@ import userInfo from "./userInfoReducer";
 import nonCoreReducers from "../../version/reducers";
 
 const coreReducers = {
+    initialize,
     patientInfo,
     patientsStatistic,
     showMode,

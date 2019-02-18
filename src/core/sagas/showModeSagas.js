@@ -1,5 +1,5 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { SHOW_MODE_ACTION, showModeAction } from "../actions/showModeAction";
 

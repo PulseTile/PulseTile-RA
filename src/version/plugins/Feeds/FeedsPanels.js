@@ -1,5 +1,4 @@
 import React from "react";
-import { get } from "lodash";
 import { connect } from 'react-redux';
 
 import dummyFeeds from "./dummyFeeds";
