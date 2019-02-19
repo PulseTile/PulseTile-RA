@@ -73,7 +73,7 @@ class FeedsSelectors extends Component {
 
     render() {
         const { classes, feeds } = this.props;
-        const feedsArray = (feeds.length > 0) ? feeds : dummyFeeds;
+        const feedsArray = (feeds && feeds.length > 0) ? feeds : dummyFeeds;
         return (
             <React.Fragment>
                 <Typography>FEEDS</Typography>

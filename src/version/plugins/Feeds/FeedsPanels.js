@@ -26,7 +26,7 @@ function getCurrentFeedInfo(feedsArray, sourceId) {
  */
 const FeedsPanels = ({ feeds, rssFeeds, showMode, showHeadings, loading }) => {
     const rssFeedsArray = Object.entries(rssFeeds);
-    const feedsArray = (feeds.length > 0) ? feeds.length : dummyFeeds;
+    const feedsArray = (feeds && feeds.length > 0) ? feeds : dummyFeeds;
     return rssFeedsArray.length > 0 ? rssFeedsArray.map((item, key) => {
         const sourceId = item[0];
         const rssItems = item[1];

@@ -8,7 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import TopPart from "./fragments/TopPart";
 import LowPart from "./fragments/LowPart";
 
-import { demographicsAction } from "../../actions/demographocsAction";
+import { demographicsAction } from "../../actions/demographicsAction";
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 /**

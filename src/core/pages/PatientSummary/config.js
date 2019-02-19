@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash/get";
 import { faAllergies, faPhone, faCapsules, faNotesMedical  } from '@fortawesome/free-solid-svg-icons';
 import { nonCoreSynopsisData } from "../../../version/config/nonCoreSynopsis";
 

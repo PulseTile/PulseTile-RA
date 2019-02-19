@@ -1,9 +1,14 @@
-import vaccinationsSynopsis from "./synopsisVaccinationsReducer";
-import top3ThingsSynopsis from "./synopsisTopThreeThingsReducer";
 import contrastMode from "./contrastModeReducer";
-import feedsList from "./feedsListReducer";
 import selectedFeedsList from "./selectedFeedsReducer";
 import feedsRss from "./feedsRssReducer";
+
+import {
+    SYNOPSIS_TOP_THREE_THINGS_ACTION,
+    SYNOPSIS_VACCINATIONS_ACTION
+} from "../actions/synopsisActions";
+import { FEEDS_LIST_ACTION } from "../actions/feedsListAction";
+
+import createCustomReducer from "../../core/reducers/createCustomReducer";
 
 /**
  * This component returns version reducers
@@ -12,10 +17,10 @@ import feedsRss from "./feedsRssReducer";
  * @return {shape}
  */
 export default {
-    vaccinationsSynopsis,
-    top3ThingsSynopsis,
+    vaccinationsSynopsis: createCustomReducer(SYNOPSIS_VACCINATIONS_ACTION, "data.synopsis"),
+    top3ThingsSynopsis: createCustomReducer(SYNOPSIS_TOP_THREE_THINGS_ACTION, "data.synopsis"),
     contrastMode,
-    feedsList,
+    feedsList: createCustomReducer(FEEDS_LIST_ACTION, "data"),
     selectedFeedsList,
     feedsRss,
 };

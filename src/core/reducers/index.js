@@ -1,33 +1,36 @@
 import { combineReducers } from 'redux';
 
-// CORE CUSTOM REDUCERS
-import allergiesSynopsis from "./allergiesSynopsisReducer";
-import contactsSynopsis from "./contactsSynopsisReducer";
-import medicationsSynopsis from "./medicationsSynopsisReducer";
-import problemsSynopsis from "./problemsSynopsisReducer";
-import initialize from "./initializeReducer";
-import demographics from "./demographicsReducer";
-import patientsStatistic from "./patientsStatisticReducer";
-import patientInfo from "./patientInfoReducer";
-import showMode from "./showModeReducer";
 import showHeadings from "./showHeadingsReducer";
-import userInfo from "./userInfoReducer";
+import createCustomReducer from "./createCustomReducer";
+
+import {
+    SYNOPSIS_ALLERGIES_ACTION,
+    SYNOPSIS_CONTACTS_ACTION,
+    SYNOPSIS_MEDICATIONS_ACTION,
+    SYNOPSIS_PROBLEMS_ACTION
+} from "../actions/synopsisActions";
+import { INITIALIZE_ACTION } from "../actions/initializeAction";
+import { DEMOGRAPHICS_ACTION } from "../actions/demographicsAction";
+import { PATIENT_INFO } from "../actions/patientInfoAction";
+import { PATIENTS_STATISTIC } from "../actions/patientsStatisticAction";
+import { USER_INFO_ACTION } from "../actions/userInfoAction";
+import { SHOW_MODE_ACTION } from "../actions/showModeAction";
 
 // LINK TO NON-CORE CUSTOM REDUCERS
 import nonCoreReducers from "../../version/reducers";
 
 const coreReducers = {
-    allergiesSynopsis,
-    contactsSynopsis,
-    medicationsSynopsis,
-    problemsSynopsis,
-    initialize,
-    demographics,
-    patientInfo,
-    patientsStatistic,
-    showMode,
+    allergiesSynopsis: createCustomReducer(SYNOPSIS_ALLERGIES_ACTION, "data.synopsis"),
+    contactsSynopsis: createCustomReducer(SYNOPSIS_CONTACTS_ACTION, "data.synopsis"),
+    medicationsSynopsis: createCustomReducer(SYNOPSIS_MEDICATIONS_ACTION, "data.synopsis"),
+    problemsSynopsis: createCustomReducer(SYNOPSIS_PROBLEMS_ACTION, "data.synopsis"),
+    initialize: createCustomReducer(INITIALIZE_ACTION, "data"),
+    demographics: createCustomReducer(DEMOGRAPHICS_ACTION, "data.demographics"),
+    patientInfo: createCustomReducer(PATIENT_INFO, "data"),
+    patientsStatistic: createCustomReducer(PATIENTS_STATISTIC, "data"),
+    showMode: createCustomReducer(SHOW_MODE_ACTION, "data"),
     showHeadings,
-    userInfo,
+    userInfo: createCustomReducer(USER_INFO_ACTION, "data"),
 };
 
 const reducers = Object.assign({}, coreReducers, nonCoreReducers);

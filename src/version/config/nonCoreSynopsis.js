@@ -1,7 +1,6 @@
 import { faSyringe, faUserMd } from '@fortawesome/free-solid-svg-icons';
 
-import { synopsisVaccinationsAction } from "../actions/synopsisVaccinationsAction";
-import { synopsisTopThreeThingsAction } from "../actions/synopsisTopThreeThingsAction";
+import { synopsisVaccinationsAction, synopsisTopThreeThingsAction } from "../actions/synopsisActions";
 
 export const nonCoreSynopsisActions = [
     synopsisVaccinationsAction,

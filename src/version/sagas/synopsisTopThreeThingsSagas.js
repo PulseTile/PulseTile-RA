@@ -1,8 +1,8 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import  { get } from "lodash";
+import get from "lodash/get";
 
 import { token, domainName } from "../../core/token";
-import { SYNOPSIS_TOP_THREE_THINGS_ACTION, synopsisTopThreeThingsAction } from "../actions/synopsisTopThreeThingsAction";
+import { SYNOPSIS_TOP_THREE_THINGS_ACTION, synopsisTopThreeThingsAction } from "../actions/synopsisActions";
 
 export default takeEvery(SYNOPSIS_TOP_THREE_THINGS_ACTION.REQUEST, function*(action) {
     const userId = get(action, 'data', null);
