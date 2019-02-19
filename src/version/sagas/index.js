@@ -1,7 +1,11 @@
 import feedsListSagas from "./feedsListSagas";
 import feedsRssSagas from "./feedsRssSagas";
-import synopsisVaccinationsSagas from "./synopsisVaccinationsSagas";
-import synopsisTopThreeThingsSagas from "./synopsisTopThreeThingsSagas";
+
+import createSynopsisSagas from "../../core/sagas/createSynopsisSagas";
+import {
+    SYNOPSIS_VACCINATIONS_ACTION, synopsisVaccinationsAction,
+    SYNOPSIS_TOP_THREE_THINGS_ACTION, synopsisTopThreeThingsAction,
+} from "../actions/synopsisActions";
 
 /**
  * This componenr returns array of version sagas
@@ -12,6 +16,6 @@ import synopsisTopThreeThingsSagas from "./synopsisTopThreeThingsSagas";
 export default [
     feedsListSagas,
     feedsRssSagas,
-    synopsisVaccinationsSagas,
-    synopsisTopThreeThingsSagas,
+    createSynopsisSagas(SYNOPSIS_VACCINATIONS_ACTION, synopsisVaccinationsAction, 'vaccinations'),
+    createSynopsisSagas(SYNOPSIS_TOP_THREE_THINGS_ACTION, synopsisTopThreeThingsAction, 'top3Things'),
 ];
