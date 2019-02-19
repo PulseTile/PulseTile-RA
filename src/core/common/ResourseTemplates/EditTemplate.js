@@ -9,6 +9,7 @@ import {
 } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
 import Typography from '@material-ui/core/Typography';
 
 import EditFormToolbar from "../../common/Toolbars/EditFormToolbar";
@@ -16,14 +17,13 @@ import EditFormToolbar from "../../common/Toolbars/EditFormToolbar";
 const styles = theme => ({
     editBlock: {
         width: '100%',
-        backgroundColor: "white",
-        margin: "15px 15px 15px 0px",
+        backgroundColor: "#fff",
     },
     blockTitle: {
         display: "flex",
         alignItems: "center",
         height: 49,
-        color: "white",
+        color: "#fff",
         backgroundColor: theme.templates.editTemplate.blockTitle.backgroundColor,
         fontSize: 18,
         fontWeight: 700,
@@ -43,20 +43,22 @@ const styles = theme => ({
  * (it used in Edit blocks for the plugins Allergies, Contacts, Medications, Problems etc.)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {func}  changeViewType
- * @param {shape} rest
+ * @param {shape}  classes
+ * @param {string} blockTitle
+ * @param {shape}  children
+ * @param {func}   changeViewType
+ * @param {shape}  rest
  * @constructor
  */
 const EditTemplate = ({ classes, blockTitle, children, changeViewType, ...rest }) => (
-    <div className={classes.editBlock}>
+    <Grid item xs={12} sm={6} className={classes.editBlock}>
         <Typography className={classes.blockTitle}>{blockTitle}</Typography>
         <Edit {...rest}>
             <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
                 {children}
             </SimpleForm>
         </Edit>
-    </div>
+    </Grid>
 );
 
 export default withStyles(styles)(EditTemplate);

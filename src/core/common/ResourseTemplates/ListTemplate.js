@@ -9,6 +9,7 @@ import {
 } from "react-admin";
 
 import { withStyles } from "@material-ui/core/styles";
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FilterIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
@@ -25,14 +26,10 @@ import { ITEMS_PER_PAGE } from "../../config/styles";
 
 const listStyles = theme => ({
     mainBlock: {
-        display: "flex",
+        margin: 0,
     },
     list: {
-        width: '100%',
-        margin: 15,
-    },
-    edit: {
-        width: '100%',
+        paddingLeft: 0,
     },
     blockTitle: {
         display: "flex",
@@ -147,6 +144,16 @@ class ListTemplate extends Component {
     };
 
     /**
+     * This function check is current page for list
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @return {boolean}
+     */
+    isListPage = () => {
+        return (this.props.location.pathname === "/" + this.props.resourceUrl);
+    };
+
+    /**
      * This function set filter string to state
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
@@ -160,7 +167,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { details, create, resourceUrl, title, children, classes, history } = this.props;
+        const { create, resourceUrl, title, children, classes, history } = this.props;
         const { isFilterOpened, key, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -171,8 +178,8 @@ class ListTemplate extends Component {
             <React.Fragment>
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <TableHeader resource={resourceUrl} />
-                <div className={classes.mainBlock}>
-                    <div className={classes.list}>
+                <Grid container spacing={16} className={classes.mainBlock}>
+                    <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
                         <React.Fragment>
                             <div className={classes.blockTitle}>
                                 <Typography className={classes.title}>{title}</Typography>
@@ -180,19 +187,19 @@ class ListTemplate extends Component {
                             </div>
                             {
                                 isFilterOpened &&
-                                    <Paper className={classes.filterInput} elevation={1}>
-                                        <Tooltip title="Menu">
-                                            <IconButton className={classes.iconButton}>
-                                                <FilterIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                        <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                        <Tooltip title="Search">
-                                            <IconButton className={classes.iconButton}>
-                                                <SearchIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </Paper>
+                                <Paper className={classes.filterInput} elevation={1}>
+                                    <Tooltip title="Menu">
+                                        <IconButton className={classes.iconButton}>
+                                            <FilterIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                    <Tooltip title="Search">
+                                        <IconButton className={classes.iconButton}>
+                                            <SearchIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Paper>
                             }
                         </React.Fragment>
                         <List
@@ -209,21 +216,21 @@ class ListTemplate extends Component {
                                 {children}
                             </Datagrid>
                         </List>
-                    </div>
+                    </Grid>
                     {
                         (!this.isCreatePage())
-                        ?
+                            ?
                             <Route
                                 path={this.getDetailsUrl()}
                                 render={({ match }) => <DetailsTemplate mode="show" {...this.props} id={match.params.id} />}
                             />
-                        :
+                            :
                             <Route
                                 path={createUrl}
                                 render={({ match }) => <CreateBlock {...this.props} id={match.params.id} />}
                             />
                     }
-                </div>
+                </Grid>
             </React.Fragment>
         );
     }

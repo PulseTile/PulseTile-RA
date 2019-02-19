@@ -3,6 +3,7 @@ import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
+import Grid from '@material-ui/core/Grid';
 
 import DashboardCard from "../../common/DashboardCard";
 import { patientInfoAction } from "../../actions/patientInfoAction";
@@ -12,13 +13,12 @@ import Breadcrumbs from "../../common/Breadcrumbs";
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
+    summaryContainer: {
+        margin: 0,
+        width: "100%",
+    },
     card: {
-        display: "inline-block",
-        width: "calc(25% - 20px)",
-        float: "left",
-        margin: "10px",
-        padding: "5px",
-        boxSizing: "border-box"
+        minHeight: 302,
     },
     media: {
         backgroundColor: theme.patientSummaryPanel.media.backgroundColor,
@@ -30,16 +30,16 @@ const styles = theme => ({
     topBlock: {
         display: "flex",
         flexDirection: "column",
-        height: "100px",
+        height: 100,
         backgroundColor: theme.patientSummaryPanel.topBlock.backgroundColor,
         background: theme.patientSummaryPanel.topBlock.background,
         backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",
-        color: "white",
+        color: "#fff",
     },
     icon: {
-        marginBottom: "10px",
+        marginBottom: 10,
     },
     title: {
         marginBottom: 0,
@@ -63,10 +63,10 @@ class PatientSummaryInfo extends Component {
         ];
         const FeedsPanels = get(themeCommonElements, 'feedsPanels', false);
         return (
-            <div className={classes.container} >
+            <Grid className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <SettingsDialog className={classes.settingsIcon} />
-                <div>
+                <Grid className={classes.summaryContainer} spacing={16} container>
                     {
                         synopsisData.map((item, key) => {
                             return (
@@ -86,8 +86,8 @@ class PatientSummaryInfo extends Component {
                         })
                     }
                     <FeedsPanels />
-                </div>
-            </div>
+                </Grid>
+            </Grid>
         );
     }
 }
