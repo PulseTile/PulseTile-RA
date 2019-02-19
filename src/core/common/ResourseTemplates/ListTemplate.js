@@ -150,7 +150,7 @@ class ListTemplate extends Component {
      * @return {boolean}
      */
     isListPage = () => {
-        return (this.props.location.pathname === "/" + this.props.resourceUrl);
+        return (this.props.location.pathname === `/${this.props.resourceUrl}`);
     };
 
     /**
