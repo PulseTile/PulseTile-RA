@@ -5,8 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import helmLogo from "../../../images/helm-logo.png";
 import nhsLogo from "../../../images/nhs.png";
@@ -93,12 +91,12 @@ const TopPart = ({ classes, logout, location }) => {
     return (
         <Toolbar className={classes.topPart}>
             <div className={classes.homeButtonItem}>
-                <Link id="icon-home" to="/charts" className={classes.homeButton} color="inherit" >
+                <Link id="icon-home" to="/" className={classes.homeButton} color="inherit" >
                     <HomeIcon />
                 </Link>
             </div>
             <div className={classes.mainLogoItem}>
-                <Link to="/summary" className={classes.homeButton} color="inherit" >
+                <Link to="/" className={classes.homeButton} color="inherit" >
                     <CardMedia
                         id="logo-image"
                         className={classes.image}

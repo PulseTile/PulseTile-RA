@@ -1,5 +1,5 @@
 import get from "lodash/get";
-import { PATIENTS_STATISTIC } from "../actions/patientsStatisticAction";
+import { INITIALIZE_ACTION } from "../actions/initializeAction";
 
 const initialState = {
     data: null,
@@ -9,18 +9,18 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case PATIENTS_STATISTIC.REQUEST:
+        case INITIALIZE_ACTION.REQUEST:
             return {
                 ...state,
                 loading: true,
             };
-        case PATIENTS_STATISTIC.SUCCESS:
+        case INITIALIZE_ACTION.SUCCESS:
             return {
                 ...state,
                 loading: false,
-                data: get(action, "data", []),
+                data: get(action, "data", null),
             };
-        case PATIENTS_STATISTIC.FAILURE:
+        case INITIALIZE_ACTION.FAILURE:
             return {
                 ...state,
                 loading: false,

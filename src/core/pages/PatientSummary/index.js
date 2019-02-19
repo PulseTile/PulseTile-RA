@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
@@ -9,6 +9,7 @@ import { patientInfoAction } from "../../actions/patientInfoAction";
 import { synopsisData, SHOW_ALL } from "./config";
 import SettingsDialog from "./SettingsDialog";
 import Breadcrumbs from "../../common/Breadcrumbs";
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
     card: {
@@ -60,6 +61,7 @@ class PatientSummaryInfo extends Component {
         const breadcrumbsResource = [
             { url: location.pathname, title: "Patient Summary", isActive: false }
         ];
+        const FeedsPanels = get(themeCommonElements, 'feedsPanels', false);
         return (
             <div className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -83,6 +85,7 @@ class PatientSummaryInfo extends Component {
                             );
                         })
                     }
+                    <FeedsPanels />
                 </div>
             </div>
         );

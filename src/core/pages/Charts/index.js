@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { get } from "lodash";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import {
@@ -14,7 +14,7 @@ import {
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { patientStatisticAction } from "../actions/patientsStatisticAction";
+import { patientStatisticAction } from "../../actions/patientsStatisticAction";
 
 const styles = {
     chartsContainer: {

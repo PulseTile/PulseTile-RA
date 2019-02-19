@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { SHOW_MODE_ACTION } from "../actions/showModeAction";
 
