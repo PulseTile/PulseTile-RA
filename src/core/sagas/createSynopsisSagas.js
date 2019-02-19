@@ -4,11 +4,6 @@ import get from "lodash/get";
 import { token, domainName } from "../token";
 
 export default function createCustomSagas(actionName, actionType, pluginName) {
-
-    console.log('actionName', actionName);
-    console.log('actionType', actionType);
-    console.log('pluginName', pluginName);
-
     return takeEvery(actionName.REQUEST, function*(action) {
         const userId = get(action, 'data', null);
         const url = domainName + '/api/patients/' + userId + '/synopsis/' + pluginName;
