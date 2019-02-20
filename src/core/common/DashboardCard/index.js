@@ -34,20 +34,19 @@ const LoadingItems = ({ classes }) => {
  * This component returns list block
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {boolean} loading
  * @param {shape}   classes
  * @param {array}   items
  * @param {shape}   list
  * @param {shape}   history
  */
-const ListBlock = ({ loading, classes, items, list, history }) => {
-    if (loading) {
+const ListBlock = ({ classes, items, list, history }) => {
+    if (items) {
         return (
-            <LoadingItems classes={classes} />
+            <ItemsList classes={classes} items={items} list={list} history={history} />
         );
     }
     return (
-        <ItemsList classes={classes} items={items} list={list} history={history} />
+        <LoadingItems classes={classes} />
     );
 };
 

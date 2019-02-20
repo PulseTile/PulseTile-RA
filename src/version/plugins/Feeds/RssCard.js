@@ -13,6 +13,7 @@ import { SHOW_ALL } from "../../../core/pages/PatientSummary/config";
 const styles = theme => ({
     card: {
         display: "inline-block",
+        minHeight: 302,
         width: "calc(25% - 20px)",
         float: "left",
         margin: 10,
