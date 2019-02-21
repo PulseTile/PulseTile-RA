@@ -94,7 +94,7 @@ class PatientSummaryInfo extends Component {
                             );
                         })
                     }
-                    <FeedsPanels />
+                    { FeedsPanels && <FeedsPanels /> }
                 </Grid>
             </Grid>
         );

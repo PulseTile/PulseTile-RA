@@ -1,4 +1,7 @@
 import React from 'react';
+import { getCurrentThemeColor } from "../../../core/config/styles";
+
+const themeColor = getCurrentThemeColor(false);
 
 function getStepsArray(steps) {
     let result = [];
@@ -81,7 +84,7 @@ const lastStep = {
     content: (
         <div className="tour-body">
             <p className="tour-body-content">
-                For more information and a guide on how to use {homepage.title}, please go to <a className="link" href={homepage.link} title={homepage.title} style={{color:"#3596f4", 'text-decoration': "none" }} target="_blank">
+                For more information and a guide on how to use {homepage.title}, please go to <a className="link" href={homepage.link} title={homepage.title} style={{color: themeColor, 'text-decoration': "none" }} target="_blank">
                 {homepage.link}</a>
             </p>
         </div>
