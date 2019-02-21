@@ -1,22 +1,37 @@
+import get from "lodash/get";
 import { createMuiTheme } from '@material-ui/core/styles';
-
-import backgroundImage from "../../version/images/Artboard.png";
-import cardBackgroundImage from "../../version/images/blue-ring-01.png";
-
-import { MAIN_THEME_COLOR } from "../../version/config/theme.config";
+import { themeImages } from "../../version/config/theme.config";
 
 export const ITEMS_PER_PAGE = 10;
 
-const CORE_MAIN_COLOR = "#0D672F";
+const DEFAULT_COLOR = "#0D672F";
 
-function getCurrentThemeColor(isContrastMode) {
-    let currentThemeColor = CORE_MAIN_COLOR;
-    if (isContrastMode) {
-        currentThemeColor = "#000";
-    } else if (MAIN_THEME_COLOR) {
-        currentThemeColor = MAIN_THEME_COLOR;
+/**
+ * This function defines theme color
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {boolean} isContrastMode
+ * @return {string}
+ */
+export function getCurrentThemeColor(isContrastMode = false) {
+    let currentThemeColor = (window && window.config) ? window.config.mainColor : DEFAULT_COLOR;
+    return (isContrastMode) ? "#000" : currentThemeColor;
+}
+
+/**
+ * This function defined background-rule for Patient Summary panels and for table headings
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param isContrastMode
+ * @return {string}
+ */
+function getCardBackground(isContrastMode = false) {
+    const cardBackgroundImage = get(themeImages, 'cardBackgroundImage', null);
+    let result = (window && window.config) ? window.config.mainColor : DEFAULT_COLOR;
+    if (cardBackgroundImage) {
+        result = 'url(' + cardBackgroundImage + ') 0 0 repeat';
     }
-    return currentThemeColor;
+    return (isContrastMode) ? "#000" : result;
 }
 
 /**
@@ -27,6 +42,8 @@ function getCurrentThemeColor(isContrastMode) {
 
 export function getCurrentTheme(isContrastMode) {
     const currentThemeColor = getCurrentThemeColor(isContrastMode);
+    const backgroundImage = get(themeImages, 'backgroundImage', null);
+    const cardBackground = getCardBackground(isContrastMode);
     return createMuiTheme({
         global: {
             mainColor: currentThemeColor,
@@ -109,7 +126,7 @@ export function getCurrentTheme(isContrastMode) {
         },
         tableHeader: {
             tableHeaderBlock: {
-                background: isContrastMode ? '#000' : 'url(' + cardBackgroundImage + ') 0 0 repeat',
+                background: cardBackground,
             },
         },
         patientSummaryPanel: {
@@ -121,7 +138,7 @@ export function getCurrentTheme(isContrastMode) {
             },
             topBlock: {
                 backgroundColor: currentThemeColor,
-                background: isContrastMode ? '#000' : 'url(' + cardBackgroundImage + ') 0 0 repeat',
+                background: cardBackground,
             },
         },
     });

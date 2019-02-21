@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
 
+import backgroundImage from "../../version/images/Artboard.png";
+import cardBackgroundImage from "../../version/images/blue-ring-01.png";
+
 import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
 import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
@@ -29,4 +32,7 @@ export const themeCommonElements = {
     homePage: PatientSummary,
 };
 
-export const MAIN_THEME_COLOR = "#3596f4";
+export const themeImages = {
+    backgroundImage: backgroundImage,
+    cardBackgroundImage: cardBackgroundImage,
+};
