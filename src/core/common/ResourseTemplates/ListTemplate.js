@@ -144,7 +144,8 @@ class ListTemplate extends Component {
     };
 
     /**
-     * This function check is current page for list
+     * This function check is current page is list page with table (it also used at create and show pages)
+     * Settings of <Grid /> component of <ListTemplate /> depends on result of this function.
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
      * @return {boolean}
