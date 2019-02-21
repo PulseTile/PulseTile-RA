@@ -10,6 +10,7 @@ import {
 } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
 import Typography from '@material-ui/core/Typography';
 
 import CreateFormToolbar from "../../common/Toolbars/CreateFormToolbar";
@@ -17,14 +18,13 @@ import CreateFormToolbar from "../../common/Toolbars/CreateFormToolbar";
 const styles = theme => ({
     createBlock: {
         width: '100%',
-        backgroundColor: "white",
-        margin: "15px 15px 15px 0px",
+        backgroundColor: "#fff",
     },
     blockTitle: {
         display: "flex",
         alignItems: "center",
         height: 49,
-        color: "white",
+        color: "#fff",
         backgroundColor: theme.templates.createTemplate.blockTitle.backgroundColor,
         fontSize: 18,
         fontWeight: 700,
@@ -44,18 +44,20 @@ const styles = theme => ({
  * (it used in Create blocks for the plugins Allergies, Contacts, Medications, Problems etc.)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {shape} rest
+ * @param {shape}  classes
+ * @param {string} blockTitle
+ * @param {shape}  children
+ * @param {shape}  rest
  */
 const CreateTemplate = ({ classes, blockTitle, children, ...rest }) => (
-    <div className={classes.createBlock}>
+    <Grid item xs={12} sm={6} className={classes.createBlock}>
         <Typography className={classes.blockTitle}>{blockTitle}</Typography>
         <Create {...rest}>
             <SimpleForm className={classes.createForm} toolbar={<CreateFormToolbar />}>
                 {children}
             </SimpleForm>
         </Create>
-    </div>
+    </Grid>
 );
 
 export default withStyles(styles)(CreateTemplate);

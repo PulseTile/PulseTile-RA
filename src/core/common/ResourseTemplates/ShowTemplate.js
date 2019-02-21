@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Show, SimpleShowLayout, TextField, DateField } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -14,7 +15,6 @@ const styles = theme => ({
     showBlock: {
         width: '100%',
         backgroundColor: "white",
-        margin: "15px 15px 15px 0px",
     },
     expansionPanel: {
         height: "49px !important",
@@ -89,13 +89,13 @@ class ShowTemplate extends Component {
         const { classes, children, pageTitle, changeViewType, ...rest } = this.props;
         const { currentPanel } = this.state;
         return (
-            <div className={classes.showBlock}>
+            <Grid item xs={12} sm={6} className={classes.showBlock}>
                 <ExpansionPanel className={(currentPanel === 'main') ? classes.currentExpansionPanel : classes.expansionPanel} expanded={currentPanel === 'main'} onChange={() => this.handleChange('main')}>
                     <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
                         <Typography className={classes.expansionTypography} >{pageTitle}</Typography>
                     </ExpansionPanelSummary>
                     {
-                    (currentPanel === 'main') &&
+                        (currentPanel === 'main') &&
                         <ExpansionPanelDetails className={classes.expansionPanelDetails}>
                             <Show className={classes.showDetails} title={pageTitle} {...rest}>
                                 <SimpleShowLayout className={classes.showLayoutDetails}>
@@ -112,17 +112,17 @@ class ShowTemplate extends Component {
                     </ExpansionPanelSummary>
                     {
                         (currentPanel === 'systemInfo') &&
-                            <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                                <Show className={classes.showDetails} title={pageTitle} {...rest}>
-                                    <SimpleShowLayout className={classes.showLayoutDetails}>
-                                        <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
-                                        <TextField className={classes.labelBlock} label="Source" source="source" />
-                                    </SimpleShowLayout>
-                                </Show>
-                            </ExpansionPanelDetails>
+                        <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                            <Show className={classes.showDetails} title={pageTitle} {...rest}>
+                                <SimpleShowLayout className={classes.showLayoutDetails}>
+                                    <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
+                                    <TextField className={classes.labelBlock} label="Source" source="source" />
+                                </SimpleShowLayout>
+                            </Show>
+                        </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>
-            </div>
+            </Grid>
         );
     }
 }

@@ -1,24 +1,18 @@
 import React from "react";
 import { connect } from 'react-redux';
 
+import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-
-import { withStyles } from "@material-ui/core/styles";
 import RssIcon from '@material-ui/icons/RssFeed';
+import Grid from '@material-ui/core/Grid';
 
 import ListBlock from "./ListBlock";
 import { SHOW_ALL } from "../../../core/pages/PatientSummary/config";
 
 const styles = theme => ({
     card: {
-        display: "inline-block",
         minHeight: 302,
-        width: "calc(25% - 20px)",
-        float: "left",
-        margin: 10,
-        padding: 5,
-        boxSizing: "border-box"
     },
     media: {
         backgroundColor: theme.patientSummaryPanel.media.backgroundColor,
@@ -66,17 +60,19 @@ const RssCard = props => {
     const { classes, sourceId, title, items, loading, icon, link, history, showMode, showHeadings, selectedFeeds } = props;
     if (selectedFeeds.indexOf(sourceId) !== -1) {
         return (
-            <Card id={sourceId} className={classes.card} onClick={() => window.open(link, "_blank")}>
-                <div className={classes.topBlock}>
-                    <RssIcon />
-                    <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
-                        {title}
-                    </Typography>
-                </div>
-                { (showMode === SHOW_ALL || !showMode) &&
+            <Grid item xs={12} sm={6} md={6} lg={3}>
+                <Card id={sourceId} className={classes.card} onClick={() => window.open(link, "_blank")}>
+                    <div className={classes.topBlock}>
+                        <RssIcon />
+                        <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
+                            {title}
+                        </Typography>
+                    </div>
+                    { (showMode === SHOW_ALL || !showMode) &&
                     <ListBlock loading={loading} classes={classes} items={items} history={history} />
-                }
-            </Card>
+                    }
+                </Card>
+            </Grid>
         );
     }
     return null;
