@@ -4,6 +4,7 @@ import { themeImages } from "../../version/config/theme.config";
 
 export const ITEMS_PER_PAGE = 10;
 
+const CONTRAST_COLOR = "#000";
 const DEFAULT_COLOR = "#0D672F";
 
 /**
@@ -15,7 +16,7 @@ const DEFAULT_COLOR = "#0D672F";
  */
 export function getCurrentThemeColor(isContrastMode = false) {
     return (isContrastMode)
-        ? (window && window.config) ? window.config.mainContrastColor : "#000"
+        ? (window && window.config) ? window.config.mainContrastColor : CONTRAST_COLOR
         : (window && window.config) ? window.config.mainColor : DEFAULT_COLOR;
 }
 
