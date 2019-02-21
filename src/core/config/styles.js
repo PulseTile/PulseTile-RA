@@ -14,8 +14,9 @@ const DEFAULT_COLOR = "#0D672F";
  * @return {string}
  */
 export function getCurrentThemeColor(isContrastMode = false) {
-    let currentThemeColor = (window && window.config) ? window.config.mainColor : DEFAULT_COLOR;
-    return (isContrastMode) ? "#000" : currentThemeColor;
+    return (isContrastMode)
+        ? (window && window.config) ? window.config.mainContrastColor : "#000"
+        : (window && window.config) ? window.config.mainColor : DEFAULT_COLOR;
 }
 
 /**
@@ -29,7 +30,7 @@ function getCardBackground(isContrastMode = false) {
     const cardBackgroundImage = get(themeImages, 'cardBackgroundImage', null);
     let result = (window && window.config) ? window.config.mainColor : DEFAULT_COLOR;
     if (cardBackgroundImage) {
-        result = 'url(' + cardBackgroundImage + ') 0 0 repeat';
+        result = `url(${cardBackgroundImage}) 0 0 repeat`;
     }
     return (isContrastMode) ? "#000" : result;
 }

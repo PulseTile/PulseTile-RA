@@ -1,5 +1,3 @@
-import { connect } from 'react-redux';
-
 import backgroundImage from "../../version/images/Artboard.png";
 import cardBackgroundImage from "../../version/images/blue-ring-01.png";
 
