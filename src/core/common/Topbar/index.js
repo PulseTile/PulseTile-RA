@@ -8,6 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import TopPart from "./fragments/TopPart";
 import LowPart from "./fragments/LowPart";
 
+import { demographicsAction } from "../../actions/demographicsAction";
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 /**
@@ -15,19 +16,27 @@ import { themeCommonElements } from "../../../version/config/theme.config";
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-const CustomTopbar = props => {
-    const ThemeTopBar = get(themeCommonElements, 'topbar', false);
-    if (ThemeTopBar) {
+class CustomTopbar extends Component {
+
+    componentDidMount() {
+        const currentUserID = localStorage.getItem('userId');
+        this.props.getDemographicsAction(currentUserID);
+    }
+
+    render() {
+        const ThemeTopBar = get(themeCommonElements, 'topbar', false);
+        if (ThemeTopBar) {
+            return (
+                <ThemeTopBar {...this.props} />
+            );
+        }
         return (
-            <ThemeTopBar {...props} />
+            <AppBar position="static">
+                <TopPart {...this.props} />
+                <LowPart {...this.props} />
+            </AppBar>
         );
     }
-    return (
-        <AppBar position="static">
-            <TopPart {...props} />
-            <LowPart {...props} />
-        </AppBar>
-    );
 };
 
 const mapStateToProps = state => {
@@ -35,10 +44,20 @@ const mapStateToProps = state => {
         isLoading: get(state, 'admin.loading', false),
         location: get(state, 'router.location', null),
         isSidebarOpen: get(state, 'admin.ui.sidebarOpen', true),
-        patientInfo: get(state, 'custom.patientInfo.data', null),
+        patientInfo: get(state, 'custom.demographics.data', null),
     }
 };
 
+const mapDispatchToProps = dispatch => {
+    return {
+        getDemographicsAction(userId) {
+            dispatch(demographicsAction.request(userId));
+        },
+        setSidebarVisibility(params) {
+            dispatch(setSidebarVisibility(params));
+        },
+    }
+};
 
-export default connect(mapStateToProps, { setSidebarVisibility })(CustomTopbar);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomTopbar);
 
