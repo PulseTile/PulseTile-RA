@@ -4,20 +4,23 @@ import { themeImages } from "../../version/config/theme.config";
 
 export const ITEMS_PER_PAGE = 10;
 
-const DEFAULT_CONTRAST_COLOR = "#000";
-export const DEFAULT_MAIN_COLOR = "#0D672F";
-export const DEFAULT_DANGER_COLOR = "#da534f";
+const defaultTheme = {
+    mainColor: "#0D672F",
+    dangerColor: "#da534f",
+    contrastColor: "#000",
+};
 
 /**
  * This function defined background-rule for Patient Summary panels and for table headings
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param isContrastMode
+ * @param {boolean} isContrastMode
+ * @param {string}  themeColor
  * @return {string}
  */
-function getCardBackground(isContrastMode = false) {
+function getCardBackground(isContrastMode, themeColor) {
     const cardBackgroundImage = get(themeImages, 'cardBackgroundImage', null);
-    let result = (window && window.config) ? window.config.mainColor : DEFAULT_MAIN_COLOR;
+    let result = themeColor.mainColor;
     if (cardBackgroundImage) {
         result = `url(${cardBackgroundImage}) 0 0 repeat`;
     }
@@ -32,23 +35,21 @@ function getCardBackground(isContrastMode = false) {
 
 export function getCurrentTheme(isContrastMode) {
     const backgroundImage = get(themeImages, 'backgroundImage', null);
-    const cardBackground = getCardBackground(isContrastMode);
-
+    const themeColor = (window && window.config) ? Object.assign({}, defaultTheme, window.config.theme) : defaultTheme;
+    const cardBackground = getCardBackground(isContrastMode, themeColor);
     const lightPalette = {
         type: 'light',
-        mainColor: (window && window.config) ? window.config.mainColor : DEFAULT_MAIN_COLOR,
-        dangerColor: (window && window.config) ? window.config.dangerColor : DEFAULT_DANGER_COLOR,
+        mainColor: themeColor.mainColor,
+        dangerColor: themeColor.dangerColor,
     };
-
     const darkPalette = {
         type: 'dark',
-        mainColor: (window && window.config) ? window.config.contrastColor : DEFAULT_CONTRAST_COLOR,
+        mainColor: themeColor.contrastColor,
         dangerColor: "#fff",
         background: "#fff",
         text: "#000",
         divider: "#000",
     };
-
     return createMuiTheme({
         palette: isContrastMode ? darkPalette : lightPalette,
         tableHeader: {

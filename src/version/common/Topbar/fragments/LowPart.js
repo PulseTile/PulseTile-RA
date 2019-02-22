@@ -37,7 +37,6 @@ const styles = theme => ({
     },
     menuButton: {
         borderRadius: 15,
-        maxHeight: 20,
         minWidth: 64,
         color: theme.palette.mainColor,
         textTransform: "none",

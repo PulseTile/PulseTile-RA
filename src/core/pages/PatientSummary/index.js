@@ -49,6 +49,8 @@ const styles = theme => ({
     },
     title: {
         marginBottom: 0,
+        color: "#fff",
+        fontSize: 20,
     },
     list: {
         padding: 0,
