@@ -1,5 +1,3 @@
-import { connect } from 'react-redux';
-
 import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
 import PatientSummary from "../../core/pages/PatientSummary";

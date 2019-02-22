@@ -13,8 +13,8 @@ const styles = theme => ({
         height: 40,
         paddingTop: "6px !important",
         paddingLeft: "8px !important",
-        backgroundColor: theme.buttons.cancelButton.backgroundColor,
-        border: theme.buttons.cancelButton.border,
+        backgroundColor: theme.palette.dangerColor,
+        border: `1px solid ${theme.palette.dangerColor}`,
         color: "#fff",
         borderRadius: 20,
         fontSize: 16,
@@ -27,7 +27,7 @@ const styles = theme => ({
         },
         "&:hover": {
             backgroundColor: "#fff",
-            color: theme.buttons.cancelButton.colorHover,
+            color: theme.palette.dangerColor,
         }
     }
 });

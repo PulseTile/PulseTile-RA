@@ -27,7 +27,7 @@ const styles = theme => ({
         minHeight: 302,
     },
     media: {
-        backgroundColor: theme.patientSummaryPanel.media.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
     },
     container: {
         background: theme.patientSummaryPanel.container.background,
@@ -37,7 +37,7 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "column",
         height: 100,
-        backgroundColor: theme.patientSummaryPanel.topBlock.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
         background: theme.patientSummaryPanel.topBlock.background,
         backgroundSize: "cover",
         justifyContent: "center",
