@@ -29,7 +29,7 @@ const styles = theme => ({
         }
     },
     expansionPanelSummary: {
-        backgroundColor: theme.templates.showTemplate.expansionPanelSummary.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
         paddingLeft: 16,
         '& > div': {
             margin: "0px !important",

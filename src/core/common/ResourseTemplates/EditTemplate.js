@@ -24,7 +24,7 @@ const styles = theme => ({
         alignItems: "center",
         height: 49,
         color: "#fff",
-        backgroundColor: theme.templates.editTemplate.blockTitle.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
         paddingLeft: 15,

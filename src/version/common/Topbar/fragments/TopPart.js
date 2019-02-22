@@ -26,7 +26,7 @@ const styles = theme => ({
         position: "relative",
         minHeight: 54,
         minWidth: 54,
-        backgroundColor: theme.global.mainColor,
+        backgroundColor: theme.palette.mainColor,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -53,10 +53,10 @@ const styles = theme => ({
         alignItems: "center",
         borderLeft: "1px solid #e5e5e5",
         '&:hover': {
-            backgroundColor: theme.global.mainColor,
+            backgroundColor: theme.palette.mainColor,
         },
         '&:active': {
-            backgroundColor: theme.global.mainColor,
+            backgroundColor: theme.palette.mainColor,
         },
         '&:hover button': {
             color: "white",
@@ -72,7 +72,7 @@ const styles = theme => ({
         },
     },
     rightBlockButton: {
-        color: theme.global.mainColor,
+        color: theme.palette.mainColor,
         '&:hover': {
             color: "white",
         },

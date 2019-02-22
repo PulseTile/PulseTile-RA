@@ -4,21 +4,9 @@ import { themeImages } from "../../version/config/theme.config";
 
 export const ITEMS_PER_PAGE = 10;
 
-const CONTRAST_COLOR = "#000";
-const DEFAULT_COLOR = "#0D672F";
-
-/**
- * This function defines theme color
- *
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {boolean} isContrastMode
- * @return {string}
- */
-export function getCurrentThemeColor(isContrastMode = false) {
-    return (isContrastMode)
-        ? (window && window.config) ? window.config.mainContrastColor : CONTRAST_COLOR
-        : (window && window.config) ? window.config.mainColor : DEFAULT_COLOR;
-}
+const DEFAULT_CONTRAST_COLOR = "#000";
+export const DEFAULT_MAIN_COLOR = "#0D672F";
+export const DEFAULT_DANGER_COLOR = "#da534f";
 
 /**
  * This function defined background-rule for Patient Summary panels and for table headings
@@ -29,7 +17,7 @@ export function getCurrentThemeColor(isContrastMode = false) {
  */
 function getCardBackground(isContrastMode = false) {
     const cardBackgroundImage = get(themeImages, 'cardBackgroundImage', null);
-    let result = (window && window.config) ? window.config.mainColor : DEFAULT_COLOR;
+    let result = (window && window.config) ? window.config.mainColor : DEFAULT_MAIN_COLOR;
     if (cardBackgroundImage) {
         result = `url(${cardBackgroundImage}) 0 0 repeat`;
     }
@@ -43,104 +31,34 @@ function getCardBackground(isContrastMode = false) {
  */
 
 export function getCurrentTheme(isContrastMode) {
-    const currentThemeColor = getCurrentThemeColor(isContrastMode);
     const backgroundImage = get(themeImages, 'backgroundImage', null);
     const cardBackground = getCardBackground(isContrastMode);
+
+    const lightPalette = {
+        type: 'light',
+        mainColor: (window && window.config) ? window.config.mainColor : DEFAULT_MAIN_COLOR,
+        dangerColor: (window && window.config) ? window.config.dangerColor : DEFAULT_DANGER_COLOR,
+    };
+
+    const darkPalette = {
+        type: 'dark',
+        mainColor: (window && window.config) ? window.config.contrastColor : DEFAULT_CONTRAST_COLOR,
+        dangerColor: "#fff",
+        background: "#fff",
+        text: "#000",
+        divider: "#000",
+    };
+
     return createMuiTheme({
-        global: {
-            mainColor: currentThemeColor,
-        },
-        sidebar: {
-            menuItem: {
-                color: currentThemeColor,
-                backgroundColorHover: currentThemeColor,
-            },
-            menuItemSelected: {
-                backgroundColor: currentThemeColor + " !important",
-            },
-        },
-        templates: {
-            listTemplate: {
-                blockTitle: {
-                    backgroundColor: currentThemeColor,
-                },
-                title: {
-                    backgroundColor: currentThemeColor,
-                },
-                tableList: {
-                    backgroundColorHover: currentThemeColor + " !important",
-                },
-                filterInput: {
-                    backgroundColor: currentThemeColor,
-                },
-            },
-            createTemplate: {
-                blockTitle: {
-                    backgroundColor: currentThemeColor,
-                },
-            },
-            editTemplate: {
-                blockTitle: {
-                    backgroundColor: currentThemeColor,
-                },
-            },
-            showTemplate: {
-                expansionPanelSummary: {
-                    backgroundColor: currentThemeColor,
-                },
-            },
-        },
-        buttons: {
-            saveButton: {
-                backgroundColor: currentThemeColor,
-                border: "1px solid " + currentThemeColor,
-                colorHover: currentThemeColor,
-            },
-            cancelButton: {
-                backgroundColor: isContrastMode ? currentThemeColor : "#da534f",
-                border: isContrastMode ? ("1px solid " + currentThemeColor) : ("1px solid " + "#da534f"),
-                colorHover: isContrastMode ? currentThemeColor : "#da534f",
-            },
-            listButton: {
-                backgroundColor: isContrastMode ? currentThemeColor : "#da534f",
-                border: isContrastMode ? ("1px solid " + currentThemeColor) : ("1px solid " + "#da534f"),
-                colorHover: isContrastMode ? currentThemeColor : "#da534f",
-            },
-            createButton: {
-                color: currentThemeColor,
-                border: "1px solid " + currentThemeColor,
-                backgroundColorHover: currentThemeColor,
-            },
-            editButton: {
-                color: currentThemeColor,
-                border: "1px solid " + currentThemeColor,
-                backgroundColorHover: currentThemeColor,
-            },
-            pagination: {
-                color: currentThemeColor,
-                backgroundColorHover: currentThemeColor,
-                backgroundColorActive: currentThemeColor,
-            },
-            logout: {
-                backgroundColor: currentThemeColor,
-                border: "1px solid " + currentThemeColor,
-            }
-        },
+        palette: isContrastMode ? darkPalette : lightPalette,
         tableHeader: {
             tableHeaderBlock: {
                 background: cardBackground,
             },
         },
         patientSummaryPanel: {
-            media: {
-                backgroundColor: currentThemeColor,
-            },
             container: {
                 background: 'url(' + backgroundImage + ')',
-            },
-            topBlock: {
-                backgroundColor: currentThemeColor,
-                background: cardBackground,
             },
         },
     });

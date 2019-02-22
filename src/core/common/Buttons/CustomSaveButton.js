@@ -10,9 +10,9 @@ const styles = theme => ({
         width: 130,
         height: 40,
         margin: 8,
-        backgroundColor: theme.buttons.saveButton.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
         color: "white",
-        border: theme.buttons.saveButton.border,
+        border: `1px solid ${theme.palette.mainColor}`,
         borderRadius: 20,
         fontSize: 16,
         fontWeight: 800,
@@ -25,7 +25,7 @@ const styles = theme => ({
         },
         "&:hover": {
             backgroundColor: "white",
-            color: theme.buttons.saveButton.colorHover,
+            color: theme.palette.mainColor,
         }
     },
 });

@@ -22,16 +22,16 @@ const styles = theme => ({
     },
     menuItem: {
         display: "block",
-        color: theme.sidebar.menuItem.color,
+        color: theme.palette.mainColor,
         borderBottom: "1px solid #e5e5e5",
         '&:hover': {
-            backgroundColor: theme.sidebar.menuItem.backgroundColorHover,
+            backgroundColor: theme.palette.mainColor,
             color: "#fff",
         },
     },
     menuItemSelected: {
         display: "block",
-        backgroundColor: theme.sidebar.menuItemSelected.backgroundColor,
+        backgroundColor: theme.palette.mainColor + '! important',
         color: "#fff",
         borderBottom: "1px solid #e5e5e5",
     },

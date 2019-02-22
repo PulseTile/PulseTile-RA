@@ -1,6 +1,7 @@
-import { getCurrentThemeColor } from "../../../core/config/styles";
+import { DEFAULT_MAIN_COLOR, DEFAULT_DANGER_COLOR } from "../../../core/config/styles";
 
-const themeColor = getCurrentThemeColor();
+const themeColor = (window && window.config) ? window.config.mainColor : DEFAULT_MAIN_COLOR;
+const dangerColor = (window && window.config) ? window.config.dangerColor : DEFAULT_DANGER_COLOR;
 
 /**
  * This component returns styles for User Tour
@@ -12,7 +13,7 @@ export default {
     options: {
         beaconSize: 36,
         overlayColor: 'rgba(0, 0, 0, 0.5)',
-        primaryColor: '#f04',
+        primaryColor: dangerColor,
         spotlightShadow: 'none',
         textColor: '#333',
         width: 400,

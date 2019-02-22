@@ -1,16 +1,13 @@
 import React from "react";
 
 import { withStyles } from "@material-ui/core/styles";
-import { getCurrentThemeColor } from "../../../../core/config/styles";
 
-const themeColor = getCurrentThemeColor();
-
-const styles = {
+const styles = theme => ({
     link: {
-        color: themeColor,
+        color: theme.palette.mainColor,
         textDecoration: "none",
     },
-};
+});
 
 const LastStepContent = ({ classes, title, link }) => {
     return (
