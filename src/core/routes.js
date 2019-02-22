@@ -4,7 +4,11 @@ import { Route } from 'react-router-dom';
 import Charts from './pages/Charts';
 import PatientSummary from './pages/PatientSummary';
 
-export default [
+import nonCoreRoutes from "../version/routes";
+
+const coreRoutes = [
     <Route exact path="/charts" component={Charts} />,
     <Route exact path="/summary" component={PatientSummary} />,
 ];
+
+export default coreRoutes.concat(nonCoreRoutes);

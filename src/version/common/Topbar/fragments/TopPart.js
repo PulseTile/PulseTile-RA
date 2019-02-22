@@ -6,7 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
 
-import helmLogo from "../../../images/helm-logo.png";
+import helmLogo from "../../../images/scotland-logo.jpg";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
 import ContrastMode from "../../../features/ContrastMode";
@@ -38,6 +38,9 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         paddingLeft: 9,
+    },
+    image: {
+        width: "auto",
     },
     nhsLogo: {
         width: "auto",

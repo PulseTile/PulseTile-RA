@@ -29,7 +29,6 @@ function getCardBackground(isContrastMode = false) {
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-
 export function getCurrentTheme(isContrastMode) {
     const backgroundImage = get(themeImages, 'backgroundImage', null);
     const cardBackground = getCardBackground(isContrastMode);
