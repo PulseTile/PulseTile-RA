@@ -58,8 +58,11 @@ export function getCurrentTheme(isContrastMode) {
         },
         patientSummaryPanel: {
             container: {
-                background: 'url(' + backgroundImage + ')',
+                background: `url(${backgroundImage})`,
             },
+            topBlock: {
+                background: cardBackground,
+            }
         },
     });
 }

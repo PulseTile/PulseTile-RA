@@ -38,7 +38,7 @@ const styles = theme => ({
         flexDirection: "column",
         height: 100,
         backgroundColor: theme.palette.mainColor,
-        background: theme.palette.mainColor,
+        background: theme.patientSummaryPanel.topBlock.background,
         backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",
