@@ -1,4 +1,5 @@
 import contrastMode from "./contrastModeReducer";
+import personalDetails from "./respectPersonalDetailsReducer";
 
 /**
  * This component returns version reducers
@@ -8,4 +9,5 @@ import contrastMode from "./contrastModeReducer";
  */
 export default {
     contrastMode,
+    personalDetails,
 };

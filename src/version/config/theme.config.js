@@ -1,6 +1,6 @@
 import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
-import PatientsList from "../../core/pages/PatientsList";
+import PatientSummary from "../../core/pages/PatientSummary";
 
 /**
  * Order of menu items for the current theme
@@ -18,7 +18,7 @@ export const resourceOrder = [
 export const themeCommonElements = {
     topbar: ThemeTopbar,
     footer: ThemeFooter,
-    homePage: PatientsList,
+    homePage: PatientSummary,
 };
 
 export const themeImages = {};

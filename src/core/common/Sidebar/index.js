@@ -32,7 +32,7 @@ const styles = theme => ({
     menuItemSelected: {
         display: "block",
         backgroundColor: theme.palette.mainColor + '! important',
-        color: "#fff",
+        color: "#fff !important",
         borderBottom: "1px solid #e5e5e5",
     },
 });

@@ -43,6 +43,14 @@ const SidebarWithFullMenu = ({ classes, resources, currentList, onMenuClick }) =
                         }
                     )
                 }
+                <MenuItemLink
+                    className={(currentList === "/respect") ? classes.menuItemSelected : classes.menuItem}
+                    to="/respect"
+                    primaryText="ReSPECT"
+                    leftIcon={(currentList === "/respect") ? <FontAwesomeIcon icon={faCircle} size="xs" /> : null}
+                    onClick={onMenuClick}
+                    selected={currentList === "/respect"}
+                />
             </div>
         </Sidebar>
     );

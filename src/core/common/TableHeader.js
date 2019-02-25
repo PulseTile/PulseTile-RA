@@ -23,6 +23,7 @@ const styles = theme => ({
  * This component returns header for table
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} classes
  * @param {string} resource
  * @constructor
  */
