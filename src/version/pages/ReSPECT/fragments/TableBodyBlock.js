@@ -7,7 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED } from "../statuses";
+import { STATUS_INCOMPLETE } from "../statuses";
 import StatusCell from "./StatusCell";
 
 class TableBodyBlock extends Component {
