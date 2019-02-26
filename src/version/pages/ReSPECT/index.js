@@ -10,7 +10,7 @@ import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import TableHeader from "../../../core/common/TableHeader";
 import TableHeadBlock from "./fragments/TableHeadBlock";
 import TableBodyBlock from "./fragments/TableBodyBlock";
-import SectionBlock from "./fragments/SectionBlock";
+import CurrentSectionBlock from "./fragments/CurrentSectionBlock";
 import sections from "./sections";
 
 const styles = theme => ({
@@ -97,9 +97,7 @@ class Respect extends Component {
         const breadcrumbsResource = [
             { url: "/respect", title: "ReSPECT", isActive: false }
         ];
-
         const currentSection = this.getCurrentSection(currentRow);
-
         return (
             <React.Fragment>
                 <TableHeader resource="respect" />
@@ -120,11 +118,10 @@ class Respect extends Component {
                     </Grid>
                     {
                         currentRow &&
-                            <SectionBlock
-                                currentRow={currentRow}
-                                title={currentSection.section}
-                                SectionBlock={currentSection.component}
+                            <CurrentSectionBlock
+                                currentSection={currentSection}
                                 classes={classes}
+                                currentRow={currentRow}
                                 onRowClick={this.onRowClick}
                             />
                     }
