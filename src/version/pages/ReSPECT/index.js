@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 
 import { personalDetailsAction } from "../../actions/ReSPECT/personalDetailsAction";
 import { summaryInformationAction } from "../../actions/ReSPECT/summaryInformationAction";
+import { personalPreferencesAction } from "../../actions/ReSPECT/personalPreferencesAction";
+import { clinicalRecommendationsAction } from "../../actions/ReSPECT/clinicalRecommendationsAction";
 
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import TableHeader from "../../../core/common/TableHeader";
@@ -142,6 +144,7 @@ const mapStateToProps = state => {
             personalDetails: state.custom.personalDetails.data,
             summaryInformation: state.custom.summaryInformation.data,
             personalPreferences: state.custom.personalPreferences.data,
+            clinicalRecommendations: state.custom.clinicalRecommendations.data,
         }
     }
 };
@@ -151,6 +154,8 @@ const mapDispatchToProps = dispatch => {
         getSectionsInfo(userId) {
             dispatch(personalDetailsAction.request(userId));
             dispatch(summaryInformationAction.request(userId));
+            dispatch(personalPreferencesAction.request(userId));
+            dispatch(clinicalRecommendationsAction.request(userId));
         },
     }
 };

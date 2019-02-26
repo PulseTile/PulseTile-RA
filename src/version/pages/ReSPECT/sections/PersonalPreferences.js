@@ -52,10 +52,10 @@ class PersonalPreferences extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-
-                    <h4 align="center">PLACE FOR "How would you balance your priorities for care?"</h4>
-
                     <SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
+
+                        <h4 align="center">PLACE FOR "How would you balance your priorities for care?"</h4>
+
                         <TextInput
                             rows="4"
                             source="preferencesText"
