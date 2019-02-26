@@ -141,6 +141,7 @@ const mapStateToProps = state => {
         sectionsInfo: {
             personalDetails: state.custom.personalDetails.data,
             summaryInformation: state.custom.summaryInformation.data,
+            personalPreferences: state.custom.personalPreferences.data,
         }
     }
 };
