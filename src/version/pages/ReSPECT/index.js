@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -8,7 +7,8 @@ import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import { respectPersonalDetailsAction } from "../../actions/respectPersonalDetails";
+import { personalDetailsAction } from "../../actions/ReSPECT/personalDetailsAction";
+import { summaryInformationAction } from "../../actions/ReSPECT/summaryInformationAction";
 
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import TableHeader from "../../../core/common/TableHeader";
@@ -16,7 +16,6 @@ import TableHeadBlock from "./fragments/TableHeadBlock";
 import TableBodyBlock from "./fragments/TableBodyBlock";
 import CurrentSectionBlock from "./fragments/CurrentSectionBlock";
 import sections from "./sections";
-import { STATUS_INCOMPLETE } from "./statuses";
 
 const styles = theme => ({
     root: {
@@ -141,6 +140,7 @@ const mapStateToProps = state => {
     return {
         sectionsInfo: {
             personalDetails: state.custom.personalDetails.data,
+            summaryInformation: state.custom.summaryInformation.data,
         }
     }
 };
@@ -148,7 +148,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getSectionsInfo(userId) {
-            dispatch(respectPersonalDetailsAction.request(userId));
+            dispatch(personalDetailsAction.request(userId));
+            dispatch(summaryInformationAction.request(userId));
         },
     }
 };

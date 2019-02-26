@@ -1,5 +1,9 @@
 import contrastMode from "./contrastModeReducer";
-import personalDetails from "./respectPersonalDetailsReducer";
+
+import createRespectPluginReducer from "./createRespectPluginReducer";
+
+import { PERSONAL_DETAILS_ACTION } from "../actions/ReSPECT/personalDetailsAction";
+import { SUMMARY_INFORMATION_ACTION } from "../actions/ReSPECT/summaryInformationAction";
 
 /**
  * This component returns version reducers
@@ -9,5 +13,6 @@ import personalDetails from "./respectPersonalDetailsReducer";
  */
 export default {
     contrastMode,
-    personalDetails,
+    personalDetails: createRespectPluginReducer(PERSONAL_DETAILS_ACTION),
+    summaryInformation: createRespectPluginReducer(SUMMARY_INFORMATION_ACTION),
 };
