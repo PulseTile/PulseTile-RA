@@ -4,6 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
+    title: {
+        color: "#fff",
+        backgroundColor: theme.palette.mainColor,
+        fontSize: 18,
+        fontWeight: 700,
+    },
     expansionPanel: {
         height: "49px !important",
         '& > div': {

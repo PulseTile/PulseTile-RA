@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import get from "lodash/get";
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -6,12 +8,15 @@ import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import { respectPersonalDetailsAction } from "../../actions/respectPersonalDetails";
+
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import TableHeader from "../../../core/common/TableHeader";
 import TableHeadBlock from "./fragments/TableHeadBlock";
 import TableBodyBlock from "./fragments/TableBodyBlock";
 import CurrentSectionBlock from "./fragments/CurrentSectionBlock";
 import sections from "./sections";
+import { STATUS_INCOMPLETE } from "./statuses";
 
 const styles = theme => ({
     root: {
@@ -37,9 +42,6 @@ const styles = theme => ({
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
-    },
-    closeIcon: {
-        paddingRight: 15,
     },
     tableWrapper: {
         overflowX: 'auto',
@@ -72,8 +74,13 @@ const styles = theme => ({
 class Respect extends Component {
 
     state = {
-        currentRow: null
+        currentRow: null,
     };
+
+    componentDidMount() {
+        const userId = localStorage.getItem('userId');
+        this.props.getSectionsInfo(userId);
+    }
 
     onRowClick = id => {
         this.setState({
@@ -92,7 +99,7 @@ class Respect extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, sectionsInfo } = this.props;
         const { currentRow } = this.state;
         const breadcrumbsResource = [
             { url: "/respect", title: "ReSPECT", isActive: false }
@@ -111,7 +118,7 @@ class Respect extends Component {
                             <div className={classes.tableWrapper}>
                                 <Table className={classes.tableList} aria-labelledby="tableTitle">
                                     <TableHeadBlock />
-                                    <TableBodyBlock sections={sections} currentRow={currentRow} onRowClick={this.onRowClick} />
+                                    <TableBodyBlock sections={sections} currentRow={currentRow} onRowClick={this.onRowClick} sectionsInfo={sectionsInfo} />
                                 </Table>
                             </div>
                         </Paper>
@@ -120,7 +127,6 @@ class Respect extends Component {
                         currentRow &&
                             <CurrentSectionBlock
                                 currentSection={currentSection}
-                                classes={classes}
                                 currentRow={currentRow}
                                 onRowClick={this.onRowClick}
                             />
@@ -131,4 +137,20 @@ class Respect extends Component {
     }
 }
 
-export default withStyles(styles)(Respect);
+const mapStateToProps = state => {
+    return {
+        sectionsInfo: {
+            personalDetails: state.custom.personalDetails.data,
+        }
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getSectionsInfo(userId) {
+            dispatch(respectPersonalDetailsAction.request(userId));
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Respect));
