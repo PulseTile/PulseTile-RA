@@ -5,7 +5,6 @@ import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import FormLabel from '@material-ui/core/FormLabel';
 
 import { clinicalRecommendationsAction } from "../../../actions/ReSPECT/clinicalRecommendationsAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
@@ -47,15 +46,6 @@ class ClinicalRecomandations extends Component {
         cprValue: null,
     };
 
-    handleChange = event => {
-
-        console.log('event', event.target.value);
-
-        this.setState({
-            cprValue: event.target.value
-        });
-    };
-
     submitForm = data => {
         data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
         data.dateCompleted = moment().format('DD-MMM-YYYY');
@@ -72,7 +62,7 @@ class ClinicalRecomandations extends Component {
 
     render() {
         const { classes, personalDetails, title, onRowClick } = this.props;
-        const { isMainPanel, cprValue } = this.state;
+        const { isMainPanel } = this.state;
         const filledValues = Object.assign({}, defaultValues, personalDetails);
         return (
             <React.Fragment>

@@ -11,6 +11,7 @@ import { personalDetailsAction } from "../../actions/ReSPECT/personalDetailsActi
 import { summaryInformationAction } from "../../actions/ReSPECT/summaryInformationAction";
 import { personalPreferencesAction } from "../../actions/ReSPECT/personalPreferencesAction";
 import { clinicalRecommendationsAction } from "../../actions/ReSPECT/clinicalRecommendationsAction";
+import { capacityAndRepresentationAction } from "../../actions/ReSPECT/capacityAndRepresentationAction";
 
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import TableHeader from "../../../core/common/TableHeader";
@@ -145,6 +146,7 @@ const mapStateToProps = state => {
             summaryInformation: state.custom.summaryInformation.data,
             personalPreferences: state.custom.personalPreferences.data,
             clinicalRecommendations: state.custom.clinicalRecommendations.data,
+            capacityAndRepresentation: state.custom.capacityAndRepresentation.data,
         }
     }
 };
@@ -156,6 +158,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(summaryInformationAction.request(userId));
             dispatch(personalPreferencesAction.request(userId));
             dispatch(clinicalRecommendationsAction.request(userId));
+            dispatch(capacityAndRepresentationAction.request(userId));
         },
     }
 };
