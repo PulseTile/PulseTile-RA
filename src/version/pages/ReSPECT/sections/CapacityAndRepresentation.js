@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SimpleForm, TextInput, DateInput, DisabledInput, RadioButtonGroupInput } from "react-admin";
+import { SimpleForm, DisabledInput, RadioButtonGroupInput } from "react-admin";
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -54,7 +54,7 @@ class CapacityAndRepresentation extends Component {
     submitForm = data => {
         data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
         data.dateCompleted = moment().format('DD-MMM-YYYY');
-        this.props.addClinicalRecommendations(data);
+        this.props.addCapacityAndRepresentation(data);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
     };
@@ -77,11 +77,13 @@ class CapacityAndRepresentation extends Component {
                             source="capacityFirst"
                             label="Does the person have sufficient capacity to participate in making the recommendations on this plan?"
                             choices={capacityFirstChoices}
+                            fullWidth
                         />
                         <RadioButtonGroupInput
                             source="capacitySecond"
                             label="Do that have legal proxy (e.g. welfare attourney, person with parental responsibility who can participate on their behalf in making recommendations?"
                             choices={capacitySecondChoices}
+                            fullWidth
                         />
                         <DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />
                     </SimpleForm>
@@ -100,7 +102,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addClinicalRecommendations(data) {
+        addCapacityAndRepresentation(data) {
             dispatch(capacityAndRepresentationAction.create(data));
         }
     }

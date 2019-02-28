@@ -7,6 +7,7 @@ import { SUMMARY_INFORMATION_ACTION } from "../actions/ReSPECT/summaryInformatio
 import { PERSONAL_PREFERENCES_ACTION } from "../actions/ReSPECT/personalPreferencesAction";
 import { CLINICAL_RECOMMENDATIONS_ACTION } from "../actions/ReSPECT/clinicalRecommendationsAction";
 import { CAPACITY_AND_REPRESENTATION_ACTION } from "../actions/ReSPECT/capacityAndRepresentationAction";
+import { INVOLVEMENT_ACTION } from "../actions/ReSPECT/involvenentAction";
 
 /**
  * This component returns version reducers
@@ -21,4 +22,5 @@ export default {
     personalPreferences: createRespectPluginReducer(PERSONAL_PREFERENCES_ACTION),
     clinicalRecommendations: createRespectPluginReducer(CLINICAL_RECOMMENDATIONS_ACTION),
     capacityAndRepresentation: createRespectPluginReducer(CAPACITY_AND_REPRESENTATION_ACTION),
+    involvement: createRespectPluginReducer(INVOLVEMENT_ACTION),
 };
