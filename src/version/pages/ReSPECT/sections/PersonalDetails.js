@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { SimpleForm, TextInput, DateInput, DisabledInput } from "react-admin";
 import moment from "moment";
 
+import { withStyles } from '@material-ui/core/styles';
+
 import { personalDetailsAction } from "../../../actions/ReSPECT/personalDetailsAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
@@ -15,6 +17,38 @@ const FORM_FIELDS_NUMBER = 9;
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
+};
+
+const styles = {
+    formBlock: {
+        '& .ra-input-firstName': {
+            display: "inline-block",
+            width: '50%',
+
+        },
+        '& .ra-input-surname': {
+            display: "inline-block",
+            width: '50%',
+        },
+        '& .ra-input-city': {
+            display: "inline-block",
+            width: '50%',
+
+        },
+        '& .ra-input-county': {
+            display: "inline-block",
+            width: '50%',
+        },
+        '& .ra-input-postCode': {
+            display: "inline-block",
+            width: '50%',
+
+        },
+        '& .ra-input-country': {
+            display: "inline-block",
+            width: '50%',
+        }
+    },
 };
 
 class PersonalDetails extends Component {
@@ -46,7 +80,8 @@ class PersonalDetails extends Component {
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     <SimpleForm className={classes.formBlock} save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
                         <TextInput source="preferredName" label="Preferred Name" fullWidth />
-                        <TextInput source="fullName" label="Full Name" fullWidth />
+                        <TextInput source="firstName" label="First Name" />
+                        <TextInput source="surname" label="Surname" />
                         <DateInput source="dateOfBirth" label="Date of Birth" fullWidth />
                         <TextInput source="streetAddress" label="Street address" fullWidth />
                         <TextInput source="addressLine" label="Address line 2" fullWidth />
@@ -78,5 +113,5 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersonalDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PersonalDetails));
 
