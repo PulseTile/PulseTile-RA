@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import { SimpleForm, TextInput, DateInput, DisabledInput, RadioButtonGroupInput } from "react-admin";
 import moment from "moment";
@@ -12,6 +13,8 @@ import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
 import { getSectionStatus } from "../functions";
+import RangeLine from "../fragments/RangeLine";
+import RadioButtonName from "../fragments/RadioButtonName";
 
 const FORM_FIELDS_NUMBER = 5;
 
@@ -30,13 +33,13 @@ const styles = {
     helperText: {
         marginLeft: 35,
         marginTop: 0,
-    }
+    },
 };
 
 const cprChoices = [
-    { id: '1', name: 'CPR attempts recommended (Adult or child)' },
-    { id: '2', name: 'For modified CPR (Adult or child)' },
-    { id: '3', name: 'CPR attempts NOT recommended (Adult or child)' },
+    { id: '1', name: <RadioButtonName mainTitle="CPR attempts recommended" helpTitle="Adult or child" /> },
+    { id: '2', name: <RadioButtonName mainTitle="For modified CPR" helpTitle="Child only, as detailed above" /> },
+    { id: '3', name: <RadioButtonName mainTitle="CPR attempts NOT recommended" helpTitle="Adult or child" /> },
 ];
 
 class ClinicalRecomandations extends Component {
@@ -44,11 +47,14 @@ class ClinicalRecomandations extends Component {
     state = {
         isMainPanel: true,
         cprValue: null,
+        focusValue: [get(this.props, 'clinicalRecommendations.focusValue', 50)],
     };
 
     submitForm = data => {
+        const { focusValue } = this.state;
         data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
         data.dateCompleted = moment().format('DD-MMM-YYYY');
+        data.focusValue = get(focusValue, '[0]', 0);
         this.props.addClinicalRecommendations(data);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
@@ -60,19 +66,29 @@ class ClinicalRecomandations extends Component {
         });
     };
 
+    setRangeInput = values => {
+        this.setState({
+            focusValue: values
+        })
+    };
+
     render() {
         const { classes, personalDetails, title, onRowClick } = this.props;
-        const { isMainPanel } = this.state;
+        const { isMainPanel, focusValue } = this.state;
         const filledValues = Object.assign({}, defaultValues, personalDetails);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <RangeLine
+                        onChangeRange={this.setRangeInput}
+                        sourceName={focusValue}
+                        title="Clinical recomendations for emergency care and treatment"
+                        helpTitle="Please mark along the scale"
+                        leftText="Focus on life sustaining treatment as per guidance below"
+                        rightText="Focus on sympton control as per guidance below"
+                    />
                     <SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
-
-                        <h4 align="center">PLACE FOR "Clinical recomendations for emergency care and treatment"</h4>
-                        <hr />
                         <h4 align="center">PLACE FOR "Clinical signature"</h4>
-
                         <TextInput
                             rows="6"
                             source="clinicalGuidance"
@@ -85,7 +101,7 @@ class ClinicalRecomandations extends Component {
                             includingbeing taken or admitted to hospital +/- receiving life support
                         </Typography>
 
-                        <RadioButtonGroupInput source="cprValue" label="CPR recommendation" choices={cprChoices} />
+                        <RadioButtonGroupInput source="cprValue" label="CPR recommendation" choices={cprChoices} fullWidth />
 
                         <h4 align="center">PLACE FOR "Clinical signature"</h4>
 
@@ -100,7 +116,7 @@ class ClinicalRecomandations extends Component {
 
 const mapStateToProps = state => {
     return {
-        personalPreferences: state.custom.personalPreferences.data,
+        clinicalRecommendations: state.custom.clinicalRecommendations.data,
     }
 };
 
