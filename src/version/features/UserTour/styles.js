@@ -1,5 +1,5 @@
-const themeColor = (window && window.config) ? window.config.theme.mainColor : "#0D672F";
-const dangerColor = (window && window.config) ? window.config.theme.dangerColor : "#da534f";
+const themeColor = (window && window.config) ? window.config.lightPalette.mainColor : "#0D672F";
+const dangerColor = (window && window.config) ? window.config.lightPalette.dangerColor : "#da534f";
 
 /**
  * This component returns styles for User Tour
