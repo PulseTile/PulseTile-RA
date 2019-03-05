@@ -36,12 +36,20 @@ const FetchLogin = (resolve, reject) => {
 };
 
 export default async (type, params) => {
+
     if (type === AUTH_LOGOUT) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('given_name');
-        localStorage.removeItem('family_name');
-        localStorage.removeItem('role');
+        if (localStorage.getItem('userId') && token) {
+            const urlLogout = domainName + '/api/logout';
+            fetch(urlLogout, options)
+                .then(res => res.json())
+                .then(response => {
+                    document.cookie = 'JSESSIONID=;';
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('role');
+                    window.location = get(response, 'redirectURL', '');
+                });
+        }
         return Promise.resolve();
     }
 
