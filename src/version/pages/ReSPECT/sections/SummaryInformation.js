@@ -4,7 +4,7 @@ import { SimpleForm, TextInput, DateInput, DisabledInput } from "react-admin";
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { summaryInformationAction } from "../../../actions/ReSPECT/summaryInformationAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
@@ -60,9 +60,9 @@ class SummaryInformation extends Component {
                             multiline
                             fullWidth
                         />
-                        <Typography className={classes.textBelow}>
+                        <FormHelperText className={classes.textBelow}>
                             Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.
-                        </Typography>
+                        </FormHelperText>
                         <TextInput
                             rows="4"
                             source="details"
@@ -70,10 +70,10 @@ class SummaryInformation extends Component {
                             multiline
                             fullWidth
                         />
-                        <Typography className={classes.textBelow}>
+                        <FormHelperText className={classes.textBelow}>
                             Details of other relevant planning documents and where to find them (e.g. Advance Decision to Refuse Treatment, Advance Care Plan).
                             Also include known wishes about organ donation.
-                        </Typography>
+                        </FormHelperText>
                         <DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />
                     </SimpleForm>
                 </MainFormBlock>

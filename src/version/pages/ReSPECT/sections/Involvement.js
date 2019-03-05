@@ -4,6 +4,8 @@ import { SimpleForm, DisabledInput, RadioButtonGroupInput, TextInput } from "rea
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { involvementAction } from "../../../actions/ReSPECT/involvenentAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
@@ -30,7 +32,10 @@ const styles = {
     helperText: {
         marginLeft: 35,
         marginTop: 0,
-    }
+    },
+    titleBlock: {
+        width: '100%',
+    },
 };
 
 class Involvement extends Component {
@@ -79,22 +84,41 @@ class Involvement extends Component {
                     sourceName="involvementValue"
                     choices={insertedChoices}
                 />},
-            { id: '7', name: "D - If no other option has been selected, valid reasons must be stated here" }
         ];
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     <SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
+                        <FormLabel>The clinician(s) signing this plan is / are confirming that</FormLabel>
                         <RadioButtonGroupInput
                             source="involvementValue"
-                            label="Do that have legal proxy (e.g. welfare attourney, person with parental responsibility who can participate on their behalf in making recommendations?"
+                            label="Select A, B or C, OR complete section D below:"
                             choices={mainChoices}
                             onClick={e => this.handleChange(e)}
                             fullWidth
                         />
-                        { selectedValue === '7' &&
-                            <TextInput rows="6" source="description" multiline fullWidth />
-                        }
+
+                        <div className={classes.titleBlock}>
+                            <TextInput
+                                label="D - if no other option has been selected, valid reasons must be stated here"
+                                rows="6"
+                                source="variantD"
+                                multiline
+                                fullWidth
+                            />
+                            <FormHelperText>Document full explanation in the clinical record</FormHelperText>
+                        </div>
+
+                        <div className={classes.titleBlock}>
+                            <TextInput
+                                label="Record date, names and roles of those involved in decision making, and where records of discussion can be found"
+                                rows="6"
+                                source="records"
+                                multiline
+                                fullWidth
+                            />
+                        </div>
+
                         <DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />
                     </SimpleForm>
                 </MainFormBlock>
