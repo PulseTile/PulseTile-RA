@@ -62,7 +62,7 @@ const SectionToolbar = ({ classes, onRowClick, ...props}) => {
 
     return (
         <Toolbar className={classes.toolbar} {...props} >
-            <SaveButton label="Complete" icon={<DoneIcon />} className={classes.saveButton} {...props} />
+            <SaveButton label="Finished" icon={<DoneIcon />} className={classes.saveButton} {...props} />
             <Button className={classes.cancelButton} onClick={() => onRowClick(null)}>Cancel</Button>
         </Toolbar>
     );

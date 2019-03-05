@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import { SimpleForm, TextInput, DateInput, DisabledInput } from "react-admin";
 import moment from "moment";
@@ -10,6 +11,7 @@ import { personalPreferencesAction } from "../../../actions/ReSPECT/personalPref
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
+import RangeLine from "../fragments/RangeLine";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
 import { getSectionStatus } from "../functions";
 
@@ -19,21 +21,24 @@ const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
 };
 
-const styles = {
+const styles = theme => ({
     textBelow: {
         width: "auto",
     }
-};
+});
 
 class PersonalPreferences extends Component {
 
     state = {
         isMainPanel: true,
+        preferencesValue: [get(this.props, 'personalPreferences.preferencesValue', 50)],
     };
 
     submitForm = data => {
+        const { preferencesValue } = this.state;
         data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
         data.dateCompleted = moment().format('DD-MMM-YYYY');
+        data.preferencesValue = get(preferencesValue, '[0]', 0);
         this.props.addPersonalPreferences(data);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
@@ -45,17 +50,28 @@ class PersonalPreferences extends Component {
         });
     };
 
+    setRangeInput = values => {
+        this.setState({
+            preferencesValue: values
+        })
+    };
+
     render() {
         const { classes, personalDetails, title, onRowClick } = this.props;
-        const { isMainPanel } = this.state;
+        const { isMainPanel, preferencesValue } = this.state;
         const filledValues = Object.assign({}, defaultValues, personalDetails);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <RangeLine
+                        onChangeRange={this.setRangeInput}
+                        sourceName={preferencesValue}
+                        title="How would you balance your priorities for care?"
+                        helpTitle="Please mark along the scale"
+                        leftText="Prioritising sustaining life, even at the expense of some comfort"
+                        rightText="Prioritising comfort, even at the expense of saving life"
+                    />
                     <SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
-
-                        <h4 align="center">PLACE FOR "How would you balance your priorities for care?"</h4>
-
                         <TextInput
                             rows="4"
                             source="preferencesText"
