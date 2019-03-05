@@ -15,6 +15,7 @@ import { TOTAL_ROWS_NUMBER } from "../statuses";
 import { getSectionStatus } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
+import Signature from "../fragments/Signature";
 
 const FORM_FIELDS_NUMBER = 5;
 
@@ -48,13 +49,15 @@ class ClinicalRecomandations extends Component {
         isMainPanel: true,
         cprValue: null,
         focusValue: [get(this.props, 'clinicalRecommendations.focusValue', 50)],
+        firstSignature: null,
+        secondSignature: null,
     };
 
     submitForm = data => {
         const { focusValue } = this.state;
-        data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
         data.dateCompleted = moment().format('DD-MMM-YYYY');
         data.focusValue = get(focusValue, '[0]', 0);
+        data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
         this.props.addClinicalRecommendations(data);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
@@ -70,6 +73,12 @@ class ClinicalRecomandations extends Component {
         this.setState({
             focusValue: values
         })
+    };
+
+    addSignature = (name, ref) => {
+        this.setState({
+            [name]: ref,
+        });
     };
 
     render() {
@@ -88,7 +97,7 @@ class ClinicalRecomandations extends Component {
                         rightText="Focus on sympton control as per guidance below"
                     />
                     <SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
-                        <h4 align="center">PLACE FOR "Clinical signature"</h4>
+                        <Signature name="firstSignature" onEnd={this.addSignature} />
                         <TextInput
                             rows="6"
                             source="clinicalGuidance"
@@ -100,11 +109,8 @@ class ClinicalRecomandations extends Component {
                             Now provide clinical guidance on specific inverventions that may or may not be wanted or clinicaly appropriate,
                             includingbeing taken or admitted to hospital +/- receiving life support
                         </Typography>
-
                         <RadioButtonGroupInput source="cprValue" label="CPR recommendation" choices={cprChoices} fullWidth />
-
-                        <h4 align="center">PLACE FOR "Clinical signature"</h4>
-
+                        <Signature name="secondSignature" onEnd={this.addSignature} />
                         <DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />
                     </SimpleForm>
                 </MainFormBlock>

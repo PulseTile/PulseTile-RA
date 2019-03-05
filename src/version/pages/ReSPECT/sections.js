@@ -7,6 +7,7 @@ import Involvement from "./sections/Involvement";
 import CliniciansSignatures from "./sections/CliniciansSignatures";
 import EmergencyContacts from "./sections/EmergencyContacts";
 import Confirmation from "./sections/Confirmation";
+import EmergencyView from "./sections/EmergencyView";
 
 export default [
     { id: 1, name: "personalDetails", section: '1. Personal Details', component: PersonalDetails, date: false },
@@ -18,4 +19,5 @@ export default [
     { id: 7, name: "cliniciansSignatures", section: '7. Clinicians signatures', component: CliniciansSignatures, date: false },
     { id: 8, name: "emergencyContacts", section: '8. Emergency contacts', component: EmergencyContacts, date: false },
     { id: 9, name: "confirmation", section: '9. Confirmation of validity', component: Confirmation, date: false },
+    { id: 10, name: "emergencyView", section: '10. Emergency view', component: EmergencyView, date: false },
 ];
