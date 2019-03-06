@@ -16,7 +16,8 @@ const styles = {
         fontWeight: 800,
     },
     signatureField: {
-        width: '100%',
+        marginLeft: 20,
+        marginRight: 20,
         '& canvas': {
             marginTop: 10,
             border: '1px solid #000',
