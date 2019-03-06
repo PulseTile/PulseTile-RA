@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SimpleForm, DisabledInput, RadioButtonGroupInput, TextInput } from "react-admin";
+import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
 
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
@@ -23,7 +25,25 @@ const styles = theme => ({
     sectionLink: {
         color: theme.palette.mainColor,
         fontWeight: 800,
-    }
+    },
+    formGroup: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        boxSizing: "border-box",
+    },
+    formLabel: {
+        display: "block",
+        fontWeight: 800,
+        color: "#000",
+        fontSize: 14,
+        marginBottom: 5,
+    },
+    formInput: {
+        width: '100%',
+        height: 25,
+        paddingLeft: 10,
+    },
 });
 
 class EmergencyView extends Component {
@@ -55,9 +75,13 @@ class EmergencyView extends Component {
                         <p className={classes.secondTitle}>CPR attempts recommended</p>
                         <p>For more information, see <a className={classes.sectionLink} onClick={e => this.redirectToSection(e)}>Section 4</a> for the latest clinical recommendations</p>
                     </div>
-                    <SimpleForm defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
-                        <DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />
-                    </SimpleForm>
+                    <LocalForm  model="personalDetails">
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
+                            <Control.text className={classes.formInput} model="personalDetails.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                        </FormGroup>
+                        <SectionToolbar onRowClick={onRowClick} />
+                    </LocalForm>
                 </MainFormBlock>
                 <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalDetails} />
             </React.Fragment>

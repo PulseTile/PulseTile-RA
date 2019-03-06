@@ -22,7 +22,7 @@ import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import Signature from "../fragments/Signature";
 
-const FORM_FIELDS_NUMBER = 2;
+const FORM_FIELDS_NUMBER = 5;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -76,10 +76,10 @@ class ClinicalRecommendations extends Component {
         const additionalData = {
             cprValue: cprValue,
             focusValue: get(focusValue, '[0]', 0),
-            status: getSectionStatus(data, FORM_FIELDS_NUMBER),
             dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
+        formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
         this.props.addClinicalRecommendations(formData);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);

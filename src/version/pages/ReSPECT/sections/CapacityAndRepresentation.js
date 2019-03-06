@@ -1,47 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SimpleForm, DisabledInput, RadioButtonGroupInput } from "react-admin";
+import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 
 import { capacityAndRepresentationAction } from "../../../actions/ReSPECT/capacityAndRepresentationAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
+import RadioButtonWithLink from "../fragments/RadioButtonWithLink";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
 import { getSectionStatus } from "../functions";
 
-const FORM_FIELDS_NUMBER = 5;
+const FORM_FIELDS_NUMBER = 2;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
 };
 
 const styles = {
-    textBelow: {
-        width: "auto",
-        marginBottom: 15,
+    formGroup: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        boxSizing: "border-box",
     },
-    radioButtonGroup: {
-        width: "auto",
+    formLabel: {
+        display: "block",
+        fontWeight: 800,
+        color: "#000",
+        fontSize: 14,
+        marginBottom: 5,
     },
-    helperText: {
-        marginLeft: 35,
-        marginTop: 0,
-    }
+    formInput: {
+        width: '100%',
+        height: 25,
+        paddingLeft: 10,
+    },
+    formTextarea: {
+        width: '98%',
+        height: 180,
+        padding: 10,
+    },
+    formHelpText: {
+        marginBottom: 5,
+    },
+    radioGroup: {
+        marginLeft: 25,
+        marginBottom: 25,
+    },
 };
 
-const capacityFirstChoices = [
-    { id: '1', name: 'Yes' },
-    { id: '2', name: 'No' },
-];
 
-const capacitySecondChoices = [
-    { id: '1', name: 'Yes (if so, document details in emergency contact section)' },
-    { id: '2', name: 'No' },
-    { id: '3', name: 'Unknown' },
-];
 
 class CapacityAndRepresentation extends Component {
 
@@ -52,9 +68,15 @@ class CapacityAndRepresentation extends Component {
     };
 
     submitForm = data => {
-        data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
-        data.dateCompleted = moment().format('DD-MMM-YYYY');
-        this.props.addCapacityAndRepresentation(data);
+        const { capacityFirst, capacitySecond } = this.state;
+        const additionalData = {
+            capacityFirst: capacityFirst,
+            capacitySecond: capacitySecond,
+            dateCompleted: moment().format('DD-MMM-YYYY'),
+        };
+        const formData = Object.assign({}, data, additionalData);
+        formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
+        this.props.addCapacityAndRepresentation(formData);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
     };
@@ -65,30 +87,45 @@ class CapacityAndRepresentation extends Component {
         });
     };
 
+    handleChecking = e => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    };
+
     render() {
-        const { classes, personalDetails, title, onRowClick } = this.props;
-        const { isMainPanel } = this.state;
-        const filledValues = Object.assign({}, defaultValues, personalDetails);
+        const { classes, capacityAndRepresentation, title, onRowClick } = this.props;
+        const { isMainPanel, capacityFirst, capacitySecond } = this.state;
+        const filledValues = Object.assign({}, defaultValues, capacityAndRepresentation);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
-                        <RadioButtonGroupInput
-                            source="capacityFirst"
-                            label="Does the person have sufficient capacity to participate in making the recommendations on this plan?"
-                            choices={capacityFirstChoices}
-                            fullWidth
-                        />
-                        <RadioButtonGroupInput
-                            source="capacitySecond"
-                            label="Do that have legal proxy (e.g. welfare attourney, person with parental responsibility who can participate on their behalf in making recommendations?"
-                            choices={capacitySecondChoices}
-                            fullWidth
-                        />
-                        <DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />
-                    </SimpleForm>
+                    <LocalForm  model="personalDetails" onSubmit={values => this.submitForm(values)}>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Does the person have sufficient capacity to participate in making the recommendations on this plan?</FormLabel>
+                            <RadioGroup name="capacityFirst" className={classes.radioGroup} value={capacityFirst} onChange={e => this.handleChecking(e)}>
+                                <FormControlLabel value="1" control={<Radio />} label="Yes" />
+                                <FormControlLabel value="2" control={<Radio />} label="No" />
+                            </RadioGroup>
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attourney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
+                            <RadioGroup name="capacitySecond" className={classes.radioGroup} value={capacitySecond} onChange={e => this.handleChecking(e)}>
+                                <FormControlLabel value="1" control={<Radio />} label={<RadioButtonWithLink onRowClick={onRowClick} />}/>
+                                <FormControlLabel value="2" control={<Radio />} label="No"/>
+                                <FormControlLabel value="3" control={<Radio />} label="Unknown"/>
+                            </RadioGroup>
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
+                            <Control.text className={classes.formInput} model="personalDetails.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                        </FormGroup>
+                        <SectionToolbar onRowClick={onRowClick} />
+                    </LocalForm>
+
+
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalDetails} />
+                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={capacityAndRepresentation} />
             </React.Fragment>
         );
     }
