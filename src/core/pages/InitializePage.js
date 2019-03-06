@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { initializeAction } from "../actions/initializeAction";
 import { token } from "../token";
 
-const styles = {
+const styles = theme => ({
     mainSpinner: {
         display: "block",
         position: "fixed",
@@ -113,7 +113,7 @@ const styles = {
             left: 40,
             borderRadius: "50%",
             border: "10px solid #000",
-            borderColor: "#3596f4 transparent #3596f4 transparent",
+            borderColor: '#0D672F transparent #0D672F transparent',
             WebkitAnimation: "rings 1s linear infinite",
             animation: `rings 1s linear infinite`,
         },
@@ -127,7 +127,7 @@ const styles = {
             animation: "rings_reverse 1s linear infinite",
         }
     },
-};
+});
 
 class InitializePage extends Component {
 

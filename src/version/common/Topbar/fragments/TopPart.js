@@ -5,8 +5,10 @@ import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
+import BackIcon from "@material-ui/icons/KeyboardBackspace";
+import IconButton from '@material-ui/core/IconButton';
 
-import helmLogo from "../../../images/helm-logo.png";
+import helmLogo from "../../../images/pulsetile-logo.png";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
 import ContrastMode from "../../../features/ContrastMode";
@@ -87,14 +89,19 @@ const styles = theme => ({
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-const TopPart = ({ classes, logout, location }) => {
+const TopPart = ({ classes, logout, location, history }) => {
     return (
         <Toolbar className={classes.topPart}>
-            <div className={classes.homeButtonItem}>
-                <Link id="icon-home" to="/" className={classes.homeButton} color="inherit" >
-                    <HomeIcon />
-                </Link>
-            </div>
+            { (location.pathname !== '/') &&
+                <div className={classes.homeButtonItem}>
+                    <IconButton
+                        className={classes.backButton}
+                        onClick={() => history.goBack()}
+                        color="inherit" >
+                        <BackIcon />
+                    </IconButton>
+                </div>
+            }
             <div className={classes.mainLogoItem}>
                 <Link to="/" className={classes.homeButton} color="inherit" >
                     <CardMedia

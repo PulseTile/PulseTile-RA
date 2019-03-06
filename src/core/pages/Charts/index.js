@@ -15,6 +15,7 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 
 import { patientStatisticAction } from "../../actions/patientsStatisticAction";
+import dummyPatients from "../dummyPatients";
 
 const styles = {
     chartsContainer: {
@@ -205,7 +206,7 @@ class Charts extends Component {
 
 const mapStateToProps = state => {
     return {
-        patients: get(state, "custom.patientsStatistic.data", []),
+        patients: get(state, "custom.patientsStatistic.data", dummyPatients),
     };
 };
 
