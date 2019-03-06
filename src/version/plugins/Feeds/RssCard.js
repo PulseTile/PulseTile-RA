@@ -15,18 +15,18 @@ const styles = theme => ({
         minHeight: 302,
     },
     media: {
-        backgroundColor: theme.patientSummaryPanel.media.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
     },
     container: {
-        background: theme.patientSummaryPanel.container.background,
+        background: theme.palette.mainColord,
         backgroundSize: "cover",
     },
     topBlock: {
         display: "flex",
         flexDirection: "column",
         height: 100,
-        backgroundColor: theme.patientSummaryPanel.topBlock.backgroundColor,
-        background: theme.patientSummaryPanel.topBlock.background,
+        backgroundColor: theme.palette.mainColor,
+        background: theme.palette.mainColor,
         backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",

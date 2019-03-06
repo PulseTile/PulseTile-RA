@@ -11,10 +11,6 @@ const TableBodyBlock = ({ data, rowsPerPage, page, onRowClick }) => {
     return (
         <TableBody>
             {dataForPage.map(item => {
-
-                    console.log('item', item);
-
-
                     return (
                         <TableRow onClick={() => onRowClick(item.id)}>
                             <TableCell scope="row" padding="none">

@@ -139,7 +139,9 @@ class Charts extends Component {
     render() {
         const { classes, patients, history } = this.props;
 
-        const DepartmentPercentage = this.getDepartmentPercentage(patients);
+        const patientsList = (patients && patients.length > 0) ? patients : dummyPatients;
+
+        const DepartmentPercentage = this.getDepartmentPercentage(patientsList);
         const dataGreen = [
             { Text: "Community Care", sort: "CommunityCare", RespondentPercentage: get(DepartmentPercentage, 'CommunityCare', 0) },
             { Text: "Hospital", sort: "Hospital", RespondentPercentage: get(DepartmentPercentage, 'Hospital', 0) },
@@ -148,7 +150,7 @@ class Charts extends Component {
             { Text: "Primary Care", sort: "PrimaryCare", RespondentPercentage: get(DepartmentPercentage, 'PrimaryCare', 0) }
         ];
 
-        const AgePercentage = this.getAgePercentage(patients);
+        const AgePercentage = this.getAgePercentage(patientsList);
         const dataViolet = [
             { Text: "19-30", sort: "first", RespondentPercentage: get(AgePercentage, 'first', 0) },
             { Text: "31-60", sort: "second", RespondentPercentage: get(AgePercentage, 'second', 0) },
@@ -206,7 +208,7 @@ class Charts extends Component {
 
 const mapStateToProps = state => {
     return {
-        patients: get(state, "custom.patientsStatistic.data", dummyPatients),
+        patients: get(state, "custom.patientsStatistic.data", []),
     };
 };
 
