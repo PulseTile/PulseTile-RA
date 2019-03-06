@@ -14,11 +14,6 @@ import PatientSummary from "../../core/pages/PatientSummary";
  * @return {array}
  */
 export const resourceOrder = [
-    'problems',
-    'medications',
-    'vaccinations',
-    'allergies',
-    'contacts',
     'top3Things'
 ];
 

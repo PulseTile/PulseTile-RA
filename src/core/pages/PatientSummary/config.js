@@ -9,13 +9,14 @@ import { nonCoreSynopsisData } from "../../../version/config/nonCoreSynopsis";
  * @return {array}
  */
 export const coreSynopsisData = [
-    { id: "block-problems", title: "Problems / Issues", list: "problems", icon: faNotesMedical },
-    { id: "block-medications", title: "Medications", list: "medications", icon: faCapsules },
-    { id: "block-allergies", title: "Allergies", list: "allergies", icon: faAllergies },
-    { id: "block-contacts", title: "Contacts", list: "contacts", icon: faPhone },
+    { id: "block-problems", title: "Problems / Issues", list: "problems", icon: faNotesMedical, isActive: false, },
+    { id: "block-medications", title: "Medications", list: "medications", icon: faCapsules, isActive: false },
+    { id: "block-allergies", title: "Allergies", list: "allergies", icon: faAllergies, isActive: false },
+    { id: "block-contacts", title: "Contacts", list: "contacts", icon: faPhone, isActive: false },
 ];
 
-export const synopsisData = coreSynopsisData.concat(nonCoreSynopsisData);
+const totalSynopsisData = coreSynopsisData.concat(nonCoreSynopsisData);
+export const synopsisData = totalSynopsisData.filter(item => item.isActive);
 
 export const SHOW_HEADING = 'heading';
 export const SHOW_ALL = 'headingAndList';

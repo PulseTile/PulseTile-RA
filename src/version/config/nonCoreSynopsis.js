@@ -8,6 +8,6 @@ export const nonCoreSynopsisActions = [
 ];
 
 export const nonCoreSynopsisData = [
-    { id: "block-vaccinations", title: "Vaccinations", list: "vaccinations", icon: faSyringe },
-    { id: "block-top3Things", title: "Top Three Things", list: "top3Things", icon: faUserMd },
+    { id: "block-vaccinations", title: "Vaccinations", list: "vaccinations", icon: faSyringe, isActive: false },
+    { id: "block-top3Things", title: "Top Three Things", list: "top3Things", icon: faUserMd, isActive: true },
 ];
