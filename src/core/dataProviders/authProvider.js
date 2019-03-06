@@ -35,27 +35,20 @@ const FetchLogin = (resolve, reject) => {
         });
 };
 
-const FetchLogout = (resolve, reject) => {
-    const urlLogout = domainName + '/api/logout';
-    fetch(urlLogout, options)
-        .then(res => res.json())
-        .then(response => {
-            const redirectUrl = get(response, 'redirectURL', '');
-            return resolve(redirectUrl);
-        });
-};
-
 export default async (type, params) => {
 
     if (type === AUTH_LOGOUT) {
         if (localStorage.getItem('userId') && token) {
-            new Promise(FetchLogout).then(redirectUrl => {
-                document.cookie = 'JSESSIONID=;';
-                localStorage.removeItem('userId');
-                localStorage.removeItem('username');
-                localStorage.removeItem('role');
-                window.location = redirectUrl;
-            });
+            const urlLogout = domainName + '/api/logout';
+            fetch(urlLogout, options)
+                .then(res => res.json())
+                .then(response => {
+                    document.cookie = 'JSESSIONID=;';
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('role');
+                    window.location = get(response, 'redirectURL', '');
+                });
         }
         return Promise.resolve();
     }

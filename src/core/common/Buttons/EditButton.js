@@ -11,6 +11,7 @@ const styles = theme => ({
         width: 85,
         height: 40,
         margin: 8,
+        padding: 0,
         backgroundColor: "white",
         color: theme.palette.mainColor,
         border: `1px solid ${theme.palette.mainColor}`,

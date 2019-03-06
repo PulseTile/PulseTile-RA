@@ -1,7 +1,5 @@
-import { DEFAULT_MAIN_COLOR, DEFAULT_DANGER_COLOR } from "../../../core/config/styles";
-
-const themeColor = (window && window.config) ? window.config.mainColor : DEFAULT_MAIN_COLOR;
-const dangerColor = (window && window.config) ? window.config.dangerColor : DEFAULT_DANGER_COLOR;
+const themeColor = (window && window.config) ? window.config.lightPalette.mainColor : "#0D672F";
+const dangerColor = (window && window.config) ? window.config.lightPalette.dangerColor : "#da534f";
 
 /**
  * This component returns styles for User Tour
