@@ -1,4 +1,5 @@
-import { MAIN_THEME_COLOR } from "../../config/theme.config";
+const themeColor = (window && window.config) ? window.config.lightPalette.mainColor : "#0D672F";
+const dangerColor = (window && window.config) ? window.config.lightPalette.dangerColor : "#da534f";
 
 /**
  * This component returns styles for User Tour
@@ -10,7 +11,7 @@ export default {
     options: {
         beaconSize: 36,
         overlayColor: 'rgba(0, 0, 0, 0.5)',
-        primaryColor: '#f04',
+        primaryColor: dangerColor,
         spotlightShadow: 'none',
         textColor: '#333',
         width: 400,
@@ -18,7 +19,7 @@ export default {
     },
     tooltipTitle: {
         textAlign: "left",
-        color: MAIN_THEME_COLOR,
+        color: themeColor,
         paddingTop: "10px",
         paddingLeft: "10px",
     },
@@ -29,30 +30,30 @@ export default {
         display: "none",
     },
     buttonSkip: {
-        color: MAIN_THEME_COLOR,
+        color: themeColor,
         fontSize: "16px",
         fontWeight: "600"
     },
     buttonBack: {
-        color: MAIN_THEME_COLOR,
+        color: themeColor,
         fontSize: "16px",
         fontWeight: "600"
     },
     buttonLast: {
-        border: "2px solid " + MAIN_THEME_COLOR,
+        border: "2px solid " + themeColor,
         borderRadius: "25px",
         backgroundColor: "#fff",
         padding: "12px 18px",
-        color: MAIN_THEME_COLOR,
+        color: themeColor,
         fontSize: "16px",
         fontWeight: "600",
     },
     buttonNext: {
-        border: "2px solid " + MAIN_THEME_COLOR,
+        border: "2px solid " + themeColor,
         borderRadius: "25px",
         backgroundColor: "#fff",
         padding: "12px 18px",
-        color: MAIN_THEME_COLOR,
+        color: themeColor,
         fontSize: "16px",
         fontWeight: "600",
     },

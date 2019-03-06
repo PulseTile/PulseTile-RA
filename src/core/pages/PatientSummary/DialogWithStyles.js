@@ -114,7 +114,7 @@ class DialogContent extends Component {
                             })
                         }
                     </div>
-                    <FeedSelector classes={classes} />
+                    { FeedSelector && <FeedSelector classes={classes} /> }
                     <Typography>VIEW OF BOARDS</Typography>
                     <Divider />
                     <div className={classes.dialogItemColumn}>

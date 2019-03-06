@@ -11,14 +11,15 @@ const styles = theme => ({
         width: 85,
         height: 40,
         margin: 8,
+        padding: 0,
         backgroundColor: "white",
-        color: theme.buttons.editButton.color,
-        border: theme.buttons.editButton.border,
+        color: theme.palette.mainColor,
+        border: `1px solid ${theme.palette.mainColor}`,
         borderRadius: 20,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {
-            backgroundColor: theme.buttons.editButton.backgroundColorHover,
+            backgroundColor: theme.palette.mainColor,
             color: "white",
         }
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import LastStepContent from "./fragments/LastStepContent";
 
 function getStepsArray(steps) {
     let result = [];
@@ -80,10 +81,7 @@ const lastStep = {
     target: '#logo-image',
     content: (
         <div className="tour-body">
-            <p className="tour-body-content">
-                For more information and a guide on how to use {homepage.title}, please go to <a className="link" href={homepage.link} title={homepage.title} style={{color:"#3596f4", 'text-decoration': "none" }} target="_blank">
-                {homepage.link}</a>
-            </p>
+            <LastStepContent title={homepage.title} link={homepage.link} />
         </div>
     ),
     placement: 'bottom',

@@ -13,6 +13,7 @@ import SidebarWithFullMenu from "./SidebarWithFullMenu";
 const styles = theme => ({
     sidebarBlock: {
         maxWidth: 240,
+        backgroundColor: "#fff",
         '& div': {
             marginTop: 0,
         },
@@ -21,18 +22,16 @@ const styles = theme => ({
         border: "1px solid #e5e5e5",
     },
     menuItem: {
-        display: "block",
-        color: theme.sidebar.menuItem.color,
+        color: `${theme.palette.mainColor} !important`,
         borderBottom: "1px solid #e5e5e5",
         '&:hover': {
-            backgroundColor: theme.sidebar.menuItem.backgroundColorHover,
-            color: "#fff",
+            backgroundColor: theme.palette.mainColor,
+            color: "#fff !important",
         },
     },
     menuItemSelected: {
-        display: "block",
-        backgroundColor: theme.sidebar.menuItemSelected.backgroundColor,
-        color: "#fff",
+        backgroundColor: theme.palette.mainColor + '! important',
+        color: "#fff !important",
         borderBottom: "1px solid #e5e5e5",
     },
 });

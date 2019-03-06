@@ -38,14 +38,14 @@ const listStyles = theme => ({
         alignItems: "center",
         height: 49,
         color: "#fff",
-        backgroundColor: theme.templates.listTemplate.blockTitle.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
         paddingLeft: 15,
     },
     title: {
         color: "#fff",
-        backgroundColor: theme.templates.listTemplate.title.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
     },
@@ -53,7 +53,7 @@ const listStyles = theme => ({
         paddingRight: 15,
     },
     filterInput: {
-        backgroundColor: theme.templates.listTemplate.filterInput.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
         borderRadius: 0,
         boxShadow: "none",
         '& button': {
@@ -80,7 +80,7 @@ const listStyles = theme => ({
             },
         },
         '& tbody tr:hover': {
-            backgroundColor: theme.templates.listTemplate.tableList.backgroundColorHover,
+            backgroundColor: theme.palette.mainColor + '!important',
         },
         '& tbody tr:hover td span': {
             color: "#fff"

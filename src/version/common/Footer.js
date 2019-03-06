@@ -32,7 +32,7 @@ const styles = theme => ({
     contrastModeLink: {
         marginLeft: 5,
         fontSize: 12,
-        color: theme.global.mainColor,
+        color: theme.palette.mainColor,
         textDecoration: "none",
     },
     footerLogo: {

@@ -22,10 +22,10 @@ const styles = theme => ({
         height: "100%",
         width: "35px",
         borderRadius: 0,
-        color: theme.buttons.pagination.color,
+        color: theme.palette.mainColor,
         '&:hover': {
             color: "white",
-            backgroundColor: theme.buttons.pagination.backgroundColorHover
+            backgroundColor: theme.palette.mainColor
         }
     },
     activeButton: {
@@ -35,10 +35,10 @@ const styles = theme => ({
         width: "35px",
         borderRadius: 0,
         color: "white",
-        backgroundColor: theme.buttons.pagination.backgroundColorActive,
+        backgroundColor: theme.palette.mainColor,
         '&:hover': {
             color: "white",
-            backgroundColor: theme.buttons.pagination.backgroundColorHover
+            backgroundColor: theme.palette.mainColor
         }
     }
 });

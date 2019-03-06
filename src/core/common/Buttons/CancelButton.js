@@ -11,14 +11,15 @@ const styles = theme => ({
         width: 100,
         height: 40,
         margin: "8px !important",
+        padding: 0,
         color: "#fff",
-        backgroundColor: theme.buttons.cancelButton.backgroundColor,
-        border: theme.buttons.cancelButton.border,
+        backgroundColor: theme.palette.dangerColor,
+        border: `1px solid ${theme.palette.dangerColor}`,
         borderRadius: 20,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {
-            color: theme.buttons.cancelButton.colorHover,
+            color: theme.palette.dangerColor,
             backgroundColor: "#fff",
         }
     }
