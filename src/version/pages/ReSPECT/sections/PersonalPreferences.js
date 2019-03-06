@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import get from "lodash/get";
 import { connect } from 'react-redux';
-import { SimpleForm, TextInput, DateInput, DisabledInput } from "react-admin";
+import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { personalPreferencesAction } from "../../../actions/ReSPECT/personalPreferencesAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
@@ -22,9 +24,32 @@ const defaultValues = {
 };
 
 const styles = theme => ({
-    textBelow: {
-        width: "auto",
-    }
+    formGroup: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        boxSizing: "border-box",
+    },
+    formLabel: {
+        display: "block",
+        fontWeight: 800,
+        color: "#000",
+        fontSize: 14,
+        marginBottom: 5,
+    },
+    formInput: {
+        width: '100%',
+        height: 25,
+        paddingLeft: 10,
+    },
+    formTextarea: {
+        width: '98%',
+        height: 180,
+        padding: 10,
+    },
+    formHelpText: {
+        marginBottom: 5,
+    },
 });
 
 class PersonalPreferences extends Component {
@@ -36,10 +61,17 @@ class PersonalPreferences extends Component {
 
     submitForm = data => {
         const { preferencesValue } = this.state;
-        data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
-        data.dateCompleted = moment().format('DD-MMM-YYYY');
-        data.preferencesValue = get(preferencesValue, '[0]', 0);
-        this.props.addPersonalPreferences(data);
+        const additionalData = {
+            preferencesValue: get(preferencesValue, '[0]', 0),
+            status: getSectionStatus(data, FORM_FIELDS_NUMBER),
+            dateCompleted: moment().format('DD-MMM-YYYY'),
+        };
+        const formData = Object.assign({}, data, additionalData);
+
+        console.log('data', data );
+        console.log('formData', formData );
+
+        this.props.addPersonalPreferences(formData);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
     };
@@ -57,9 +89,9 @@ class PersonalPreferences extends Component {
     };
 
     render() {
-        const { classes, personalDetails, title, onRowClick } = this.props;
+        const { classes, personalPreferences, title, onRowClick } = this.props;
         const { isMainPanel, preferencesValue } = this.state;
-        const filledValues = Object.assign({}, defaultValues, personalDetails);
+        const filledValues = Object.assign({}, defaultValues, personalPreferences);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
@@ -71,21 +103,20 @@ class PersonalPreferences extends Component {
                         leftText="Prioritising sustaining life, even at the expense of some comfort"
                         rightText="Prioritising comfort, even at the expense of saving life"
                     />
-                    <SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
-                        <TextInput
-                            rows="4"
-                            source="preferencesText"
-                            label="Considering the priorities above, what is more important to you?"
-                            multiline
-                            fullWidth
-                        />
-                        <Typography className={classes.textBelow}>
-                            Optional
-                        </Typography>
-                        <DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />
-                    </SimpleForm>
+                    <LocalForm model="personalPreferences" onSubmit={values => this.submitForm(values)}>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Considering the priorities above, what is more important to you?</FormLabel>
+                            <Control.textarea className={classes.formTextarea} model="personalPreferences.preferencesText" defaultValue={filledValues.preferencesText} />
+                            <FormHelperText>Optional</FormHelperText>
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
+                            <Control.text className={classes.formInput} model="personalPreferences.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                        </FormGroup>
+                        <SectionToolbar onRowClick={onRowClick} />
+                    </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalDetails} />
+                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalPreferences} />
             </React.Fragment>
         );
     }

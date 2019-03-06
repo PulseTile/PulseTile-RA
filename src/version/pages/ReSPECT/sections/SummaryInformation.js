@@ -15,7 +15,7 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
 import { getSectionStatus } from "../functions";
 
-const FORM_FIELDS_NUMBER = 2;
+const FORM_FIELDS_NUMBER = 1;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -41,9 +41,9 @@ const styles = {
         paddingLeft: 10,
     },
     formTextarea: {
-        width: '100%',
+        width: '98%',
         height: 180,
-        paddingLeft: 10,
+        padding: 10,
     },
     formHelpText: {
         marginBottom: 5,
@@ -88,7 +88,7 @@ class SummaryInformation extends Component {
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Details of other relevant planning documents</FormLabel>
-                            <Control.textarea className={classes.formTextarea} model="summaryInformation.details" defaultValue={filledValues.summary} />
+                            <Control.textarea className={classes.formTextarea} model="summaryInformation.details" defaultValue={filledValues.details} />
                             <FormHelperText>
                                 Details of other relevant planning documents and where to find them (e.g. Advance Decision to Refuse Treatment, Advance Care Plan). Also include known wishes about organ donation.
                             </FormHelperText>
