@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import get from "lodash/get";
 import { connect } from 'react-redux';
-import { SimpleForm, TextInput, DateInput, DisabledInput } from "react-admin";
+import { LocalForm, Control } from 'react-redux-form';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { personalDetailsAction } from "../../../actions/ReSPECT/personalDetailsAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
@@ -20,34 +26,34 @@ const defaultValues = {
 };
 
 const styles = {
-    formBlock: {
-        '& .ra-input-firstName': {
-            display: "inline-block",
-            width: '50%',
-
-        },
-        '& .ra-input-surname': {
-            display: "inline-block",
-            width: '50%',
-        },
-        '& .ra-input-city': {
-            display: "inline-block",
-            width: '50%',
-
-        },
-        '& .ra-input-county': {
-            display: "inline-block",
-            width: '50%',
-        },
-        '& .ra-input-postCode': {
-            display: "inline-block",
-            width: '50%',
-
-        },
-        '& .ra-input-country': {
-            display: "inline-block",
-            width: '50%',
-        }
+    formGroup: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        boxSizing: "border-box",
+    },
+    smallFormGroup: {
+        display: "inline-block",
+        width: "50%",
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        boxSizing: "border-box",
+    },
+    formLabel: {
+        display: "block",
+        fontWeight: 800,
+        color: "#000",
+        fontSize: 14,
+        marginBottom: 5,
+    },
+    formInput: {
+        width: '100%',
+        height: 25,
+        paddingLeft: 10,
+    },
+    formHelpText: {
+        marginBottom: 5,
     },
 };
 
@@ -55,14 +61,25 @@ class PersonalDetails extends Component {
 
     state = {
         isMainPanel: true,
+        birthDate: get(this.props, 'personalDetails.birthDate', null),
     };
 
     submitForm = data => {
-        data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
-        data.dateCompleted = moment().format('DD-MMM-YYYY');
-        this.props.addPersonalDetails(data);
+        const additionalData = {
+            birthDate: this.state.birthDate,
+            status: getSectionStatus(data, FORM_FIELDS_NUMBER),
+            dateCompleted: moment().format('DD-MMM-YYYY'),
+        };
+        const formData = Object.assign({}, data, additionalData);
+        this.props.addPersonalDetails(formData);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
+    };
+
+    changeBirthDate = value => {
+        this.setState({
+            birthDate: value,
+        })
     };
 
     togglePanel = () => {
@@ -73,25 +90,61 @@ class PersonalDetails extends Component {
 
     render() {
         const { classes, personalDetails, title, onRowClick } = this.props;
-        const { isMainPanel } = this.state;
+        const { isMainPanel, birthDate } = this.state;
         const filledValues = Object.assign({}, defaultValues, personalDetails);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <SimpleForm className={classes.formBlock} save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
-                        <TextInput source="preferredName" label="Preferred Name" fullWidth />
-                        <TextInput source="firstName" label="First Name" />
-                        <TextInput source="surname" label="Surname" />
-                        <DateInput source="dateOfBirth" label="Date of Birth" fullWidth />
-                        <TextInput source="streetAddress" label="Street address" fullWidth />
-                        <TextInput source="addressLine" label="Address line 2" fullWidth />
-                        <TextInput source="city" label="City" />
-                        <TextInput source="county" label="County" />
-                        <TextInput source="postCode" label="Post Code" />
-                        <TextInput source="country" label="Country" />
-                        <DisabledInput source="nhsNumber" label="NHS / CHI / Health Care Number" fullWidth />
-                        <DisabledInput source="dateCompleted" label="Date Completed" fullWidth />
-                    </SimpleForm>
+                    <LocalForm  model="personalDetails" onSubmit={values => this.submitForm(values)}>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Preferred Name</FormLabel>
+                            <Control.text className={classes.formInput} model="personalDetails.preferredName" defaultValue={filledValues.preferredName} />
+                        </FormGroup>
+                        <FormGroup className={classes.smallFormGroup}>
+                            <FormLabel className={classes.formLabel}>First Name</FormLabel>
+                            <Control.text className={classes.formInput} model="personalDetails.firstName" defaultValue={filledValues.firstName} />
+                        </FormGroup>
+                        <FormGroup className={classes.smallFormGroup}>
+                            <FormLabel className={classes.formLabel}>Surname</FormLabel>
+                            <Control.text className={classes.formInput} model="personalDetails.surname" defaultValue={filledValues.surname} />
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Date of Birth</FormLabel>
+                            <DatePicker className={classes.formInput} selected={birthDate} onChange={value => this.changeBirthDate(value)} />
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Address</FormLabel>
+                            <Control.text className={classes.formInput} model="personalDetails.streetAddress" defaultValue={filledValues.streetAddress} />
+                            <FormHelperText className={classes.formHelpText}>Street address</FormHelperText>
+                            <Control.text className={classes.formInput} model="personalDetails.addressSecondLine" defaultValue={filledValues.addressSecondLine} />
+                            <FormHelperText className={classes.formHelpText}>Address line 2</FormHelperText>
+                        </FormGroup>
+                        <FormGroup className={classes.smallFormGroup}>
+                            <Control.text className={classes.formInput} model="personalDetails.city" defaultValue={filledValues.city} />
+                            <FormHelperText className={classes.formHelpText}>City</FormHelperText>
+                        </FormGroup>
+                        <FormGroup className={classes.smallFormGroup}>
+                            <Control.text className={classes.formInput} model="personalDetails.county" defaultValue={filledValues.county} />
+                            <FormHelperText className={classes.formHelpText}>County</FormHelperText>
+                        </FormGroup>
+                        <FormGroup className={classes.smallFormGroup}>
+                            <Control.text className={classes.formInput} model="personalDetails.postCode" defaultValue={filledValues.postCode} />
+                            <FormHelperText className={classes.formHelpText}>Post code</FormHelperText>
+                        </FormGroup>
+                        <FormGroup className={classes.smallFormGroup}>
+                            <Control.text className={classes.formInput} model="personalDetails.country" defaultValue={filledValues.country} />
+                            <FormHelperText className={classes.formHelpText}>Country</FormHelperText>
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>NHS / CHI / Health Care Number</FormLabel>
+                            <Control.text className={classes.formInput} model="personalDetails.nhsNumber" defaultValue={filledValues.nhsNumber} disabled />
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
+                            <Control.text className={classes.formInput} model="personalDetails.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                        </FormGroup>
+                        <SectionToolbar onRowClick={onRowClick} />
+                    </LocalForm>
                 </MainFormBlock>
                 <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalDetails} />
             </React.Fragment>

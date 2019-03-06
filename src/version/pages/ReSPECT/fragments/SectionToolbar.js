@@ -4,6 +4,8 @@ import { Toolbar, SaveButton } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 import DoneIcon from '@material-ui/icons/Done';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
     toolbar: {
@@ -58,11 +60,16 @@ const styles = theme => ({
     }
 });
 
-const SectionToolbar = ({ classes, onRowClick, ...props}) => {
+const SectionToolbar = ({ classes, onRowClick }) => {
 
     return (
-        <Toolbar className={classes.toolbar} {...props} >
-            <SaveButton label="Finished" icon={<DoneIcon />} className={classes.saveButton} {...props} />
+        <Toolbar className={classes.toolbar}>
+            <Tooltip title="Finished">
+                <IconButton type="submit" className={classes.saveButton}>
+                    Finished
+                    <DoneIcon />
+                </IconButton>
+            </Tooltip>
             <Button className={classes.cancelButton} onClick={() => onRowClick(null)}>Cancel</Button>
         </Toolbar>
     );

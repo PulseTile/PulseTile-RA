@@ -10,7 +10,8 @@ export function getMenuType(currentPathname) {
     let result = SHORT_MENU;
     const ShortMenuPages = [
         "/charts",
-        "/patients"
+        "/patients",
+        "/",
     ];
     if (ShortMenuPages.indexOf(currentPathname) === -1) {
         result = FULL_MENU;
