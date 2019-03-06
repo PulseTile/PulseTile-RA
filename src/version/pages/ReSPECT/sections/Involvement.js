@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import get from "lodash/get";
 import { connect } from 'react-redux';
-import { SimpleForm, DisabledInput, RadioButtonGroupInput, TextInput } from "react-admin";
+import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 
 import { involvementAction } from "../../../actions/ReSPECT/involvenentAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
@@ -22,19 +27,38 @@ const defaultValues = {
 };
 
 const styles = {
-    textBelow: {
-        width: "auto",
-        marginBottom: 15,
+    formGroup: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        boxSizing: "border-box",
     },
-    radioButtonGroup: {
-        width: "auto",
+    formLabel: {
+        display: "block",
+        fontWeight: 800,
+        color: "#000",
+        fontSize: 14,
+        marginBottom: 5,
     },
-    helperText: {
-        marginLeft: 35,
-        marginTop: 0,
-    },
-    titleBlock: {
+    formInput: {
         width: '100%',
+        height: 25,
+        paddingLeft: 10,
+    },
+    formControlLabel: {
+        marginBottom: 10,
+    },
+    formTextarea: {
+        width: '98%',
+        height: 180,
+        padding: 10,
+    },
+    formHelpText: {
+        marginBottom: 5,
+    },
+    radioGroup: {
+        marginLeft: 25,
+        marginBottom: 25,
     },
 };
 
@@ -42,13 +66,18 @@ class Involvement extends Component {
 
     state = {
         isMainPanel: true,
-        selectedValue: null,
+        variant: get(this.props, 'involvement.variant', null),
     };
 
     submitForm = data => {
-        data.status = getSectionStatus(data, FORM_FIELDS_NUMBER);
-        data.dateCompleted = moment().format('DD-MMM-YYYY');
-        this.props.addInvolvement(data);
+        const { variant } = this.state;
+        const additionalData = {
+            variant: variant,
+            dateCompleted: moment().format('DD-MMM-YYYY'),
+        };
+        const formData = Object.assign({}, data, additionalData);
+        formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
+        this.props.addInvolvement(formData);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
     };
@@ -60,69 +89,65 @@ class Involvement extends Component {
     };
 
     handleChange = event => {
-        this.setState({ selectedValue: event.target.value });
+        this.setState({ variant: event.target.value });
     };
 
     render() {
-        const { classes, personalDetails, title, onRowClick } = this.props;
-        const { isMainPanel, selectedValue } = this.state;
-        const filledValues = Object.assign({}, defaultValues, personalDetails);
-        const InsertRadioValues = ['4', '5', '6'];
-        const insertedChoices = [
-            { id: '4', name: '1 - They have sufficient maturity and understanding to participate in making this plan.' },
-            { id: '5', name: '2 - They do not have sufficient maturity and understanding to participate in making this plan. Their views, when known, have been taken into account.' },
-            { id: '6', name: '3 - Those holding parental responsibility have been fully involved in discussing and making this plan.' },
-        ];
-        const mainChoices = [
-            { id: '1', name: 'A - This person has the mantal capacity to participate in making these recommendations. They have benn fully involved in making this plan.' },
-            { id: '2', name: 'B - This person does not have the mental capacity to participate in making these recommendations. This plan has been made in accordance with capacity law, including, where applicable, in consultation with their legal proxy, or where no proxy, with relevant family members / friends.'},
-            { id: '3', name:
-                <InsertedRadioButtonGroup
-                    isSelected={selectedValue === '3' || InsertRadioValues.indexOf(selectedValue) !== -1}
-                    label="C - This person is less than 18 (UK Except Scotland) / 16 (Scotland)"
-                    secondaryLabel="Please select 1 or 2, and also 3 as applicable or explain in section D below"
-                    sourceName="involvementValue"
-                    choices={insertedChoices}
-                />},
-        ];
+        const { classes, involvement, title, onRowClick } = this.props;
+        const { isMainPanel, variant } = this.state;
+        const filledValues = Object.assign({}, defaultValues, involvement);
+        const InsertRadioValues = ['variantC1', 'variantC2', 'variantC3'];
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>
-                        <FormLabel>The clinician(s) signing this plan is / are confirming that</FormLabel>
-                        <RadioButtonGroupInput
-                            source="involvementValue"
-                            label="Select A, B or C, OR complete section D below:"
-                            choices={mainChoices}
-                            onClick={e => this.handleChange(e)}
-                            fullWidth
-                        />
-
-                        <div className={classes.titleBlock}>
-                            <TextInput
-                                label="D - if no other option has been selected, valid reasons must be stated here"
-                                rows="6"
-                                source="variantD"
-                                multiline
-                                fullWidth
-                            />
+                    <LocalForm model="involvement" onSubmit={values => this.submitForm(values)}>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attourney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
+                            <RadioGroup name="variant" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
+                                <FormControlLabel
+                                    className={classes.formControlLabel}
+                                    value="variantA"
+                                    control={<Radio />}
+                                    label="A - This person has the mantal capacity to participate in making these recommendations. They have benn fully involved in making this plan."
+                                />
+                                <FormControlLabel
+                                    className={classes.formControlLabel}
+                                    value="variantB"
+                                    control={<Radio />}
+                                    label="B - This person does not have the mental capacity to participate in making these recommendations. This plan has been made in accordance with capacity law, including, where applicable, in consultation with their legal proxy, or where no proxy, with relevant family members / friends."
+                                />
+                                <FormControlLabel
+                                    className={classes.formControlLabel}
+                                    value="variantC"
+                                    control={<Radio />}
+                                    label={
+                                        <InsertedRadioButtonGroup
+                                            isSelected={variant === 'variantC' || InsertRadioValues.indexOf(variant) !== -1}
+                                            variant={variant}
+                                            handleChange={this.handleChange}
+                                        />
+                                    }
+                                />
+                            </RadioGroup>
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>D - if no other option has been selected, valid reasons must be stated here</FormLabel>
+                            <Control.textarea className={classes.formTextarea} model="involvement.variantD" defaultValue={filledValues.variantD} />
                             <FormHelperText>Document full explanation in the clinical record</FormHelperText>
-                        </div>
-
-                        <div className={classes.titleBlock}>
-                            <TextInput
-                                label="Record date, names and roles of those involved in decision making, and where records of discussion can be found"
-                                rows="6"
-                                source="records"
-                                multiline
-                                fullWidth
-                            />
-                        </div>
-
-                        <DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />
-                    </SimpleForm>
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Record date, names and roles of those involved in decision making, and where records of discussion can be found</FormLabel>
+                            <Control.textarea className={classes.formTextarea} model="involvement.records" defaultValue={filledValues.records} />
+                            <FormHelperText>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
+                            <Control.text className={classes.formInput} model="involvement.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                        </FormGroup>
+                        <SectionToolbar onRowClick={onRowClick} />
+                    </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalDetails} />
+                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={involvement} />
             </React.Fragment>
         );
     }
@@ -143,3 +168,24 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Involvement));
+
+
+{/*<FormLabel>The clinician(s) signing this plan is / are confirming that</FormLabel>*/}
+{/*<RadioButtonGroupInput*/}
+{/*source="involvementValue"*/}
+{/*label="Select A, B or C, OR complete section D below:"*/}
+{/*choices={mainChoices}*/}
+{/*onClick={e => this.handleChange(e)}*/}
+{/*fullWidth*/}
+{/*/>*/}
+
+{/*<div className={classes.titleBlock}>*/}
+{/*<TextInput*/}
+{/*label="D - if no other option has been selected, valid reasons must be stated here"*/}
+{/*rows="6"*/}
+{/*source="variantD"*/}
+{/*multiline*/}
+{/*fullWidth*/}
+{/*/>*/}
+{/*<FormHelperText>Document full explanation in the clinical record</FormHelperText>*/}
+{/*</div>*/}
