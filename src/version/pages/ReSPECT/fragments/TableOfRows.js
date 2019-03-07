@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -47,13 +48,15 @@ const TableOfContacts = ({ classes, headers, rowsArray }) => {
                         <TableRow key={key}>
 
                             {headers.map((headerItem, key) => {
-
-
-                                console.log('headerItem.id', headerItem.id);
-
+                                let label = rowItem[headerItem.id];
+                                if (headerItem.isDate) {
+                                    label = moment(label).format('DD-MMM-YYYY');
+                                } else if (headerItem.isBinary) {
+                                    label = rowItem[headerItem.id] ? 'Yes' : 'No';
+                                }
                                 return (
                                     <TableCell key={key} align={headerItem.numeric ? 'right' : 'left'} padding={headerItem.disablePadding ? 'none' : 'default'}>
-                                        {rowItem[headerItem.id]}
+                                        {label}
                                     </TableCell>
                                 );
                             })}

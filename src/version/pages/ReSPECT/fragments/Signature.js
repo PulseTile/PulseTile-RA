@@ -15,6 +15,10 @@ const styles = {
         color: "#000",
         fontWeight: 800,
     },
+    subTitle: {
+        color: "#000",
+        fontSize: 12,
+    },
     signatureField: {
         marginLeft: 20,
         marginRight: 20,
@@ -26,9 +30,9 @@ const styles = {
     }
 };
 
-const Signature = ({ classes, name, onEnd }) => (
+const Signature = ({ classes, name, onEnd, isSubTitle }) => (
     <div className={classes.signatureField}>
-        <FormLabel className={classes.mainTitle}>Clinical signature</FormLabel>
+        <FormLabel className={isSubTitle ? classes.subTitle : classes.mainTitle}>Clinical signature</FormLabel>
         <SignaturePad
             ref={ref => this.signature = ref}
             options={{

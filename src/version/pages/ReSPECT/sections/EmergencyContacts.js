@@ -3,7 +3,6 @@ import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control, actions } from 'react-redux-form';
 import moment from "moment";
-import "react-datepicker/dist/react-datepicker.css";
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -72,9 +71,9 @@ const styles = {
 };
 
 const tableHeadersArray = [
-    { id: 'name', label: 'Name', isNumeric: false, disablePadding: true },
-    { id: 'role', label: 'Role', isNumeric: false, disablePadding: true },
-    { id: 'phone', label: 'Telephone', isNumeric: true, disablePadding: false },
+    { id: 'name', label: 'Name', isNumeric: false, isBinary: false, isDate: false, disablePadding: true },
+    { id: 'role', label: 'Role', isNumeric: false, isBinary: false, isDate: false, disablePadding: true },
+    { id: 'phone', label: 'Telephone', isNumeric: true, isBinary: false, isDate: false, disablePadding: false },
 ];
 
 const contactsArray = [
