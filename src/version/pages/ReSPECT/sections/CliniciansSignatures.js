@@ -140,11 +140,6 @@ class CliniciansSignatures extends Component {
         const { classes, clinicalSignatures, title, onRowClick } = this.props;
         const { isMainPanel, rowsArray, dateAndTime } = this.state;
         const filledValues = Object.assign({}, defaultValues, clinicalSignatures);
-
-        console.log('+++++++++++++++++++++++++++++++++++');
-        console.log('rowsArray', rowsArray);
-
-
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

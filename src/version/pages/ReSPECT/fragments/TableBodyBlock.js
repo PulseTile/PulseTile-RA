@@ -46,7 +46,13 @@ class TableBodyBlock extends Component {
             <TableBody>
                 {
                     sections.map((item, key) => {
+
+                        console.log('item.name', item.name);
+
                         const status = get(sectionsInfo, [ item.name, 'status'], STATUS_INCOMPLETE);
+
+                        console.log('status', status);
+
                         const dateCompleted = get(sectionsInfo, [ item.name, 'dateCompleted'], '-');
                         const rowClassName = this.getRowClassName(status, item);
                         return (
