@@ -8,6 +8,7 @@ import { PERSONAL_PREFERENCES_ACTION } from "../actions/ReSPECT/personalPreferen
 import { CLINICAL_RECOMMENDATIONS_ACTION } from "../actions/ReSPECT/clinicalRecommendationsAction";
 import { CAPACITY_AND_REPRESENTATION_ACTION } from "../actions/ReSPECT/capacityAndRepresentationAction";
 import { INVOLVEMENT_ACTION } from "../actions/ReSPECT/involvenentAction";
+import { EMERGENCY_CONTACTS_ACTION } from "../actions/ReSPECT/emergencyContactsAction";
 import { EMERGENCY_VIEW_ACTION } from "../actions/ReSPECT/emergencyViewAction";
 
 /**
@@ -24,5 +25,6 @@ export default {
     clinicalRecommendations: createRespectPluginReducer(CLINICAL_RECOMMENDATIONS_ACTION),
     capacityAndRepresentation: createRespectPluginReducer(CAPACITY_AND_REPRESENTATION_ACTION),
     involvement: createRespectPluginReducer(INVOLVEMENT_ACTION),
+    emergencyContacts: createRespectPluginReducer(EMERGENCY_CONTACTS_ACTION),
     emergencyView: createRespectPluginReducer(EMERGENCY_VIEW_ACTION),
 };
