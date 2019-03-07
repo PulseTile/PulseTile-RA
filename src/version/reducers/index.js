@@ -10,6 +10,7 @@ import { CAPACITY_AND_REPRESENTATION_ACTION } from "../actions/ReSPECT/capacityA
 import { INVOLVEMENT_ACTION } from "../actions/ReSPECT/involvenentAction";
 import { CLINICAL_SIGNATURES_ACTION } from "../actions/ReSPECT/clinicalSignaturesAction";
 import { EMERGENCY_CONTACTS_ACTION } from "../actions/ReSPECT/emergencyContactsAction";
+import { CONFIRMATION_ACTION } from "../actions/ReSPECT/confirmationAction";
 import { EMERGENCY_VIEW_ACTION } from "../actions/ReSPECT/emergencyViewAction";
 
 /**
@@ -28,5 +29,6 @@ export default {
     involvement: createRespectPluginReducer(INVOLVEMENT_ACTION),
     clinicalSignatures: createRespectPluginReducer(CLINICAL_SIGNATURES_ACTION),
     emergencyContacts: createRespectPluginReducer(EMERGENCY_CONTACTS_ACTION),
+    confirmation: createRespectPluginReducer(CONFIRMATION_ACTION),
     emergencyView: createRespectPluginReducer(EMERGENCY_VIEW_ACTION),
 };

@@ -15,6 +15,7 @@ import { capacityAndRepresentationAction } from "../../actions/ReSPECT/capacityA
 import { involvementAction } from "../../actions/ReSPECT/involvenentAction";
 import { clinicalSignaturesAction } from "../../actions/ReSPECT/clinicalSignaturesAction";
 import { emergencyViewAction } from "../../actions/ReSPECT/emergencyViewAction";
+import { confirmationAction } from "../../actions/ReSPECT/confirmationAction";
 import { emergencyContactsAction } from "../../actions/ReSPECT/emergencyContactsAction";
 
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
@@ -154,6 +155,7 @@ const mapStateToProps = state => {
             involvement: state.custom.involvement.data,
             clinicalSignatures: state.custom.clinicalSignatures.data,
             emergencyView: state.custom.emergencyView.data,
+            confirmation: state.custom.confirmation.data,
             emergencyContacts: state.custom.emergencyContacts.data,
         }
     }
@@ -170,6 +172,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(involvementAction.request(userId));
             dispatch(clinicalSignaturesAction.request(userId));
             dispatch(emergencyViewAction.request(userId));
+            dispatch(confirmationAction.request(userId));
             dispatch(emergencyContactsAction.request(userId));
         },
     }
