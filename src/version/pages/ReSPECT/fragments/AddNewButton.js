@@ -32,11 +32,11 @@ const styles = theme => ({
     },
 });
 
-const AddNewButton = ({ classes, onClick }) => {
+const AddNewButton = ({ classes }) => {
     return (
         <Toolbar>
         <Tooltip title="Add new">
-            <IconButton type="submit" className={classes.addNewButton} onClick={() => onClick()}>
+            <IconButton type="submit" className={classes.addNewButton}>
                 Add new
                 <AddIcon />
             </IconButton>
