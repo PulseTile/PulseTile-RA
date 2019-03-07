@@ -3,8 +3,8 @@ import get from "lodash/get";
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
-import TextField from '@material-ui/core/TextField';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -13,7 +13,20 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const styles = {
     textField: {
         display: 'block',
-    }
+    },
+    formGroup: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+        boxSizing: "border-box",
+    },
+    mainFormLabel: {
+        display: "block",
+        fontWeight: 800,
+        color: "#000",
+        fontSize: 14,
+        marginBottom: 5,
+    },
 };
 
 const SystemInformationBlock = ({ classes, isMainPanel, togglePanel, info }) => {
@@ -25,10 +38,14 @@ const SystemInformationBlock = ({ classes, isMainPanel, togglePanel, info }) => 
             {
                 !isMainPanel &&
                     <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                        <CardContent>
-                            <TextField className={classes.textField} label="Source" defaultValue={get(info, 'source', null)} disabled={true}/>
-                            <TextField className={classes.textField} label="Author" defaultValue={get(info, 'author', null)} disabled={true}/>
-                        </CardContent>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.mainFormLabel}>Source</FormLabel>
+                            <p>{get(info, 'source', null)}</p>
+                        </FormGroup>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.mainFormLabel}>Author</FormLabel>
+                            <p>{get(info, 'author', null)}</p>
+                        </FormGroup>
                     </ExpansionPanelDetails>
             }
         </ExpansionPanel>
