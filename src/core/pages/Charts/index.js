@@ -15,7 +15,7 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 
 import { patientStatisticAction } from "../../actions/patientsStatisticAction";
-import dummyPatients from "../dummyPatients";
+import dummyPatients from "../PatientsList/dummyPatients";
 
 const styles = {
     chartsContainer: {
