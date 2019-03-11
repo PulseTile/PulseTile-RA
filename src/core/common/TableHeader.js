@@ -23,14 +23,21 @@ const styles = theme => ({
  * This component returns header for table
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape}  classes
  * @param {string} resource
- * @constructor
  */
-const TableHeader = ({ classes, resource }) => (
-    <div className={classes.tableHeaderBlock} >
-        <h1 className={classes.title}>{get(tableHeaders, [resource, 'title'], null)}</h1>
-        <p>{get(tableHeaders, [resource, 'description'], null)}</p>
-    </div>
-);
+const TableHeader = ({ classes, resource }) => {
+    const title = get(tableHeaders, [resource, 'title'], null);
+    const description = get(tableHeaders, [resource, 'description'], null);
+    if (!title) {
+        return null;
+    }
+    return (
+        <div className={classes.tableHeaderBlock} >
+            <h1 className={classes.title}>{get(tableHeaders, [resource, 'title'], null)}</h1>
+            <p>{get(tableHeaders, [resource, 'description'], null)}</p>
+        </div>
+    );
+};
 
 export default withStyles(styles)(TableHeader);

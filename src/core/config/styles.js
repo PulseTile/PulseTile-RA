@@ -67,5 +67,12 @@ export function getCurrentTheme(isContrastMode) {
                 background: getCardBackground(isContrastMode, palette.mainColor),
             }
         },
+        overrides: {
+            MuiInput: {
+                root: {
+                    border: "1px solid #e5e5e5"
+                }
+            }
+        }
     });
 }
