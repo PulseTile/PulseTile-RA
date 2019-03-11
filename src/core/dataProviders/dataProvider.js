@@ -277,7 +277,14 @@ export default () => {
         }
     };
 
-
+    /**
+     * This function will be used TEMPORARY, until /api/patients request will be done at the server side
+     *
+     * @param type
+     * @param resource
+     * @param params
+     * @return {*}
+     */
     function getPatientsResponse(type, resource, params) {
         switch (type) {
             case GET_LIST:
@@ -295,7 +302,14 @@ export default () => {
 
             case GET_ONE:
             case UPDATE:
-                const response = getPatientById(dummyPatients, params);
+                let response = {};
+                for (let i = 0, n = dummyPatients.length; i < n; i++) {
+                    let item = dummyPatients[i];
+                    if (item.id === params.id) {
+                        response = item;
+                        break;
+                    }
+                }
                 return {
                     data: Object.assign({id: params.id}, response),
                 };
@@ -308,17 +322,5 @@ export default () => {
             default:
                 return { data: 'No results' };
         }
-    }
-
-    function getPatientById(dummyPatients, params) {
-        let result = {};
-        for (let i = 0, n = dummyPatients.length; i < n; i++) {
-            let item = dummyPatients[i];
-            if (item.id === params.id) {
-                result = item;
-                break;
-            }
-        }
-        return result;
     }
 };

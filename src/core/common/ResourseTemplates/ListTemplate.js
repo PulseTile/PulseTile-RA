@@ -144,8 +144,10 @@ class ListTemplate extends Component {
     };
 
     /**
-     * This function check is current page is list page with table (it also used at create and show pages)
+     * This function check is current page is list page with table (it also used at create and show pages).
      * Settings of <Grid /> component of <ListTemplate /> depends on result of this function.
+     *
+     * Second part of condition - for the case when list page is a homepage
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
      * @return {boolean}
@@ -167,6 +169,12 @@ class ListTemplate extends Component {
         })
     };
 
+    /**
+     * This function redirects to Patient Summary page (only for Patients list case)
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {number} userId
+     */
     redirectToSummary = userId => {
         localStorage.setItem('userId', userId);
         this.props.history.push('/summary');

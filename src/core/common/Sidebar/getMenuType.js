@@ -13,7 +13,7 @@ export const FULL_MENU = "full";
 function notPatientPage(currentPathname) {
     const pathArray = currentPathname.split('/');
     return get(pathArray, [1], null) !== 'patients';
-} 
+}
 
 /**
  * @author Bogdan Shcherban <bsc@piogroup.net>

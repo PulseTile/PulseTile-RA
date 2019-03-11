@@ -25,7 +25,6 @@ const styles = theme => ({
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
  * @param {string} resource
- * @constructor
  */
 const TableHeader = ({ classes, resource }) => {
     const title = get(tableHeaders, [resource, 'title'], null);
@@ -39,6 +38,6 @@ const TableHeader = ({ classes, resource }) => {
             <p>{get(tableHeaders, [resource, 'description'], null)}</p>
         </div>
     );
-}
+};
 
 export default withStyles(styles)(TableHeader);
