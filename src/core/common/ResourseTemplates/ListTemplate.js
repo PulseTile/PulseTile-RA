@@ -151,7 +151,7 @@ class ListTemplate extends Component {
      * @return {boolean}
      */
     isListPage = () => {
-        return (this.props.location.pathname === `/${this.props.resourceUrl}`);
+        return (this.props.location.pathname === `/${this.props.resourceUrl}`) || (this.props.location.pathname === '/');
     };
 
     /**
@@ -165,6 +165,11 @@ class ListTemplate extends Component {
             filterText: e.target.value,
             key: this.state.key + 1,
         })
+    };
+
+    redirectToSummary = userId => {
+        localStorage.setItem('userId', userId);
+        this.props.history.push('/summary');
     };
 
     render() {
@@ -204,6 +209,7 @@ class ListTemplate extends Component {
                             }
                         </React.Fragment>
                         <List
+                            resource={resourceUrl}
                             key={key}
                             filter={{ filterText: filterText }}
                             title={title}
@@ -213,7 +219,10 @@ class ListTemplate extends Component {
                             pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
                             {...this.props}
                         >
-                            <Datagrid className={classes.tableList} rowClick="edit">
+                            <Datagrid
+                                className={classes.tableList}
+                                rowClick={(resourceUrl === 'patients') ? userId => this.redirectToSummary(userId) : "edit"}
+                            >
                                 {children}
                             </Datagrid>
                         </List>

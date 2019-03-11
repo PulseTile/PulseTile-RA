@@ -16,6 +16,8 @@ import {
 import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
+import dummyPatients from "../pages/PatientsList/dummyPatients";
+
 const apiPatientsUser = 'api/patients';
 const currentUserID = localStorage.getItem('userId');
 
@@ -266,8 +268,57 @@ export default () => {
      */
     return (type, resource, params) => {
         let { url, options } = convertDataRequestToHTTP(type, resource, params);
-        return fetch(url, options).then(response => response.json())
-            .then(res => convertHTTPResponse(res, type, resource, params))
-            .catch(err => console.log('Error: ', err));
+        if (resource === `patients`) {
+            return getPatientsResponse(type, resource, params);
+        } else {
+            return fetch(url, options).then(response => response.json())
+                .then(res => convertHTTPResponse(res, type, resource, params))
+                .catch(err => console.log('Error: ', err));
+        }
     };
+
+
+    function getPatientsResponse(type, resource, params) {
+        switch (type) {
+            case GET_LIST:
+                const pageNumber = get(params, 'pagination.page', 1);
+                const numberPerPage = get(params, 'pagination.perPage', 10);
+                const results = getResultsFromResponse(resource, dummyPatients, params);
+                const resultsFiltering = getFilterResults(resource, results, params);
+                const startItem = (pageNumber - 1) * numberPerPage;
+                const endItem = pageNumber * numberPerPage;
+                const paginationResults = resultsFiltering.slice(startItem, endItem);
+                return {
+                    data: paginationResults,
+                    total: resultsFiltering.length,
+                };
+
+            case GET_ONE:
+            case UPDATE:
+                const response = getPatientById(dummyPatients, params);
+                return {
+                    data: Object.assign({id: params.id}, response),
+                };
+
+            case CREATE:
+                return {
+                    data: Object.assign({id: params.data.nhsNumber}, params.data)
+                };
+
+            default:
+                return { data: 'No results' };
+        }
+    }
+
+    function getPatientById(dummyPatients, params) {
+        let result = {};
+        for (let i = 0, n = dummyPatients.length; i < n; i++) {
+            let item = dummyPatients[i];
+            if (item.id === params.id) {
+                result = item;
+                break;
+            }
+        }
+        return result;
+    }
 };
