@@ -24,14 +24,12 @@ const Homepage = get(themeCommonElements, 'homePage', Charts);
 const App = () => {
     return (
         <Admin
-            authProvider={authProvider}
             customSagas={[customSagas]}
             customReducers={{custom: customReducers}}
             customRoutes={customRoutes}
             dataProvider={dataProvider}
             dashboard={Homepage}
             appLayout={Layout}
-            loginPage={InitializePage}
         >
             {
                 plugins.map(item => {
