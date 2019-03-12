@@ -7,7 +7,18 @@ import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 
+import { personalDetailsAction } from "../../../actions/ReSPECT/personalDetailsAction";
+import { summaryInformationAction } from "../../../actions/ReSPECT/summaryInformationAction";
+import { personalPreferencesAction } from "../../../actions/ReSPECT/personalPreferencesAction";
+import { clinicalRecommendationsAction } from "../../../actions/ReSPECT/clinicalRecommendationsAction";
+import { capacityAndRepresentationAction } from "../../../actions/ReSPECT/capacityAndRepresentationAction";
+import { involvementAction } from "../../../actions/ReSPECT/involvenentAction";
+import { clinicalSignaturesAction } from "../../../actions/ReSPECT/clinicalSignaturesAction";
+import { emergencyViewAction } from "../../../actions/ReSPECT/emergencyViewAction";
+import { confirmationAction } from "../../../actions/ReSPECT/confirmationAction";
+import { emergencyContactsAction } from "../../../actions/ReSPECT/emergencyContactsAction";
 import { versionsAction } from "../../../actions/ReSPECT/versionsAction";
+
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
@@ -116,6 +127,16 @@ const mapDispatchToProps = dispatch => {
     return {
         createNewVersion(data) {
             dispatch(versionsAction.create(data));
+            dispatch(personalDetailsAction.remove());
+            dispatch(summaryInformationAction.remove());
+            dispatch(personalPreferencesAction.remove());
+            dispatch(clinicalRecommendationsAction.remove());
+            dispatch(capacityAndRepresentationAction.remove());
+            dispatch(involvementAction.remove());
+            dispatch(clinicalSignaturesAction.remove());
+            dispatch(emergencyViewAction.remove());
+            dispatch(confirmationAction.remove());
+            dispatch(emergencyContactsAction.remove());
         }
     }
 };

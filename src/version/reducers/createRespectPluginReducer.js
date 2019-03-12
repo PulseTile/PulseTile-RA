@@ -38,6 +38,12 @@ export default function createRespectPluginReducer(actionName) {
                     loading: false,
                     error: get(action, "error", null),
                 };
+            case actionName.REMOVE:
+                return {
+                    data: null,
+                    loading: false,
+                    error: null,
+                };
             default:
                 return state;
         }
