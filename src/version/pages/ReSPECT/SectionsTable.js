@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -17,6 +18,7 @@ import { clinicalSignaturesAction } from "../../actions/ReSPECT/clinicalSignatur
 import { emergencyViewAction } from "../../actions/ReSPECT/emergencyViewAction";
 import { confirmationAction } from "../../actions/ReSPECT/confirmationAction";
 import { emergencyContactsAction } from "../../actions/ReSPECT/emergencyContactsAction";
+import { versionsAction } from "../../actions/ReSPECT/versionsAction";
 
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import TableHeader from "../../../core/common/TableHeader";
@@ -81,12 +83,13 @@ const styles = theme => ({
 class SectionsTable extends Component {
 
     state = {
-        currentRow: null,
+        currentRow: this.props.sectionForShow ? this.props.sectionForShow : null,
     };
 
     componentDidMount() {
         const userId = localStorage.getItem('userId');
         this.props.getSectionsInfo(userId);
+        this.props.getVersionsInfo(userId);
     }
 
     onRowClick = id => {
@@ -106,11 +109,19 @@ class SectionsTable extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, toggleMode } = this.props;
+        const { classes, sectionsInfo, toggleMode, versionsInfo, currentVersion, sectionForShow } = this.props;
         const { currentRow } = this.state;
         const breadcrumbsResource = [
             { url: "/respect", title: "ReSPECT", isActive: false }
         ];
+
+        let isVersionInfo = false;
+        let versionSectionsInfo = null;
+        if (currentVersion && sectionForShow) {
+            versionSectionsInfo = get(versionsInfo, [ [currentVersion - 1], 'sections' ], null);
+            isVersionInfo = true;
+        }
+
         const currentSection = this.getCurrentSection(currentRow);
         return (
             <React.Fragment>
@@ -125,7 +136,12 @@ class SectionsTable extends Component {
                             <div className={classes.tableWrapper}>
                                 <Table className={classes.tableList} aria-labelledby="tableTitle">
                                     <TableHeadBlock />
-                                    <TableBodyBlock sections={sections} currentRow={currentRow} onRowClick={this.onRowClick} sectionsInfo={sectionsInfo} />
+                                    <TableBodyBlock
+                                        sections={sections}
+                                        currentRow={currentRow}
+                                        onRowClick={this.onRowClick}
+                                        sectionsInfo={isVersionInfo ? versionSectionsInfo : sectionsInfo}
+                                    />
                                 </Table>
                             </div>
                         </Paper>
@@ -136,7 +152,8 @@ class SectionsTable extends Component {
                                 currentSection={currentSection}
                                 currentRow={currentRow}
                                 onRowClick={this.onRowClick}
-                                sectionsInfo={sectionsInfo}
+                                isVersionInfo={isVersionInfo}
+                                sectionsInfo={isVersionInfo ? versionSectionsInfo : sectionsInfo}
                                 toggleMode={toggleMode}
                             />
                     }
@@ -159,7 +176,8 @@ const mapStateToProps = state => {
             emergencyView: state.custom.emergencyView.data,
             confirmation: state.custom.confirmation.data,
             emergencyContacts: state.custom.emergencyContacts.data,
-        }
+        },
+        versionsInfo: state.custom.versionsInfo.data,
     }
 };
 
@@ -177,6 +195,9 @@ const mapDispatchToProps = dispatch => {
             dispatch(confirmationAction.request(userId));
             dispatch(emergencyContactsAction.request(userId));
         },
+        getVersionsInfo(userId) {
+            dispatch(versionsAction.request(userId));
+        }
     }
 };
 

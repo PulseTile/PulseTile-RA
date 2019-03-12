@@ -65,7 +65,7 @@ const styles = theme => ({
 class CurrentVersionBlock extends Component {
 
     render() {
-        const { classes, currentVersion, versionsInfo } = this.props;
+        const { classes, currentVersion, versionsInfo, toggleMode } = this.props;
         const versionInfo = get(versionsInfo, [[currentVersion - 1], 'sections'], []);
         return (
             <Grid className={classes.mainBlock} item xs={12} sm={6}>
@@ -76,7 +76,7 @@ class CurrentVersionBlock extends Component {
                     <div className={classes.tableWrapper}>
                         <Table className={classes.tableList} aria-labelledby="tableTitle">
                             <TableHeadBlock />
-                            <SectionsInfo sections={sections} versionInfo={versionInfo} />
+                            <SectionsInfo sections={sections} versionInfo={versionInfo} toggleMode={toggleMode} currentVersion={currentVersion} />
                         </Table>
                     </div>
                 </Paper>

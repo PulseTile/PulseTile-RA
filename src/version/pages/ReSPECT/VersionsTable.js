@@ -111,6 +111,7 @@ class VersionsTable extends Component {
                     {
                         currentVersion &&
                             <CurrentVersionBlock
+                                toggleMode={toggleMode}
                                 currentVersion={currentVersion}
                             />
                     }

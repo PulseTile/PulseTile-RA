@@ -33,7 +33,7 @@ class SectionsInfo extends Component {
     };
 
     render() {
-        const { classes, sections, versionInfo } = this.props;
+        const { classes, sections, versionInfo, toggleMode, currentVersion } = this.props;
         return (
             <TableBody>
                 {
@@ -42,7 +42,7 @@ class SectionsInfo extends Component {
                         const dateCompleted = get(versionInfo, [ item.name, 'dateCompleted'], '-');
                         const rowClassName = this.getRowClassName(status, item);
                         return (
-                            <TableRow className={classes[rowClassName]} key={key}>
+                            <TableRow className={classes[rowClassName]} key={key} onClick={() => toggleMode(currentVersion, item.id)}>
                                 <TableCell scope="row" padding="none">
                                     <span>{item.section}</span>
                                 </TableCell>
@@ -53,7 +53,7 @@ class SectionsInfo extends Component {
                                     <span>{dateCompleted}</span>
                                 </TableCell>
                             </TableRow>
-                        )
+                        );
                     })
                 }
             </TableBody>

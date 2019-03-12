@@ -109,6 +109,7 @@ class SummaryInformation extends Component {
 const mapStateToProps = state => {
     return {
         summaryInformation: state.custom.summaryInformation.data,
+
     }
 };
 
@@ -121,27 +122,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SummaryInformation));
-
-
-{/*<SimpleForm save={e => this.submitForm(e)} defaultValue={filledValues} toolbar={<SectionToolbar onRowClick={onRowClick} />}>*/}
-    {/*<TextInput*/}
-        {/*rows="4"*/}
-        {/*source="summary"*/}
-        {/*label="Summary of relevant information for this plan."*/}
-        {/*multiline*/}
-        {/*fullWidth*/}
-    {/*/>*/}
-    {/*<FormHelperText className={classes.textBelow}>*/}
-        // {/**/}
-    {/*</FormHelperText>*/}
-    {/*<TextInput*/}
-        {/*rows="4"*/}
-        {/*source="details"*/}
-        {/*label="Details of other relevant planning documents"*/}
-        {/*multiline*/}
-        {/*fullWidth*/}
-    {/*/>*/}
-    {/*<FormHelperText className={classes.textBelow}>*/}
-    {/*</FormHelperText>*/}
-    {/*<DisabledInput className={classes.labelBlock} source="dateCompleted" label="Date Completed" />*/}
-{/*</SimpleForm>*/}

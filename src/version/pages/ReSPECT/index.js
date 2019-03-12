@@ -7,19 +7,28 @@ class Respect extends Component {
 
     state = {
         isVersionMode: true,
+        currentVersion: null,
+        currentSection: null,
     };
 
-    toggleMode = () => {
+    toggleMode = (currentVersion, currentSection) => {
         this.setState({
             isVersionMode: !this.state.isVersionMode,
+            currentVersion: currentVersion,
+            currentSection: currentSection,
         })
+
     };
 
     render() {
-        const { isVersionMode } = this.state;
+        const { isVersionMode, currentVersion, currentSection } = this.state;
         if (!isVersionMode) {
             return (
-               <SectionsTable toggleMode={this.toggleMode} />
+               <SectionsTable
+                   toggleMode={this.toggleMode}
+                   currentVersion={currentVersion}
+                   sectionForShow={currentSection}
+               />
             )
         }
         return (
