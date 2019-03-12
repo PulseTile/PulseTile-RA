@@ -18,7 +18,7 @@ import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import InsertedRadioButtonGroup from "../fragments/InsertedRadioButtonGroup";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus } from "../functions";
+import { getSectionStatus, getFilledValues } from "../functions";
 
 const FORM_FIELDS_NUMBER = 4;
 
@@ -66,7 +66,9 @@ class Involvement extends Component {
 
     state = {
         isMainPanel: true,
-        variant: get(this.props, 'involvement.variant', null),
+        variant: this.props.isVersionInfo
+            ? get(this.props, 'sectionsInfo.involvement.variant', null)
+            : get(this.props, 'involvement.variant', null),
     };
 
     submitForm = data => {
@@ -93,9 +95,9 @@ class Involvement extends Component {
     };
 
     render() {
-        const { classes, involvement, title, onRowClick } = this.props;
+        const { classes, sectionsInfo, involvement, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, variant } = this.state;
-        const filledValues = Object.assign({}, defaultValues, involvement);
+        const filledValues = getFilledValues(sectionsInfo, involvement, 'involvement', isVersionInfo, defaultValues);
         const InsertRadioValues = ['variantC1', 'variantC2', 'variantC3'];
         return (
             <React.Fragment>
@@ -106,24 +108,28 @@ class Involvement extends Component {
                             <RadioGroup name="variant" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
                                 <FormControlLabel
                                     className={classes.formControlLabel}
+                                    disabled={isVersionInfo}
                                     value="variantA"
                                     control={<Radio />}
                                     label="A - This person has the mantal capacity to participate in making these recommendations. They have benn fully involved in making this plan."
                                 />
                                 <FormControlLabel
                                     className={classes.formControlLabel}
+                                    disabled={isVersionInfo}
                                     value="variantB"
                                     control={<Radio />}
                                     label="B - This person does not have the mental capacity to participate in making these recommendations. This plan has been made in accordance with capacity law, including, where applicable, in consultation with their legal proxy, or where no proxy, with relevant family members / friends."
                                 />
                                 <FormControlLabel
                                     className={classes.formControlLabel}
+                                    disabled={isVersionInfo}
                                     value="variantC"
                                     control={<Radio />}
                                     label={
                                         <InsertedRadioButtonGroup
                                             isSelected={variant === 'variantC' || InsertRadioValues.indexOf(variant) !== -1}
                                             variant={variant}
+                                            isVersionInfo={isVersionInfo}
                                             handleChange={this.handleChange}
                                         />
                                     }
@@ -132,19 +138,34 @@ class Involvement extends Component {
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>D - if no other option has been selected, valid reasons must be stated here</FormLabel>
-                            <Control.textarea className={classes.formTextarea} model="involvement.variantD" defaultValue={filledValues.variantD} />
+                            <Control.textarea
+                                className={classes.formTextarea}
+                                model="involvement.variantD"
+                                defaultValue={filledValues.variantD}
+                                disabled={isVersionInfo}
+                            />
                             <FormHelperText>Document full explanation in the clinical record</FormHelperText>
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Record date, names and roles of those involved in decision making, and where records of discussion can be found</FormLabel>
-                            <Control.textarea className={classes.formTextarea} model="involvement.records" defaultValue={filledValues.records} />
+                            <Control.textarea
+                                className={classes.formTextarea}
+                                model="involvement.records"
+                                defaultValue={filledValues.records}
+                                disabled={isVersionInfo}
+                            />
                             <FormHelperText>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="involvement.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                            <Control.text
+                                className={classes.formInput}
+                                model="involvement.dateCompleted"
+                                defaultValue={filledValues.dateCompleted}
+                                disabled
+                            />
                         </FormGroup>
-                        <SectionToolbar onRowClick={onRowClick} />
+                        { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
                 <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={involvement} />

@@ -40,7 +40,7 @@ const styles = {
     },
 };
 
-const InsertedRadioButtonGroup = ({ classes, isSelected, variant, handleChange }) => {
+const InsertedRadioButtonGroup = ({ classes, isSelected, variant, handleChange, isVersionInfo }) => {
     return (
         <React.Fragment>
             <FormLabel className={classes.formLabel}>
@@ -54,16 +54,19 @@ const InsertedRadioButtonGroup = ({ classes, isSelected, variant, handleChange }
                     <FormControlLabel
                         value="variantC1"
                         control={<Radio />}
+                        disabled={isVersionInfo}
                         label="1 - They have sufficient maturity and understanding to participate in making this plan."
                     />
                     <FormControlLabel
                         value="variantC2"
                         control={<Radio />}
+                        disabled={isVersionInfo}
                         label="2 - They do not have sufficient maturity and understanding to participate in making this plan. Their views, when known, have been taken into account."
                     />
                     <FormControlLabel
                         value="variantC3"
                         control={<Radio />}
+                        disabled={isVersionInfo}
                         label="3 - Those holding parental responsibility have been fully involved in discussing and making this plan."
                     />
                 </RadioGroup>
