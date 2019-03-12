@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import { translate } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -40,4 +41,4 @@ const TableHeader = ({ classes, resource }) => {
     );
 };
 
-export default withStyles(styles)(TableHeader);
+export default withStyles(styles)(translate(TableHeader));
