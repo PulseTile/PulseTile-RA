@@ -12,6 +12,7 @@ import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import TableHeader from "../../../core/common/TableHeader";
 import TableHeadBlock from "./fragments/versions/TableHeadBlock";
 import TableBodyBlock from "./fragments/versions/TableBodyBlock";
+import CurrentVersionBlock from "./fragments/versions/CurrentVersionBlock";
 
 const styles = theme => ({
     root: {
@@ -107,14 +108,12 @@ class VersionsTable extends Component {
                             </div>
                         </Paper>
                     </Grid>
-                    {/*{*/}
-                        {/*currentRow &&*/}
-                            {/*<CurrentSectionBlock*/}
-                                {/*currentSection={currentSection}*/}
-                                {/*currentRow={currentRow}*/}
-                                {/*onRowClick={this.onRowClick}*/}
-                            {/*/>*/}
-                    {/*}*/}
+                    {
+                        currentVersion &&
+                            <CurrentVersionBlock
+                                currentVersion={currentVersion}
+                            />
+                    }
                 </Grid>
             </React.Fragment>
         );

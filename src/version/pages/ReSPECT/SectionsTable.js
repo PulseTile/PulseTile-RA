@@ -132,13 +132,13 @@ class SectionsTable extends Component {
                     </Grid>
                     {
                         currentRow &&
-                        <CurrentSectionBlock
-                            currentSection={currentSection}
-                            currentRow={currentRow}
-                            onRowClick={this.onRowClick}
-                            sectionsInfo={sectionsInfo}
-                            toggleMode={toggleMode}
-                        />
+                            <CurrentSectionBlock
+                                currentSection={currentSection}
+                                currentRow={currentRow}
+                                onRowClick={this.onRowClick}
+                                sectionsInfo={sectionsInfo}
+                                toggleMode={toggleMode}
+                            />
                     }
                 </Grid>
             </React.Fragment>

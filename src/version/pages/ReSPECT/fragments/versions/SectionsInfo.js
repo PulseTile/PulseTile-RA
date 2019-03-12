@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import get from "lodash/get";
 import { Route } from "react-router";
-import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,7 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 
 import { STATUS_INCOMPLETE, STATUS_COMPLETED } from "../../statuses";
 import StatusCell from "../StatusCell";
-import NewVersionRow from "./NewVersionRow";
 
 const styles = {
     rowCompleted: {
@@ -30,7 +28,7 @@ const styles = {
     },
 };
 
-class TableBodyBlock extends Component {
+class SectionsInfo extends Component {
 
     getRowClassName = (status, item) => {
         let result = 'rowInComplete';
@@ -43,33 +41,24 @@ class TableBodyBlock extends Component {
     };
 
     render() {
-        const { classes, toggleMode, showVersion, versionsInfo } = this.props;
-        let versionsNumber = Array.isArray(versionsInfo) ? versionsInfo.length : 0;
+        const { classes, sections, versionInfo } = this.props;
         return (
             <TableBody>
-                <NewVersionRow versionsNumber={versionsNumber + 1} toggleMode={toggleMode} />
                 {
-                    versionsInfo && versionsInfo.reverse().map((item, key) => {
-                        const status = get(item, 'status', STATUS_INCOMPLETE);
-                        const dateCompleted = get(item, 'dateCompleted', '-');
+                    sections.map((item, key) => {
+                        const status = get(versionInfo, [ item.name, 'status'], STATUS_INCOMPLETE);
+                        const dateCompleted = get(versionInfo, [ item.name, 'dateCompleted'], '-');
                         const rowClassName = this.getRowClassName(status, item);
-                        const version = versionsNumber--;
                         return (
-                            <TableRow className={classes[rowClassName]} key={key} onClick={() => showVersion(version)}>
+                            <TableRow className={classes[rowClassName]} key={key}>
                                 <TableCell scope="row" padding="none">
-                                    <span>{version}</span>
-                                </TableCell>
-                                <TableCell scope="row" padding="none">
-                                    <span>{moment(dateCompleted).format('DD-MMM-YYYY')}</span>
-                                </TableCell>
-                                <TableCell scope="row" padding="none">
-                                    <span>{moment(dateCompleted).format('HH:mm')}</span>
+                                    <span>{item.section}</span>
                                 </TableCell>
                                 <TableCell align="right">
-                                    <span>{status}</span>
+                                    <StatusCell item={item} currentRow={null} status={status} />
                                 </TableCell>
                                 <TableCell align="right">
-                                    <span>{get(item, 'author', STATUS_INCOMPLETE)}</span>
+                                    <span>{dateCompleted}</span>
                                 </TableCell>
                             </TableRow>
                         )
@@ -80,4 +69,4 @@ class TableBodyBlock extends Component {
     }
 };
 
-export default withStyles(styles)(TableBodyBlock);
+export default withStyles(styles)(SectionsInfo);
