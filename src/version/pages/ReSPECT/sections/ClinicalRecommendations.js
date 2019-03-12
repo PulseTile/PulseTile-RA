@@ -17,12 +17,12 @@ import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus } from "../functions";
+import { getSectionStatus, getFilledValues } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import Signature from "../fragments/Signature";
 
-const FORM_FIELDS_NUMBER = 5;
+const FORM_FIELDS_NUMBER = 3;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -65,8 +65,12 @@ class ClinicalRecommendations extends Component {
 
     state = {
         isMainPanel: true,
-        cprValue: get(this.props, 'clinicalRecommendations.cprValue', null),
-        focusValue: [get(this.props, 'clinicalRecommendations.focusValue', 50)],
+        cprValue: this.props.isVersionInfo
+            ? get(this.props, 'sectionsInfo.clinicalRecommendations.cprValue', null)
+            : get(this.props, 'clinicalRecommendations.cprValue', null),
+        focusValue: this.props.isVersionInfo
+            ? [get(this.props, 'sectionsInfo.clinicalRecommendations.focusValue', 50)]
+            : [get(this.props, 'clinicalRecommendations.focusValue', 50)],
         firstSignature: null,
         secondSignature: null,
     };
@@ -110,9 +114,9 @@ class ClinicalRecommendations extends Component {
     };
 
     render() {
-        const { classes, clinicalRecommendations, title, onRowClick } = this.props;
+        const { classes, sectionsInfo, clinicalRecommendations, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, focusValue, cprValue } = this.state;
-        const filledValues = Object.assign({}, defaultValues, clinicalRecommendations);
+        const filledValues = getFilledValues(sectionsInfo, clinicalRecommendations, 'clinicalRecommendations', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
@@ -128,7 +132,12 @@ class ClinicalRecommendations extends Component {
                         <Signature name="firstSignature" onEnd={this.addSignature} />
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Clinical Guidance</FormLabel>
-                            <Control.textarea className={classes.formTextarea} model="clinicalRecommendations.clinicalGuidance" defaultValue={filledValues.clinicalGuidance} />
+                            <Control.textarea
+                                className={classes.formTextarea}
+                                model="clinicalRecommendations.clinicalGuidance"
+                                defaultValue={filledValues.clinicalGuidance}
+                                disabled={isVersionInfo}
+                            />
                             <FormHelperText>
                                 Now provide clinical guidance on specific inverventions that may or may not be wanted or clinicaly appropriate,
                                 includingbeing taken or admitted to hospital +/- receiving life support.
@@ -139,16 +148,19 @@ class ClinicalRecommendations extends Component {
                             <RadioGroup name="cprValue" className={classes.radioGroup} value={cprValue} onChange={e => this.handleChecking(e)}>
                                 <FormControlLabel
                                     value="1"
+                                    disabled={isVersionInfo}
                                     control={<Radio />}
                                     label={<RadioButtonName mainTitle="CPR attempts recommended" helpTitle="Adult or child" />}
                                 />
                                 <FormControlLabel
                                     value="2"
+                                    disabled={isVersionInfo}
                                     control={<Radio />}
                                     label={<RadioButtonName mainTitle="For modified CPR" helpTitle="Child only, as detailed above" />}
                                 />
                                 <FormControlLabel
                                     value="3"
+                                    disabled={isVersionInfo}
                                     control={<Radio />}
                                     label={<RadioButtonName mainTitle="CPR attempts NOT recommended" helpTitle="Adult or child" />}
                                 />
@@ -157,7 +169,12 @@ class ClinicalRecommendations extends Component {
                         <Signature name="secondSignature" onEnd={this.addSignature} />
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="clinicalRecommendations.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                            <Control.text
+                                className={classes.formInput}
+                                model="clinicalRecommendations.dateCompleted"
+                                defaultValue={filledValues.dateCompleted}
+                                disabled
+                            />
                         </FormGroup>
                         <SectionToolbar onRowClick={onRowClick} />
                     </LocalForm>

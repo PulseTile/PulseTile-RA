@@ -43,6 +43,7 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "column",
         padding: 0,
+        marginBottom: 10,
     },
 });
 
