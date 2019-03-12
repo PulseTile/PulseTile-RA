@@ -176,7 +176,7 @@ class ClinicalRecommendations extends Component {
                                 disabled
                             />
                         </FormGroup>
-                        <SectionToolbar onRowClick={onRowClick} />
+                        { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
                 <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={clinicalRecommendations} />
