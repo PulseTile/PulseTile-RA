@@ -7,9 +7,12 @@ import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 
+import { versionsAction } from "../../../actions/ReSPECT/versionsAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
+import { getAuthorName } from "../functions";
+import { STATUS_COMPLETED } from "../statuses";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -63,8 +66,21 @@ class EmergencyView extends Component {
         this.props.onRowClick(4);
     };
 
+    submitForm = data => {
+        const { sectionsInfo, versionsInfo, toggleMode, createNewVersion } = this.props;
+        const formData = {
+            sections: sectionsInfo,
+            status: STATUS_COMPLETED,
+            dateCompleted: moment().format('DD-MMM-YYYY HH:mm'),
+            author: getAuthorName(),
+        };
+        const updateVersionsInfo = Array.isArray(versionsInfo) ? versionsInfo.concat(formData) : [formData];
+        createNewVersion(updateVersionsInfo);
+        toggleMode();
+    };
+
     render() {
-        const { classes, personalDetails, title, onRowClick } = this.props;
+        const { classes, personalDetails, title, onRowClick, sectionsInfo } = this.props;
         const { isMainPanel } = this.state;
         const filledValues = Object.assign({}, defaultValues, personalDetails);
         return (
@@ -75,7 +91,7 @@ class EmergencyView extends Component {
                         <p className={classes.secondTitle}>CPR attempts recommended</p>
                         <p>For more information, see <a className={classes.sectionLink} onClick={e => this.redirectToSection(e)}>Section 4</a> for the latest clinical recommendations</p>
                     </div>
-                    <LocalForm  model="personalDetails">
+                    <LocalForm onSubmit={values => this.submitForm(values)} model="personalDetails">
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
                             <Control.text className={classes.formInput} model="personalDetails.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
@@ -92,7 +108,16 @@ class EmergencyView extends Component {
 const mapStateToProps = state => {
     return {
         emergencyView: state.custom.emergencyView.data,
+        versionsInfo: state.custom.versionsInfo.data,
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(styles)(EmergencyView));
+const mapDispatchToProps = dispatch => {
+    return {
+        createNewVersion(data) {
+            dispatch(versionsAction.create(data));
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EmergencyView));

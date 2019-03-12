@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import get from "lodash/get";
 import { Route } from "react-router";
+import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-import { STATUS_INCOMPLETE, STATUS_COMPLETED } from "../statuses";
-import StatusCell from "./StatusCell";
+import { STATUS_INCOMPLETE, STATUS_COMPLETED } from "../../statuses";
+import StatusCell from "../StatusCell";
+import NewVersionRow from "./NewVersionRow";
 
 const styles = {
     rowCompleted: {
@@ -41,24 +43,35 @@ class TableBodyBlock extends Component {
     };
 
     render() {
-        const { classes, sections, onRowClick, currentRow, sectionsInfo } = this.props;
+        const { classes, toggleMode, showVersion, currentVersion, versionsInfo } = this.props;
+        let versionsNumber = Array.isArray(versionsInfo) ? (versionsInfo.length + 1) : 1;
+
         return (
             <TableBody>
+                <NewVersionRow versionsNumber={versionsNumber} toggleMode={toggleMode} />
                 {
-                    sections.map((item, key) => {
-                        const status = get(sectionsInfo, [ item.name, 'status'], STATUS_INCOMPLETE);
-                        const dateCompleted = get(sectionsInfo, [ item.name, 'dateCompleted'], '-');
+                    versionsInfo && versionsInfo.map((item, key) => {
+
+                        const status = get(item, 'status', STATUS_INCOMPLETE);
+                        const dateCompleted = get(item, 'dateCompleted', '-');
                         const rowClassName = this.getRowClassName(status, item);
+                        versionsNumber--;
                         return (
-                            <TableRow className={classes[rowClassName]} key={key} onClick={() => onRowClick(item.id)}>
+                            <TableRow className={classes[rowClassName]} key={key} onClick={() => showVersion(item.id)}>
                                 <TableCell scope="row" padding="none">
-                                    <span>{item.section}</span>
+                                    <span>{versionsNumber}</span>
+                                </TableCell>
+                                <TableCell scope="row" padding="none">
+                                    <span>{moment(dateCompleted).format('DD-MMM-YYYY')}</span>
+                                </TableCell>
+                                <TableCell scope="row" padding="none">
+                                    <span>{moment(dateCompleted).format('HH:mm')}</span>
                                 </TableCell>
                                 <TableCell align="right">
-                                     <StatusCell item={item} currentRow={currentRow} status={status} />
+                                    <span>{status}</span>
                                 </TableCell>
                                 <TableCell align="right">
-                                    <span>{dateCompleted}</span>
+                                    <span>{get(item, 'author', STATUS_INCOMPLETE)}</span>
                                 </TableCell>
                             </TableRow>
                         )
