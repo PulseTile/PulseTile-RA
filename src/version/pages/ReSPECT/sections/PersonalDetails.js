@@ -61,7 +61,9 @@ class PersonalDetails extends Component {
 
     state = {
         isMainPanel: true,
-        birthDate: get(this.props, 'personalDetails.birthDate', null),
+        birthDate: this.props.isVersionInfo
+            ? get(this.props, 'sectionsInfo.personalDetails.birthDate', null)
+            : get(this.props, 'personalDetails.birthDate', null),
     };
 
     submitForm = data => {

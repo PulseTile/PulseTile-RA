@@ -13,7 +13,7 @@ import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus } from "../functions";
+import { getSectionStatus, getFilledValues } from "../functions";
 
 const FORM_FIELDS_NUMBER = 1;
 
@@ -74,30 +74,45 @@ class SummaryInformation extends Component {
     };
 
     render() {
-        const { classes, summaryInformation, title, onRowClick } = this.props;
+        const { classes, sectionsInfo, summaryInformation, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel } = this.state;
-        const filledValues = Object.assign({}, defaultValues, summaryInformation);
+        const filledValues = getFilledValues(sectionsInfo, summaryInformation, 'summaryInformation', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     <LocalForm  model="summaryInformation" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Summary of relevant information for this plan.</FormLabel>
-                            <Control.textarea className={classes.formTextarea} model="summaryInformation.summary" defaultValue={filledValues.summary} />
+                            <Control.textarea
+                                className={classes.formTextarea}
+                                model="summaryInformation.summary"
+                                defaultValue={filledValues.summary}
+                                disabled={isVersionInfo}
+                            />
                             <FormHelperText>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Details of other relevant planning documents</FormLabel>
-                            <Control.textarea className={classes.formTextarea} model="summaryInformation.details" defaultValue={filledValues.details} />
+                            <Control.textarea
+                                className={classes.formTextarea}
+                                model="summaryInformation.details"
+                                defaultValue={filledValues.details}
+                                disabled={isVersionInfo}
+                            />
                             <FormHelperText>
                                 Details of other relevant planning documents and where to find them (e.g. Advance Decision to Refuse Treatment, Advance Care Plan). Also include known wishes about organ donation.
                             </FormHelperText>
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="summaryInformation.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                            <Control.text
+                                className={classes.formInput}
+                                model="summaryInformation.dateCompleted"
+                                defaultValue={filledValues.dateCompleted}
+                                disabled
+                            />
                         </FormGroup>
-                        <SectionToolbar onRowClick={onRowClick} />
+                        { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
                 <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={summaryInformation} />
