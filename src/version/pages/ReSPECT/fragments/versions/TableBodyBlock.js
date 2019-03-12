@@ -12,7 +12,7 @@ import { STATUS_INCOMPLETE, STATUS_COMPLETED } from "../../statuses";
 import StatusCell from "../StatusCell";
 import NewVersionRow from "./NewVersionRow";
 
-const styles = {
+const styles = theme => ({
     rowCompleted: {
         backgroundColor: "#fff",
     },
@@ -22,13 +22,13 @@ const styles = {
             color: "#6d6c6c",
         },
     },
-    rowInProgress: {
-        backgroundColor: "#dbe4ed",
+    currentRow: {
+        backgroundColor: theme.palette.mainColor,
         '& td span': {
-            fontWeight: 600,
+            color: "#fff",
         },
-    },
-};
+    }
+});
 
 class TableBodyBlock extends Component {
 
@@ -36,14 +36,12 @@ class TableBodyBlock extends Component {
         let result = 'rowInComplete';
         if (status === STATUS_COMPLETED) {
             result = 'rowCompleted';
-        } else if (item.id === this.props.currentRow) {
-            result = 'rowInProgress';
         }
         return result;
     };
 
     render() {
-        const { classes, toggleMode, showVersion, versionsInfo } = this.props;
+        const { classes, currentVersion, toggleMode, showVersion, versionsInfo } = this.props;
         let versionsNumber = Array.isArray(versionsInfo) ? versionsInfo.length : 0;
         return (
             <TableBody>
@@ -55,7 +53,7 @@ class TableBodyBlock extends Component {
                         const rowClassName = this.getRowClassName(status, item);
                         const version = versionsNumber--;
                         return (
-                            <TableRow className={classes[rowClassName]} key={key} onClick={() => showVersion(version)}>
+                            <TableRow className={(currentVersion === version) ? classes.currentRow : classes[rowClassName]} key={key} onClick={() => showVersion(version)}>
                                 <TableCell scope="row" padding="none">
                                     <span>{version}</span>
                                 </TableCell>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
@@ -23,7 +24,8 @@ import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { getAuthorName } from "../functions";
-import { STATUS_COMPLETED } from "../statuses";
+import sections from "../sections";
+import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER } from "../statuses";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -77,11 +79,30 @@ class EmergencyView extends Component {
         this.props.onRowClick(4);
     };
 
+    getVersionStatus = sectionsInfo => {
+        let completedSectionsCount = 0;
+        sections.forEach(item => {
+            if (get(sectionsInfo, [item.name, 'status'], null) === STATUS_COMPLETED) {
+                completedSectionsCount++;
+            }
+        });
+
+        console.log('completedSectionsCount',completedSectionsCount );
+
+        let result = STATUS_INCOMPLETE;
+        if (completedSectionsCount === TOTAL_ROWS_NUMBER) {
+            result = STATUS_COMPLETED;
+        } else if (completedSectionsCount > 0) {
+            result = STATUS_IN_PROGRESS;
+        }
+        return result;
+    };
+
     submitForm = data => {
         const { sectionsInfo, versionsInfo, toggleMode, createNewVersion } = this.props;
         const formData = {
             sections: sectionsInfo,
-            status: STATUS_COMPLETED,
+            status: this.getVersionStatus(sectionsInfo),
             dateCompleted: moment().format('DD-MMM-YYYY HH:mm'),
             author: getAuthorName(),
         };

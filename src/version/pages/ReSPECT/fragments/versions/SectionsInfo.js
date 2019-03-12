@@ -20,12 +20,6 @@ const styles = {
             color: "#6d6c6c",
         },
     },
-    rowInProgress: {
-        backgroundColor: "#dbe4ed",
-        '& td span': {
-            fontWeight: 600,
-        },
-    },
 };
 
 class SectionsInfo extends Component {
@@ -34,8 +28,6 @@ class SectionsInfo extends Component {
         let result = 'rowInComplete';
         if (status === STATUS_COMPLETED) {
             result = 'rowCompleted';
-        } else if (item.id === this.props.currentRow) {
-            result = 'rowInProgress';
         }
         return result;
     };

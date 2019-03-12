@@ -1,7 +1,7 @@
 import React from "react";
 
 import { withStyles } from '@material-ui/core/styles';
-import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED } from "../statuses";
+import { STATUS_INCOMPLETE, STATUS_EDITING, STATUS_COMPLETED } from "../statuses";
 
 const styles = {
     tableCellInpogress: {
@@ -19,7 +19,7 @@ const styles = {
 const StatusCell = ({ classes, item, currentRow, status  }) => {
     if (item.id === currentRow) {
         return (
-            <span className={classes.tableCellInpogress}>{STATUS_IN_PROGRESS}</span>
+            <span className={classes.tableCellInpogress}>{STATUS_EDITING}</span>
         );
     } else if (status === STATUS_COMPLETED) {
         return (

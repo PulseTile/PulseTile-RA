@@ -8,14 +8,16 @@ import TableRow from '@material-ui/core/TableRow';
 import { getAuthorName } from "../../functions";
 
 const styles = {
-    newRow: {
-        backgroundColor: "#fff",
+    rowInProgress: {
+        '& td span': {
+            fontWeight: 600,
+        },
     },
 };
 
 const NewVersionRow = ({ classes, versionsNumber, toggleMode }) => {
     return (
-        <TableRow className={classes.newRow} onClick={() => toggleMode()}>
+        <TableRow className={classes.rowInProgress} onClick={() => toggleMode()}>
             <TableCell scope="row" padding="none">
                 <span>{versionsNumber}</span>
             </TableCell>
