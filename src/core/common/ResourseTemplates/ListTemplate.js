@@ -169,19 +169,8 @@ class ListTemplate extends Component {
         })
     };
 
-    /**
-     * This function redirects to Patient Summary page (only for Patients list case)
-     *
-     * @author Bogdan Shcherban <bsc@piogroup.net>
-     * @param {number} userId
-     */
-    redirectToSummary = userId => {
-        localStorage.setItem('userId', userId);
-        this.props.history.push('/summary');
-    };
-
     render() {
-        const { create, resourceUrl, title, children, classes, history } = this.props;
+        const { create, resourceUrl, title, children, classes, history, rowClickAction } = this.props;
         const { isFilterOpened, key, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -227,10 +216,7 @@ class ListTemplate extends Component {
                             pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
                             {...this.props}
                         >
-                            <Datagrid
-                                className={classes.tableList}
-                                rowClick={(resourceUrl === 'patients') ? userId => this.redirectToSummary(userId) : "edit"}
-                            >
+                            <Datagrid className={classes.tableList} rowClick={rowClickAction ? rowClickAction : "edit"}>
                                 {children}
                             </Datagrid>
                         </List>

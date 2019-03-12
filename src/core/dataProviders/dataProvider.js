@@ -258,34 +258,14 @@ export default () => {
         }
     };
 
-    /**
-     * This function provides requests/response to server
-     *
-     * @author Bogdan Shcherban <bsc@piogroup.net>
-     * @param {shape}  type
-     * @param {string} resource
-     * @param {shape}  params
-     */
-    return (type, resource, params) => {
+    const dataProvider = (type, resource, params) => {
         let { url, options } = convertDataRequestToHTTP(type, resource, params);
-        if (resource === `patients`) {
-            return getPatientsResponse(type, resource, params);
-        } else {
-            return fetch(url, options).then(response => response.json())
-                .then(res => convertHTTPResponse(res, type, resource, params))
-                .catch(err => console.log('Error: ', err));
-        }
+        return fetch(url, options).then(response => response.json())
+            .then(res => convertHTTPResponse(res, type, resource, params))
+            .catch(err => console.log('Error: ', err));
     };
 
-    /**
-     * This function will be used TEMPORARY, until /api/patients request will be done at the server side
-     *
-     * @param type
-     * @param resource
-     * @param params
-     * @return {*}
-     */
-    function getPatientsResponse(type, resource, params) {
+    const fakePatientsProvider = (type, resource, params) => {
         switch (type) {
             case GET_LIST:
                 const pageNumber = get(params, 'pagination.page', 1);
@@ -322,5 +302,20 @@ export default () => {
             default:
                 return { data: 'No results' };
         }
-    }
+    };
+
+    /**
+     * This function provides requests/response to server
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {shape}  type
+     * @param {string} resource
+     * @param {shape}  params
+     */
+    return (type, resource, params) => {
+        if (resource === `patients`) {
+            return fakePatientsProvider(type, resource, params);
+        }
+        return dataProvider(type, resource, params);
+    };
 };
