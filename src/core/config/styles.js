@@ -54,6 +54,13 @@ export function getCurrentTheme(isContrastMode) {
     const palette = getCurrentPalette(isContrastMode);
     return createMuiTheme({
         palette: palette,
+        typography: {
+            fontFamily: [
+                '"HK Grotesk"',
+                'Arial',
+                'sans-serif',
+            ].join(','),
+        },
         tableHeader: {
             tableHeaderBlock: {
                 background: getCardBackground(isContrastMode, palette.mainColor),
