@@ -47,7 +47,7 @@ const styles = theme => ({
     },
 });
 
-const CurrentSectionBlock = ({ classes, currentRow, currentSection, onRowClick, sectionsInfo, toggleMode, isVersionInfo }) => {
+const CurrentSectionBlock = ({ classes, currentRow, currentSection, onRowClick, sectionsInfo, latestVersionInfo, toggleMode, isVersionInfo }) => {
     const SectionBlock = currentSection ? currentSection.component : null;
     return (
         <Grid item xs={12} sm={currentRow ? 6 : 12}>
@@ -57,6 +57,7 @@ const CurrentSectionBlock = ({ classes, currentRow, currentSection, onRowClick, 
                 classes={classes}
                 onRowClick={onRowClick}
                 sectionsInfo={sectionsInfo}
+                latestVersionInfo={latestVersionInfo}
                 toggleMode={toggleMode}
                 isVersionInfo={isVersionInfo}
             />

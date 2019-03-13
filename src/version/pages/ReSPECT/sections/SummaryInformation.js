@@ -74,9 +74,9 @@ class SummaryInformation extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, summaryInformation, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, sectionsInfo, latestVersionInfo, summaryInformation, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, summaryInformation, 'summaryInformation', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, summaryInformation, 'summaryInformation', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

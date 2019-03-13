@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control, actions } from 'react-redux-form';
 import moment from "moment";
@@ -18,7 +17,7 @@ import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import Signature from "../fragments/Signature";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE } from "../statuses";
-import { getFilledValues } from "../functions";
+import { getFilledValues, getStateData } from "../functions";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -85,9 +84,7 @@ class Confirmation extends Component {
     state = {
         isMainPanel: true,
         reviewDate: null,
-        rowsArray: this.props.isVersionInfo
-            ? get(this.props, 'sectionsInfo.confirmation.confirmationsArray', [])
-            : get(this.props, 'confirmation.confirmationsArray', []),
+        rowsArray: getStateData(this.props, 'confirmation.confirmationsArray', []),
     };
 
     attachDispatch(dispatch) {
@@ -140,9 +137,9 @@ class Confirmation extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, confirmation, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, sectionsInfo, latestVersionInfo, confirmation, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, rowsArray, reviewDate } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, confirmation, 'confirmation', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, confirmation, 'confirmation', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

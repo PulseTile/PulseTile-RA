@@ -114,9 +114,9 @@ class EmergencyView extends Component {
     };
 
     render() {
-        const { classes, personalDetails, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, emergencyView, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel } = this.state;
-        const filledValues = Object.assign({}, defaultValues, personalDetails);
+        const filledValues = Object.assign({}, defaultValues, emergencyView);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
@@ -133,7 +133,7 @@ class EmergencyView extends Component {
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalDetails} />
+                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={emergencyView} />
             </React.Fragment>
         );
     }

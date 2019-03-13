@@ -118,12 +118,20 @@ class SectionsTable extends Component {
 
         let isVersionInfo = false;
         let versionSectionsInfo = null;
+        let latestVersionInfo = null;
         if (currentVersion && sectionForShow) {
             versionSectionsInfo = get(versionsInfo, [ [currentVersion - 1], 'sections' ], null);
             isVersionInfo = true;
+        } else if (Array.isArray(versionsInfo) && versionsInfo.length > 0) {
+            const versionsNumber = versionsInfo.length;
+            latestVersionInfo = get(versionsInfo, [ [versionsNumber - 1], 'sections' ], null);
         }
 
+        console.log('latestVersionInfo', latestVersionInfo);
+
+
         const currentSection = this.getCurrentSection(currentRow);
+
         return (
             <React.Fragment>
                 <TableHeader resource="respect" />
@@ -142,6 +150,7 @@ class SectionsTable extends Component {
                                         currentRow={currentRow}
                                         onRowClick={this.onRowClick}
                                         sectionsInfo={isVersionInfo ? versionSectionsInfo : sectionsInfo}
+                                        latestVersionInfo={latestVersionInfo}
                                     />
                                 </Table>
                             </div>
@@ -155,6 +164,7 @@ class SectionsTable extends Component {
                                 onRowClick={this.onRowClick}
                                 isVersionInfo={isVersionInfo}
                                 sectionsInfo={isVersionInfo ? versionSectionsInfo : sectionsInfo}
+                                latestVersionInfo={latestVersionInfo}
                                 toggleMode={toggleMode}
                             />
                     }

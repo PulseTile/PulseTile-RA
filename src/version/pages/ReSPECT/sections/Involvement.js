@@ -18,7 +18,7 @@ import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import InsertedRadioButtonGroup from "../fragments/InsertedRadioButtonGroup";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues } from "../functions";
+import { getSectionStatus, getStateData, getFilledValues } from "../functions";
 
 const FORM_FIELDS_NUMBER = 4;
 
@@ -66,9 +66,7 @@ class Involvement extends Component {
 
     state = {
         isMainPanel: true,
-        variant: this.props.isVersionInfo
-            ? get(this.props, 'sectionsInfo.involvement.variant', null)
-            : get(this.props, 'involvement.variant', null),
+        variant: getStateData(this.props, 'involvement.variant'),
     };
 
     submitForm = data => {
@@ -95,9 +93,9 @@ class Involvement extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, involvement, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, sectionsInfo, latestVersionInfo, involvement, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, variant } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, involvement, 'involvement', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, involvement, 'involvement', isVersionInfo, defaultValues);
         const InsertRadioValues = ['variantC1', 'variantC2', 'variantC3'];
         return (
             <React.Fragment>

@@ -18,7 +18,7 @@ import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import Signature from "../fragments/Signature";
 import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED } from "../statuses";
-import { getFilledValues } from "../functions";
+import { getFilledValues, getStateData } from "../functions";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -85,9 +85,7 @@ class CliniciansSignatures extends Component {
     state = {
         isMainPanel: true,
         dateAndTime: null,
-        rowsArray: this.props.isVersionInfo
-            ? get(this.props, 'sectionsInfo.clinicalSignatures.signaturesArray', [])
-            : get(this.props, 'clinicalSignatures.signaturesArray', []),
+        rowsArray: getStateData(this.props, 'clinicalSignatures.signaturesArray', []),
     };
 
     attachDispatch(dispatch) {
@@ -140,9 +138,9 @@ class CliniciansSignatures extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, clinicalSignatures, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, sectionsInfo, latestVersionInfo, clinicalSignatures, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, rowsArray, dateAndTime } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, clinicalSignatures, 'clinicalSignatures', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalSignatures, 'clinicalSignatures', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

@@ -17,7 +17,7 @@ import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import RadioButtonWithLink from "../fragments/RadioButtonWithLink";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues } from "../functions";
+import { getSectionStatus, getFilledValues, getStateData } from "../functions";
 
 const FORM_FIELDS_NUMBER = 2;
 
@@ -64,12 +64,8 @@ class CapacityAndRepresentation extends Component {
 
     state = {
         isMainPanel: true,
-        capacityFirst: this.props.isVersionInfo
-            ? get(this.props, 'sectionsInfo.capacityAndRepresentation.capacityFirst', null)
-            : get(this.props, 'capacityAndRepresentation.capacityFirst', null),
-        capacitySecond: this.props.isVersionInfo
-            ? get(this.props, 'sectionsInfo.capacityAndRepresentation.capacitySecond', null)
-            : get(this.props, 'capacityAndRepresentation.capacitySecond', null),
+        capacityFirst: getStateData(this.props, 'capacityAndRepresentation.capacityFirst'),
+        capacitySecond: getStateData(this.props, 'capacityAndRepresentation.capacitySecond'),
     };
 
     submitForm = data => {
@@ -99,9 +95,9 @@ class CapacityAndRepresentation extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, capacityAndRepresentation, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, sectionsInfo, latestVersionInfo, capacityAndRepresentation, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, capacityFirst, capacitySecond } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, capacityAndRepresentation, 'capacityAndRepresentation', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, capacityAndRepresentation, 'capacityAndRepresentation', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

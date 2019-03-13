@@ -15,7 +15,7 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE } from "../statuses";
-import { getFilledValues } from "../functions";
+import { getFilledValues, getStateData } from "../functions";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -99,9 +99,7 @@ class EmergencyContacts extends Component {
 
     state = {
         isMainPanel: true,
-        rowsArray: this.props.isVersionInfo
-            ? get(this.props, 'sectionsInfo.emergencyContacts.contactsArray', [])
-            : get(this.props, 'emergencyContacts.contactsArray', []),
+        rowsArray: getStateData(this.props, 'emergencyContacts.contactsArray', []),
     };
 
     attachDispatch(dispatch) {
@@ -138,9 +136,9 @@ class EmergencyContacts extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, emergencyContacts, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, sectionsInfo, latestVersionInfo, emergencyContacts, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, rowsArray } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, emergencyContacts, 'emergencyContacts', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, emergencyContacts, 'emergencyContacts', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

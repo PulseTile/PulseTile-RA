@@ -15,7 +15,7 @@ import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import RangeLine from "../fragments/RangeLine";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues } from "../functions";
+import { getSectionStatus, getFilledValues, getStateData } from "../functions";
 
 const FORM_FIELDS_NUMBER = 2;
 
@@ -56,9 +56,7 @@ class PersonalPreferences extends Component {
 
     state = {
         isMainPanel: true,
-        preferencesValue: this.props.isVersionInfo
-            ? [get(this.props, 'sectionsInfo.personalPreferences.preferencesValue', 50)]
-            : [get(this.props, 'personalPreferences.preferencesValue', 50)],
+        preferencesValue: [getStateData(this.props, 'personalPreferences.preferencesValue', 50)],
     };
 
     submitForm = data => {
@@ -91,9 +89,9 @@ class PersonalPreferences extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, personalPreferences, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, sectionsInfo, latestVersionInfo, personalPreferences, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, preferencesValue } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, personalPreferences, 'personalPreferences', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, personalPreferences, 'personalPreferences', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

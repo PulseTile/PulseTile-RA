@@ -16,7 +16,7 @@ import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues } from "../functions";
+import { getSectionStatus, getStateData, getFilledValues } from "../functions";
 
 const FORM_FIELDS_NUMBER = 9;
 
@@ -57,13 +57,13 @@ const styles = {
     },
 };
 
+
+
 class PersonalDetails extends Component {
 
     state = {
         isMainPanel: true,
-        birthDate: this.props.isVersionInfo
-            ? get(this.props, 'sectionsInfo.personalDetails.birthDate', null)
-            : get(this.props, 'personalDetails.birthDate', null),
+        birthDate: getStateData(this.props, 'personalDetails.birthDate'),
     };
 
     submitForm = data => {
@@ -91,9 +91,9 @@ class PersonalDetails extends Component {
     };
 
     render() {
-        const { classes, personalDetails, title, onRowClick, sectionsInfo, isVersionInfo } = this.props;
+        const { classes, personalDetails, title, onRowClick, sectionsInfo, latestVersionInfo, isVersionInfo } = this.props;
         const { isMainPanel, birthDate } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, personalDetails, 'personalDetails', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, personalDetails, 'personalDetails', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

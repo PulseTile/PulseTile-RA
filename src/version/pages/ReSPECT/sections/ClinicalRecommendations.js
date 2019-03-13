@@ -17,7 +17,7 @@ import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues } from "../functions";
+import { getSectionStatus, getFilledValues, getStateData } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import Signature from "../fragments/Signature";
@@ -65,12 +65,8 @@ class ClinicalRecommendations extends Component {
 
     state = {
         isMainPanel: true,
-        cprValue: this.props.isVersionInfo
-            ? get(this.props, 'sectionsInfo.clinicalRecommendations.cprValue', null)
-            : get(this.props, 'clinicalRecommendations.cprValue', null),
-        focusValue: this.props.isVersionInfo
-            ? [get(this.props, 'sectionsInfo.clinicalRecommendations.focusValue', 50)]
-            : [get(this.props, 'clinicalRecommendations.focusValue', 50)],
+        cprValue: getStateData(this.props, 'clinicalRecommendations.cprValue'),
+        focusValue: [getStateData(this.props, 'clinicalRecommendations.focusValue', 50)],
         firstSignature: null,
         secondSignature: null,
     };
@@ -114,9 +110,9 @@ class ClinicalRecommendations extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, clinicalRecommendations, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, sectionsInfo, latestVersionInfo, clinicalRecommendations, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, focusValue, cprValue } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, clinicalRecommendations, 'clinicalRecommendations', isVersionInfo, defaultValues);
+        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalRecommendations, 'clinicalRecommendations', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
