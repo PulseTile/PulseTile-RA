@@ -138,9 +138,7 @@ class Charts extends Component {
 
     render() {
         const { classes, patients, history } = this.props;
-
         const patientsList = (patients && patients.length > 0) ? patients : dummyPatients;
-
         const DepartmentPercentage = this.getDepartmentPercentage(patientsList);
         const dataGreen = [
             { Text: "Community Care", sort: "CommunityCare", RespondentPercentage: get(DepartmentPercentage, 'CommunityCare', 0) },

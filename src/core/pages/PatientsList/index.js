@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { TextField, DateField, ShowButton } from "react-admin";
 
@@ -14,22 +14,39 @@ import PatientShow from "./PatientShow";
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @constructor
  */
-export const PatientsList = props => (
-    <ListTemplate
-        basePath="/patients"
-        create={PatientCreate}
-        edit={PatientEdit}
-        show={PatientShow}
-        resourceUrl="patients"
-        title="Patients List"
-        {...props}
-    >
-        <TextField source="name" label="Name" />
-        <TextField source="address" label="Address" />
-        <DateField source="dateOfBirth" label="Born" />
-        <TextField source="nhsNumber" label="CHI No." />
-        <CustomShowButton {...props} />
-    </ListTemplate>
-);
+class PatientsList extends Component {
+
+    /**
+     * This function redirects to Patient Summary page
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {number} userId
+     */
+    redirectToSummary = userId => {
+        localStorage.setItem('userId', userId);
+        this.props.history.push('/summary');
+    };
+
+    render() {
+        return (
+            <ListTemplate
+                basePath="/patients"
+                create={PatientCreate}
+                edit={PatientEdit}
+                show={PatientShow}
+                resourceUrl="patients"
+                title="Patients List"
+                rowClickAction={userId => this.redirectToSummary(userId)}
+                {...this.props}
+            >
+                <TextField source="name" label="Name" />
+                <TextField source="address" label="Address" />
+                <DateField source="dateOfBirth" label="Born" />
+                <TextField source="nhsNumber" label="CHI No." />
+                <CustomShowButton {...this.props} />
+            </ListTemplate>
+        )
+    }
+}
 
 export default PatientsList;
