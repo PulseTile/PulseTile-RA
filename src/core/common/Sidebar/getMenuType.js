@@ -1,3 +1,5 @@
+import get from "lodash/get";
+
 export const SHORT_MENU = "short";
 export const FULL_MENU = "full";
 
@@ -7,13 +9,11 @@ export const FULL_MENU = "full";
  * @return {string}
  */
 export function getMenuType(currentPathname) {
-    let result = SHORT_MENU;
+    const pathArray = currentPathname.split('/');
+    const currentResource = get(pathArray, [1], null);
     const ShortMenuPages = [
-        "/charts",
-        "/patients"
+        "charts",
+        "patients",
     ];
-    if (ShortMenuPages.indexOf(currentPathname) === -1) {
-        result = FULL_MENU;
-    }
-    return result;
+    return (ShortMenuPages.indexOf(currentResource) === -1) ? FULL_MENU : SHORT_MENU;
 }

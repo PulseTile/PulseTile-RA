@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { GET_LIST } from 'react-admin';
 import moment from "moment";
 import get from "lodash/get";
 import { connect } from 'react-redux';
@@ -13,8 +14,7 @@ import {
 } from "recharts";
 
 import { withStyles } from '@material-ui/core/styles';
-
-import { patientStatisticAction } from "../../actions/patientsStatisticAction";
+import customDataProvider from "../../dataProviders/dataProvider";
 
 const styles = {
     chartsContainer: {
@@ -30,7 +30,7 @@ const styles = {
 class Charts extends Component {
 
     componentDidMount() {
-        this.props.getPatientsStatistic();
+        customDataProvider(GET_LIST, 'patients', {});
     }
 
     /**
@@ -209,15 +209,7 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getPatientsStatistic() {
-            dispatch(patientStatisticAction.request());
-        }
-    }
-};
-
 export default compose(
     withStyles(styles),
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, null)
 )(Charts);
