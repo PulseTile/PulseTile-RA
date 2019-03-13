@@ -15,6 +15,7 @@ import {
 
 import { withStyles } from '@material-ui/core/styles';
 import customDataProvider from "../../dataProviders/dataProvider";
+import dummyPatients from "../../pages/PatientsList/dummyPatients";
 
 const styles = {
     chartsContainer: {
@@ -138,7 +139,7 @@ class Charts extends Component {
     render() {
         const { classes, patients, history } = this.props;
 
-        const DepartmentPercentage = this.getDepartmentPercentage(patients);
+        const DepartmentPercentage = this.getDepartmentPercentage(dummyPatients);
         const dataGreen = [
             { Text: "Community Care", sort: "CommunityCare", RespondentPercentage: get(DepartmentPercentage, 'CommunityCare', 0) },
             { Text: "Hospital", sort: "Hospital", RespondentPercentage: get(DepartmentPercentage, 'Hospital', 0) },
@@ -147,7 +148,7 @@ class Charts extends Component {
             { Text: "Primary Care", sort: "PrimaryCare", RespondentPercentage: get(DepartmentPercentage, 'PrimaryCare', 0) }
         ];
 
-        const AgePercentage = this.getAgePercentage(patients);
+        const AgePercentage = this.getAgePercentage(dummyPatients);
         const dataViolet = [
             { Text: "19-30", sort: "first", RespondentPercentage: get(AgePercentage, 'first', 0) },
             { Text: "31-60", sort: "second", RespondentPercentage: get(AgePercentage, 'second', 0) },
