@@ -26,6 +26,7 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import { getAuthorName } from "../functions";
 import sections from "../sections";
 import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER } from "../statuses";
+import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -164,4 +165,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EmergencyView));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(formStyles)(EmergencyView));

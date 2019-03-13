@@ -16,59 +16,11 @@ import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE } from "../statuses";
 import { getFilledValues, getStateData } from "../functions";
+import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
-};
-
-const styles = {
-    formGroup: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 15,
-        boxSizing: "border-box",
-    },
-    smallFormGroup: {
-        display: "inline-block",
-        width: "50%",
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 15,
-        boxSizing: "border-box",
-    },
-    mainFormLabel: {
-        display: "block",
-        fontWeight: 800,
-        color: "#000",
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    formLabel: {
-        display: "block",
-        color: "#000",
-        fontSize: 12,
-        marginBottom: 5,
-    },
-    formInput: {
-        width: '100%',
-        height: 25,
-        paddingLeft: 10,
-    },
-    formSelect: {
-        width: '100%',
-        height: 30,
-        paddingLeft: 10,
-        backgroundColor: "#fff",
-    },
-    formTextarea: {
-        width: '98%',
-        height: 180,
-        padding: 10,
-    },
-    formHelpText: {
-        marginBottom: 5,
-    },
 };
 
 const tableHeadersArray = [
@@ -206,4 +158,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EmergencyContacts));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(formStyles)(EmergencyContacts));

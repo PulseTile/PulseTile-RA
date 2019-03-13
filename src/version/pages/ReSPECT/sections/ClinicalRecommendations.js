@@ -21,44 +21,12 @@ import { getSectionStatus, getFilledValues, getStateData } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import Signature from "../fragments/Signature";
+import formStyles from "../fragments/formStyles";
 
 const FORM_FIELDS_NUMBER = 3;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
-};
-
-const styles = {
-    formGroup: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 15,
-        boxSizing: "border-box",
-    },
-    formLabel: {
-        display: "block",
-        fontWeight: 800,
-        color: "#000",
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    formInput: {
-        width: '100%',
-        height: 25,
-        paddingLeft: 10,
-    },
-    formTextarea: {
-        width: '98%',
-        height: 180,
-        padding: 10,
-    },
-    formHelpText: {
-        marginBottom: 5,
-    },
-    radioGroup: {
-        marginLeft: 25,
-        marginBottom: 25,
-    },
 };
 
 class ClinicalRecommendations extends Component {
@@ -195,4 +163,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ClinicalRecommendations));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(formStyles)(ClinicalRecommendations));

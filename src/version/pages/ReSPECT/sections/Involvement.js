@@ -19,47 +19,12 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import InsertedRadioButtonGroup from "../fragments/InsertedRadioButtonGroup";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
 import { getSectionStatus, getStateData, getFilledValues } from "../functions";
+import formStyles from "../fragments/formStyles";
 
 const FORM_FIELDS_NUMBER = 4;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
-};
-
-const styles = {
-    formGroup: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 15,
-        boxSizing: "border-box",
-    },
-    formLabel: {
-        display: "block",
-        fontWeight: 800,
-        color: "#000",
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    formInput: {
-        width: '100%',
-        height: 25,
-        paddingLeft: 10,
-    },
-    formControlLabel: {
-        marginBottom: 10,
-    },
-    formTextarea: {
-        width: '98%',
-        height: 180,
-        padding: 10,
-    },
-    formHelpText: {
-        marginBottom: 5,
-    },
-    radioGroup: {
-        marginLeft: 25,
-        marginBottom: 25,
-    },
 };
 
 class Involvement extends Component {
@@ -186,25 +151,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Involvement));
-
-
-{/*<FormLabel>The clinician(s) signing this plan is / are confirming that</FormLabel>*/}
-{/*<RadioButtonGroupInput*/}
-{/*source="involvementValue"*/}
-{/*label="Select A, B or C, OR complete section D below:"*/}
-{/*choices={mainChoices}*/}
-{/*onClick={e => this.handleChange(e)}*/}
-{/*fullWidth*/}
-{/*/>*/}
-
-{/*<div className={classes.titleBlock}>*/}
-{/*<TextInput*/}
-{/*label="D - if no other option has been selected, valid reasons must be stated here"*/}
-{/*rows="6"*/}
-{/*source="variantD"*/}
-{/*multiline*/}
-{/*fullWidth*/}
-{/*/>*/}
-{/*<FormHelperText>Document full explanation in the clinical record</FormHelperText>*/}
-{/*</div>*/}
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(formStyles)(Involvement));

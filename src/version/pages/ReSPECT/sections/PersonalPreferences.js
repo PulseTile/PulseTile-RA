@@ -16,41 +16,13 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import RangeLine from "../fragments/RangeLine";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
 import { getSectionStatus, getFilledValues, getStateData } from "../functions";
+import formStyles from "../fragments/formStyles";
 
 const FORM_FIELDS_NUMBER = 2;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
 };
-
-const styles = theme => ({
-    formGroup: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 15,
-        boxSizing: "border-box",
-    },
-    formLabel: {
-        display: "block",
-        fontWeight: 800,
-        color: "#000",
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    formInput: {
-        width: '100%',
-        height: 25,
-        paddingLeft: 10,
-    },
-    formTextarea: {
-        width: '98%',
-        height: 180,
-        padding: 10,
-    },
-    formHelpText: {
-        marginBottom: 5,
-    },
-});
 
 class PersonalPreferences extends Component {
 
@@ -146,4 +118,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PersonalPreferences));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(formStyles)(PersonalPreferences));

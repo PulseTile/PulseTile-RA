@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
@@ -17,6 +16,7 @@ import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
 import { getSectionStatus, getStateData, getFilledValues } from "../functions";
+import formStyles from "../fragments/formStyles";
 
 const FORM_FIELDS_NUMBER = 9;
 
@@ -24,40 +24,6 @@ const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
 };
-
-const styles = {
-    formGroup: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 15,
-        boxSizing: "border-box",
-    },
-    smallFormGroup: {
-        display: "inline-block",
-        width: "50%",
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 15,
-        boxSizing: "border-box",
-    },
-    formLabel: {
-        display: "block",
-        fontWeight: 800,
-        color: "#000",
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    formInput: {
-        width: '100%',
-        height: 25,
-        paddingLeft: 10,
-    },
-    formHelpText: {
-        marginBottom: 5,
-    },
-};
-
-
 
 class PersonalDetails extends Component {
 
@@ -231,5 +197,5 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PersonalDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(formStyles)(PersonalDetails));
 
