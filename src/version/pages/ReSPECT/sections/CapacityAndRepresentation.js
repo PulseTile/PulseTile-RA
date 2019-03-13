@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
@@ -67,7 +66,7 @@ class CapacityAndRepresentation extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <LocalForm  model="personalDetails" onSubmit={values => this.submitForm(values)}>
+                    <LocalForm  model="capacityAndRepresentation" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Does the person have sufficient capacity to participate in making the recommendations on this plan?</FormLabel>
                             <RadioGroup name="capacityFirst" className={classes.radioGroup} value={capacityFirst} onChange={e => this.handleChecking(e)}>
@@ -110,7 +109,7 @@ class CapacityAndRepresentation extends Component {
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="personalDetails.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                            <Control.text className={classes.formInput} model="capacityAndRepresentation.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
                         </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>

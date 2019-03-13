@@ -22,7 +22,7 @@ const RenderTrack = ({ classes, props, children, preferencesValue, min, max }) =
                     borderRadius: "4px",
                     background: getTrackBackground({
                         values: preferencesValue,
-                        colors: ["#000080", "#ccc"],
+                        colors: ["#0078C8", "#ccc"],
                         min: min,
                         max: max
                     }),
