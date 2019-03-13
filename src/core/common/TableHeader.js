@@ -28,7 +28,7 @@ const styles = theme => ({
 const TableHeader = ({ classes, resource, translate }) => {
     const title = translate('tableHeaders.' + resource +'.title');
     const description = translate('tableHeaders.' + resource +'.description');
-    if (!title) {
+    if (title === 'tableHeaders.' + resource +'.title') {
         return null;
     }
     return (
