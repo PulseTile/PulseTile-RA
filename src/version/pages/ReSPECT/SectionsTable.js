@@ -112,7 +112,8 @@ class SectionsTable extends Component {
         const { classes, sectionsInfo, toggleMode, versionsInfo, currentVersion, sectionForShow } = this.props;
         const { currentRow } = this.state;
         const breadcrumbsResource = [
-            { url: "/respect", title: "ReSPECT", isActive: false }
+            { url: null, title: "ReSPECT", isActive: false, onClickAction: toggleMode },
+            { url: null, title: 'New Version', isActive: false }
         ];
 
         let isVersionInfo = false;

@@ -84,12 +84,24 @@ class VersionsTable extends Component {
         })
     };
 
+    returnToVersions = () => {
+        this.setState({
+            currentVersion: null,
+        })
+    };
+
     render() {
         const { classes, versionsInfo, toggleMode } = this.props;
         const { currentVersion } = this.state;
-        const breadcrumbsResource = [
-            { url: "/respect", title: "ReSPECT Versions", isActive: false }
+        let breadcrumbsResource = [
+            { url: null, title: "ReSPECT", isActive: false }
         ];
+        if (currentVersion) {
+            breadcrumbsResource = [
+                { url: null, title: "ReSPECT", isActive: false, onClickAction: () => this.returnToVersions() },
+                { url: null, title: `Version ${currentVersion}`, isActive: false }
+            ];
+        }
         return (
             <React.Fragment>
                 <TableHeader resource="respect" />
