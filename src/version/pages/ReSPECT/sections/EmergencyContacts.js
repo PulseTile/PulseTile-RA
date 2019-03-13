@@ -15,6 +15,7 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE } from "../statuses";
+import { getFilledValues } from "../functions";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -98,7 +99,9 @@ class EmergencyContacts extends Component {
 
     state = {
         isMainPanel: true,
-        rowsArray: get(this.props, 'emergencyContacts.contactsArray', []),
+        rowsArray: this.props.isVersionInfo
+            ? get(this.props, 'sectionsInfo.emergencyContacts.contactsArray', [])
+            : get(this.props, 'emergencyContacts.contactsArray', []),
     };
 
     attachDispatch(dispatch) {
@@ -135,55 +138,55 @@ class EmergencyContacts extends Component {
     };
 
     render() {
-        const { classes, emergencyContacts, title, onRowClick } = this.props;
+        const { classes, sectionsInfo, emergencyContacts, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, rowsArray } = this.state;
-        const filledValues = Object.assign({}, defaultValues, emergencyContacts);
+        const filledValues = getFilledValues(sectionsInfo, emergencyContacts, 'emergencyContacts', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }
-                    <LocalForm
-                        model="emergencyContactsRow"
-                        onSubmit={values => this.addNewRow(values)}
-                        getDispatch={(dispatch) => this.attachDispatch(dispatch)}
-                    >
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.mainFormLabel}>Emergency contact</FormLabel>
-                            <FormLabel className={classes.formLabel}>Role</FormLabel>
-                            <Control.select className={classes.formSelect} model="emergencyContactsRow.role" required>
-                                <option value=''>(no selected)</option>
-                                { contactsArray.map((item, key) => {
-                                    return (
-                                        <option key={key} value={item.id}>{item.label}</option>
-                                    )
-                                })}
-                            </Control.select>
-                        </FormGroup>
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>Name</FormLabel>
-                            <Control.text className={classes.formInput} model="emergencyContactsRow.name" required />
-                        </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Telephone</FormLabel>
-                            <Control.text className={classes.formInput} model="emergencyContactsRow.phone" required />
-                        </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Other details</FormLabel>
-                            <Control.textarea className={classes.formTextarea} model="emergencyContactsRow.details" />
-                        </FormGroup>
-                        <AddNewButton />
-                    </LocalForm>
-
+                    { !isVersionInfo &&
+                        <LocalForm
+                            model="emergencyContactsRow"
+                            onSubmit={values => this.addNewRow(values)}
+                            getDispatch={(dispatch) => this.attachDispatch(dispatch)}
+                        >
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.mainFormLabel}>Emergency contact</FormLabel>
+                                <FormLabel className={classes.formLabel}>Role</FormLabel>
+                                <Control.select className={classes.formSelect} model="emergencyContactsRow.role" required>
+                                    <option value=''>(no selected)</option>
+                                    { contactsArray.map((item, key) => {
+                                        return (
+                                            <option key={key} value={item.id}>{item.label}</option>
+                                        )
+                                    })}
+                                </Control.select>
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>Name</FormLabel>
+                                <Control.text className={classes.formInput} model="emergencyContactsRow.name" required/>
+                            </FormGroup>
+                            <FormGroup className={classes.formGroup}>
+                                <FormLabel className={classes.formLabel}>Telephone</FormLabel>
+                                <Control.text className={classes.formInput} model="emergencyContactsRow.phone" required/>
+                            </FormGroup>
+                            <FormGroup className={classes.formGroup}>
+                                <FormLabel className={classes.formLabel}>Other details</FormLabel>
+                                <Control.textarea className={classes.formTextarea} model="emergencyContactsRow.details"/>
+                            </FormGroup>
+                            <AddNewButton />
+                        </LocalForm>
+                    }
                     <LocalForm  model="emergencyContacts" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.mainFormLabel}>Date Completed</FormLabel>
                             <Control.text className={classes.formInput} model="emergencyContacts.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
                         </FormGroup>
-                        <SectionToolbar onRowClick={onRowClick} />
+                        { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
-
                 </MainFormBlock>
                 <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={emergencyContacts} />
             </React.Fragment>

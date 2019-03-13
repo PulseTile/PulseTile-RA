@@ -86,9 +86,6 @@ class EmergencyView extends Component {
                 completedSectionsCount++;
             }
         });
-
-        console.log('completedSectionsCount',completedSectionsCount );
-
         let result = STATUS_INCOMPLETE;
         if (completedSectionsCount === TOTAL_ROWS_NUMBER) {
             result = STATUS_COMPLETED;
@@ -100,6 +97,11 @@ class EmergencyView extends Component {
 
     submitForm = data => {
         const { sectionsInfo, versionsInfo, toggleMode, createNewVersion } = this.props;
+        sectionsInfo.emergencyView = {
+            status: STATUS_COMPLETED,
+            dateCompleted: moment().format('DD-MMM-YYYY HH:mm'),
+            author: getAuthorName(),
+        };
         const formData = {
             sections: sectionsInfo,
             status: this.getVersionStatus(sectionsInfo),
@@ -112,7 +114,7 @@ class EmergencyView extends Component {
     };
 
     render() {
-        const { classes, personalDetails, title, onRowClick, sectionsInfo } = this.props;
+        const { classes, personalDetails, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel } = this.state;
         const filledValues = Object.assign({}, defaultValues, personalDetails);
         return (
@@ -128,7 +130,7 @@ class EmergencyView extends Component {
                             <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
                             <Control.text className={classes.formInput} model="personalDetails.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
                         </FormGroup>
-                        <SectionToolbar onRowClick={onRowClick} />
+                        { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
                 <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalDetails} />

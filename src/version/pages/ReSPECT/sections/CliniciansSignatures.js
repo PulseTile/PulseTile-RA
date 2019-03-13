@@ -17,7 +17,8 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import Signature from "../fragments/Signature";
-import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE } from "../statuses";
+import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED } from "../statuses";
+import { getFilledValues } from "../functions";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -84,7 +85,9 @@ class CliniciansSignatures extends Component {
     state = {
         isMainPanel: true,
         dateAndTime: null,
-        rowsArray: get(this.props, 'clinicalSignatures.signaturesArray', []),
+        rowsArray: this.props.isVersionInfo
+            ? get(this.props, 'sectionsInfo.clinicalSignatures.signaturesArray', [])
+            : get(this.props, 'clinicalSignatures.signaturesArray', []),
     };
 
     attachDispatch(dispatch) {
@@ -137,63 +140,80 @@ class CliniciansSignatures extends Component {
     };
 
     render() {
-        const { classes, clinicalSignatures, title, onRowClick } = this.props;
+        const { classes, sectionsInfo, clinicalSignatures, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, rowsArray, dateAndTime } = this.state;
-        const filledValues = Object.assign({}, defaultValues, clinicalSignatures);
+        const filledValues = getFilledValues(sectionsInfo, clinicalSignatures, 'clinicalSignatures', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }
-                    <LocalForm
-                        model="clinicalSignaturesRow"
-                        onSubmit={values => this.addNewRow(values)}
-                        getDispatch={(dispatch) => this.attachDispatch(dispatch)}
-                    >
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.mainFormLabel}>Clinician Signature</FormLabel>
-                        </FormGroup>
-
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>Designation (grade / speciality)</FormLabel>
-                            <Control.text className={classes.formInput} model="clinicalSignaturesRow.designation" required />
-                        </FormGroup>
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>Clinicial name</FormLabel>
-                            <Control.text className={classes.formInput} model="clinicalSignaturesRow.clinicialName" required />
-                        </FormGroup>
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>GMC / NMC / HCPC number</FormLabel>
-                            <Control.text className={classes.formInput} model="clinicalSignaturesRow.gmcNumber" required />
-                        </FormGroup>
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>Date & Time</FormLabel>
-                            <DatePicker
-                                className={classes.formInput}
-                                selected={dateAndTime}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                timeCaption="time"
-                                dateFormat="M/d/yyyy HH:mm"
-                                onChange={value => this.changeDateAndTime(value)}
-                            />
-                        </FormGroup>
-                        <Signature name="signature" onEnd={this.addSignature} isSubTitle={true} />
-                        <FormGroup className={classes.smallFormGroup}>
-                            <Control.checkbox model="clinicalSignaturesRow.isSrc" />
-                            <span>Senior responsible clinician</span>
-                        </FormGroup>
-                        <AddNewButton />
-                    </LocalForm>
-
-                    <LocalForm  model="emergencyContacts" onSubmit={values => this.submitForm(values)}>
+                    { !isVersionInfo &&
+                        <LocalForm
+                            model="clinicalSignaturesRow"
+                            onSubmit={values => this.addNewRow(values)}
+                            getDispatch={(dispatch) => this.attachDispatch(dispatch)}
+                        >
+                            <FormGroup className={classes.formGroup}>
+                                <FormLabel className={classes.mainFormLabel}>Clinician Signature</FormLabel>
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>Designation (grade / speciality)</FormLabel>
+                                <Control.text
+                                    className={classes.formInput}
+                                    model="clinicalSignaturesRow.designation"
+                                    required
+                                />
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>Clinicial name</FormLabel>
+                                <Control.text
+                                    className={classes.formInput}
+                                    model="clinicalSignaturesRow.clinicialName"
+                                    required
+                                />
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>GMC / NMC / HCPC number</FormLabel>
+                                <Control.text
+                                    className={classes.formInput}
+                                    model="clinicalSignaturesRow.gmcNumber"
+                                    required
+                                />
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>Date & Time</FormLabel>
+                                <DatePicker
+                                    className={classes.formInput}
+                                    selected={dateAndTime}
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    timeIntervals={15}
+                                    timeCaption="time"
+                                    dateFormat="M/d/yyyy HH:mm"
+                                    onChange={value => this.changeDateAndTime(value)}
+                                />
+                            </FormGroup>
+                            <Signature name="signature" onEnd={this.addSignature} isSubTitle={true}/>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <Control.checkbox model="clinicalSignaturesRow.isSrc" disabled={isVersionInfo}/>
+                                <span>Senior responsible clinician</span>
+                            </FormGroup>
+                            <AddNewButton />
+                        </LocalForm>
+                    }
+                    <LocalForm  model="clinicalSignatures" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.mainFormLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="clinicalSignatures.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                            <Control.text
+                                className={classes.formInput}
+                                model="clinicalSignatures.dateCompleted"
+                                defaultValue={filledValues.dateCompleted}
+                                disabled
+                            />
                         </FormGroup>
-                        <SectionToolbar onRowClick={onRowClick} />
+                        { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
 
                 </MainFormBlock>

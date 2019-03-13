@@ -200,5 +200,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ClinicalRecommendations));
-
-// control={<Control.radio component={Radio} model="clinicalRecommendations.cprRecommendations" />}

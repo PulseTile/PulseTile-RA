@@ -18,6 +18,7 @@ import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import Signature from "../fragments/Signature";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE } from "../statuses";
+import { getFilledValues } from "../functions";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -84,7 +85,9 @@ class Confirmation extends Component {
     state = {
         isMainPanel: true,
         reviewDate: null,
-        rowsArray: get(this.props, 'confirmationRow.confirmationsArray', []),
+        rowsArray: this.props.isVersionInfo
+            ? get(this.props, 'sectionsInfo.confirmation.confirmationsArray', [])
+            : get(this.props, 'confirmation.confirmationsArray', []),
     };
 
     attachDispatch(dispatch) {
@@ -137,51 +140,52 @@ class Confirmation extends Component {
     };
 
     render() {
-        const { classes, confirmation, title, onRowClick } = this.props;
+        const { classes, sectionsInfo, confirmation, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, rowsArray, reviewDate } = this.state;
-        const filledValues = Object.assign({}, defaultValues, confirmation);
+        const filledValues = getFilledValues(sectionsInfo, confirmation, 'confirmation', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }
-                    <LocalForm model="confirmationRow" onSubmit={values => this.addNewRow(values)} getDispatch={(dispatch) => this.attachDispatch(dispatch)}>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.mainFormLabel}>Clinician Signature</FormLabel>
-                        </FormGroup>
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>Review date</FormLabel>
-                            <DatePicker
-                                className={classes.formInput}
-                                selected={reviewDate}
-                                onChange={value => this.changeReviewDate(value)}
-                            />
-                        </FormGroup>
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>Designation (grade / speciality)</FormLabel>
-                            <Control.text className={classes.formInput} model="confirmationRow.designation" required />
-                        </FormGroup>
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>Clinicial name</FormLabel>
-                            <Control.text className={classes.formInput} model="confirmationRow.clinicialName" required />
-                        </FormGroup>
-                        <FormGroup className={classes.smallFormGroup}>
-                            <FormLabel className={classes.formLabel}>GMC / NMC / HCPC number</FormLabel>
-                            <Control.text className={classes.formInput} model="confirmationRow.gmcNumber" required />
-                        </FormGroup>
-                        <Signature name="signature" onEnd={this.addSignature} isSubTitle={true} />
-                        <AddNewButton />
-                    </LocalForm>
-
+                    { !isVersionInfo &&
+                        <LocalForm model="confirmationRow" onSubmit={values => this.addNewRow(values)}
+                                   getDispatch={(dispatch) => this.attachDispatch(dispatch)}>
+                            <FormGroup className={classes.formGroup}>
+                                <FormLabel className={classes.mainFormLabel}>Clinician Signature</FormLabel>
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>Review date</FormLabel>
+                                <DatePicker
+                                    className={classes.formInput}
+                                    selected={reviewDate}
+                                    onChange={value => this.changeReviewDate(value)}
+                                />
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>Designation (grade / speciality)</FormLabel>
+                                <Control.text className={classes.formInput} model="confirmationRow.designation" required/>
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>Clinicial name</FormLabel>
+                                <Control.text className={classes.formInput} model="confirmationRow.clinicialName" required/>
+                            </FormGroup>
+                            <FormGroup className={classes.smallFormGroup}>
+                                <FormLabel className={classes.formLabel}>GMC / NMC / HCPC number</FormLabel>
+                                <Control.text className={classes.formInput} model="confirmationRow.gmcNumber" required/>
+                            </FormGroup>
+                            <Signature name="signature" onEnd={this.addSignature} isSubTitle={true}/>
+                            <AddNewButton />
+                        </LocalForm>
+                    }
                     <LocalForm model="confirmation" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.mainFormLabel}>Date Completed</FormLabel>
                             <Control.text className={classes.formInput} model="confirmation.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
                         </FormGroup>
-                        <SectionToolbar onRowClick={onRowClick} />
+                        { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
-
                 </MainFormBlock>
                 <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={confirmation} />
             </React.Fragment>
