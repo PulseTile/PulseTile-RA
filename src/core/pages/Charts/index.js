@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { GET_LIST } from 'react-admin';
 import moment from "moment";
 import get from "lodash/get";
 import { connect } from 'react-redux';
@@ -13,9 +14,7 @@ import {
 } from "recharts";
 
 import { withStyles } from '@material-ui/core/styles';
-
-import { patientStatisticAction } from "../../actions/patientsStatisticAction";
-import dummyPatients from "../PatientsList/dummyPatients";
+import customDataProvider from "../../dataProviders/dataProvider";
 
 const styles = {
     chartsContainer: {
@@ -31,7 +30,7 @@ const styles = {
 class Charts extends Component {
 
     componentDidMount() {
-        this.props.getPatientsStatistic();
+        customDataProvider(GET_LIST, 'patients', {});
     }
 
     /**
@@ -138,8 +137,8 @@ class Charts extends Component {
 
     render() {
         const { classes, patients, history } = this.props;
-const patientsList = (patients && patients.length > 0) ? patients : dummyPatients;
-        const DepartmentPercentage = this.getDepartmentPercentage(patientsList);
+
+        const DepartmentPercentage = this.getDepartmentPercentage(patients);
         const dataGreen = [
             { Text: "Community Care", sort: "CommunityCare", RespondentPercentage: get(DepartmentPercentage, 'CommunityCare', 0) },
             { Text: "Hospital", sort: "Hospital", RespondentPercentage: get(DepartmentPercentage, 'Hospital', 0) },
@@ -148,7 +147,7 @@ const patientsList = (patients && patients.length > 0) ? patients : dummyPatient
             { Text: "Primary Care", sort: "PrimaryCare", RespondentPercentage: get(DepartmentPercentage, 'PrimaryCare', 0) }
         ];
 
-        const AgePercentage = this.getAgePercentage(patientsList);
+        const AgePercentage = this.getAgePercentage(patients);
         const dataViolet = [
             { Text: "19-30", sort: "first", RespondentPercentage: get(AgePercentage, 'first', 0) },
             { Text: "31-60", sort: "second", RespondentPercentage: get(AgePercentage, 'second', 0) },
@@ -210,15 +209,7 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getPatientsStatistic() {
-            dispatch(patientStatisticAction.request());
-        }
-    }
-};
-
 export default compose(
     withStyles(styles),
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, null)
 )(Charts);

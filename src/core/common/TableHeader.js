@@ -1,9 +1,8 @@
 import React from "react";
 import get from "lodash/get";
+import { translate } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
-
-import tableHeaders from "../config/tableHeaders";
 
 const styles = theme => ({
     tableHeaderBlock: {
@@ -26,18 +25,18 @@ const styles = theme => ({
  * @param {shape} classes
  * @param {string} resource
  */
-const TableHeader = ({ classes, resource }) => {
-    const title = get(tableHeaders, [resource, 'title'], null);
-    const description = get(tableHeaders, [resource, 'description'], null);
+const TableHeader = ({ classes, resource, translate }) => {
+    const title = translate('tableHeaders.' + resource +'.title');
+    const description = translate('tableHeaders.' + resource +'.description');
     if (!title) {
         return null;
     }
     return (
         <div className={classes.tableHeaderBlock} >
-            <h1 className={classes.title}>{get(tableHeaders, [resource, 'title'], null)}</h1>
-            <p>{get(tableHeaders, [resource, 'description'], null)}</p>
+            <h1 className={classes.title}>{title}</h1>
+            <p>{description}</p>
         </div>
     );
 };
 
-export default withStyles(styles)(TableHeader);
+export default withStyles(styles)(translate(TableHeader));

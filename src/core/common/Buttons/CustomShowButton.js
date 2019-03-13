@@ -12,7 +12,7 @@ const styles = {
 };
 
 /**
- * This component returns Save button with custom styles
+ * This component returns Show button with custom styles
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
