@@ -51,6 +51,7 @@ const styles = theme => ({
         marginBottom: 0,
         color: "#fff",
         fontSize: 20,
+        fontWeight: 800,
     },
     list: {
         padding: 0,
