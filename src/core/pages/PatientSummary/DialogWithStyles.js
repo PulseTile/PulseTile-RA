@@ -23,6 +23,7 @@ const styles = {
     },
     dialogItem: {
         minHeight: 100,
+        paddingBottom: 10,
     },
     dialogItemColumn: {
         display: "flex",
@@ -31,7 +32,15 @@ const styles = {
     dialogLabel: {
         display: "inline-block",
         minWidth: 200,
-    }
+        marginTop: 10,
+    },
+    checkbox: {
+        display: "inline-block",
+        height: 24,
+    },
+    checkboxLabel: {
+        display: "inline-block",
+    },
 };
 
 /**
@@ -107,8 +116,13 @@ class DialogContent extends Component {
                             synopsisData.map((item, key) => {
                                 return (
                                     <div key={key} className={classes.dialogLabel}>
-                                        <Checkbox checked={this.isHeadingChecked(item.list)} color="primary" onChange={() => this.toggleVisibility(item.list)} />
-                                        <span>{item.title}</span>
+                                        <Checkbox
+                                            className={classes.checkbox}
+                                            checked={this.isHeadingChecked(item.list)}
+                                            color="primary"
+                                            onChange={() => this.toggleVisibility(item.list)}
+                                        />
+                                        <Typography className={classes.checkboxLabel}>{item.title}</Typography>
                                     </div>
                                 );
                             })
@@ -122,8 +136,13 @@ class DialogContent extends Component {
                         showModesArray.map((item, key) => {
                             return (
                                 <label key={key} className={classes.dialogLabel}>
-                                    <Radio checked={selectedMode === item.type} color="primary" onChange={() => this.selectShowMode(item.type)} />
-                                    <span>{item.label}</span>
+                                    <Radio
+                                        className={classes.checkbox}
+                                        checked={selectedMode === item.type}
+                                        color="primary"
+                                        onChange={() => this.selectShowMode(item.type)}
+                                    />
+                                    <Typography className={classes.checkboxLabel}>{item.label}</Typography>
                                 </label>
                             );
                         })

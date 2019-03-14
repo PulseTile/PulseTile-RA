@@ -68,15 +68,8 @@ const listStyles = theme => ({
     },
     tableList: {
         '& thead': {
-            backgroundColor: "#e5e5e5",
-            '& tr th span span': {
-                color: "#000",
-            },
             '& tr th': {
                 paddingLeft: 10,
-            },
-            '& tr': {
-                height: 48,
             },
         },
         '& tbody tr:hover': {

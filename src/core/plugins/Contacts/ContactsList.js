@@ -22,10 +22,10 @@ const ContactsList = props => (
       title="Contacts"
       {...props}
     >
-        <TextField source="name" />
-        <TextField source="relationship" />
-        <TextField source="nextOfKin" />
-        <TextField source="source" />
+        <TextField source="name" label="Name" />
+        <TextField source="relationship" label="Relationship" />
+        <TextField source="nextOfKin" label="Next Of Kin" />
+        <TextField source="source" label="Source" />
     </ListTemplate>
 );
 
