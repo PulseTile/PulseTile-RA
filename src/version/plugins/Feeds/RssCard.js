@@ -15,28 +15,34 @@ const styles = theme => ({
         minHeight: 302,
     },
     media: {
-        backgroundColor: theme.patientSummaryPanel.media.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
     },
     container: {
-        background: theme.patientSummaryPanel.container.background,
+        background: theme.patientSummaryPanel.topBlock.background,
         backgroundSize: "cover",
     },
     topBlock: {
         display: "flex",
         flexDirection: "column",
         height: 100,
-        backgroundColor: theme.patientSummaryPanel.topBlock.backgroundColor,
+        backgroundColor: theme.palette.mainColor,
         background: theme.patientSummaryPanel.topBlock.background,
         backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",
         color: "#fff",
+        '&:hover': {
+            cursor: "pointer",
+        }
     },
     icon: {
         marginBottom: 10,
     },
     title: {
         marginBottom: 0,
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: 800,
     },
     list: {
         padding: 0,
@@ -64,7 +70,7 @@ const RssCard = props => {
                 <Card id={sourceId} className={classes.card} onClick={() => window.open(link, "_blank")}>
                     <div className={classes.topBlock}>
                         <RssIcon />
-                        <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
+                        <Typography gutterBottom className={classes.title} >
                             {title}
                         </Typography>
                     </div>

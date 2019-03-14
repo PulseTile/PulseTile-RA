@@ -43,6 +43,9 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         color: "#fff",
+        '&:hover': {
+            cursor: "pointer",
+        }
     },
     icon: {
         marginBottom: 10,
