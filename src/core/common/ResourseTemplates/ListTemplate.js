@@ -144,14 +144,16 @@ class ListTemplate extends Component {
     };
 
     /**
-     * This function check is current page is list page with table (it also used at create and show pages)
+     * This function check is current page is list page with table (it also used at create and show pages).
      * Settings of <Grid /> component of <ListTemplate /> depends on result of this function.
+     *
+     * Second part of condition - for the case when list page is a homepage
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
      * @return {boolean}
      */
     isListPage = () => {
-        return (this.props.location.pathname === `/${this.props.resourceUrl}`);
+        return (this.props.location.pathname === `/${this.props.resourceUrl}`) || (this.props.location.pathname === '/');
     };
 
     /**
@@ -168,7 +170,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, children, classes, history } = this.props;
+        const { create, resourceUrl, title, children, classes, history, rowClickAction } = this.props;
         const { isFilterOpened, key, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -204,6 +206,7 @@ class ListTemplate extends Component {
                             }
                         </React.Fragment>
                         <List
+                            resource={resourceUrl}
                             key={key}
                             filter={{ filterText: filterText }}
                             title={title}
@@ -213,7 +216,7 @@ class ListTemplate extends Component {
                             pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
                             {...this.props}
                         >
-                            <Datagrid className={classes.tableList} rowClick="edit">
+                            <Datagrid className={classes.tableList} rowClick={rowClickAction ? rowClickAction : "edit"}>
                                 {children}
                             </Datagrid>
                         </List>
