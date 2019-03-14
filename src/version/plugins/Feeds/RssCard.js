@@ -18,7 +18,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.mainColor,
     },
     container: {
-        background: theme.palette.mainColord,
+        background: theme.patientSummaryPanel.topBlock.background,
         backgroundSize: "cover",
     },
     topBlock: {
@@ -31,12 +31,18 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         color: "#fff",
+        '&:hover': {
+            cursor: "pointer",
+        }
     },
     icon: {
         marginBottom: 10,
     },
     title: {
         marginBottom: 0,
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: 800,
     },
     list: {
         padding: 0,
@@ -64,7 +70,7 @@ const RssCard = props => {
                 <Card id={sourceId} className={classes.card} onClick={() => window.open(link, "_blank")}>
                     <div className={classes.topBlock}>
                         <RssIcon />
-                        <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
+                        <Typography gutterBottom className={classes.title} >
                             {title}
                         </Typography>
                     </div>

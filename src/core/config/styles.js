@@ -54,6 +54,13 @@ export function getCurrentTheme(isContrastMode) {
     const palette = getCurrentPalette(isContrastMode);
     return createMuiTheme({
         palette: palette,
+        typography: {
+            fontFamily: [
+                '"HK Grotesk"',
+                'Arial',
+                'sans-serif',
+            ].join(','),
+        },
         tableHeader: {
             tableHeaderBlock: {
                 background: getCardBackground(isContrastMode, palette.mainColor),
@@ -72,7 +79,39 @@ export function getCurrentTheme(isContrastMode) {
                 root: {
                     border: "1px solid #e5e5e5"
                 }
-            }
+            },
+            MuiPaper: {
+                elevation1: {
+                    boxShadow: "none",
+                    backgroundColor: "#fafafa",
+                }
+            },
+            MuiTable: {
+                root: {
+                    backgroundColor: "#fff",
+                    border: "1px solid #e5e5e5",
+                }
+            },
+            MuiTableHead: {
+                root: {
+                    backgroundColor: "#e5e5e5",
+                    color: "#000",
+                }
+            },
+            MuiTableRow: {
+                head: {
+                    height: 48,
+                }
+            },
+            MuiTableCell: {
+                head: {
+                    color: "#000",
+                    fontWeight: 800,
+                },
+                paddingNone: {
+                    paddingLeft: 10,
+                }
+            },
         }
     });
 }

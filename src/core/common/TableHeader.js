@@ -1,8 +1,8 @@
 import React from "react";
-import get from "lodash/get";
 import { translate } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     tableHeaderBlock: {
@@ -15,6 +15,13 @@ const styles = theme => ({
     },
     title: {
         marginTop: 0,
+        color: "#fff",
+        fontSize: 24,
+        fontWeight: 800,
+    },
+    description: {
+        marginTop: 10,
+        color: "#fff",
     }
 });
 
@@ -33,8 +40,8 @@ const TableHeader = ({ classes, resource, translate }) => {
     }
     return (
         <div className={classes.tableHeaderBlock} >
-            <h1 className={classes.title}>{title}</h1>
-            <p>{description}</p>
+            <Typography className={classes.title}>{title}</Typography>
+            <Typography className={classes.description}>{description}</Typography>
         </div>
     );
 };

@@ -22,9 +22,9 @@ const AllergiesList = props => (
       title="Allergies"
       {...props}
     >
-        <TextField source="cause" />
-        <TextField source="reaction" />
-        <TextField source="source" />
+        <TextField source="cause" label="Cause" />
+        <TextField source="reaction" label="Reaction / Description" />
+        <TextField source="source" label="Source" />
     </ListTemplate>
 );
 
