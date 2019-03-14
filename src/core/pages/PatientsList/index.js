@@ -41,7 +41,7 @@ class PatientsList extends Component {
             >
                 <TextField source="name" label="Name" />
                 <TextField source="address" label="Address" />
-                <DateField source="dateOfBirth" label="Born" />
+                <DateField source="dateOfBirth" label="Born (age)" />
                 <TextField source="nhsNumber" label="CHI No." />
                 <CustomShowButton {...this.props} />
             </ListTemplate>
