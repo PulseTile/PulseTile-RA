@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { GET_LIST } from 'react-admin';
 import moment from "moment";
 import get from "lodash/get";
-import { connect } from 'react-redux';
-import compose from 'recompose/compose';
 import {
     BarChart,
     XAxis,
@@ -15,7 +13,6 @@ import {
 
 import { withStyles } from '@material-ui/core/styles';
 import customDataProvider from "../../dataProviders/dataProvider";
-import dummyPatients from "../../pages/PatientsList/dummyPatients";
 
 const styles = {
     chartsContainer: {
@@ -29,10 +26,6 @@ const styles = {
 };
 
 class Charts extends Component {
-
-    componentDidMount() {
-        customDataProvider(GET_LIST, 'patients', {});
-    }
 
     /**
      * This function calculates percentage of patients by department
@@ -137,9 +130,12 @@ class Charts extends Component {
     }
 
     render() {
-        const { classes, patients, history } = this.props;
+        const { classes, history } = this.props;
 
-        const DepartmentPercentage = this.getDepartmentPercentage(dummyPatients);
+        const patientsInfo = customDataProvider(GET_LIST, 'patients', {});
+        const patientsData = get(patientsInfo, 'data', []);
+
+        const DepartmentPercentage = this.getDepartmentPercentage(patientsData);
         const dataGreen = [
             { Text: "Community Care", sort: "CommunityCare", RespondentPercentage: get(DepartmentPercentage, 'CommunityCare', 0) },
             { Text: "Hospital", sort: "Hospital", RespondentPercentage: get(DepartmentPercentage, 'Hospital', 0) },
@@ -148,7 +144,7 @@ class Charts extends Component {
             { Text: "Primary Care", sort: "PrimaryCare", RespondentPercentage: get(DepartmentPercentage, 'PrimaryCare', 0) }
         ];
 
-        const AgePercentage = this.getAgePercentage(dummyPatients);
+        const AgePercentage = this.getAgePercentage(patientsData);
         const dataViolet = [
             { Text: "19-30", sort: "first", RespondentPercentage: get(AgePercentage, 'first', 0) },
             { Text: "31-60", sort: "second", RespondentPercentage: get(AgePercentage, 'second', 0) },
@@ -204,13 +200,4 @@ class Charts extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        patients: get(state, "custom.patientsStatistic.data", []),
-    };
-};
-
-export default compose(
-    withStyles(styles),
-    connect(mapStateToProps, null)
-)(Charts);
+export default withStyles(styles)(Charts);
