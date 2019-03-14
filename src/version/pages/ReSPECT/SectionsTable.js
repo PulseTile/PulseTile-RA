@@ -21,7 +21,7 @@ import { emergencyContactsAction } from "../../actions/ReSPECT/emergencyContacts
 import { versionsAction } from "../../actions/ReSPECT/versionsAction";
 
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
-import TableHeader from "../../../core/common/TableHeader";
+import RespectPageHeader from "./fragments/RespectPageHeader";
 import TableHeadBlock from "./fragments/TableHeadBlock";
 import TableBodyBlock from "./fragments/TableBodyBlock";
 import CurrentSectionBlock from "./fragments/CurrentSectionBlock";
@@ -134,7 +134,7 @@ class SectionsTable extends Component {
 
         return (
             <React.Fragment>
-                <TableHeader resource="respect" />
+                <RespectPageHeader />
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <Grid container spacing={16} className={classes.mainBlock}>
                     <Grid className={classes.list} item xs={12} sm={currentRow ? 6 : 12}>

@@ -6,7 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
 
-import helmLogo from "../../../images/scotland-logo.jpg";
+import helmLogo from "../../../images/logo-big.png";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
 import ContrastMode from "../../../features/ContrastMode";
