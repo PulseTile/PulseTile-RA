@@ -8,7 +8,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import helmLogo from "../../../images/logo-big.png";
 import nhsLogo from "../../../images/nhs.png";
-import UserTour from "../../../features/UserTour";
 import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
 
@@ -120,7 +119,6 @@ const TopPart = ({ classes, logout, location }) => {
                 image={nhsLogo}
                 title="Pulse Tile"
             />
-            <UserTour classes={classes} location={location} />
             <ContrastMode classes={classes} />
             <UserPanelButton classes={classes} />
         </Toolbar>

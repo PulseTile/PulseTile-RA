@@ -1,5 +1,4 @@
 import ThemeTopbar from "../common/Topbar";
-import ThemeFooter from "../common/Footer";
 import PatientsList from "../../core/pages/PatientsList";
 
 /**
@@ -17,8 +16,8 @@ export const resourceOrder = [
 
 export const themeCommonElements = {
     topbar: ThemeTopbar,
-    footer: ThemeFooter,
     homePage: PatientsList,
+    isFooterAbsent: false,
 };
 
 export const themeImages = {};
