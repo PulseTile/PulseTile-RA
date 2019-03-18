@@ -170,7 +170,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, children, classes, history, rowClickAction } = this.props;
+        const { create, resourceUrl, title, children, classes, history } = this.props;
         const { isFilterOpened, key, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -216,7 +216,7 @@ class ListTemplate extends Component {
                             pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
                             {...this.props}
                         >
-                            <Datagrid className={classes.tableList} rowClick={rowClickAction ? rowClickAction : "edit"}>
+                            <Datagrid className={classes.tableList} rowClick="edit">
                                 {children}
                             </Datagrid>
                         </List>
