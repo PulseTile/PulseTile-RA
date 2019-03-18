@@ -62,6 +62,7 @@ export function getCurrentTheme(isContrastMode) {
                 'Arial',
                 'sans-serif',
             ].join(','),
+            fontSize: 14,
         },
         tableHeader: {
             tableHeaderBlock: {

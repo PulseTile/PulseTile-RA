@@ -9,6 +9,9 @@ import Divider from '@material-ui/core/Divider';
 import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import Typography from "@material-ui/core/Typography";
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { showModeAction } from "../../actions/showModeAction";
 import { showHeadingsAction } from "../../actions/showHeadingsAction";
@@ -19,7 +22,9 @@ const styles = {
     dialogBlock: {
         minHeight: 300,
         minWidth: 500,
-        margin: 20,
+        marginTop: 5,
+        marginLeft: 20,
+        marginBottom: 20,
     },
     dialogItem: {
         minHeight: 100,
@@ -41,6 +46,18 @@ const styles = {
     checkboxLabel: {
         display: "inline-block",
     },
+    sectionTitle: {
+        marginTop: 10,
+    },
+    topPanel: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    closeIcon: {
+        float: "right",
+        height: 25,
+    }
 };
 
 /**
@@ -109,7 +126,12 @@ class DialogContent extends Component {
         return (
             <Dialog onBackdropClick={() => onClose()} {...rest}>
                 <div className={classes.dialogBlock} >
-                    <Typography>SHOW</Typography>
+                    <Tooltip title="Settings">
+                        <IconButton className={classes.closeIcon} color="inherit" onClick={() => onClose()}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Typography className={classes.sectionTitle}>SHOW</Typography>
                     <Divider />
                     <div className={classes.dialogItem}>
                         {
