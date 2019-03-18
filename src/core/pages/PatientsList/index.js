@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { TextField, DateField, ShowButton } from "react-admin";
 
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
-import CustomShowButton from "../../common/Buttons/CustomShowButton";
+import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
@@ -22,7 +22,8 @@ class PatientsList extends Component {
      * @author Bogdan Shcherban <bsc@piogroup.net>
      * @param {number} userId
      */
-    redirectToSummary = userId => {
+    redirectToSummary = (e, userId) => {
+        e.stopPropagation();
         localStorage.setItem('userId', userId);
         this.props.history.push('/summary');
     };
@@ -36,14 +37,13 @@ class PatientsList extends Component {
                 show={PatientShow}
                 resourceUrl="patients"
                 title="Patients List"
-                rowClickAction={userId => this.redirectToSummary(userId)}
                 {...this.props}
             >
                 <TextField source="name" label="Name" />
                 <TextField source="address" label="Address" />
                 <DateField source="dateOfBirth" label="Born (age)" />
                 <TextField source="nhsNumber" label="CHI No." />
-                <CustomShowButton {...this.props} />
+                <ViewButton viewAction={this.redirectToSummary} />
             </ListTemplate>
         )
     }
