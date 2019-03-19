@@ -2,7 +2,7 @@ import ThemeTopbar from "../common/Topbar";
 import PatientsList from "../../core/pages/PatientsList";
 
 export const themeShortMenu = [
-    { url: '/', label: 'Patients' },
+    { url: '/patients', label: 'Patients' },
 ];
 
 export const themeFullMenu = [
