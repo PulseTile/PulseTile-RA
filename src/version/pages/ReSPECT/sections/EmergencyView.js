@@ -27,41 +27,11 @@ import { getAuthorName } from "../functions";
 import sections from "../sections";
 import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER } from "../statuses";
 import formStyles from "../fragments/formStyles";
+import cprVariants from "../fragments/cprVariants";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
 };
-
-const styles = theme => ({
-    titleBlock: {
-        paddingLeft: 25,
-    },
-    secondTitle: {
-        fontSize: 20,
-    },
-    sectionLink: {
-        color: theme.palette.mainColor,
-        fontWeight: 800,
-    },
-    formGroup: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 15,
-        boxSizing: "border-box",
-    },
-    formLabel: {
-        display: "block",
-        fontWeight: 800,
-        color: "#000",
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    formInput: {
-        width: '100%',
-        height: 25,
-        paddingLeft: 10,
-    },
-});
 
 class EmergencyView extends Component {
 
@@ -96,6 +66,20 @@ class EmergencyView extends Component {
         return result;
     };
 
+    getCprLabel = () => {
+        const { clinicalRecommendations, versionsInfo, isVersionInfo } = this.props;
+        const cprValue = isVersionInfo
+            ? get(versionsInfo, 'clinicalRecommendations.cprValue', null)
+            : get(clinicalRecommendations, 'cprValue', null);
+        let result = null;
+        cprVariants.forEach(item => {
+            if (item.id === cprValue) {
+                result = item.mainTitle;
+            }
+        });
+        return result;
+    };
+
     submitForm = data => {
         const { sectionsInfo, versionsInfo, toggleMode, createNewVersion } = this.props;
         sectionsInfo.emergencyView = {
@@ -123,7 +107,7 @@ class EmergencyView extends Component {
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     <div className={classes.titleBlock}>
                         <h1>Emergency (CPR) view</h1>
-                        <p className={classes.secondTitle}>CPR attempts recommended</p>
+                        <p className={classes.secondTitle}>{this.getCprLabel()}</p>
                         <p>For more information, see <a className={classes.sectionLink} onClick={e => this.redirectToSection(e)}>Section 4</a> for the latest clinical recommendations</p>
                     </div>
                     <LocalForm onSubmit={values => this.submitForm(values)} model="personalDetails">
@@ -142,6 +126,7 @@ class EmergencyView extends Component {
 
 const mapStateToProps = state => {
     return {
+        clinicalRecommendations: state.custom.clinicalRecommendations.data,
         emergencyView: state.custom.emergencyView.data,
         versionsInfo: state.custom.versionsInfo.data,
     }

@@ -104,7 +104,7 @@ class EmergencyContacts extends Component {
                             getDispatch={(dispatch) => this.attachDispatch(dispatch)}
                         >
                             <FormGroup className={classes.smallFormGroup}>
-                                <FormLabel className={classes.formLabel}>Emergency contact role</FormLabel>
+                                <FormLabel className={classes.formLabel}>Emergency Contact Role</FormLabel>
                                 <Control.select className={classes.formSelect} model="emergencyContactsRow.role" required>
                                     <option value=''>(no selected)</option>
                                     { contactsArray.map((item, key) => {

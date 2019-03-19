@@ -22,6 +22,7 @@ import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import Signature from "../fragments/Signature";
 import formStyles from "../fragments/formStyles";
+import cprVariants from "../fragments/cprVariants";
 
 const FORM_FIELDS_NUMBER = 3;
 
@@ -110,24 +111,17 @@ class ClinicalRecommendations extends Component {
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>CPR recommendations</FormLabel>
                             <RadioGroup name="cprValue" className={classes.radioGroup} value={cprValue} onChange={e => this.handleChecking(e)}>
-                                <FormControlLabel
-                                    value="1"
-                                    disabled={isVersionInfo}
-                                    control={<Radio />}
-                                    label={<RadioButtonName mainTitle="CPR attempts recommended" helpTitle="Adult or child" />}
-                                />
-                                <FormControlLabel
-                                    value="2"
-                                    disabled={isVersionInfo}
-                                    control={<Radio />}
-                                    label={<RadioButtonName mainTitle="For modified CPR" helpTitle="Child only, as detailed above" />}
-                                />
-                                <FormControlLabel
-                                    value="3"
-                                    disabled={isVersionInfo}
-                                    control={<Radio />}
-                                    label={<RadioButtonName mainTitle="CPR attempts NOT recommended" helpTitle="Adult or child" />}
-                                />
+                                {cprVariants.map((item, key) => {
+                                    return (
+                                        <FormControlLabel
+                                            key={key}
+                                            value={item.id}
+                                            disabled={isVersionInfo}
+                                            control={<Radio />}
+                                            label={<RadioButtonName mainTitle={item.mainTitle} helpTitle={item.helpTitle} />}
+                                        />
+                                    );
+                                })}
                             </RadioGroup>
                         </FormGroup>
                         <Signature name="secondSignature" onEnd={this.addSignature} />
