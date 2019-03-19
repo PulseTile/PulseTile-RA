@@ -7,7 +7,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import Menu from '@material-ui/core/Menu';
 
-import { pageHasTitle } from "../../../../core/common/Topbar/functions";
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
 import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
 
@@ -94,6 +93,34 @@ const MenuButton = ({ classes, setSidebarVisibility, isSidebarOpen }) => {
 };
 
 /**
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} location
+ * @return {boolean}
+ */
+export function pageHasTitle(location) {
+    const pathName = location.pathname;
+    const pagesWithTitle = [
+        '/charts',
+    ];
+    return pagesWithTitle.indexOf(pathName) !== -1;
+}
+
+/**
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} location
+ * @return {boolean}
+ */
+export function pageHasPatientBanner(location) {
+    const pathName = location.pathname;
+    const pagesWithTitle = [
+        '/',
+        '/charts',
+        '/patients'
+    ];
+    return pagesWithTitle.indexOf(pathName) !== -1;
+}
+
+/**
  * This component returns low part of Showcase TopBar
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
@@ -108,6 +135,7 @@ class LowPart extends Component {
     render() {
         const { classes, isSidebarOpen, setSidebarVisibility, location, patientInfo } = this.props;
         const isPageHasTitle = pageHasTitle(location);
+        const isPageHasPatientBanner = pageHasPatientBanner(location);
         return (
             <Toolbar className={classes.lowPart}>
                 {
@@ -117,7 +145,7 @@ class LowPart extends Component {
                 <div className={classes.menuAndBanner}>
                     <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
                     {
-                        !isPageHasTitle &&
+                        !isPageHasPatientBanner &&
                             <PatientBanner location={location} classes={classes} patientInfo={patientInfo} />
                     }
                 </div>

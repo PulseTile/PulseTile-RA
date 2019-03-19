@@ -137,11 +137,11 @@ class CliniciansSignatures extends Component {
                                 <DatePicker
                                     className={classes.formInput}
                                     selected={dateAndTime}
-                                    showTimeSelect
                                     timeFormat="HH:mm"
                                     timeIntervals={15}
-                                    timeCaption="time"
                                     dateFormat="M/d/yyyy HH:mm"
+                                    timeInputLabel="Time:"
+                                    showTimeInput
                                     onChange={value => this.changeDateAndTime(value)}
                                 />
                             </FormGroup>

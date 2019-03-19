@@ -1,23 +1,23 @@
 import ThemeTopbar from "../common/Topbar";
 import PatientsList from "../../core/pages/PatientsList";
 
-/**
- * Order of menu items for the current theme
- *
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @return {array}
- */
-export const resourceOrder = [
-    'problems',
-    'medications',
-    'allergies',
-    'contacts',
+export const themeShortMenu = [
+    { url: '/', label: 'Patients' },
+];
+
+export const themeFullMenu = [
+    { url: '/summary', label: 'Patient Summary' },
+    { url: '/problems', label: 'Problems / Issues' },
+    { url: '/medications', label: 'Medications' },
+    { url: '/allergies', label: 'Allergies' },
+    { url: '/contacts', label: 'Contacts' },
+    { url: '/respect', label: 'ReSPECT' },
 ];
 
 export const themeCommonElements = {
     topbar: ThemeTopbar,
     homePage: PatientsList,
-    isFooterAbsent: false,
+    isFooterAbsent: true,
 };
 
 export const themeImages = {};

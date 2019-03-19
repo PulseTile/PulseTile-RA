@@ -66,7 +66,7 @@ const SectionToolbar = ({ classes, onRowClick }) => {
         <Toolbar className={classes.toolbar}>
             <Tooltip title="Finished">
                 <IconButton type="submit" className={classes.saveButton}>
-                    Finished
+                    Save
                     <DoneIcon />
                 </IconButton>
             </Tooltip>

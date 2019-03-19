@@ -1,19 +1,38 @@
 import get from "lodash/get";
 
-export const SHORT_MENU = "short";
-export const FULL_MENU = "full";
+import { themeShortMenu, themeFullMenu } from "../../../version/config/theme.config";
 
-/**
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {string} currentPathname
- * @return {string}
- */
-export function getMenuType(currentPathname) {
+const defaultShortMenu = [
+    { url: '/', label: 'Charts' },
+    { url: '/patients', label: 'Patients' }
+];
+
+const defaultFullMenu = [
+    { url: '/summary', label: 'Patient Summary' },
+    { url: '/problems', label: 'Problems / Issues' },
+    { url: '/medications', label: 'Medications' },
+    { url: '/allergies', label: 'Allergies' },
+    { url: '/contacts', label: 'Contacts' },
+];
+
+function isUrlPresented(currentResource, menuItemsArray) {
+    const filterArray = menuItemsArray.filter(item => {
+        return item.url === ('/' + currentResource);
+    });
+    return filterArray.length > 0;
+}
+
+export function getMenuItems(currentPathname) {
     const pathArray = currentPathname.split('/');
     const currentResource = get(pathArray, [1], null);
-    const ShortMenuPages = [
-        "charts",
-        "patients",
-    ];
-    return (ShortMenuPages.indexOf(currentResource) === -1) ? FULL_MENU : SHORT_MENU;
+    if (isUrlPresented(currentResource, themeShortMenu)) {
+        return themeShortMenu;
+    }
+    if (isUrlPresented(currentResource, themeFullMenu)) {
+        return themeFullMenu;
+    }
+    if (isUrlPresented(currentResource, defaultFullMenu)) {
+        return defaultFullMenu;
+    }
+    return defaultShortMenu;
 }

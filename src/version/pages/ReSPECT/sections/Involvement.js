@@ -74,7 +74,7 @@ class Involvement extends Component {
                                     disabled={isVersionInfo}
                                     value="variantA"
                                     control={<Radio />}
-                                    label="A - This person has the mantal capacity to participate in making these recommendations. They have benn fully involved in making this plan."
+                                    label="A - This person has the mental capacity to participate in making these recommendations. They have benn fully involved in making this plan."
                                 />
                                 <FormControlLabel
                                     className={classes.formControlLabel}
