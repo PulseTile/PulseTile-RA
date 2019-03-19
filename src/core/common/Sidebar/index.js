@@ -45,11 +45,14 @@ const styles = theme => ({
  * @constructor
  */
 const CustomSidebar = props => {
-    const { classes, onMenuClick, location } = props;
+    const { classes, isSidebarOpen, onMenuClick, location } = props;
     const currentPathname = get(location, 'pathname', null);
     const pathNameArray = currentPathname.split('/');
     const currentList = '/' + pathNameArray[1];
     const menuItems = getMenuItems(currentPathname);
+    if (!isSidebarOpen) {
+        return null;
+    }
     return (
         <Sidebar className={classes.sidebarBlock}>
             <div className={classes.menuBlock}>
