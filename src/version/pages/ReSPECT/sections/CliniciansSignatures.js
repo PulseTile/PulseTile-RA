@@ -22,6 +22,7 @@ import { getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
+    clinicalSignature: localStorage.getItem('username'),
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
 };
@@ -145,7 +146,17 @@ class CliniciansSignatures extends Component {
                                     onChange={value => this.changeDateAndTime(value)}
                                 />
                             </FormGroup>
-                            <Signature name="signature" onEnd={this.addSignature} isSubTitle={true}/>
+
+                            {/*<Signature name="signature" onEnd={this.addSignature} isSubTitle={true}/>*/}
+                            <FormGroup className={classes.formGroup}>
+                                <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
+                                <Control.text
+                                    className={classes.formInput}
+                                    model="clinicalSignaturesRow.clinicalSignature"
+                                    defaultValue={filledValues.clinicalSignature}
+                                />
+                            </FormGroup>
+
                             <FormGroup className={classes.smallFormGroup}>
                                 <Control.checkbox model="clinicalSignaturesRow.isSrc" disabled={isVersionInfo}/>
                                 <span>Senior responsible clinician</span>

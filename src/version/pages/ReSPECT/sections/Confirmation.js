@@ -21,6 +21,7 @@ import { getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
+    clinicalSignature: localStorage.getItem('username'),
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
 };
@@ -124,7 +125,17 @@ class Confirmation extends Component {
                                 <FormLabel className={classes.formLabel}>GMC / NMC / HCPC number</FormLabel>
                                 <Control.text className={classes.formInput} model="confirmationRow.gmcNumber" required/>
                             </FormGroup>
-                            <Signature name="signature" onEnd={this.addSignature} isSubTitle={true}/>
+
+                            {/*<Signature name="signature" onEnd={this.addSignature} isSubTitle={true}/>*/}
+                            <FormGroup className={classes.formGroup}>
+                                <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
+                                <Control.text
+                                    className={classes.formInput}
+                                    model="confirmationRow.clinicalSignature"
+                                    defaultValue={filledValues.clinicalSignature}
+                                />
+                            </FormGroup>
+
                             <AddNewButton />
                         </LocalForm>
                     }

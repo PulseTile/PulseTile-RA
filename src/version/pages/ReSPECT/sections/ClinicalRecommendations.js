@@ -27,6 +27,8 @@ import cprVariants from "../fragments/cprVariants";
 const FORM_FIELDS_NUMBER = 3;
 
 const defaultValues = {
+    clinicalSignatureFirst: localStorage.getItem('username'),
+    clinicalSignatureSecond: localStorage.getItem('username'),
     dateCompleted: moment().format('DD-MMM-YYYY'),
 };
 
@@ -94,7 +96,17 @@ class ClinicalRecommendations extends Component {
                         rightText="Focus on sympton control as per guidance below"
                     />
                     <LocalForm  model="clinicalRecommendations" onSubmit={values => this.submitForm(values)}>
-                        <Signature name="firstSignature" onEnd={this.addSignature} />
+
+                        {/*<Signature name="firstSignature" onEnd={this.addSignature} />*/}
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
+                            <Control.text
+                                className={classes.formInput}
+                                model="clinicalRecommendations.clinicalSignatureFirst"
+                                defaultValue={filledValues.clinicalSignatureFirst}
+                            />
+                        </FormGroup>
+
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Clinical Guidance</FormLabel>
                             <Control.textarea
@@ -124,7 +136,17 @@ class ClinicalRecommendations extends Component {
                                 })}
                             </RadioGroup>
                         </FormGroup>
-                        <Signature name="secondSignature" onEnd={this.addSignature} />
+
+                        {/*<Signature name="secondSignature" onEnd={this.addSignature} />*/}
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
+                            <Control.text
+                                className={classes.formInput}
+                                model="clinicalRecommendations.clinicalSignatureSecond"
+                                defaultValue={filledValues.clinicalSignatureSecond}
+                            />
+                        </FormGroup>
+
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
                             <Control.text
