@@ -67,9 +67,9 @@ class EmergencyView extends Component {
     };
 
     getCprLabel = () => {
-        const { clinicalRecommendations, versionsInfo, isVersionInfo } = this.props;
+        const { clinicalRecommendations, sectionsInfo, isVersionInfo } = this.props;
         const cprValue = isVersionInfo
-            ? get(versionsInfo, 'clinicalRecommendations.cprValue', null)
+            ? get(sectionsInfo, 'clinicalRecommendations.cprValue', null)
             : get(clinicalRecommendations, 'cprValue', null);
         let result = null;
         cprVariants.forEach(item => {
