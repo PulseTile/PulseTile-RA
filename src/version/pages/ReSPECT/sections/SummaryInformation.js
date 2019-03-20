@@ -20,6 +20,7 @@ const FORM_FIELDS_NUMBER = 1;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
+    author: localStorage.getItem('username'),
 };
 
 class SummaryInformation extends Component {
@@ -87,7 +88,7 @@ class SummaryInformation extends Component {
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={summaryInformation} />
+                <SystemInformationBlock classes={classes} modelName="summaryInformation" filledValues={filledValues} />
             </React.Fragment>
         );
     }

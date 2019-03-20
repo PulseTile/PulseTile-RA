@@ -30,6 +30,7 @@ const defaultValues = {
     clinicalSignatureFirst: localStorage.getItem('username'),
     clinicalSignatureSecond: localStorage.getItem('username'),
     dateCompleted: moment().format('DD-MMM-YYYY'),
+    author: localStorage.getItem('username'),
 };
 
 class ClinicalRecommendations extends Component {
@@ -159,7 +160,7 @@ class ClinicalRecommendations extends Component {
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={clinicalRecommendations} />
+                <SystemInformationBlock classes={classes} modelName="clinicalRecommendations" filledValues={filledValues} />
             </React.Fragment>
         );
     }

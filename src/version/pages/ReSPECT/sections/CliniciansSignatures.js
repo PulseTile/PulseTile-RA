@@ -25,6 +25,7 @@ const defaultValues = {
     clinicalSignature: localStorage.getItem('username'),
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
+    author: localStorage.getItem('username'),
 };
 
 const tableHeadersArray = [
@@ -178,7 +179,7 @@ class CliniciansSignatures extends Component {
                     </LocalForm>
 
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={clinicalSignatures} />
+                <SystemInformationBlock classes={classes} modelName="clinicalSignatures" filledValues={filledValues} />
             </React.Fragment>
         );
     }

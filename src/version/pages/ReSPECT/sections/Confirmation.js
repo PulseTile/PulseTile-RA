@@ -24,6 +24,7 @@ const defaultValues = {
     clinicalSignature: localStorage.getItem('username'),
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
+    author: localStorage.getItem('username'),
 };
 
 const tableHeadersArray = [
@@ -147,7 +148,7 @@ class Confirmation extends Component {
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={confirmation} />
+                <SystemInformationBlock classes={classes} modelName="confirmation" filledValues={filledValues} />
             </React.Fragment>
         );
     }

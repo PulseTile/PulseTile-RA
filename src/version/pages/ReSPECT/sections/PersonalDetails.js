@@ -23,6 +23,7 @@ const FORM_FIELDS_NUMBER = 9;
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
+    author: localStorage.getItem('username'),
 };
 
 class PersonalDetails extends Component {
@@ -177,7 +178,7 @@ class PersonalDetails extends Component {
                         }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={personalDetails} />
+                <SystemInformationBlock classes={classes} modelName="personalDetails" filledValues={filledValues} />
             </React.Fragment>
         );
     }

@@ -23,6 +23,7 @@ const FORM_FIELDS_NUMBER = 2;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
+    author: localStorage.getItem('username'),
 };
 
 class CapacityAndRepresentation extends Component {
@@ -114,7 +115,7 @@ class CapacityAndRepresentation extends Component {
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={capacityAndRepresentation} />
+                <SystemInformationBlock classes={classes} modelName="capacityAndRepresentation" filledValues={filledValues} />
             </React.Fragment>
         );
     }

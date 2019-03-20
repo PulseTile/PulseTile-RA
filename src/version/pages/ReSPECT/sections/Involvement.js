@@ -25,6 +25,7 @@ const FORM_FIELDS_NUMBER = 4;
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
+    author: localStorage.getItem('username'),
 };
 
 class Involvement extends Component {
@@ -131,7 +132,7 @@ class Involvement extends Component {
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={involvement} />
+                <SystemInformationBlock classes={classes} modelName="involvement" filledValues={filledValues} />
             </React.Fragment>
         );
     }

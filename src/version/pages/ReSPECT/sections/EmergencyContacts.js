@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control, actions } from 'react-redux-form';
 import moment from "moment";
@@ -21,6 +20,7 @@ import formStyles from "../fragments/formStyles";
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
+    author: localStorage.getItem('username'),
 };
 
 const tableHeadersArray = [
@@ -137,7 +137,7 @@ class EmergencyContacts extends Component {
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock isMainPanel={isMainPanel} togglePanel={this.togglePanel} classes={classes} info={emergencyContacts} />
+                <SystemInformationBlock classes={classes} modelName="emergencyContacts" filledValues={filledValues} />
             </React.Fragment>
         );
     }
