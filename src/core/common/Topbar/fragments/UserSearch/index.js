@@ -59,10 +59,15 @@ class UserSearch extends Component {
 
     onSearchClick = searchText => {
         this.props.setUserSearch(searchText);
+        window.location.replace('/#/patients');
     };
 
     render() {
-        const { classes, userSearch } = this.props;
+        const { classes, userSearch, ...rest } = this.props;
+
+        console.log('rest', rest);
+
+
         const { searchText } = this.state;
         return (
             <div className={classes.mainBlock}>

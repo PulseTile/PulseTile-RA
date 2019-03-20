@@ -85,18 +85,12 @@ const styles = theme => ({
     }
 });
 
-function isUserSearchShown(location) {
-    const pathname = location.pathname;
-    const pathnameArray = pathname.split('/');
-    return pathnameArray[1] === 'patients' || pathname === '/';
-}
-
 /**
  * This component returns Top part of Helm Topbar
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-const TopPart = ({ classes, location, history }) => {
+const TopPart = ({ classes, location }) => {
     return (
         <Toolbar className={classes.topPart}>
             <div className={classes.homeButtonItem}>
@@ -118,7 +112,7 @@ const TopPart = ({ classes, location, history }) => {
                 </Link>
             </div>
             <div className={classes.emptyBlock}></div>
-            { isUserSearchShown(location) && <UserSearch location={location} history={history} /> }
+            <UserSearch location={location} />
             <CardMedia
                 className={classes.nhsLogo}
                 component="img"
