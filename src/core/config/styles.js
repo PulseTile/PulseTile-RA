@@ -11,6 +11,7 @@ const defaultLightPalette = {
     mainColor: "#0D672F",
     dangerColor: "#da534f",
     viewButton: "#30ad57",
+    disabledColor: "#e9e4e4",
 };
 
 const defaultDarkPalette = {
@@ -18,6 +19,7 @@ const defaultDarkPalette = {
     mainColor: "#000",
     dangerColor: "#000",
     viewButton: "#000",
+    disabledColor: "#e9e4e4",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -109,10 +111,16 @@ export function getCurrentTheme(isContrastMode) {
             MuiTableCell: {
                 head: {
                     color: "#000",
+                    fontSize: 16,
                     fontWeight: 800,
                 },
                 paddingNone: {
                     paddingLeft: 10,
+                }
+            },
+            MuiTypography: {
+                body1: {
+                    fontSize: 15,
                 }
             },
         }

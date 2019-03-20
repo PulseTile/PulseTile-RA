@@ -27,6 +27,9 @@ import { ITEMS_PER_PAGE } from "../../config/styles";
 const listStyles = theme => ({
     mainBlock: {
         margin: 0,
+        paddingLeft: 10,
+        paddingTop: 15,
+        paddingRight: 25,
     },
     list: {
         paddingLeft: 0,

@@ -16,7 +16,7 @@ const styles = theme => ({
         color: "white",
         backgroundColor: theme.palette.mainColor,
         border: `1px solid ${theme.palette.mainColor}`,
-        borderRadius: 20,
+        borderRadius: 25,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {

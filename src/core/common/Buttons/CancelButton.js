@@ -15,7 +15,7 @@ const styles = theme => ({
         color: "#fff",
         backgroundColor: theme.palette.dangerColor,
         border: `1px solid ${theme.palette.dangerColor}`,
-        borderRadius: 20,
+        borderRadius: 25,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {
