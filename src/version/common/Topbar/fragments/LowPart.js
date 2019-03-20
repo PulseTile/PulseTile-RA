@@ -112,12 +112,13 @@ export function pageHasTitle(location) {
  */
 export function pageHasPatientBanner(location) {
     const pathName = location.pathname;
+    const pathArray = pathName.split('/');
+    const currentResource = get(pathArray, [1], null);
     const pagesWithTitle = [
-        '/',
-        '/charts',
-        '/patients'
+        'charts',
+        'patients'
     ];
-    return pagesWithTitle.indexOf(pathName) !== -1;
+    return pagesWithTitle.indexOf(currentResource) !== -1  ||  pathName === '/';
 }
 
 /**

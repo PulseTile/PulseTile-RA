@@ -39,10 +39,6 @@ class PersonalPreferences extends Component {
             dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
-
-        console.log('data', data );
-        console.log('formData', formData );
-
         this.props.addPersonalPreferences(formData);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
