@@ -25,6 +25,7 @@ const styles = theme => ({
     },
     card: {
         minHeight: 302,
+        borderRadius: 0,
     },
     media: {
         backgroundColor: theme.palette.mainColor,
