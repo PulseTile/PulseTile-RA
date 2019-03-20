@@ -28,6 +28,9 @@ import { ITEMS_PER_PAGE } from "../../config/styles";
 const listStyles = theme => ({
     mainBlock: {
         margin: 0,
+        paddingLeft: 10,
+        paddingTop: 15,
+        paddingRight: 25,
     },
     list: {
         paddingLeft: 0,
@@ -201,7 +204,7 @@ class ListTemplate extends Component {
                                     {titleTable}
                                 </Typography>
                                 { !headerFilterAbsent &&
-                                    <FilterIcon className={classes.filterIcon} onClick={() => this.toggleFilter()}/>
+                                    <SearchIcon className={classes.filterIcon} onClick={() => this.toggleFilter()}/>
                                 }
                             </div>
                             {
@@ -213,11 +216,6 @@ class ListTemplate extends Component {
                                         </IconButton>
                                     </Tooltip>
                                     <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                    <Tooltip title="Search">
-                                        <IconButton className={classes.iconButton}>
-                                            <SearchIcon />
-                                        </IconButton>
-                                    </Tooltip>
                                 </Paper>
                             }
                         </React.Fragment>
