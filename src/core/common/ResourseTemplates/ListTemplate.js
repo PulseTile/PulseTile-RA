@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
+import { connect } from 'react-redux';
 import {
     List,
     Filter,
@@ -162,14 +163,32 @@ class ListTemplate extends Component {
         })
     };
 
+    filterByUserSearch = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearch) {
+                return {
+                    filterText: props.userSearch,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
     render() {
-        const { create, resourceUrl, title, children, classes, history } = this.props;
+        const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent } = this.props;
         const { isFilterOpened, key, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
         ];
         const CreateBlock = create;
         const createUrl = this.getCreateUrl();
+
+        let titleTable = title;
+        if (userSearch && resourceUrl === 'patients') {
+            titleTable = `${title} (search: ${userSearch})`;
+            this.filterByUserSearch();
+        }
+
         return (
             <React.Fragment>
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -178,8 +197,12 @@ class ListTemplate extends Component {
                     <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
                         <React.Fragment>
                             <div className={classes.blockTitle}>
-                                <Typography className={classes.title}>{title}</Typography>
-                                <FilterIcon className={classes.filterIcon} onClick={() => this.toggleFilter()} />
+                                <Typography className={classes.title}>
+                                    {titleTable}
+                                </Typography>
+                                { !headerFilterAbsent &&
+                                    <FilterIcon className={classes.filterIcon} onClick={() => this.toggleFilter()}/>
+                                }
                             </div>
                             {
                                 isFilterOpened &&
@@ -201,7 +224,7 @@ class ListTemplate extends Component {
                         <List
                             resource={resourceUrl}
                             key={key}
-                            filter={{ filterText: filterText }}
+                            filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
                             title={title}
                             perPage={ITEMS_PER_PAGE}
                             actions={null}
@@ -233,4 +256,10 @@ class ListTemplate extends Component {
     }
 }
 
-export default withStyles(listStyles)(ListTemplate);
+const mapStateToProps = state => {
+    return {
+        userSearch: state.custom.userSearch.data,
+    }
+};
+
+export default connect(mapStateToProps, null)(withStyles(listStyles)(ListTemplate));

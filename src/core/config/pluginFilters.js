@@ -12,6 +12,7 @@ const corePluginFilters = {
     contacts: ['name', 'relationship'],
     problems: ['problem'],
     medications: ['name'],
+    patients: ['name'],
 };
 
 export default Object.assign({}, corePluginFilters, nonCorePluginFilters);

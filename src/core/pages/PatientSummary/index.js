@@ -58,6 +58,8 @@ const styles = theme => ({
     },
     list: {
         padding: 0,
+        backgroundColor: "#fff",
+        border: "1px solid #e5e5e5",
     },
     listItem: {
         fontSize: "1rem",

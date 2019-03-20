@@ -36,7 +36,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
     switch (type) {
         case GET_LIST: {
             if (resource === 'patients') {
-                url = `${domainName}/api/${resource}`;
+                url = `${domainName}/mpi/Patients`;
             } else {
                 url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
             }
@@ -184,6 +184,12 @@ function isItemConsider(item, filters, filterText) {
     return result;
 }
 
+function isSearchPresented(item, search) {
+    const userName = item.name.toLowerCase().trim();
+    const searchString = search.toLowerCase().trim();
+    return userName.search(searchString) >= 0;
+}
+
 /**
  * This function filters response array
  *
@@ -197,6 +203,11 @@ function getFilterResults(resource, results, params) {
     const filterText = get(params, 'filter.filterText', null);
     const filters = pluginFilters[resource];
     return !filterText ? results : results.filter(item => isItemConsider(item, filters, filterText));
+}
+
+function getUserSearchResults(results, params) {
+    const searchText = get(params, 'filter.filterText', null);
+    return !searchText ? results : results.filter(item => isSearchPresented(item, searchText));
 }
 
 /**
@@ -272,7 +283,7 @@ const fakePatientsProvider = (type, resource, params) => {
             const pageNumber = get(params, 'pagination.page', 1);
             const numberPerPage = get(params, 'pagination.perPage', 10);
             const results = getResultsFromResponse(resource, dummyPatients, params);
-            const resultsFiltering = getFilterResults(resource, results, params);
+            const resultsFiltering = getUserSearchResults(results, params);
             const resultsSorting = getSortedResults(resultsFiltering, params);
             const startItem = (pageNumber - 1) * numberPerPage;
             const endItem = pageNumber * numberPerPage;

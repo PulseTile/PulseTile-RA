@@ -49,6 +49,6 @@ const App = () => {
             }
         </Admin>
     );
-}
+};
 
 export default App;

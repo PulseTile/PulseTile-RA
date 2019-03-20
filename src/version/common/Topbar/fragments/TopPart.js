@@ -8,6 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import helmLogo from "../../../images/logo-big.png";
 import nhsLogo from "../../../images/nhs.png";
+import UserSearch from "../../../../core/common/Topbar/fragments/UserSearch";
 import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
 
@@ -84,12 +85,18 @@ const styles = theme => ({
     }
 });
 
+function isUserSearchShown(location) {
+    const pathname = location.pathname;
+    const pathnameArray = pathname.split('/');
+    return pathnameArray[1] === 'patients' || pathname === '/';
+}
+
 /**
  * This component returns Top part of Helm Topbar
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-const TopPart = ({ classes, logout, location }) => {
+const TopPart = ({ classes, location, history }) => {
     return (
         <Toolbar className={classes.topPart}>
             <div className={classes.homeButtonItem}>
@@ -111,6 +118,7 @@ const TopPart = ({ classes, logout, location }) => {
                 </Link>
             </div>
             <div className={classes.emptyBlock}></div>
+            { isUserSearchShown(location) && <UserSearch location={location} history={history} /> }
             <CardMedia
                 className={classes.nhsLogo}
                 component="img"

@@ -44,7 +44,7 @@ const contactsArray = [
     { id: 'District Nurse', label: 'District Nurse' },
     { id: 'Primary Care Worker', label: 'Primary Care Worker' },
     { id: 'Allocated social worker', label: 'Allocated social worker' },
-    { id: 'Care C-ordinator', label: 'Care C-ordinator' },
+    { id: 'Care Coordinator', label: 'Care Coordinator' },
 ];
 
 class EmergencyContacts extends Component {

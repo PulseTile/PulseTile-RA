@@ -25,7 +25,7 @@ function isUrlPresented(currentResource, menuItemsArray) {
 export function getMenuItems(currentPathname) {
     const pathArray = currentPathname.split('/');
     const currentResource = get(pathArray, [1], null);
-    if (isUrlPresented(currentResource, themeShortMenu)) {
+    if (isUrlPresented(currentResource, themeShortMenu) || currentPathname === "/") {
         return themeShortMenu;
     }
     if (isUrlPresented(currentResource, themeFullMenu)) {

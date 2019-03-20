@@ -10,6 +10,7 @@ const defaultLightPalette = {
     type: 'light',
     mainColor: "#0D672F",
     dangerColor: "#da534f",
+    disabledColor: "#e9e4e4",
     viewButton: "#30ad57",
 };
 
@@ -17,6 +18,7 @@ const defaultDarkPalette = {
     type: 'dark',
     mainColor: "#000",
     dangerColor: "#000",
+    disabledColor: "#e9e4e4",
     viewButton: "#000",
     background: "#fff",
     text: "#000",

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import showHeadings from "./showHeadingsReducer";
 import createCustomReducer from "./createCustomReducer";
+import userSearchReducer from "./userSearchReducer";
 
 import {
     SYNOPSIS_ALLERGIES_ACTION,
@@ -31,6 +32,7 @@ const coreReducers = {
     showMode: createCustomReducer(SHOW_MODE_ACTION, "data"),
     showHeadings,
     userInfo: createCustomReducer(USER_INFO_ACTION, "data"),
+    userSearch: userSearchReducer,
 };
 
 const reducers = Object.assign({}, coreReducers, nonCoreReducers);
