@@ -65,9 +65,6 @@ class UserSearch extends Component {
     render() {
         const { classes, userSearch, ...rest } = this.props;
 
-        console.log('rest', rest);
-
-
         const { searchText } = this.state;
         return (
             <div className={classes.mainBlock}>

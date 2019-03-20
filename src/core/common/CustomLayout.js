@@ -19,7 +19,6 @@ const styles = {
         position: 'relative',
         '& > div': {
             minHeight: '100vh',
-            overflowX: 'hidden !important',
         },
         '& main > div': {
             padding: 0,

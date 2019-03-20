@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -14,7 +15,34 @@ import Typography from "@material-ui/core/Typography";
  * @param {shape} history
  * @constructor
  */
-const ItemsList = ({ classes, items, list, history }) => {
+const ItemsList = ({ classes, items, list, history, versionsInfo }) => {
+
+
+    //// TEMPORARY
+    if (list === 'respect' && !versionsInfo) {
+        return (
+            <ListItem button divider>
+                <ListItemText primary="No versions" />
+            </ListItem>
+        );
+    } else if (list === 'respect' && versionsInfo && versionsInfo.length > 0) {
+        return (
+            <List className={classes.list}>
+                {versionsInfo.map((item, key) => {
+                    return (
+                        <ListItem key={key} button divider onClick={() => history.push('/respect')}>
+                            <Typography noWrap={true} className={classes.listItem}>
+                                Version {key + 1}
+                            </Typography>
+                        </ListItem>
+                    );
+                })}
+            </List>
+        );
+    }
+    //////
+
+
     if (items && items.length === 0) {
         return (
             <ListItem button divider>
@@ -39,4 +67,10 @@ const ItemsList = ({ classes, items, list, history }) => {
     }
 };
 
-export default ItemsList;
+const mapStateToProps = state => {
+    return {
+        versionsInfo: state.custom.versionsInfo.data,
+    }
+};
+
+export default connect(mapStateToProps, null)(ItemsList);

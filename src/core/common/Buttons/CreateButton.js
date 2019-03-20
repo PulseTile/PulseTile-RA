@@ -33,12 +33,15 @@ const styles = theme => ({
  * @param {shape}  history
  * @param {string} redirectPath
  */
-const CreateButton = ({ classes, history, redirectPath }) => (
-    <Tooltip title="Create">
-        <IconButton className={classes.createButton} onClick={() => history.push(redirectPath)}>
-            <AddIcon /> Create
-        </IconButton>
-    </Tooltip>
-);
+const CreateButton = ({ classes, history, redirectPath }) => {
+    return null;
+    // return (
+    //     <Tooltip title="Create">
+    //         <IconButton className={classes.createButton} onClick={() => history.push(redirectPath)}>
+    //             <AddIcon /> Create
+    //         </IconButton>
+    //     </Tooltip>
+    // );
+};
 
 export default withStyles(styles)(CreateButton);

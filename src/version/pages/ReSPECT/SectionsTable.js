@@ -127,9 +127,6 @@ class SectionsTable extends Component {
             latestVersionInfo = get(versionsInfo, [ [versionsNumber - 1], 'sections' ], null);
         }
 
-        console.log('latestVersionInfo', latestVersionInfo);
-
-
         const currentSection = this.getCurrentSection(currentRow);
 
         return (
