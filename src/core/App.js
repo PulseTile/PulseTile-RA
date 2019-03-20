@@ -25,14 +25,12 @@ const i18nProvider = locale => translations[locale];
 const App = () => {
     return (
         <Admin
-            authProvider={authProvider}
             customSagas={[customSagas]}
             customReducers={{custom: customReducers}}
             customRoutes={customRoutes}
             dataProvider={customDataProvider}
             dashboard={Homepage}
             appLayout={Layout}
-            loginPage={InitializePage}
             locale="en"
             i18nProvider={i18nProvider}
         >

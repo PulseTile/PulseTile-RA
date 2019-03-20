@@ -185,7 +185,7 @@ class ListTemplate extends Component {
 
         let titleTable = title;
         if (userSearch && resourceUrl === 'patients') {
-            titleTable = `${title} (search: ${userSearch})`;
+            titleTable = `Patients matching '${userSearch}'`;
             this.filterByUserSearch();
         }
 
