@@ -1,4 +1,5 @@
 import get from "lodash/get";
+import jwt from "jsonwebtoken";
 import {
     fetchUtils,
     GET_LIST,
@@ -60,22 +61,15 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
 
         case CREATE:
             let patientId = get(params, 'data.nhsNumber', null);
-            let gender = get(params, 'data.gender', null);
-
-            let name = get(params, 'data.name', null);
-            let nameArray = name.split(' ');
-            let nameArrayLength = nameArray.length;
-            let givenName = (nameArrayLength > 2) ? getGivenNamesArray(nameArray) : [nameArray[0]];
-            let lastName = (nameArrayLength > 0) ? nameArray[nameArrayLength - 1] : nameArray[0];
-
+            let name = get(params, 'data.firstName', null);
             data = {
                 name: {
-                    family: lastName,
-                    given: givenName,
-                    prefix: (gender === "male") ? "Mr" : "Mrs"
+                    family: get(params, 'data.lastName', null),
+                    given: name.split(' '),
+                    prefix: get(params, 'data.prefix', null),
                 },
                 telecom: get(params, 'data.phone', null),
-                gender: gender,
+                gender: get(params, 'data.gender', null),
                 birthDate: get(params, 'data.dateOfBirth', null),
                 address: {
                     line: get(params, 'data.address', null),
@@ -125,9 +119,10 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             const patientFromResponse = get(response, 'patient', null);
             const id = get(patientFromResponse, ['identifier', [0], 'value'], null);
             const name = get(patientFromResponse, ['name', [0]], null);
-            const surname = get(name, ['family'], null);
+            const prefix = get(name, ['prefix'], null);
             const namesArray = get(name, 'given', null);
-            const nameAndSurname = namesArray.concat(surname);
+            const firstName = namesArray.join(' ');
+            const lastName = get(name, ['family'], null);
             const addressArray = get(patientFromResponse, 'address', null);
             const city = get(addressArray, [[0], 'city'], null);
             const country = get(addressArray, [[0], 'country'], null);
@@ -137,7 +132,10 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             return {
                 data: {
                     id: id,
-                    name: nameAndSurname.join(' '),
+                    prefix: prefix,
+                    firstName: firstName,
+                    lastName: lastName,
+                    name: [prefix, firstName, lastName].join(' '),
                     address: line,
                     city: city,
                     country: country,
@@ -160,9 +158,6 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             // let compositionUidArray = response.compositionUid.split('::');
             // let sourseID = compositionUidArray[0];
             // let id = response.host + '-' + sourseID;
-
-
-
             return {
                 data: Object.assign({id: id}, response),
             };
@@ -220,9 +215,11 @@ function getPatientsList(patientsArray) {
  */
 function getTotalName(item) {
     const nameFromResponse = get(item, 'resource.name', null);
-    const name = get(nameFromResponse, [[0], 'given', [0]], null);
+    const prefix = get(nameFromResponse, [[0], 'prefix'], null);
+    const namesArray = get(nameFromResponse, [[0], 'given'], null);
+    const firstName = namesArray.join(' ');
     const surname = get(nameFromResponse, [[0], 'family'], null);
-    return [name, surname].join(' ');
+    return [prefix, firstName, surname].join(' ');
 }
 
 /**

@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
+import Typography from '@material-ui/core/Typography';
 
 import { clinicalSignaturesAction } from "../../../actions/ReSPECT/clinicalSignaturesAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
@@ -160,7 +161,7 @@ class CliniciansSignatures extends Component {
 
                             <FormGroup className={classes.smallFormGroup}>
                                 <Control.checkbox model="clinicalSignaturesRow.isSrc" disabled={isVersionInfo}/>
-                                <span>Senior responsible clinician</span>
+                                <Typography>Senior responsible clinician</Typography>
                             </FormGroup>
                             <AddNewButton />
                         </LocalForm>
