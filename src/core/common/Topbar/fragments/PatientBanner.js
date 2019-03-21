@@ -1,6 +1,5 @@
 import React from "react";
 import get from "lodash/get";
-import moment from "moment";
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -14,24 +13,26 @@ import Typography from '@material-ui/core/Typography';
  * @constructor
  */
 const PatientBanner = ({ classes, patientInfo }) => {
+    const addressArray = [
+        get(patientInfo, 'address', null),
+        get(patientInfo, 'city', null),
+        get(patientInfo, 'country', null),
+        get(patientInfo, 'postCode', null)
+    ];
     return (
         <Grid className={classes.patientInfo} container spacing={24}>
             <Grid className={classes.gridBlock} item xs={12} lg={8}>
                 <Typography>
                     {get(patientInfo, 'name', null)}
                 </Typography>
-                <Typography>
-                    <span className={classes.keyName}>Doctor: </span>
-                    {get(patientInfo, 'gpName', null)}
-                </Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
                 <Typography>
                     <span className={classes.keyName}>D.O.B.: </span>
-                    { moment(get(patientInfo, 'dateOfBirth', null)).format('DD-MMM-YYYY') }</Typography>
+                    {get(patientInfo, 'dateOfBirth', null)}</Typography>
                 <Typography>
                     <span className={classes.keyName}>Phone: </span>
-                    {get(patientInfo, 'telephone', null)}
+                    {get(patientInfo, 'phone', null)}
                 </Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
@@ -46,7 +47,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
             <Grid className={classes.gridBlock} item xs={12}>
                 <Typography>
                     <span className={classes.keyName}>Address: </span>
-                    {get(patientInfo, 'address', null)}
+                    {addressArray.join(', ')}
                 </Typography>
             </Grid>
         </Grid>

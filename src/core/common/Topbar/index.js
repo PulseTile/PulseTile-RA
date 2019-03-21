@@ -44,7 +44,7 @@ const mapStateToProps = state => {
         isLoading: get(state, 'admin.loading', false),
         location: get(state, 'router.location', null),
         isSidebarOpen: get(state, 'admin.ui.sidebarOpen', true),
-        patientInfo: get(state, 'custom.demographics.data', null),
+        patientInfo: get(state, 'custom.currentPatient.data', null),
     }
 };
 

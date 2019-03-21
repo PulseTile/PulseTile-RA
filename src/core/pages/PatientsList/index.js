@@ -5,6 +5,7 @@ import { TextField, DateField, ShowButton } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 
+import { currentPatientAction } from "../../actions/currentPatientAction";
 import image from "../../../version/images/logo-landing.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
@@ -36,12 +37,13 @@ class PatientsList extends Component {
      * This function redirects to Patient Summary page
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
-     * @param {shape}  e
-     * @param {number} userId
+     * @param {shape} e
+     * @param {shape} record
      */
-    redirectToSummary = (e, userId) => {
+    redirectToSummary = (e, record) => {
         e.stopPropagation();
-        localStorage.setItem('userId', userId);
+        this.props.updateCurrentPatient(record);
+        localStorage.setItem('patientId', record.nhsNumber);
         this.props.history.push('/summary');
     };
 
@@ -87,4 +89,12 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(styles)(PatientsList));
+const mapDispatchToProps = dispatch => {
+    return {
+        updateCurrentPatient(data) {
+            dispatch(currentPatientAction.update(data));
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PatientsList));

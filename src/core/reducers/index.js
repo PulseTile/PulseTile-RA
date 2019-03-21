@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import currentPatientReducer from "./currentPatientReducer";
 import showHeadings from "./showHeadingsReducer";
 import createCustomReducer from "./createCustomReducer";
 import userSearchReducer from "./userSearchReducer";
@@ -33,6 +34,7 @@ const coreReducers = {
     showHeadings,
     userInfo: createCustomReducer(USER_INFO_ACTION, "data"),
     userSearch: userSearchReducer,
+    currentPatient: currentPatientReducer,
 };
 
 const reducers = Object.assign({}, coreReducers, nonCoreReducers);
