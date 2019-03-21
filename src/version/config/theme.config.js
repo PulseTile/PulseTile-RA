@@ -7,10 +7,10 @@ export const themeShortMenu = [
 
 export const themeFullMenu = [
     { url: '/summary', label: 'Patient Summary' },
-    { url: '/problems', label: 'Problems / Issues' },
-    { url: '/medications', label: 'Medications' },
-    { url: '/allergies', label: 'Allergies' },
-    { url: '/contacts', label: 'Contacts' },
+    // { url: '/problems', label: 'Problems / Issues' },
+    // { url: '/medications', label: 'Medications' },
+    // { url: '/allergies', label: 'Allergies' },
+    // { url: '/contacts', label: 'Contacts' },
     { url: '/respect', label: 'ReSPECT' },
 ];
 

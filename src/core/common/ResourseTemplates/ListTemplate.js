@@ -81,6 +81,9 @@ const listStyles = theme => ({
         },
         '& tbody tr:hover td span': {
             color: "#fff"
+        },
+        '& tbody tr:hover td button span p': {
+            color: "#fff"
         }
     }
 });

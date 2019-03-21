@@ -18,9 +18,10 @@ import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
 import dummyPatients from "../pages/PatientsList/dummyPatients";
+import newPatientsProvider from "./patientsProvider";
 
 const apiPatientsUser = 'api/patients';
-const currentUserID = localStorage.getItem('userId');
+const currentUserID = localStorage.getItem('patientId');
 
 /**
  * This constant prepare data for requests (URL and options)
@@ -35,11 +36,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
     const options = {};
     switch (type) {
         case GET_LIST: {
-            if (resource === 'patients') {
-                url = `${domainName}/mpi/Patients`;
-            } else {
-                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
-            }
+            url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -96,6 +93,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
     }
     return { url, options };
 };
+
 
 /**
  * This function filters patients list by department
@@ -237,7 +235,6 @@ const convertHTTPResponse = (response, type, resource, params) => {
     switch (type) {
 
         case GET_LIST:
-
             const pageNumber = get(params, 'pagination.page', 1);
             const numberPerPage = get(params, 'pagination.perPage', 10);
             const results = getResultsFromResponse(resource, response, params);
@@ -327,7 +324,7 @@ const fakePatientsProvider = (type, resource, params) => {
  */
 export default (type, resource, params) => {
     if (resource === `patients`) {
-        return fakePatientsProvider(type, resource, params);
+        return newPatientsProvider(type, resource, params);
     }
     return dataProvider(type, resource, params);
 };
