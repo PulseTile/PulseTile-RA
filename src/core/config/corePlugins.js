@@ -7,9 +7,6 @@ import MedicationsList from "../plugins/Medications/MedicationsList";
 import ProblemsList from "../plugins/Problems/ProblemsList";
 import PatientsList from "../pages/PatientsList";
 
-// SHOW PAGES
-import PatientsShow from "../pages/PatientInfo";
-
 export default [
     {
         name: "allergies",
@@ -35,6 +32,5 @@ export default [
         name: "patients",
         label: "Patients",
         list: PatientsList,
-        show: PatientsShow,
     },
 ];

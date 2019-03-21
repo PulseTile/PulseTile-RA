@@ -10,12 +10,14 @@ const defaultLightPalette = {
     type: 'light',
     mainColor: "#0D672F",
     dangerColor: "#da534f",
+    viewButton: "#30ad57",
 };
 
 const defaultDarkPalette = {
     type: 'dark',
     mainColor: "#000",
-    dangerColor: "#fff",
+    dangerColor: "#000",
+    viewButton: "#000",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -67,5 +69,12 @@ export function getCurrentTheme(isContrastMode) {
                 background: getCardBackground(isContrastMode, palette.mainColor),
             }
         },
+        overrides: {
+            MuiInput: {
+                root: {
+                    border: "1px solid #e5e5e5"
+                }
+            }
+        }
     });
 }
