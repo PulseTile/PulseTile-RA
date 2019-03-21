@@ -24,6 +24,11 @@ const PatientShow = ({ classes, ...rest }) => (
         <DateField className={classes.labelBlock} label="Date of Birth" source="dateOfBirth" />
         <TextField className={classes.labelBlock} label="Gender" source="gender" />
         <TextField className={classes.labelBlock} label="Address" source="address" />
+        <TextField className={classes.labelBlock} label="District" source="district" />
+        <TextField className={classes.labelBlock} label="City" source="city" />
+        <TextField className={classes.labelBlock} label="Country" source="country" />
+        <TextField className={classes.labelBlock} label="Telephone Number" source="phone" />
+        <TextField className={classes.labelBlock} label="NHS number" source="nhsNumber" />
     </ShowTemplate>
 );
 

@@ -32,12 +32,13 @@ const FormInputs = ({ classes }) => {
             <TextInput source="address" label="Address" fullWidth />
             <div className={classes.halfWidthBlock}>
                 <TextInput className={classes.halfWidth} source="city" label="City" />
-                <TextInput className={classes.halfWidth} source="county" label="County" />
+                <TextInput className={classes.halfWidth} source="district" label="District" />
             </div>
             <div className={classes.halfWidthBlock}>
                 <TextInput className={classes.halfWidth} source="postCode" label="Post Code" />
                 <TextInput className={classes.halfWidth} source="country" label="Country" />
             </div>
+            <TextInput source="phone" label="Telephone Number" fullWidth />
             <TextInput source="nhsNumber" label="CHI Number" fullWidth />
         </React.Fragment>
     );
