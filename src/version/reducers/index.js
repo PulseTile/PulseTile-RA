@@ -1,6 +1,8 @@
 import contrastMode from "./contrastModeReducer";
 
 import createRespectPluginReducer from "./createRespectPluginReducer";
+import respectModal from "./respectModalReducer";
+import versionsServerInfo from "./versionsServerInfoReducer";
 
 import { PERSONAL_DETAILS_ACTION } from "../actions/ReSPECT/personalDetailsAction";
 import { SUMMARY_INFORMATION_ACTION } from "../actions/ReSPECT/summaryInformationAction";
@@ -22,6 +24,7 @@ import { VERSIONS_ACTION } from "../actions/ReSPECT/versionsAction";
  */
 export default {
     contrastMode,
+    respectModal,
     personalDetails: createRespectPluginReducer(PERSONAL_DETAILS_ACTION),
     summaryInformation: createRespectPluginReducer(SUMMARY_INFORMATION_ACTION),
     personalPreferences: createRespectPluginReducer(PERSONAL_PREFERENCES_ACTION),
@@ -33,4 +36,6 @@ export default {
     confirmation: createRespectPluginReducer(CONFIRMATION_ACTION),
     emergencyView: createRespectPluginReducer(EMERGENCY_VIEW_ACTION),
     versionsInfo: createRespectPluginReducer(VERSIONS_ACTION),
+
+    versionsServerInfo,
 };

@@ -1,5 +1,6 @@
 import ThemeTopbar from "../common/Topbar";
 import PatientsList from "../../core/pages/PatientsList";
+import RespectSummaryPanel from "../pages/ReSPECT/fragments/summaryPanel";
 
 export const themeShortMenu = [
     { url: '/patients', label: 'Patients' },
@@ -18,6 +19,7 @@ export const themeCommonElements = {
     topbar: ThemeTopbar,
     homePage: PatientsList,
     isFooterAbsent: true,
+    respectPanel: RespectSummaryPanel,
 };
 
 export const themeImages = {};

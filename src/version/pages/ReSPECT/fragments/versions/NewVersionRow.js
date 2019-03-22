@@ -1,40 +1,82 @@
-import React from "react";
+import React, { Component } from "react";
 import moment from "moment";
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from "@material-ui/core/Typography";
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import EditIcon from '@material-ui/icons/Edit';
 
+import { modalOpenAction } from "../../../../actions/ReSPECT/modalOpenAction";
+import ModalWindow from "./ModalWindow";
 import { getAuthorName } from "../../functions";
 
-const styles = {
+const styles = theme => ({
     rowInProgress: {
-        '& td span': {
-            fontWeight: 600,
+        '&:hover p': {
+            color: "#fff",
         },
     },
+    editButton: {
+        color: theme.palette.mainColor,
+        fontSize: 16,
+        height: 40,
+    }
+});
+
+class NewVersionRow extends Component {
+
+    state = {
+        isOpenModal: this.props.respectModal,
+    };
+
+    toggleMode = () => {
+        this.setState({
+            isOpenModal: !this.state.isOpenModal
+        });
+    };
+
+    render() {
+        const { classes, versionsNumber, toggleMode } = this.props;
+        const { isOpenModal } = this.state;
+        return (
+            <React.Fragment>
+                <ModalWindow open={isOpenModal} onClose={this.toggleMode} toggleMode={toggleMode} />
+                <TableRow className={classes.rowInProgress}>
+                    <TableCell scope="row" padding="none">
+                        <Typography>{versionsNumber}</Typography>
+                    </TableCell>
+                    <TableCell scope="row" padding="none">
+                        <Typography>{moment().format('DD-MMM-YYYY')}</Typography>
+                    </TableCell>
+                    <TableCell scope="row" padding="none">
+                        <Typography>{moment().format('HH:mm')}</Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Tooltip title="Proceed">
+                            <IconButton className={classes.editButton} onClick={() => this.toggleMode()}>
+                                Latest
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Typography>{getAuthorName()}</Typography>
+                    </TableCell>
+                </TableRow>
+            </React.Fragment>
+        );
+    }
+
 };
 
-const NewVersionRow = ({ classes, versionsNumber, toggleMode }) => {
-    return (
-        <TableRow className={classes.rowInProgress} onClick={() => toggleMode()}>
-            <TableCell scope="row" padding="none">
-                <span>{versionsNumber}</span>
-            </TableCell>
-            <TableCell scope="row" padding="none">
-                <span>{moment().format('DD-MMM-YYYY')}</span>
-            </TableCell>
-            <TableCell scope="row" padding="none">
-                <span>{moment().format('HH:mm')}</span>
-            </TableCell>
-            <TableCell align="right">
-                <span>New</span>
-            </TableCell>
-            <TableCell align="right">
-                <span>{getAuthorName()}</span>
-            </TableCell>
-        </TableRow>
-    );
+const mapStateToProps = state => {
+    return {
+        respectModal: state.custom.respectModal.data,
+    };
 };
 
-export default withStyles(styles)(NewVersionRow);
+export default connect(mapStateToProps, null)(withStyles(styles)(NewVersionRow));

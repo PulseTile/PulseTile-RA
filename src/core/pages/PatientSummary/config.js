@@ -13,7 +13,6 @@ export const coreSynopsisData = [
     // { id: "block-medications", title: "Medications", list: "medications", icon: faCapsules },
     // { id: "block-allergies", title: "Allergies", list: "allergies", icon: faAllergies },
     // { id: "block-contacts", title: "Contacts", list: "contacts", icon: faPhone },
-    { id: "block-feeds", title: "ReSPECT", list: "respect", icon: faNotesMedical }
 ];
 
 export const synopsisData = coreSynopsisData.concat(nonCoreSynopsisData);

@@ -255,12 +255,6 @@ function getSortedResults(results, params) {
 }
 
 export default (type, resource, params) => {
-
-    console.log('type', type);
-    console.log('resource', resource);
-    console.log('params', params);
-
-
     let { url, options } = convertPatientsDataRequestToHTTP(type, resource, params);
     return fetch(url, options).then(response => response.json())
         .then(res => convertPatientsHTTPResponse(res, type, resource, params))

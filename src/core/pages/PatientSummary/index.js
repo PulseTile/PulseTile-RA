@@ -80,6 +80,7 @@ class PatientSummaryInfo extends Component {
             { url: location.pathname, title: "Patient Summary", isActive: false }
         ];
         const FeedsPanels = get(themeCommonElements, 'feedsPanels', false);
+        const RespectPanel = get(themeCommonElements, 'respectPanel', false);
         return (
             <Grid className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -104,6 +105,7 @@ class PatientSummaryInfo extends Component {
                         })
                     }
                     { FeedsPanels && <FeedsPanels /> }
+                    { RespectPanel && <RespectPanel showMode={showMode} {...this.props} /> }
                 </Grid>
             </Grid>
         );

@@ -8,6 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import { versionsAction } from "../../actions/ReSPECT/versionsAction";
+import { versionsServerAction } from "../../actions/ReSPECT/versionsServerAction";
+
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import RespectPageHeader from "./fragments/RespectPageHeader";
 import TableHeadBlock from "./fragments/versions/TableHeadBlock";
@@ -74,14 +76,16 @@ class VersionsTable extends Component {
     };
 
     componentDidMount() {
-        const userId = localStorage.getItem('userId');
-        this.props.getVersionsInfo(userId);
+        this.props.getVersionsInfo();
+
+        this.props.getVersionsFromServer();
     };
 
     showVersion = version => {
-        this.setState({
-            currentVersion: version,
-        })
+        this.setState(
+            state => ({ currentVersion: version }),
+            () => this.props.getOneVersion(this.state.version)
+        );
     };
 
     returnToVersions = () => {
@@ -141,8 +145,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getVersionsInfo(userId) {
-            dispatch(versionsAction.request(userId));
+        getVersionsInfo() {
+            dispatch(versionsAction.request());
+        },
+
+        getVersionsFromServer() {
+            dispatch(versionsServerAction.request());
+        },
+        getOneVersion() {
+            dispatch(versionsServerAction.requestOne());
         },
     }
 };
