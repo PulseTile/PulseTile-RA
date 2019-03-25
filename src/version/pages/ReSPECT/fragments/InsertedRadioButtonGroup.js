@@ -52,19 +52,19 @@ const InsertedRadioButtonGroup = ({ classes, isSelected, variant, handleChange, 
                         Please select 1 or 2, and also 3 as applicable or explain in section D below.
                     </FormHelperText>
                     <FormControlLabel
-                        value="variantC1"
+                        value="at0005"
                         control={<Radio />}
                         disabled={isVersionInfo}
                         label="1 - They have sufficient maturity and understanding to participate in making this plan."
                     />
                     <FormControlLabel
-                        value="variantC2"
+                        value="at0011"
                         control={<Radio />}
                         disabled={isVersionInfo}
                         label="2 - They do not have sufficient maturity and understanding to participate in making this plan. Their views, when known, have been taken into account."
                     />
                     <FormControlLabel
-                        value="variantC3"
+                        value="at0012"
                         control={<Radio />}
                         disabled={isVersionInfo}
                         label="3 - Those holding parental responsibility have been fully involved in discussing and making this plan."

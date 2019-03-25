@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
-                data: null,
+                data: action.data,
             };
         case VERSIONS_SERVER_ACTION.SUCCESS:
             return {

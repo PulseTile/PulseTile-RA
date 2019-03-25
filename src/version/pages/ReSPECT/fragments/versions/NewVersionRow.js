@@ -40,7 +40,7 @@ class NewVersionRow extends Component {
     };
 
     render() {
-        const { classes, versionsNumber, toggleMode } = this.props;
+        const { classes, versionsNumber, versionsServerInfo, toggleMode } = this.props;
         const { isOpenModal } = this.state;
         return (
             <React.Fragment>
@@ -76,6 +76,7 @@ class NewVersionRow extends Component {
 const mapStateToProps = state => {
     return {
         respectModal: state.custom.respectModal.data,
+        versionsServerInfo: state.custom.versionsServerInfo.data,
     };
 };
 

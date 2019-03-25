@@ -11,11 +11,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { personalDetailsAction } from "../../../actions/ReSPECT/personalDetailsAction";
+import { versionsServerAction } from "../../../actions/ReSPECT/versionsServerAction";
 import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getStateData, getFilledValues } from "../functions";
+import { getSectionStatus, getStateData, getFilledValues, getVersionData } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const FORM_FIELDS_NUMBER = 9;
@@ -34,15 +35,18 @@ class PersonalDetails extends Component {
     };
 
     submitForm = data => {
+        const { sectionsInfo, currentRow, onRowClick, addPersonalDetails } = this.props;
+        const { birthDate } = this.state;
         const additionalData = {
-            birthDate: this.state.birthDate,
+            birthDate: birthDate,
             status: getSectionStatus(data, FORM_FIELDS_NUMBER),
             dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
-        this.props.addPersonalDetails(formData);
-        const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
-        this.props.onRowClick(nextStep);
+        const versionData = getVersionData('personalDetails', formData, sectionsInfo);
+        addPersonalDetails(formData, versionData);
+        const nextStep = (currentRow > TOTAL_ROWS_NUMBER) ? null : (currentRow + 1);
+        onRowClick(nextStep);
     };
 
     changeBirthDate = value => {
@@ -192,8 +196,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addPersonalDetails(data) {
-            dispatch(personalDetailsAction.create(data));
+        addPersonalDetails(sectionData, versionData) {
+            dispatch(personalDetailsAction.create(sectionData));
+            dispatch(versionsServerAction.put(versionData))
         }
     }
 };

@@ -7,10 +7,14 @@ import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import PrintIcon from '@material-ui/icons/Print';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import TableHeadBlock from "../TableHeadBlock";
 import SectionsInfo from "./SectionsInfo";
 import sections from "../../sections";
+import createPDF from "../pdfTool";
 
 const styles = theme => ({
     mainBlock: {
@@ -60,6 +64,9 @@ const styles = theme => ({
             color: "#fff"
         }
     },
+    printButton: {
+        color: "#fff",
+    }
 });
 
 class CurrentVersionBlock extends Component {
@@ -71,6 +78,11 @@ class CurrentVersionBlock extends Component {
             <Grid className={classes.mainBlock} item xs={12} sm={6}>
                 <div className={classes.blockTitle}>
                     <Typography className={classes.title}>ReSPECT Sections (Version {currentVersion})</Typography>
+                    <Tooltip title="Create">
+                        <IconButton className={classes.printButton} onClick={() => createPDF()} >
+                            <PrintIcon />
+                        </IconButton>
+                    </Tooltip>
                 </div>
                 <Paper className={classes.root}>
                     <div className={classes.tableWrapper}>

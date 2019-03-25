@@ -152,7 +152,7 @@ class ClinicalRecommendations extends Component {
                             <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
                             <Control.text
                                 className={classes.formInput}
-                                model="clinicalRecommendations.dateCompleted"
+                                model="clinicalRecommendations.dateDecision"
                                 defaultValue={filledValues.dateCompleted}
                                 disabled
                             />

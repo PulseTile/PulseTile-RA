@@ -114,7 +114,7 @@ class Involvement extends Component {
                             <FormLabel className={classes.formLabel}>Record date, names and roles of those involved in decision making, and where records of discussion can be found</FormLabel>
                             <Control.textarea
                                 className={classes.formTextarea}
-                                model="involvement.records"
+                                model="involvement.detailsOfDecision"
                                 defaultValue={filledValues.records}
                                 disabled={isVersionInfo}
                             />

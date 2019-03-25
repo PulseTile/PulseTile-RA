@@ -46,18 +46,37 @@ const getVersionById = takeEvery(VERSIONS_SERVER_ACTION.REQUEST_ONE, function*(a
 });
 
 const createNewVersion = takeEvery(VERSIONS_SERVER_ACTION.CREATE, function*(action) {
-    const versionData = get(action, 'data.versionData', null);
-    const currentVersion = get(action, 'data.currentVersion', null);
     const url = domainName + '/api/patients/' + patientId + '/respectforms';
     let options = {};
-    options.method = "PUT";
+    options.method = "POST";
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }
     options.headers = {
         'X-Requested-With': "XMLHttpRequest",
     };
-    options.body = JSON.stringify(versionData);
+    try {
+        const result = yield fetch(url, options).then(res => res.json());
+        yield put(versionsServerAction.success(result))
+    } catch(e) {
+        yield put(versionsServerAction.error(e))
+    }
+});
+
+const putOneSection = takeEvery(VERSIONS_SERVER_ACTION.PUT, function*(action) {
+    
+    console.log('', );
+       
+    
+    const url = domainName + '/api/patients/' + patientId + '/respectforms/';
+    let options = {};
+    options.method = "POST";
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    options.headers = {
+        'X-Requested-With': "XMLHttpRequest",
+    };
     try {
         const result = yield fetch(url, options).then(res => res.json());
         yield put(versionsServerAction.success(result))
@@ -70,4 +89,5 @@ export default [
     getVersionsList,
     getVersionById,
     createNewVersion,
+    putOneSection,
 ]

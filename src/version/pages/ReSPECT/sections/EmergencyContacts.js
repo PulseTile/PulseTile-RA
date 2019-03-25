@@ -30,21 +30,10 @@ const tableHeadersArray = [
 ];
 
 const contactsArray = [
-    { id: 'Husband', label: 'Husband' },
-    { id: 'Wife', label: 'Wife' },
-    { id: 'Father', label: 'Father' },
-    { id: 'Mother', label: 'Mother' },
-    { id: 'Daughter', label: 'Daughter' },
-    { id: 'Son', label: 'Son' },
-    { id: 'Brother', label: 'Brother' },
-    { id: 'Sister', label: 'Sister' },
-    { id: 'Friend', label: 'Friend' },
-    { id: 'Family friend', label: 'Family friend' },
-    { id: 'Neighbour', label: 'Neighbour' },
-    { id: 'District Nurse', label: 'District Nurse' },
-    { id: 'Primary Care Worker', label: 'Primary Care Worker' },
-    { id: 'Allocated social worker', label: 'Allocated social worker' },
-    { id: 'Care Coordinator', label: 'Care Coordinator' },
+    { id: 'Legal proxy or parent', label: 'Legal proxy or parent' },
+    { id: 'Family or friend or other', label: 'Family or friend or other' },
+    { id: 'GP', label: 'GP' },
+    { id: 'Lead consultant', label: 'Lead consultant' },
 ];
 
 class EmergencyContacts extends Component {
@@ -122,14 +111,14 @@ class EmergencyContacts extends Component {
                                 <FormLabel className={classes.formLabel}>Telephone</FormLabel>
                                 <Control.text className={classes.formInput} model="emergencyContactsRow.phone" required/>
                             </FormGroup>
-                            <FormGroup className={classes.formGroup}>
-                                <FormLabel className={classes.formLabel}>Other details</FormLabel>
-                                <Control.textarea className={classes.formTextarea} model="emergencyContactsRow.details"/>
-                            </FormGroup>
                             <AddNewButton />
                         </LocalForm>
                     }
                     <LocalForm  model="emergencyContacts" onSubmit={values => this.submitForm(values)}>
+                        <FormGroup className={classes.formGroup}>
+                            <FormLabel className={classes.formLabel}>Other details</FormLabel>
+                            <Control.textarea className={classes.formTextarea} model="emergencyContacts.details" defaultValue={filledValues.details}  />
+                        </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.mainFormLabel}>Date Completed</FormLabel>
                             <Control.text className={classes.formInput} model="emergencyContacts.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
