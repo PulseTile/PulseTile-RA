@@ -1,18 +1,43 @@
 import moment from "moment";
-import PDFDocument from "pdfkit";
+import get from "lodash/get";
+import PDFDocument from "@react-pdf/pdfkit";
 import blobStream from "blob-stream";
+
+import 'brace/mode/javascript';
+import 'brace/theme/monokai';
 
 import page1 from "./page1";
 import page2 from "./page2";
 
 function address(obj){
     let arr = [];
-    if( obj.sections.personalDetails.streetAddress ){ arr.push(obj.sections.personalDetails.streetAddress); }
-    if( obj.sections.personalDetails.addressSecondLine ){ arr.push(obj.sections.personalDetails.addressSecondLine); }
-    if( obj.sections.personalDetails.city ){ arr.push(obj.sections.personalDetails.city); }
-    if( obj.sections.personalDetails.country ){ arr.push(obj.sections.personalDetails.country); }
-    if( obj.sections.personalDetails.county ){ arr.push(obj.sections.personalDetails.county); }
-    if( obj.sections.personalDetails.postCode ){ arr.push(obj.sections.personalDetails.postCode); }
+
+    let streetAddress = get(obj, 'sections.personalDetails.streetAddress', null);
+    let addressSecondLine = get(obj, 'sections.personalDetails.addressSecondLine', null);
+    let city = get(obj, 'sections.personalDetails.city', null);
+    let country = get(obj, 'sections.personalDetails.country', null);
+    let county = get(obj, 'sections.personalDetails.county', null);
+    let postCode = get(obj, 'sections.personalDetails.postCode', null);
+
+    if (streetAddress) {
+        arr.push(streetAddress);
+    }
+    if (addressSecondLine) {
+        arr.push(addressSecondLine);
+    }
+    if (city) {
+        arr.push(city);
+    }
+    if (country) {
+        arr.push(country);
+    }
+    if (county) {
+        arr.push(county);
+    }
+    if (postCode) {
+        arr.push(postCode);
+    }
+
     return arr.join(', ');
 }
 
@@ -23,7 +48,7 @@ function getDDMMMYYYY(date){
 
 
 function getClinicalRecommendations(obj){
-    switch( obj.sections.clinicalRecommendation.focusValue ){
+    switch(get(obj, 'sections.clinicalRecommendation.focusValue', null)){
         case 'Life-sustaining treatment':
             return 5;
             break;
@@ -36,181 +61,47 @@ function getClinicalRecommendations(obj){
     }
 }
 
-export function makePDF(iframe) {
+export function makePDF(obj) {
 
-    // console.log('versionInfo', versionInfo);
-
-    // create a document and pipe to a blob
     let doc = new PDFDocument();
     let stream = doc.pipe(blobStream());
 
-// This is an example of the JSON Object provided by Rob
-    let json  = `{
-  "sections": {
-    "personalDetails": {
-      "nhsNumber": "9999999801",
-      "dateCompleted": "22-Mar-2019",
-      "preferredName": "Mr",
-      "firstName": "John",
-      "surname": "Doe",
-      "streetAddress": "Some address...",
-      "addressSecondLine": "Some address...",
-      "city": "London",
-      "county": "Some county...",
-      "postCode": "QWERTY1234",
-      "country": "UK",
-      "birthDate": "2019-03-05T22:00:00.000Z",
-      "status": "Completed"
-    },
-    "summaryInformation": {
-      "dateCompleted": "22-Mar-2019",
-      "summary": "Summary text...",
-      "details": "Details text...",
-      "status": "Completed"
-    },
-    "personalPreferences": {
-      "dateCompleted": "22-Mar-2019",
-      "preferencesText": "Some text...",
-      "preferencesValue": 8.9,
-      "status": "Completed"
-    },
-    "clinicalRecommendation": {
-      "clinicalSignatureFirst": "Robert Tweed",
-      "clinicalSignatureSecond": "Robert Tweed",
-      "dateCompleted": "22-Mar-2019",
-      "clinicalGuidance": "Some text...",
-      "cprValue": "2",
-      "focusValue": "Life-sustaining treatment",
-      "status": "Completed"
-    },
-    "capacityAndRepresentation": {
-      "dateCompleted": "22-Mar-2019",
-      "capacityFirst": "2",
-      "capacitySecond": "2",
-      "status": "Completed"
-    },
-    "involvement": {
-      "dateCompleted": "22-Mar-2019",
-      "records": "Some text...",
-      "variant": "variantB",
-      "status": "Completed"
-    },
-    "clinicalSignatures": {
-      "dateCompleted":"22-Mar-2019",
-      "signaturesArray": [
-        {
-          "clinicalSignature": "Robert Tweed",
-          "designation": "qwerty",
-          "clinicialName": "qwerty",
-          "gmcNumber": "123456789",
-          "isSrc": true,
-          "dateAndTime": "2019-03-09T22:00:00.000Z"
-        },
-        {
-          "designation": "ytrewq",
-          "clinicialName": "asdfg",
-          "gmcNumber": "741852963",
-          "clinicalSignature":" Robert Tweed",
-          "dateAndTime": "2019-02-23T22:00:00.000Z"
-        }
-      ],
-      "status": "Completed"
-    },
-    "emergencyContacts": {
-      "dateCompleted": "22-Mar-2019",
-      "contactsArray": [
-        {
-          "details": "Some text...",
-          "role": "Husband",
-          "name": "John",
-          "phone": "+380663729988"
-        },
-        {
-          "role": "Father",
-          "name": "James",
-          "phone": "+38050802287",
-          "details": "Some text..."
-        }
-      ],
-      "status": "Completed"
-    },
-    "confirmation": {
-      "dateCompleted": "22-Mar-2019",
-      "confirmationsArray": [
-        {
-          "clinicalSignature": "Robert Tweed",
-          "designation": "qwerty",
-          "clinicialName": "Nick",
-          "gmcNumber": "963852741",
-          "reviewDate": "2019-03-03T22:00:00.000Z"
-        },
-        {
-          "designation": "ytgfred",
-          "clinicialName": "Carl",
-          "gmcNumber": "789321456",
-          "clinicalSignature": "Robert Tweed",
-          "reviewDate": "2019-03-04T22:00:00.000Z"
-        }
-      ],
-      "status": "Completed"
-    },
-    "emergencyView": {
-      "status": "Completed",
-      "dateCompleted": "22-Mar-2019 10:26",
-      "author": "Robert Tweed"
-    }
-  },
-  "status": "Completed",
-  "dateCompleted": "22-Mar-2019 10:26",
-  "author": "Robert Tweed"
-}`;
-    let obj = JSON.parse(json);
-
-
-    console.log( obj );
-
-// START DOCUMENT
-
-
-// If senior clinician, don't include in other columns.
     let seniorClinician;
-    for(let i = 0; i < obj.sections.clinicalSignatures.signaturesArray.length; i++ ){
-        if( obj.sections.clinicalSignatures.signaturesArray[i].isSrc ){
-            seniorClinician = obj.sections.clinicalSignatures.signaturesArray[i];
-        }
-    }
-
-// Include all other clinicians in here
     let clinicians = [];
-    for( let i=0; i<obj.sections.clinicalSignatures.signaturesArray.length; i++ ){
-        if( !obj.sections.clinicalSignatures.signaturesArray[i].isSrc ){
-            clinicians.push(obj.sections.clinicalSignatures.signaturesArray[i]);
+
+    const signaturesArray = get(obj, 'sections.clinicalSignatures.signaturesArray', []);
+    const signaturesNumber = signaturesArray.length;
+    for (let i = 0; i < signaturesNumber; i++) {
+        let item = signaturesArray[i];
+        if (item.isSrc) {
+            seniorClinician = item;
+        } else {
+            clinicians.push(item);
         }
     }
 
     let form = {
-        // Map all properties from the json object (obj)
-        preferredName: obj.sections.personalDetails.preferredName,
-        fullName: obj.sections.personalDetails.firstName + ' ' + obj.sections.personalDetails.surname,
-        dateOfBirth: getDDMMMYYYY(obj.sections.personalDetails.birthDate),
-        dateCompleted: obj.sections.personalDetails.dateCompleted,
-        chiNumber: obj.sections.personalDetails.nhsNumber,
+        preferredName: get(obj, 'sections.personalDetails.preferredName', null),
+        fullName: get(obj, 'sections.personalDetails.firstName', null) + ' ' + get(obj, 'sections.personalDetails.surname', null),
+        dateOfBirth: getDDMMMYYYY(get(obj, 'sections.personalDetails.birthDate', null)),
+        dateCompleted: get(obj, 'sections.personalDetails.dateCompleted', null),
+        chiNumber: get(obj, 'sections.personalDetails.nhsNumber', null),
         address: address(obj),
-        sectionTwoDiagnostics: obj.sections.summaryInformation.summary,
-        sectionTwoDetails: obj.sections.summaryInformation.details,
-        sectionThreeX: obj.sections.personalPreferences.preferencesValue,
-        sectionThreeDetails: obj.sections.personalPreferences.preferencesText,
-        sectionFourClinicalRecommendationsX: getClinicalRecommendations(obj), // Returns position for the 'X' that appears on the form. 'Life-sustaining treatment' = 10 (left side), 'Symptom control' = 90 (right side)
-        sectionFourClinicalRecommendations: obj.sections.clinicalRecommendation.clinicalGuidance,
-        sectionFiveCapacity: obj.sections.capacityAndRepresentation.capacityFirst, // Yes or No
-        sectionFiveLegalProxy: obj.sections.capacityAndRepresentation.capacitySecond, // Yes, No or Unknown
-        sectionSixA: (obj.sections.involvement.variant == 'variantA'),
-        sectionSixB: (obj.sections.involvement.variant == 'variantB'),
-        sectionSixC: (obj.sections.involvement.variant == 'variantC'),
-        sectionSixC1: (obj.sections.involvement.variant == 'variantC1'),
-        sectionSixC2: (obj.sections.involvement.variant == 'variantC2'),
-        sectionSixC3: (obj.sections.involvement.variant == 'variantC3'),
-        sectionSixD: obj.sections.involvement.records,
+        sectionTwoDiagnostics: get(obj, 'sections.summaryInformation.summary', null),
+        sectionTwoDetails: get(obj, 'sections.summaryInformation.details', null),
+        sectionThreeX: get(obj, 'sections.personalPreferences.preferencesValue', null),
+        sectionThreeDetails: get(obj, 'sections.personalPreferences.preferencesText', null),
+        sectionFourClinicalRecommendationsX: getClinicalRecommendations(obj),
+        sectionFourClinicalRecommendations: get(obj, 'sections.clinicalRecommendation.clinicalGuidance', null),
+        sectionFiveCapacity: get(obj, 'sections.capacityAndRepresentation.capacityFirst', null),
+        sectionFiveLegalProxy: get(obj, 'sections.capacityAndRepresentation.capacitySecond', null),
+        sectionSixA: (get(obj, 'sections.involvement.variant', null) === 'variantA'),
+        sectionSixB: (get(obj, 'sections.involvement.variant', null) === 'variantB'),
+        sectionSixC: (get(obj, 'sections.involvement.variant', null) === 'variantC'),
+        sectionSixC1: (get(obj, 'sections.involvement.variant', null) === 'variantC1'),
+        sectionSixC2: (get(obj, 'sections.involvement.variant', null) === 'variantC2'),
+        sectionSixC3: (get(obj, 'sections.involvement.variant', null) === 'variantC3'),
+        sectionSixD: get(obj, 'sections.involvement.records', null),
         sectionSevenClinician1: {
             designation: ( clinicians[0] ? clinicians[0].designation : '' ),
             name: ( clinicians[0] ? clinicians[0].clinicialName : '' ),
@@ -230,151 +121,144 @@ export function makePDF(iframe) {
             dateTime: ( seniorClinician ? getDDMMMYYYY(seniorClinician.dateAndTime) : '' )
         },
         sectionEightContact1: {
-            role: ( obj.sections.emergencyContacts.contactsArray[0] ? obj.sections.emergencyContacts.contactsArray[0].role : '' ),
-            name: ( obj.sections.emergencyContacts.contactsArray[0] ? obj.sections.emergencyContacts.contactsArray[0].name : '' ),
-            telephone: ( obj.sections.emergencyContacts.contactsArray[0] ? obj.sections.emergencyContacts.contactsArray[0].phone : '' ),
-            details: ( obj.sections.emergencyContacts.contactsArray[0] ? obj.sections.emergencyContacts.contactsArray[0].details : '' )
+            role: get(obj, ['sections.emergencyContacts.contactsArray', [0], 'role'], null),
+            name: get(obj, ['sections.emergencyContacts.contactsArray', [0], 'name'], null),
+            telephone: get(obj, ['sections.emergencyContacts.contactsArray', [0], 'phone'], null),
+            details: get(obj, ['sections.emergencyContacts.contactsArray', [0], 'details'], null),
         },
         sectionEightContact2: {
-            role: ( obj.sections.emergencyContacts.contactsArray[1] ? obj.sections.emergencyContacts.contactsArray[1].role : '' ),
-            name: ( obj.sections.emergencyContacts.contactsArray[1] ? obj.sections.emergencyContacts.contactsArray[1].name : '' ),
-            telephone: ( obj.sections.emergencyContacts.contactsArray[1] ? obj.sections.emergencyContacts.contactsArray[1].phone : '' ),
-            details: ( obj.sections.emergencyContacts.contactsArray[1] ? obj.sections.emergencyContacts.contactsArray[1].details : '' )
+            role: get(obj, ['sections.emergencyContacts.contactsArray', [1], 'role'], null),
+            name: get(obj, ['sections.emergencyContacts.contactsArray', [1], 'name'], null),
+            telephone: get(obj, ['sections.emergencyContacts.contactsArray', [1], 'phone'], null),
+            details: get(obj, ['sections.emergencyContacts.contactsArray', [1], 'details'], null),
         },
         sectionEightContact3: {
-            role: ( obj.sections.emergencyContacts.contactsArray[2] ? obj.sections.emergencyContacts.contactsArray[2].role : '' ),
-            name: ( obj.sections.emergencyContacts.contactsArray[2] ? obj.sections.emergencyContacts.contactsArray[2].name : '' ),
-            telephone: ( obj.sections.emergencyContacts.contactsArray[2] ? obj.sections.emergencyContacts.contactsArray[2].phone : '' ),
-            details: ( obj.sections.emergencyContacts.contactsArray[2] ? obj.sections.emergencyContacts.contactsArray[2].details : '' )
+            role: get(obj, ['sections.emergencyContacts.contactsArray', [2], 'role'], null),
+            name: get(obj, ['sections.emergencyContacts.contactsArray', [2], 'name'], null),
+            telephone: get(obj, ['sections.emergencyContacts.contactsArray', [2], 'phone'], null),
+            details: get(obj, ['sections.emergencyContacts.contactsArray', [2], 'details'], null),
         },
         sectionEightContact4: {
-            role: ( obj.sections.emergencyContacts.contactsArray[3] ? obj.sections.emergencyContacts.contactsArray[3].role : '' ),
-            name: ( obj.sections.emergencyContacts.contactsArray[3] ? obj.sections.emergencyContacts.contactsArray[3].name : '' ),
-            telephone: ( obj.sections.emergencyContacts.contactsArray[3] ? obj.sections.emergencyContacts.contactsArray[3].phone : '' ),
-            details: ( obj.sections.emergencyContacts.contactsArray[3] ? obj.sections.emergencyContacts.contactsArray[3].details : '' )
+            role: get(obj, ['sections.emergencyContacts.contactsArray', [3], 'role'], null),
+            name: get(obj, ['sections.emergencyContacts.contactsArray', [3], 'name'], null),
+            telephone: get(obj, ['sections.emergencyContacts.contactsArray', [3], 'phone'], null),
+            details: get(obj, ['sections.emergencyContacts.contactsArray', [3], 'details'], null),
         },
         sectionNineConfirmation1: {
-            reviewDate: ( obj.sections.confirmation.confirmationsArray[0] ? getDDMMMYYYY(obj.sections.confirmation.confirmationsArray[0].reviewDate) : '' ),
-            designation: ( obj.sections.confirmation.confirmationsArray[0] ? obj.sections.confirmation.confirmationsArray[0].designation : '' ),
-            name: ( obj.sections.confirmation.confirmationsArray[0] ? obj.sections.confirmation.confirmationsArray[0].clinicialName : '' ),
-            number: ( obj.sections.confirmation.confirmationsArray[0] ? obj.sections.confirmation.confirmationsArray[0].gmcNumber : '' )
+            reviewDate: getDDMMMYYYY(get(obj, ['sections.confirmation.confirmationsArray', [0], 'reviewDate'], null)),
+            designation: get(obj, ['sections.confirmation.confirmationsArray', [0], 'designation'], null),
+            name: get(obj, ['sections.confirmation.confirmationsArray', [0], 'clinicialName'], null),
+            number: get(obj, ['sections.confirmation.confirmationsArray', [0], 'gmcNumber'], null),
         },
         sectionNineConfirmation2: {
-            reviewDate: ( obj.sections.confirmation.confirmationsArray[1] ? getDDMMMYYYY(obj.sections.confirmation.confirmationsArray[1].reviewDate) : '' ),
-            designation: ( obj.sections.confirmation.confirmationsArray[1] ? obj.sections.confirmation.confirmationsArray[1].designation : '' ),
-            name: ( obj.sections.confirmation.confirmationsArray[1] ? obj.sections.confirmation.confirmationsArray[1].clinicialName : '' ),
-            number: ( obj.sections.confirmation.confirmationsArray[1] ? obj.sections.confirmation.confirmationsArray[1].gmcNumber : '' )
+            reviewDate: getDDMMMYYYY(get(obj, ['sections.confirmation.confirmationsArray', [1], 'reviewDate'], null)),
+            designation: get(obj, ['sections.confirmation.confirmationsArray', [1], 'designation'], null),
+            name: get(obj, ['sections.confirmation.confirmationsArray', [1], 'clinicialName'], null),
+            number: get(obj, ['sections.confirmation.confirmationsArray', [1], 'gmcNumber'], null),
         }
-    }
+    };
 
-// PAGE 1
-
-// Import RESPECT image
     doc.image(page1, 0, 0, {width: doc.page.width, height: doc.page.height});
 
-// Preferred Name
-    doc.fontSize(10)
-        .text(form.preferredName, 316, 28, {
+    if (get(form, 'preferredName', null)) {
+        doc.fontSize(10)
+            .text(form.preferredName, 316, 28, {
+                width: 267,
+                height: 23
+            });
+    }
+
+    if (get(form, 'fullName', null)) {
+        doc.text(form.fullName, 31, 85, {
             width: 267,
             height: 23
         });
+    }
 
-// SECTION 1
-
-    // Full Name
-    doc.text(form.fullName, 31, 85, {
-        width: 267,
-        height: 23
-    });
-
-    // Date of Birth
-    doc.text(form.dateOfBirth, 316, 83, {
-        width: 172,
-        height: 23
-    });
-
-    // Date Completed
-    doc.text(form.dateCompleted, 505, 100, {
-        width: 75,
-        height: 23
-    });
-
-    // CHI number
-    doc.fontSize(12)
-        .text(form.chiNumber, 33, 129, {
-            width: 285,
-            height: 23,
-            characterSpacing: 16.5
-        });
-
-    // Address
-    doc.fontSize(10)
-        .lineGap(-1)
-        .text(form.address, 316, 115, {
+    if (get(form, 'dateOfBirth', null)) {
+        doc.text(form.dateOfBirth, 316, 83, {
             width: 172,
+            height: 23
+        });
+    }
+
+    if (get(form, 'dateCompleted', null)) {
+        doc.text(form.dateCompleted, 505, 100, {
+            width: 75,
+            height: 23
+        });
+    }
+
+    if (get(form, 'chiNumber', null)) {
+        doc.fontSize(12)
+            .text(form.chiNumber, 33, 129, {
+                width: 285,
+                height: 23,
+                characterSpacing: 16.5
+            });
+    }
+
+    if (get(form, 'address', null)) {
+        doc.fontSize(10)
+        // .lineGap(-1)
+            .text(form.address, 316, 115, {
+                width: 172,
+                height: 36
+            });
+    }
+
+    if (get(form, 'sectionTwoDiagnostics', null)) {
+        doc
+        // .lineGap(0)
+            .text(form.sectionTwoDiagnostics, 31, 208, {
+                width: 553,
+                height: 58
+            });
+    }
+
+    if (get(form, 'sectionTwoDetails', null)) {
+        doc.text(form.sectionTwoDetails, 31, 300, {
+            width: 553,
             height: 36
         });
+    }
 
-// SECTION 2
+    if (get(form, 'sectionThreeX', null)) {
+        doc.fontSize(14)
+            .text('X', (278 * (form.sectionThreeX / 100))+169, 389, {
+                width: 10,
+                height: 23
+            });
+    }
 
-    // Diagnostics...
-    doc.lineGap(0)
-        .text(form.sectionTwoDiagnostics, 31, 208, {
-            width: 553,
-            height: 58
-        });
+    if (get(form, 'sectionThreeDetails', null)) {
+        doc.fontSize(10)
+            .text(form.sectionThreeDetails, 31, 447, {
+                width: 553,
+                height: 41
+            });
+    }
 
-    // Details...
-    doc.text(form.sectionTwoDetails, 31, 300, {
-        width: 553,
-        height: 36
-    });
+    if (get(form, 'sectionFourClinicalRecommendationsX', null)) {
+        doc.fontSize(14)
+            .text('X', (171 * (form.sectionFourClinicalRecommendationsX / 100))+187, 544, {
+                width: 10,
+                height: 23
+            });
+    }
 
-
-// SECTION 3
-
-    // Balance Scale
-    doc.fontSize(14)
-        .text('X', (278 * (form.sectionThreeX / 100))+169, 389, {
-            width: 10,
-            height: 23
-        });
-
-    // Details...
-    doc.fontSize(10)
-        .text(form.sectionThreeDetails, 31, 447, {
-            width: 553,
-            height: 41
-        });
-
-
-// SECTION 4
-
-    // Clinical Recommendations Scale
-    doc.fontSize(14)
-        .text('X', (171 * (form.sectionFourClinicalRecommendationsX / 100))+187, 544, {
-            width: 10,
-            height: 23
-        });
-
-    // Clinical Recommendations Details...
-    doc.fontSize(10)
-        .text(form.sectionFourClinicalRecommendations, 31, 618, {
-            width: 553,
-            height: 100
-        });
-
-
-
-// PAGE 2
+    if (get(form, 'sectionFourClinicalRecommendations', null)) {
+        doc.fontSize(10)
+            .text(form.sectionFourClinicalRecommendations, 31, 618, {
+                width: 553,
+                height: 100
+            });
+    }
 
     doc.addPage();
     doc.image(page2, 0, 0, {width: doc.page.width, height: doc.page.height});
 
-// SECTION 5
-
-    // Capacity
-    switch( form.sectionFiveCapacity ){
+    switch (get(form, 'sectionFiveCapacity', null)) {
         case '2': // Yes
             doc.ellipse(535, 52, 16, 10)
                 .lineWidth(2)
@@ -390,7 +274,7 @@ export function makePDF(iframe) {
     }
 
     // Legal Proxy
-    switch( form.sectionFiveLegalProxy ){
+    switch (get(form, 'sectionFiveLegalProxy', null)) {
         case '2': // Yes
             doc.ellipse(470, 89, 16, 10)
                 .lineWidth(2)
@@ -411,12 +295,7 @@ export function makePDF(iframe) {
             break;
     }
 
-// SECTION 6
-
-    // Involvement
-
-    // A
-    if( form.sectionSixA ){
+    if (get(form, 'sectionSixA', null)) {
         doc.fontSize(14)
             .text('X', 34, 163, {
                 width: 10,
@@ -424,8 +303,7 @@ export function makePDF(iframe) {
             });
     }
 
-    // B
-    if( form.sectionSixB ){
+    if (get(form, 'sectionSixB', null)) {
         doc.fontSize(14)
             .text('X', 34, 196, {
                 width: 10,
@@ -433,8 +311,7 @@ export function makePDF(iframe) {
             });
     }
 
-    // C
-    if( form.sectionSixC ){
+    if (get(form, 'sectionSixC', null)) {
         doc.fontSize(14)
             .text('X', 34, 242, {
                 width: 10,
@@ -442,8 +319,7 @@ export function makePDF(iframe) {
             });
     }
 
-    // C1
-    if( form.sectionSixC1 ){
+    if (get(form, 'sectionSixC1', null)) {
         doc.fontSize(14)
             .text('X', 42, 271, {
                 width: 10,
@@ -451,8 +327,7 @@ export function makePDF(iframe) {
             });
     }
 
-    // C2
-    if( form.sectionSixC2 ){
+    if (get(form, 'sectionSixC2', null)) {
         doc.fontSize(14)
             .text('X', 42, 288, {
                 width: 10,
@@ -460,8 +335,7 @@ export function makePDF(iframe) {
             });
     }
 
-    // C3
-    if( form.sectionSixC3 ){
+    if (get(form, 'sectionSixC3', null)) {
         doc.fontSize(14)
             .text('X', 42, 315, {
                 width: 10,
@@ -469,213 +343,253 @@ export function makePDF(iframe) {
             });
     }
 
-    // D - Details...
-    doc.fontSize(10)
-        .text(form.sectionSixD, 31, 409, {
-            width: 553,
-            height: 41
+    if (get(form, 'sectionSixD', null)) {
+        doc.fontSize(10)
+            .text(form.sectionSixD, 31, 409, {
+                width: 553,
+                height: 41
+            });
+    }
+
+
+    if (get(form, 'sectionSevenClinician1.designation', null)) {
+        doc.text(form.sectionSevenClinician1.designation, 31, 497, {
+            width: 111,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionSevenClinician1.name', null)) {
+        doc.text(form.sectionSevenClinician1.name, 151, 497, {
+            width: 154,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionSevenClinician1.number', null)) {
+        doc.text(form.sectionSevenClinician1.number, 314, 497, {
+            width: 85,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionSevenClinician1.dateTime', null)) {
+        doc.text(form.sectionSevenClinician1.dateTime, 506, 497, {
+            width: 78,
+            height: 18
+        });
+    }
+
+    if (get(form, 'sectionSevenClinician2.designation', null)) {
+        doc.text(form.sectionSevenClinician2.designation, 31, 497, {
+            width: 111,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionSevenClinician2.name', null)) {
+        doc.text(form.sectionSevenClinician2.name, 151, 497, {
+            width: 154,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionSevenClinician2.number', null)) {
+        doc.text(form.sectionSevenClinician2.number, 314, 497, {
+            width: 85,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionSevenClinician2.dateTime', null)) {
+        doc.text(form.sectionSevenClinician2.dateTime, 506, 497, {
+            width: 78,
+            height: 18
+        });
+    }
+
+
+    if (get(form, 'sectionSevenSeniorClinician.designation', null)) {
+        doc.text(form.sectionSevenSeniorClinician.designation, 31, 537, {
+            width: 111,
+            height: 18
+        });
+    }
+
+    if (get(form, 'sectionSevenSeniorClinician.name', null)) {
+        doc.text(form.sectionSevenSeniorClinician.name, 151, 537, {
+            width: 154,
+            height: 18
+        });
+    }
+
+    if (get(form, 'sectionSevenSeniorClinician.number', null)) {
+        doc.text(form.sectionSevenSeniorClinician.number, 314, 537, {
+            width: 85,
+            height: 18
+        });
+    }
+
+    if (get(form, 'sectionSevenSeniorClinician.dateTime', null)) {
+        doc.text(form.sectionSevenSeniorClinician.dateTime, 506, 537, {
+            width: 78,
+            height: 18
         });
 
-// SECTION 7
+    }
 
-    // Clinicial 1
-    doc.text(form.sectionSevenClinician1.designation, 31, 497, {
-        width: 111,
-        height: 18
-    });
+    if (get(form, 'sectionEightContact1.role', null)) {
+        doc.text(form.sectionEightContact1.role, 31, 605, {
+            width: 111,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact1.name', null)) {
+        doc.text(form.sectionEightContact1.name, 151, 605, {
+            width: 154,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact1.telephone', null)) {
+        doc.text(form.sectionEightContact1.telephone, 314, 605, {
+            width: 117,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact1.details', null)) {
+        doc.text(form.sectionEightContact1.details, 439, 605, {
+            width: 145,
+            height: 18
+        });
+    }
 
-    doc.text(form.sectionSevenClinician1.name, 151, 497, {
-        width: 154,
-        height: 18
-    });
+    if (get(form, 'sectionEightContact2.role', null)) {
+        doc.text(form.sectionEightContact2.role, 31, 605, {
+            width: 111,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact2.name', null)) {
+        doc.text(form.sectionEightContact2.name, 151, 605, {
+            width: 154,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact2.telephone', null)) {
+        doc.text(form.sectionEightContact2.telephone, 314, 605, {
+            width: 117,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact2.details', null)) {
+        doc.text(form.sectionEightContact2.details, 439, 605, {
+            width: 145,
+            height: 18
+        });
+    }
 
-    doc.text(form.sectionSevenClinician1.number, 314, 497, {
-        width: 85,
-        height: 18
-    });
+    if (get(form, 'sectionEightContact3.role', null)) {
+        doc.text(form.sectionEightContact3.role, 31, 605, {
+            width: 111,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact3.name', null)) {
+        doc.text(form.sectionEightContact3.name, 151, 605, {
+            width: 154,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact3.telephone', null)) {
+        doc.text(form.sectionEightContact3.telephone, 314, 605, {
+            width: 117,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact3.details', null)) {
+        doc.text(form.sectionEightContact3.details, 439, 605, {
+            width: 145,
+            height: 18
+        });
+    }
 
-    doc.text(form.sectionSevenClinician1.dateTime, 506, 497, {
-        width: 78,
-        height: 18
-    });
+    if (get(form, 'sectionEightContact4.role', null)) {
+        doc.text(form.sectionEightContact4.role, 31, 605, {
+            width: 111,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact4.name', null)) {
+        doc.text(form.sectionEightContact4.name, 151, 605, {
+            width: 154,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact4.telephone', null)) {
+        doc.text(form.sectionEightContact4.telephone, 314, 605, {
+            width: 117,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionEightContact4.details', null)) {
+        doc.text(form.sectionEightContact4.details, 439, 605, {
+            width: 145,
+            height: 18
+        });
+    }
 
-    // Clinicial 2
-    doc.text(form.sectionSevenClinician2.designation, 31, 517, {
-        width: 111,
-        height: 18
-    });
 
-    doc.text(form.sectionSevenClinician2.name, 151, 517, {
-        width: 154,
-        height: 18
-    });
+    if (get(form, 'sectionNineConfirmation1.reviewDate', null)) {
+        doc.text(form.sectionNineConfirmation1.reviewDate, 31, 740, {
+            width: 78,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionNineConfirmation1.designation', null)) {
+        doc.text(form.sectionNineConfirmation1.designation, 120, 740, {
+            width: 108,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionNineConfirmation1.name', null)) {
+        doc.text(form.sectionNineConfirmation1.name, 234, 740, {
+            width: 154,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionNineConfirmation1.number', null)) {
+        doc.text(form.sectionNineConfirmation1.number, 395, 740, {
+            width: 108,
+            height: 18
+        });
+    }
 
-    doc.text(form.sectionSevenClinician2.number, 314, 517, {
-        width: 85,
-        height: 18
-    });
+    if (get(form, 'sectionNineConfirmation2.reviewDate', null)) {
+        doc.text(form.sectionNineConfirmation2.reviewDate, 31, 740, {
+            width: 78,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionNineConfirmation2.designation', null)) {
+        doc.text(form.sectionNineConfirmation2.designation, 120, 740, {
+            width: 108,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionNineConfirmation2.name', null)) {
+        doc.text(form.sectionNineConfirmation2.name, 234, 740, {
+            width: 154,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionNineConfirmation2.number', null)) {
+        doc.text(form.sectionNineConfirmation2.number, 395, 740, {
+            width: 108,
+            height: 18
+        });
+    }
 
-    doc.text(form.sectionSevenClinician2.dateTime, 506, 517, {
-        width: 78,
-        height: 18
-    });
 
-    // Clinicial 3
-    doc.text(form.sectionSevenSeniorClinician.designation, 31, 537, {
-        width: 111,
-        height: 18
-    });
-
-    doc.text(form.sectionSevenSeniorClinician.name, 151, 537, {
-        width: 154,
-        height: 18
-    });
-
-    doc.text(form.sectionSevenSeniorClinician.number, 314, 537, {
-        width: 85,
-        height: 18
-    });
-
-    doc.text(form.sectionSevenSeniorClinician.dateTime, 506, 537, {
-        width: 78,
-        height: 18
-    });
-
-// SECTION 8
-
-    // Contact 1
-    doc.text(form.sectionEightContact1.role, 31, 605, {
-        width: 111,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact1.name, 151, 605, {
-        width: 154,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact1.telephone, 314, 605, {
-        width: 117,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact1.details, 439, 605, {
-        width: 145,
-        height: 18
-    });
-
-    // Contact 2
-    doc.text(form.sectionEightContact2.role, 31, 625, {
-        width: 111,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact2.name, 151, 625, {
-        width: 154,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact2.telephone, 314, 625, {
-        width: 117,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact2.details, 439, 625, {
-        width: 145,
-        height: 18
-    });
-
-    // Contact 3
-    doc.text(form.sectionEightContact3.role, 31, 644, {
-        width: 111,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact3.name, 151, 644, {
-        width: 154,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact3.telephone, 314, 644, {
-        width: 117,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact3.details, 439, 644, {
-        width: 145,
-        height: 18
-    });
-
-    // Contact 4
-    doc.text(form.sectionEightContact4.role, 31, 663, {
-        width: 111,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact4.name, 151, 663, {
-        width: 154,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact4.telephone, 314, 663, {
-        width: 117,
-        height: 18
-    });
-
-    doc.text(form.sectionEightContact4.details, 439, 663, {
-        width: 145,
-        height: 18
-    });
-
-// SECTION 9
-
-    // Confirmation 1
-    doc.text(form.sectionNineConfirmation1.reviewDate, 31, 740, {
-        width: 78,
-        height: 18
-    });
-
-    doc.text(form.sectionNineConfirmation1.designation, 120, 740, {
-        width: 108,
-        height: 18
-    });
-
-    doc.text(form.sectionNineConfirmation1.name, 234, 740, {
-        width: 154,
-        height: 18
-    });
-
-    doc.text(form.sectionNineConfirmation1.number, 395, 740, {
-        width: 108,
-        height: 18
-    });
-
-    // Confirmation 2
-    doc.text(form.sectionNineConfirmation2.reviewDate, 31, 760, {
-        width: 78,
-        height: 18
-    });
-
-    doc.text(form.sectionNineConfirmation2.designation, 120, 760, {
-        width: 108,
-        height: 18
-    });
-
-    doc.text(form.sectionNineConfirmation2.name, 234, 760, {
-        width: 154,
-        height: 18
-    });
-
-    doc.text(form.sectionNineConfirmation2.number, 395, 760, {
-        width: 108,
-        height: 18
-    });
-
-// end and display the document in the iframe to the right
     doc.end();
     stream.on('finish', function() {
-        iframe.src = stream.toBlobURL('application/pdf');
+        let url = stream.toBlobURL('application/pdf');
+        window.open(url, '_blank');
     });
+
 
     return true;
 }

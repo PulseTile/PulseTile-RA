@@ -74,12 +74,15 @@ class CurrentVersionBlock extends Component {
     render() {
         const { classes, currentVersion, versionsInfo, toggleMode } = this.props;
         const versionInfo = get(versionsInfo, [[currentVersion - 1], 'sections'], []);
+
+        const infoToPrint = get(versionsInfo, [currentVersion - 1], null);
+
         return (
             <Grid className={classes.mainBlock} item xs={12} sm={6}>
                 <div className={classes.blockTitle}>
                     <Typography className={classes.title}>ReSPECT Sections (Version {currentVersion})</Typography>
                     <Tooltip title="Create">
-                        <IconButton className={classes.printButton} onClick={() => createPDF()} >
+                        <IconButton className={classes.printButton} onClick={() => createPDF(infoToPrint)} >
                             <PrintIcon />
                         </IconButton>
                     </Tooltip>
