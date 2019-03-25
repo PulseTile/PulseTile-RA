@@ -24,6 +24,7 @@ const LoadingItems = ({ classes }) => {
             <ListItem button divider>
                 <ListItemText primary="Loading..." />
             </ListItem>
+            <div className={classes.emptyRows}></div>
         </List>
     );
 };

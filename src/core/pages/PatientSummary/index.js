@@ -24,7 +24,6 @@ const styles = theme => ({
         width: "100%",
     },
     card: {
-        minHeight: 302,
         borderRadius: 0,
     },
     media: {
@@ -62,6 +61,9 @@ const styles = theme => ({
     },
     listItem: {
         fontSize: "1rem",
+    },
+    emptyRows: {
+        height: 150,
     },
 });
 

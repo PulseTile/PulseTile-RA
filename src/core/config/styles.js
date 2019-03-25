@@ -85,6 +85,11 @@ export function getCurrentTheme(isContrastMode) {
                     border: "1px solid #e5e5e5"
                 }
             },
+            MuiList: {
+                root: {
+                    backgroundColor: "#fff",
+                }
+            },
             MuiPaper: {
                 elevation1: {
                     boxShadow: "none",
