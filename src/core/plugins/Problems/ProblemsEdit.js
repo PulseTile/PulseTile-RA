@@ -12,7 +12,7 @@ import EditTemplate from "../../common/ResourseTemplates/EditTemplate";
  * @constructor
  */
 const ProblemsEdit = ({ classes, ...rest }) => (
-    <EditTemplate blockTitle="Problem / Issue"  {...rest}>
+    <EditTemplate blockTitle="Problem / Diagnosis"  {...rest}>
         <TextInput className={classes.labelBlock} source="problem" label="Problem issue" />
         <LongTextInput className={classes.labelBlock} source="description" label="Description" />
         <DisabledInput className={classes.labelBlock} source="author" label="Author" />

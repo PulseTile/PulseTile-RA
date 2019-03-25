@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router";
-import { TextField } from "react-admin";
+import { TextField, DateField } from "react-admin";
 
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import AllergiesCreate from "./AllergiesCreate";
@@ -23,7 +23,7 @@ const AllergiesList = props => (
       {...props}
     >
         <TextField source="cause" label="Cause" />
-        <TextField source="reaction" label="Reaction / Description" />
+        <DateField source="dateCreated" label="Date" />
         <TextField source="source" label="Source" />
     </ListTemplate>
 );

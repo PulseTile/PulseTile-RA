@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { SelectInput, TextInput, DisabledInput } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -29,7 +30,7 @@ const ContactsCreate = ({ classes, ...rest }) => (
         <TextInput source="notes" label="Comment" />
         <DisabledInput source="source" label="Source" />
         <DisabledInput source="author" label="Author" />
-        <DisabledInput source="date" label="Date" />
+        <DisabledInput className={classes.labelBlock} source="date" label="Date" defaultValue={moment().format('MM/DD/YYYY HH:mm')} />
     </CreateTemplate>
 );
 

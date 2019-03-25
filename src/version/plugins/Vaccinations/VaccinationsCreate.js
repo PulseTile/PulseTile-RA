@@ -21,7 +21,7 @@ const styles = {
  * @param {shape} rest
  */
 const VaccinationsCreate = ({ classes, ...rest }) => (
-    <CreateTemplate blockTitle="Problems / Issues" {...rest}>
+    <CreateTemplate blockTitle="Vaccination" {...rest}>
         <TextInput className={classes.labelBlock} source="vaccinationName" label="Name" />
         <DateInput className={classes.labelBlock} source="vaccinationDateTime" label="Date and Time" />
         <TextInput className={classes.labelBlock} source="series" label="Series" />

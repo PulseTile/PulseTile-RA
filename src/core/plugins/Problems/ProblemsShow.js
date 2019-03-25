@@ -20,7 +20,7 @@ const styles = {
  */
 const ProblemsShow = ({ classes, ...rest }) => (
     <ShowTemplate pageTitle="Problem / Diagnosis" {...rest}>
-        <TextField className={classes.labelBlock} label="Problem / Issue" source="problem" />
+        <TextField className={classes.labelBlock} label="Problem issue" source="problem" />
         <TextField className={classes.labelBlock} label="Description" source="description" />
         <TextField className={classes.labelBlock} label="Author" source="author" />
         <DateField className={classes.labelBlock} label="Date" source="dateCreated" />

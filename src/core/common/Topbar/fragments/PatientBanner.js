@@ -31,7 +31,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
                     { moment(get(patientInfo, 'dateOfBirth', null)).format('DD-MMM-YYYY') }</Typography>
                 <Typography>
                     <span className={classes.keyName}>Phone: </span>
-                    {get(patientInfo, 'telephone', null)}
+                    {get(patientInfo, 'phone', null)}
                 </Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
