@@ -25,8 +25,8 @@ export const resourceOrder = [
 export const themeCommonElements = {
     topbar: ThemeTopbar,
     footer: ThemeFooter,
-    feedsSelectors: FeedsSelectors,
-    feedsPanels: FeedsPanels,
+    // feedsSelectors: FeedsSelectors,
+    // feedsPanels: FeedsPanels,
     homePage: PatientSummary,
 };
 
