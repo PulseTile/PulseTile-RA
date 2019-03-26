@@ -63,8 +63,7 @@ const styles = theme => ({
 class PatientSummaryInfo extends Component {
 
     componentDidMount() {
-        const currentUserID = localStorage.getItem('userId');
-        this.props.getPatientSynopsis(currentUserID);
+        this.props.getPatientSynopsis();
     }
 
     render() {
@@ -128,9 +127,9 @@ const mapDispatchToProps = dispatch => {
     const synopsisActions = coreSynopsisActions.concat(nonCoreSynopsisActions);
 
     return {
-        getPatientSynopsis(userId) {
+        getPatientSynopsis() {
             synopsisActions.map(item => {
-                return dispatch(item.request(userId));
+                return dispatch(item.request());
             });
         }
     }
