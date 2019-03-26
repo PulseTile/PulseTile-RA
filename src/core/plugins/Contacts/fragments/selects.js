@@ -14,7 +14,7 @@ export const relationshipArray = [
     { id: 'District Nurse', name: 'District Nurse' },
     { id: 'Primary Care Worker', name: 'Primary Care Worker' },
     { id: 'Allocated social worker', name: 'Allocated social worker' },
-    { id: 'Care Coordinator', name: 'Care Coordinator' },
+    { id: 'Care Coordinator', name: 'Care C-ordinator' },
 ];
 
 export const relationshipTypeArray = [

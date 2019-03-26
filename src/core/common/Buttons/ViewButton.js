@@ -18,11 +18,14 @@ const styles = theme => ({
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
  * @param {func}  viewAction
+ * @param {shape} record
  */
-const ViewButton = ({ classes, viewAction }) => (
-    <Button onClick={(e, userId) => viewAction(e, userId)} className={classes.viewButton}>
-        <Typography className={classes.viewButton}>View</Typography>
-    </Button>
-);
+const ViewButton = ({ classes, viewAction, record }) => {
+    return (
+        <Button onClick={e => viewAction(e, record)} className={classes.viewButton}>
+            <Typography className={classes.viewButton}>View</Typography>
+        </Button>
+    );
+};
 
 export default withStyles(styles)(ViewButton);

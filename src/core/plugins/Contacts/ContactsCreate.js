@@ -1,19 +1,7 @@
 import React from "react";
-import moment from "moment";
-import { SelectInput, TextInput, DisabledInput } from "react-admin";
-
-import { withStyles } from '@material-ui/core/styles';
 
 import CreateTemplate from "../../common/ResourseTemplates/CreateTemplate";
-import { relationshipArray, relationshipTypeArray } from "./selects";
-
-const styles = {
-    labelBlock: {
-        '& > div': {
-            marginBottom: "0px !important",
-        },
-    },
-};
+import Inputs from "./fragments/Inputs";
 
 /**
  * This component returns Contacts creation form
@@ -24,14 +12,8 @@ const styles = {
  */
 const ContactsCreate = ({ classes, ...rest }) => (
     <CreateTemplate blockTitle="Contact" {...rest}>
-        <TextInput source="name" label="Name" />
-        <SelectInput source="relationship" label="Relationship" choices={relationshipArray} />
-        <SelectInput source="relationshipType" label="Relationship Type" choices={relationshipTypeArray} />
-        <TextInput source="notes" label="Comment" />
-        <DisabledInput source="source" label="Source" />
-        <DisabledInput source="author" label="Author" />
-        <DisabledInput className={classes.labelBlock} source="date" label="Date" defaultValue={moment().format('MM/DD/YYYY HH:mm')} />
+        <Inputs />
     </CreateTemplate>
 );
 
-export default withStyles(styles)(ContactsCreate);
+export default ContactsCreate;
