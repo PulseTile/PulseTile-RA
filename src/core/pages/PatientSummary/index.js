@@ -24,7 +24,6 @@ const styles = theme => ({
         width: "100%",
     },
     card: {
-        minHeight: 302,
         borderRadius: 0,
     },
     media: {
@@ -65,13 +64,15 @@ const styles = theme => ({
     listItem: {
         fontSize: "1rem",
     },
+    emptyRows: {
+        height: 150,
+    },
 });
 
 class PatientSummaryInfo extends Component {
 
     componentDidMount() {
-        const currentUserID = localStorage.getItem('userId');
-        this.props.getPatientSynopsis(currentUserID);
+        this.props.getPatientSynopsis();
     }
 
     render() {
@@ -137,9 +138,9 @@ const mapDispatchToProps = dispatch => {
     const synopsisActions = coreSynopsisActions.concat(nonCoreSynopsisActions);
 
     return {
-        getPatientSynopsis(userId) {
+        getPatientSynopsis() {
             synopsisActions.map(item => {
-                return dispatch(item.request(userId));
+                return dispatch(item.request());
             });
         }
     }

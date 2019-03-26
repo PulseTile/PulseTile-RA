@@ -1,12 +1,12 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import get from "lodash/get";
 
 import { token, domainName } from "../token";
 
+const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
+
 export default function createCustomSagas(actionName, actionType, pluginName) {
     return takeEvery(actionName.REQUEST, function*(action) {
-        const userId = get(action, 'data', null);
-        const url = domainName + '/api/patients/' + userId + '/synopsis/' + pluginName;
+        const url = domainName + '/api/patients/' + patientID + '/synopsis/' + pluginName;
         let options = {};
         options.method = "GET";
         if (!options.headers) {
