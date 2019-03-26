@@ -20,7 +20,7 @@ import { token, domainName } from "../token";
 import dummyPatients from "../pages/PatientsList/dummyPatients";
 
 const apiPatientsUser = 'api/patients';
-const currentUserID = localStorage.getItem('userId');
+const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
 
 /**
  * This constant prepare data for requests (URL and options)
@@ -38,7 +38,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             if (resource === 'patients') {
                 url = `${domainName}/api/${resource}`;
             } else {
-                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
+                url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}`;
             }
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -51,7 +51,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
         }
 
         case GET_ONE:
-            url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
+            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}/${params.id}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -62,8 +62,8 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
-            let data = Object.assign({userId: currentUserID}, params.data);
-            url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
+            let data = Object.assign({userId: patientID}, params.data);
+            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}/${params.id}`;
             options.method = "PUT";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -77,8 +77,8 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
-            data = Object.assign({userId: currentUserID}, params.data);
-            url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
+            data = Object.assign({userId: patientID}, params.data);
+            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}`;
             options.method = "POST";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -247,11 +247,13 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case CREATE:
-            let compositionUidArray = response.compositionUid.split('::');
-            let sourseID = compositionUidArray[0];
-            let id = response.host + '-' + sourseID;
+            const dataFromRequest = get(params, 'data', null);
+            const compositionUid = get(response, 'compositionUid', null);
+            const compositionUidArray = compositionUid.split('::');
+            const sourseID = compositionUidArray[0];
+            dataFromRequest.id = get(response, 'host', null) + '-' + sourseID;
             return {
-                data: Object.assign({id: id}, response),
+                data: dataFromRequest,
             };
 
         default:

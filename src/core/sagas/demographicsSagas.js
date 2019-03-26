@@ -1,12 +1,12 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import get from "lodash/get";
 
 import { domainName } from "../token";
 import { DEMOGRAPHICS_ACTION, demographicsAction } from "../actions/demographicsAction";
 
+const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
+
 export default takeEvery(DEMOGRAPHICS_ACTION.REQUEST, function*(action) {
-    const userId = get(action, 'data', null);
-    const url = domainName + '/api/demographics/' + userId;
+    const url = domainName + '/api/demographics/' + patientID;
     let options = {};
     options.method = "GET";
     if (!options.headers) {
