@@ -12,6 +12,7 @@ import {
     DELETE,
     DELETE_MANY
 } from "react-admin";
+import sort, { ASC, DESC } from 'sort-array-objects';
 
 import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
@@ -199,6 +200,20 @@ function getFilterResults(resource, results, params) {
 }
 
 /**
+ * This function sorts response array
+ *
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {array}  results
+ * @param {shape}  params
+ * @return {array}
+ */
+function getSortedResults(results, params) {
+    const sortField = get(params, 'sort.field', null);
+    const sortOrder = (get(params, 'sort.order', null) === 'DESC') ? DESC : ASC;
+    return sort(results, [sortField], sortOrder);
+}
+
+/**
  * This constant handle response data
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
@@ -214,16 +229,15 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
             const pageNumber = get(params, 'pagination.page', 1);
             const numberPerPage = get(params, 'pagination.perPage', 10);
-
             const results = getResultsFromResponse(resource, response, params);
             const resultsFiltering = getFilterResults(resource, results, params);
-
+            const resultsSorting = getSortedResults(resultsFiltering, params);
             const startItem = (pageNumber - 1) * numberPerPage;
             const endItem = pageNumber * numberPerPage;
-            const paginationResults = resultsFiltering.slice(startItem, endItem);
+            const paginationResults = resultsSorting.slice(startItem, endItem);
             return {
                 data: paginationResults,
-                total: resultsFiltering.length,
+                total: resultsSorting.length,
             };
 
         case GET_ONE:
@@ -265,12 +279,13 @@ const fakePatientsProvider = (type, resource, params) => {
             const numberPerPage = get(params, 'pagination.perPage', 10);
             const results = getResultsFromResponse(resource, dummyPatients, params);
             const resultsFiltering = getFilterResults(resource, results, params);
+            const resultsSorting = getSortedResults(resultsFiltering, params);
             const startItem = (pageNumber - 1) * numberPerPage;
             const endItem = pageNumber * numberPerPage;
-            const paginationResults = resultsFiltering.slice(startItem, endItem);
+            const paginationResults = resultsSorting.slice(startItem, endItem);
             return {
                 data: paginationResults,
-                total: resultsFiltering.length,
+                total: resultsSorting.length,
             };
 
         case GET_ONE:

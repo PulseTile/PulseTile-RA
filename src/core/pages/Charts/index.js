@@ -12,6 +12,8 @@ import {
 } from "recharts";
 
 import { withStyles } from '@material-ui/core/styles';
+import Typography from "@material-ui/core/Typography";
+
 import customDataProvider from "../../dataProviders/dataProvider";
 
 const styles = {
@@ -22,6 +24,16 @@ const styles = {
     },
     chartBlock: {
         display: "inline-block",
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 800,
+        paddingTop: 10,
+        paddingLeft: 10,
+    },
+    description: {
+        paddingTop: 10,
+        paddingLeft: 10,
     }
 };
 
@@ -155,8 +167,8 @@ class Charts extends Component {
         return (
             <div className={classes.chartsContainer}>
                 <div className={classes.chartBlock}>
-                    <h3>Patients By Setting</h3>
-                    <p>This is a brief description of patients by setting.</p>
+                    <Typography className={classes.title}>Patients By Setting</Typography>
+                    <Typography className={classes.description}>This is a brief description of patients by setting.</Typography>
                     <BarChart
                         width={800}
                         height={260}
@@ -178,8 +190,8 @@ class Charts extends Component {
                     </BarChart>
                 </div>
                 <div className={classes.chartBlock}>
-                    <h3>Patients By Age</h3>
-                    <p>This is a brief description of patients by age.</p>
+                    <Typography className={classes.title}>Patients By Age</Typography>
+                    <Typography className={classes.description}>This is a brief description of patients by age.</Typography>
                     <BarChart
                         width={800}
                         height={260}

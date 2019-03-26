@@ -24,7 +24,7 @@ const styles = theme => ({
         width: "100%",
     },
     card: {
-        minHeight: 302,
+        borderRadius: 0,
     },
     media: {
         backgroundColor: theme.palette.mainColor,
@@ -43,6 +43,9 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         color: "#fff",
+        '&:hover': {
+            cursor: "pointer",
+        }
     },
     icon: {
         marginBottom: 10,
@@ -51,12 +54,16 @@ const styles = theme => ({
         marginBottom: 0,
         color: "#fff",
         fontSize: 20,
+        fontWeight: 800,
     },
     list: {
         padding: 0,
     },
     listItem: {
         fontSize: "1rem",
+    },
+    emptyRows: {
+        height: 150,
     },
 });
 

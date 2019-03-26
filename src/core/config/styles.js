@@ -11,6 +11,7 @@ const defaultLightPalette = {
     mainColor: "#0D672F",
     dangerColor: "#da534f",
     viewButton: "#30ad57",
+    disabledColor: "#e9e4e4",
 };
 
 const defaultDarkPalette = {
@@ -18,6 +19,7 @@ const defaultDarkPalette = {
     mainColor: "#000",
     dangerColor: "#000",
     viewButton: "#000",
+    disabledColor: "#e9e4e4",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -56,6 +58,14 @@ export function getCurrentTheme(isContrastMode) {
     const palette = getCurrentPalette(isContrastMode);
     return createMuiTheme({
         palette: palette,
+        typography: {
+            fontFamily: [
+                '"HK Grotesk"',
+                'Arial',
+                'sans-serif',
+            ].join(','),
+            fontSize: 14,
+        },
         tableHeader: {
             tableHeaderBlock: {
                 background: getCardBackground(isContrastMode, palette.mainColor),
@@ -74,7 +84,50 @@ export function getCurrentTheme(isContrastMode) {
                 root: {
                     border: "1px solid #e5e5e5"
                 }
-            }
+            },
+            MuiList: {
+                root: {
+                    backgroundColor: "#fff",
+                }
+            },
+            MuiPaper: {
+                elevation1: {
+                    boxShadow: "none",
+                    backgroundColor: "#fafafa",
+                }
+            },
+            MuiTable: {
+                root: {
+                    backgroundColor: "#fff",
+                    border: "1px solid #e5e5e5",
+                }
+            },
+            MuiTableHead: {
+                root: {
+                    backgroundColor: "#e5e5e5",
+                    color: "#000",
+                }
+            },
+            MuiTableRow: {
+                head: {
+                    height: 48,
+                }
+            },
+            MuiTableCell: {
+                head: {
+                    color: "#000",
+                    fontSize: 16,
+                    fontWeight: 800,
+                },
+                paddingNone: {
+                    paddingLeft: 10,
+                }
+            },
+            MuiTypography: {
+                body1: {
+                    fontSize: 15,
+                }
+            },
         }
     });
 }

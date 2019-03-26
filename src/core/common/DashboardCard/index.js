@@ -24,6 +24,7 @@ const LoadingItems = ({ classes }) => {
             <ListItem button divider>
                 <ListItemText primary="Loading..." />
             </ListItem>
+            <div className={classes.emptyRows}></div>
         </List>
     );
 };
@@ -63,9 +64,9 @@ export default props => {
     return (
         <Grid item xs={12} sm={6} md={6} lg={3}>
             <Card className={classes.card}>
-                <div className={classes.topBlock} onClick={() => history.push('/' + list)}>
+                <div id={id} className={classes.topBlock} onClick={() => history.push('/' + list)}>
                     <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
-                    <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
+                    <Typography className={classes.title} >
                         {title}
                     </Typography>
                 </div>
