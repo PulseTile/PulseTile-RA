@@ -25,7 +25,6 @@ class PatientsList extends Component {
      */
     redirectToSummary = (e, record) => {
         e.stopPropagation();
-        this.props.updateCurrentPatient(record);
         localStorage.setItem('patientId', record.nhsNumber);
         this.props.history.push('/summary');
     };
