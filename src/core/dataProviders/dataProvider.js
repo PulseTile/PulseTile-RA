@@ -251,13 +251,16 @@ const convertHTTPResponse = (response, type, resource, params) => {
             console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++');
             console.log('params', params);
 
+            const dataFromRequest = get(params, 'data', null);
+            const compositionUid = get(response, 'compositionUid', null);
+            const compositionUidArray = compositionUid.split('::');
+            const sourseID = compositionUidArray[0];
+            dataFromRequest.id = response.host + '-' + sourseID;
 
+            console.log('dataFromRequest', dataFromRequest);
 
-            let compositionUidArray = response.compositionUid.split('::');
-            let sourseID = compositionUidArray[0];
-            let id = response.host + '-' + sourseID;
             return {
-                data: Object.assign({id: id}, response),
+                data: Object.assign({ data: dataFromRequest }),
             };
 
         default:

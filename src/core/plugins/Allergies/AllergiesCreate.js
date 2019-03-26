@@ -1,5 +1,6 @@
 import React from "react";
 import { TextInput, DateInput, DisabledInput, LongTextInput } from "react-admin";
+import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -24,8 +25,10 @@ const AllergiesCreate = ({ classes, ...rest }) => (
     <CreateTemplate blockTitle="Allergy" {...rest}>
         <TextInput className={classes.labelBlock} source="cause" label="Cause" />
         <LongTextInput className={classes.labelBlock} source="reaction" label="Reaction / Description" />
-        <DisabledInput className={classes.labelBlock} source="author" label="Author" />
-        <DateInput className={classes.labelBlock} source="dateCreated" label="Date" disabled={true} />
+        <TextInput className={classes.labelBlock} source="causeCode" label="Terminology" />
+        <TextInput className={classes.labelBlock} source="causeTerminology" label="Terminology Code" />
+        <TextInput className={classes.labelBlock} source="author" label="Author" defaultValue={localStorage.getItem('username')} disabled={true} />
+        <DateInput className={classes.labelBlock} source="dateCreated" label="Date" defaultValue={moment().format('MM/DD/YYYY')} disabled={true} />
     </CreateTemplate>
 );
 
