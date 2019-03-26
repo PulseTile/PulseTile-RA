@@ -10,10 +10,10 @@ import Inputs from "./fragments/Inputs";
  * @param {shape} classes
  * @param {shape} rest
  */
-const ProblemsCreate = ({ classes, ...rest }) => (
+const ProblemsEdit = ({ classes, ...rest }) => (
     <EditTemplate blockTitle="Problems / Issues" {...rest}>
             <Inputs />
     </EditTemplate>
 );
 
-export default ProblemsCreate;
+export default ProblemsEdit;

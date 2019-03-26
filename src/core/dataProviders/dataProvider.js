@@ -247,20 +247,13 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case CREATE:
-
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log('params', params);
-
             const dataFromRequest = get(params, 'data', null);
             const compositionUid = get(response, 'compositionUid', null);
             const compositionUidArray = compositionUid.split('::');
             const sourseID = compositionUidArray[0];
-            dataFromRequest.id = response.host + '-' + sourseID;
-
-            console.log('dataFromRequest', dataFromRequest);
-
+            dataFromRequest.id = get(response, 'host', null) + '-' + sourseID;
             return {
-                data: Object.assign({ data: dataFromRequest }),
+                data: dataFromRequest,
             };
 
         default:
