@@ -7,26 +7,15 @@ import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
 import FeedsPanels from "../plugins/Feeds/FeedsPanels";
 import PatientSummary from "../../core/pages/PatientSummary";
 
-/**
- * Order of menu items for the current theme
- *
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @return {array}
- */
-export const resourceOrder = [
-    'problems',
-    'medications',
-    'allergies',
-    'contacts',
-    'vaccinations',
-    'top3Things'
-];
+export const themeShortMenu = [];
+
+export const themeFullMenu = [];
 
 export const themeCommonElements = {
     topbar: ThemeTopbar,
     footer: ThemeFooter,
-    // feedsSelectors: FeedsSelectors,
-    // feedsPanels: FeedsPanels,
+    feedsSelectors: FeedsSelectors,
+    feedsPanels: FeedsPanels,
     homePage: PatientSummary,
 };
 
