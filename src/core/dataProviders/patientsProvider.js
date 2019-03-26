@@ -155,13 +155,11 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             };
 
         case CREATE:
-            // let compositionUidArray = response.compositionUid.split('::');
-            // let sourseID = compositionUidArray[0];
-            // let id = response.host + '-' + sourseID;
+            const dataFromRequest = get(params, 'data', null);
+            dataFromRequest.id = get(response, 'uuid', null);
             return {
-                data: Object.assign({id: id}, response),
+                data: dataFromRequest,
             };
-
 
         default:
             return { data: 'No results' };
