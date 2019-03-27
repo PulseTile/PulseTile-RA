@@ -1,8 +1,11 @@
+import get from "lodash/get";
 import { takeEvery, put } from 'redux-saga/effects';
 
 import { token, domainName } from "../token";
+import { httpErrorAction } from '../actions/httpErrorAction';
 
 const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
+let responseInfo = {};
 
 export default function createCustomSagas(actionName, actionType, pluginName) {
     return takeEvery(actionName.REQUEST, function*(action) {
@@ -16,10 +19,31 @@ export default function createCustomSagas(actionName, actionType, pluginName) {
             Authorization: "Bearer " + token,
             'X-Requested-With': "XMLHttpRequest",
         };
+
         try {
-            const result = yield fetch(url, options).then(res => res.json());
-            yield put(actionType.success(result))
-        } catch (e) {
+            const result = yield fetch(url, options)
+                .then(res => {
+                    responseInfo.status = get(res, 'status', null);
+                    return res.json()
+                })
+                .then(res => {
+                    if (responseInfo.status !== 200) {
+                        responseInfo.errorMessage = get(res, 'error', null);
+                        return false;
+                    }
+                    return res;
+                });
+
+            if (responseInfo.status === 200) {
+                yield put(actionType.success(result))
+            } else {
+                yield put(httpErrorAction.save({
+                    status: responseInfo.status,
+                    message: responseInfo.errorMessage
+                }));
+            }
+
+        } catch(e) {
             yield put(actionType.error(e))
         }
     });
