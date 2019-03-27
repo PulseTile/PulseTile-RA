@@ -10,7 +10,8 @@ import {
     UPDATE,
     UPDATE_MANY,
     DELETE,
-    DELETE_MANY
+    DELETE_MANY,
+    HttpError,
 } from "react-admin";
 import sort, { ASC, DESC } from 'sort-array-objects';
 
@@ -18,6 +19,7 @@ import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
 import dummyPatients from "../pages/PatientsList/dummyPatients";
+import { httpErrorAction } from '../actions/httpErrorAction';
 
 const apiPatientsUser = 'api/patients';
 const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
@@ -263,9 +265,23 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
 const dataProvider = (type, resource, params) => {
     let { url, options } = convertDataRequestToHTTP(type, resource, params);
-    return fetch(url, options).then(response => response.json())
-        .then(res => convertHTTPResponse(res, type, resource, params))
-        .catch(err => console.log('Error: ', err));
+    let responseInfo = {};
+    return fetch(url, options).then(response => {
+        responseInfo.status = get(response, 'status', null);
+        return response.json();
+    })
+        .then(res => {
+            if (responseInfo.status !== 200) {
+                responseInfo.errorMessage = get(res, 'error', null);
+                let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
+                throw new HttpError(errorString);
+            }
+            return convertHTTPResponse(res, type, resource, params)
+        })
+        .catch(err => {
+            console.log('Error: ', err);
+            throw new Error(err);
+        });
 };
 
 const fakePatientsProvider = (type, resource, params) => {

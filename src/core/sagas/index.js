@@ -3,6 +3,7 @@ import { all } from 'redux-saga/effects';
 // CORE SAGAS
 import initializeSagas from "./initializeSagas";
 import demographicsSagas from "./demographicsSagas";
+import httpErrorSagas from "./httpErrorSagas";
 import patientInfoSagas from "./patientInfoSagas";
 import patientsStatisticSagas from "./patientsStatisticSagas";
 import showModeSagas from "./showModeSagas";
@@ -27,6 +28,7 @@ const coreSagas = [
     createSynopsisSagas(SYNOPSIS_PROBLEMS_ACTION, synopsisProblemsAction, 'problems'),
     initializeSagas,
     demographicsSagas,
+    httpErrorSagas,
     patientInfoSagas,
     patientsStatisticSagas,
     showModeSagas,

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import showHeadings from "./showHeadingsReducer";
 import createCustomReducer from "./createCustomReducer";
+import httpErrorReducer from "./httpErrorReducer";
 
 import {
     SYNOPSIS_ALLERGIES_ACTION,
@@ -26,6 +27,7 @@ const coreReducers = {
     problemsSynopsis: createCustomReducer(SYNOPSIS_PROBLEMS_ACTION, "data.synopsis"),
     initialize: createCustomReducer(INITIALIZE_ACTION, "data"),
     demographics: createCustomReducer(DEMOGRAPHICS_ACTION, "data.demographics"),
+    httpErrors: httpErrorReducer,
     patientInfo: createCustomReducer(PATIENT_INFO, "data"),
     patientsStatistic: createCustomReducer(PATIENTS_STATISTIC, "data"),
     showMode: createCustomReducer(SHOW_MODE_ACTION, "data"),
