@@ -4,11 +4,8 @@ import { all } from 'redux-saga/effects';
 import initializeSagas from "./initializeSagas";
 import demographicsSagas from "./demographicsSagas";
 import httpErrorSagas from "./httpErrorSagas";
-import patientInfoSagas from "./patientInfoSagas";
-import patientsStatisticSagas from "./patientsStatisticSagas";
 import showModeSagas from "./showModeSagas";
 import showHeadingsSagas from "./showHeadingsSagas";
-import userInfoSagas from "./userInfoSagas";
 
 import createSynopsisSagas from "./createSynopsisSagas";
 import {
@@ -29,11 +26,8 @@ const coreSagas = [
     initializeSagas,
     demographicsSagas,
     httpErrorSagas,
-    patientInfoSagas,
-    patientsStatisticSagas,
     showModeSagas,
     showHeadingsSagas,
-    userInfoSagas,
 ];
 
 const mergeSagas = coreSagas.concat(nonCoreSagas);

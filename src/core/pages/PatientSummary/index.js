@@ -112,7 +112,7 @@ class PatientSummaryInfo extends Component {
 const mapStateToProps = state => {
 
     const patientSummaryProps = {
-        loading: state.custom.patientInfo.loading,
+        loading: state.custom.demographics.loading,
         showMode: state.custom.showMode.data,
         showHeadings: state.custom.showHeadings.data,
     };
