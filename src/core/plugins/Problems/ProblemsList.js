@@ -21,10 +21,10 @@ const DiagnosisList = ({ classes, ...rest }) => (
       edit={ProblemsEdit}
       show={ProblemsShow}
       resourceUrl="problems"
-      title="Problems / Diagnosis"
+      title="Problems / Issues"
       {...rest}
     >
-        <TextField source="problem" label="Problem  Issue" />
+        <TextField source="problem" label="Problem / Issue" />
         <DateField source="dateOfOnset" label="Date" />
         <TextField source="source" label="Source" />
     </ListTemplate>

@@ -21,7 +21,7 @@ const styles = {
  */
 const VaccinationsCreate = ({ classes, ...rest }) => (
     <React.Fragment>
-        <TextInput className={classes.labelBlock} source="vaccinationName" label="Vaccination name" fullWidth />
+        <TextInput className={classes.labelBlock} source="vaccinationName" label="Name" fullWidth />
         <DateInput className={classes.labelBlock} source="vaccinationDateTime" label="Vaccination date" fullWidth />
         <TextInput className={classes.labelBlock} source="series" label="Series" fullWidth />
         <LongTextInput className={classes.labelBlock} source="comment" label="Comment" fullWidth />
