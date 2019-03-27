@@ -29,7 +29,6 @@ const coreReducers = {
     httpErrors: httpErrorReducer,
     showMode: createCustomReducer(SHOW_MODE_ACTION, "data"),
     showHeadings,
-    userInfo: createCustomReducer(USER_INFO_ACTION, "data"),
     userSearch: userSearchReducer,
     currentPatient: currentPatientReducer,
 };

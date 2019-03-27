@@ -1,16 +1,12 @@
 import get from "lodash/get";
-import jwt from "jsonwebtoken";
 import {
     fetchUtils,
     GET_LIST,
     GET_ONE,
     GET_MANY,
-    GET_MANY_REFERENCE,
     CREATE,
     UPDATE,
-    UPDATE_MANY,
-    DELETE,
-    DELETE_MANY
+    HttpError
 } from "react-admin";
 import sort, { ASC, DESC } from 'sort-array-objects';
 import { token, domainName } from "../token";
@@ -254,7 +250,21 @@ function getSortedResults(results, params) {
 
 export default (type, resource, params) => {
     let { url, options } = convertPatientsDataRequestToHTTP(type, resource, params);
-    return fetch(url, options).then(response => response.json())
-        .then(res => convertPatientsHTTPResponse(res, type, resource, params))
-        .catch(err => console.log('Error: ', err));
+    let responseInfo = {};
+    return fetch(url, options).then(response => {
+        responseInfo.status = get(response, 'status', null);
+        return response.json();
+    })
+        .then(res => {
+            if (responseInfo.status !== 200) {
+                responseInfo.errorMessage = get(res, 'error', null);
+                let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
+                throw new HttpError(errorString);
+            }
+            return convertPatientsHTTPResponse(res, type, resource, params)
+        })
+        .catch(err => {
+            console.log('Error: ', err);
+            throw new Error(err);
+        });
 };
