@@ -1,6 +1,6 @@
 import React from "react";
 
-import EditTemplate from "../../common/ResourseTemplates/CreateTemplate";
+import EditTemplate from "../../common/ResourseTemplates/EditTemplate";
 import Inputs from "./fragments/Inputs";
 
 /**
