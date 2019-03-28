@@ -4,8 +4,6 @@ import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -16,14 +14,14 @@ import { SHOW_ALL } from "../../pages/PatientSummary/config";
  * This component returns list of empty rows if information is loading
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @constructor
+ * @param {shape} classes
  */
 const LoadingItems = ({ classes }) => {
     return (
         <List className={classes.list}>
-            <ListItem button divider>
-                <ListItemText primary="Loading..." />
-            </ListItem>
+            <li className={classes.listItem}>
+                <Typography>Loading...</Typography>
+            </li>
             <div className={classes.emptyRows}></div>
         </List>
     );

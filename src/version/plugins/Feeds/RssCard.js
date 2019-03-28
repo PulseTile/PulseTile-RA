@@ -12,7 +12,7 @@ import { SHOW_ALL } from "../../../core/pages/PatientSummary/config";
 
 const styles = theme => ({
     card: {
-        minHeight: 302,
+        borderRadius: 0,
     },
     media: {
         backgroundColor: theme.palette.mainColor,
@@ -49,6 +49,15 @@ const styles = theme => ({
         "& a": {
             textDecoration: "none",
         }
+    },
+    listItem: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 48,
+        paddingLeft: 15,
+        fontSize: "1rem",
+        borderBottom: "1px solid #e5e5e5",
     },
     feedsItem: {
         fontSize: "1rem",

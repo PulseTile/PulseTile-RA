@@ -60,7 +60,13 @@ const styles = theme => ({
         padding: 0,
     },
     listItem: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 48,
+        paddingLeft: 15,
         fontSize: "1rem",
+        borderBottom: "1px solid #e5e5e5",
     },
     emptyRows: {
         height: 150,
