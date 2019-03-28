@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import get from "lodash/get";
+import { connect } from 'react-redux';
 import { Route } from "react-router";
 import { connect } from 'react-redux';
 import {
@@ -22,6 +24,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import ListToolbar from "../../common/Toolbars/ListToolbar";
+import EmptyListBlock from "./EmptyListBlock";
 import DetailsTemplate from "./DetailsTemplate";
 import { ITEMS_PER_PAGE } from "../../config/styles";
 
@@ -181,7 +184,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent } = this.props;
+        const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent, currentList } = this.props;
         const { isFilterOpened, key, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -194,6 +197,8 @@ class ListTemplate extends Component {
             titleTable = `Patients matching '${userSearch}'`;
             this.filterByUserSearch();
         }
+
+        const idsNumber = Array.isArray(currentList) ? currentList.length : 0;
 
         return (
             <React.Fragment>
@@ -222,21 +227,25 @@ class ListTemplate extends Component {
                                 </Paper>
                             }
                         </React.Fragment>
-                        <List
-                            resource={resourceUrl}
-                            key={key}
-                            filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
-                            title={title}
-                            perPage={ITEMS_PER_PAGE}
-                            actions={null}
-                            bulkActions={false}
-                            pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
-                            {...this.props}
-                        >
-                            <Datagrid className={classes.tableList} rowClick="edit">
-                                {children}
-                            </Datagrid>
-                        </List>
+                        { (idsNumber > 0) ?
+                            <List
+                                resource={resourceUrl}
+                                key={key}
+                                filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
+                                title={title}
+                                perPage={ITEMS_PER_PAGE}
+                                actions={null}
+                                bulkActions={false}
+                                pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
+                                {...this.props}
+                            >
+                                <Datagrid className={classes.tableList} rowClick="edit">
+                                    {children}
+                                </Datagrid>
+                            </List>
+                            :
+                            <EmptyListBlock />
+                        }
                     </Grid>
                     {
                         (!this.isCreatePage())
@@ -257,9 +266,11 @@ class ListTemplate extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps)  => {
     return {
         userSearch: state.custom.userSearch.data,
+        currentList: get(state, ['admin.resources', ownProps.resource, 'list.ids'], []),
+
     }
 };
 
