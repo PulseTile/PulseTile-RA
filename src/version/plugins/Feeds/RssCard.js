@@ -38,6 +38,9 @@ const styles = theme => ({
     icon: {
         marginBottom: 10,
     },
+    mainHeading: {
+        margin: 0,
+    },
     title: {
         marginBottom: 0,
         color: "#fff",
@@ -78,10 +81,12 @@ const RssCard = props => {
             <Grid item xs={12} sm={6} md={6} lg={3}>
                 <Card id={sourceId} className={classes.card} onClick={() => window.open(link, "_blank")}>
                     <div className={classes.topBlock}>
-                        <RssIcon />
-                        <Typography gutterBottom className={classes.title} >
-                            {title}
-                        </Typography>
+                        <RssIcon className={classes.icon} />
+                        <h1 className={classes.mainHeading}>
+                            <Typography gutterBottom className={classes.title} >
+                                {title}
+                            </Typography>
+                        </h1>
                     </div>
                     { (showMode === SHOW_ALL || !showMode) &&
                     <ListBlock loading={loading} classes={classes} items={items} history={history} />

@@ -50,6 +50,9 @@ const styles = theme => ({
     icon: {
         marginBottom: 10,
     },
+    mainHeading: {
+        margin: 0,
+    },
     title: {
         marginBottom: 0,
         color: "#fff",

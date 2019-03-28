@@ -64,9 +64,11 @@ export default props => {
             <Card className={classes.card}>
                 <div id={id} className={classes.topBlock} aria-label={title} onClick={() => history.push('/' + list)}>
                     <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
-                    <Typography className={classes.title} >
-                        {title}
-                    </Typography>
+                    <h1 className={classes.mainHeading}>
+                        <Typography className={classes.title}>
+                            {title}
+                        </Typography>
+                    </h1>
                 </div>
                 { (showMode === SHOW_ALL || !showMode) &&
                 <ListBlock loading={loading} classes={classes} items={items} list={list} history={history} />
