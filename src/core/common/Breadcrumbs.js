@@ -9,7 +9,7 @@ const styles = theme => ({
         display: "flex",
         height: 48,
         alignItems: "center",
-        border: "1px solid #e5e5e5",
+        border: `1px solid ${theme.palette.borderColor}`,
         paddingLeft: 10,
         backgroundColor: "#fff",
     },
@@ -43,7 +43,7 @@ const Breadcrumbs = ({ classes, resource }) => {
     return (
         <div className={classes.breadcrumbsBlock}>
             <Typography>
-                <Link to="/" className={classes.link} color="inherit">Home</Link>
+                <Link to="/" className={classes.link} color="inherit" aria-label="Home">Home</Link>
             </Typography>
             {
                 resource.map((item, key) => {
@@ -51,7 +51,7 @@ const Breadcrumbs = ({ classes, resource }) => {
                         <div key={key} className={classes.breadcrumbsItem}>
                             <div className={classes.separator}></div>
                             {item.isActive
-                                ? <Link to={item.url} className={classes.link} color="inherit">{item.title}</Link>
+                                ? <Link to={item.url} className={classes.link} color="inherit" aria-label={item.title}>{item.title}</Link>
                                 : <Typography>{item.title}</Typography>
                             }
                         </div>

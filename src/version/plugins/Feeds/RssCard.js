@@ -12,7 +12,7 @@ import { SHOW_ALL } from "../../../core/pages/PatientSummary/config";
 
 const styles = theme => ({
     card: {
-        minHeight: 302,
+        borderRadius: 0,
     },
     media: {
         backgroundColor: theme.palette.mainColor,
@@ -38,6 +38,9 @@ const styles = theme => ({
     icon: {
         marginBottom: 10,
     },
+    mainHeading: {
+        margin: 0,
+    },
     title: {
         marginBottom: 0,
         color: "#fff",
@@ -49,6 +52,17 @@ const styles = theme => ({
         "& a": {
             textDecoration: "none",
         }
+    },
+    listItem: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 48,
+        paddingLeft: 15,
+        fontSize: "1rem",
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
+        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
     },
     feedsItem: {
         fontSize: "1rem",
@@ -69,10 +83,12 @@ const RssCard = props => {
             <Grid item xs={12} sm={6} md={6} lg={3}>
                 <Card id={sourceId} className={classes.card} onClick={() => window.open(link, "_blank")}>
                     <div className={classes.topBlock}>
-                        <RssIcon />
-                        <Typography gutterBottom className={classes.title} >
-                            {title}
-                        </Typography>
+                        <RssIcon className={classes.icon} />
+                        <h1 className={classes.mainHeading}>
+                            <Typography gutterBottom className={classes.title} >
+                                {title}
+                            </Typography>
+                        </h1>
                     </div>
                     { (showMode === SHOW_ALL || !showMode) &&
                     <ListBlock loading={loading} classes={classes} items={items} history={history} />

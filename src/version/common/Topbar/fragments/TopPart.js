@@ -19,7 +19,7 @@ const styles = theme => ({
         display: "flex",
         backgroundColor: "white",
         justifyContent: "space-around",
-        border: "1px solid #e5e5e5",
+        border: `1px solid ${theme.palette.borderColor}`,
         minHeight: 54,
         padding: 0,
     },
@@ -53,7 +53,7 @@ const styles = theme => ({
         minWidth: 54,
         justifyContent: "center",
         alignItems: "center",
-        borderLeft: "1px solid #e5e5e5",
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
         '&:hover': {
             backgroundColor: theme.palette.mainColor,
         },
@@ -103,7 +103,7 @@ const TopPart = ({ classes, logout, location, history }) => {
                 </div>
             }
             <div className={classes.mainLogoItem}>
-                <Link to="/" className={classes.homeButton} color="inherit" >
+                <Link to="/" className={classes.homeButton} color="inherit" aria-label="Home" >
                     <CardMedia
                         id="logo-image"
                         className={classes.image}

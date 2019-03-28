@@ -10,8 +10,17 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
 	<link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-	<link rel="stylesheet" href="%PUBLIC_URL%/fonts/fonts.css">
-	<link rel="shortcut icon" type="image/png" href="/images/logo-small.png"/>
+    <link rel="shortcut icon" type="image/png" href="/images/logo-small.png"/>
+
+	<style>
+		@font-face {
+			font-family: 'HK Grotesk';
+			font-weight: normal;
+			font-style: normal;
+			src: url('./fonts/HKGrotesk-Regular.otf');
+		}
+	</style>
+
 	<!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -48,6 +57,9 @@
                 dangerColor: "#da534f",
                 contrastColor: "#000",
                 disabledColor: "#e9e4e4",
+				borderColor: "#e5e5e5",
+				paperColor: "#fff",
+				fontColor: "#000",
                 viewButton: "#30ad57",
 			},
 			darkPalette: {
@@ -55,6 +67,9 @@
                 dangerColor: "#da534f",
                 contrastColor: "#000",
                 disabledColor: "#e9e4e4",
+                borderColor: "#000",
+                paperColor: "#fff",
+                fontColor: "#000",
                 viewButton: "#000",
 			},
         }

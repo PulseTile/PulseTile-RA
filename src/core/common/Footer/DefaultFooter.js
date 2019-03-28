@@ -7,14 +7,14 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 import footerLogo from "../../images/ripple-foundation-logo-footer.png";
 
-const styles = {
+const styles = theme => ({
     footerBlock: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
         flex: "0 0 auto",
-        borderTop: "1px solid #e5e5e5",
+        borderTop: `1px solid ${theme.palette.borderColor}`,
         height: 54,
         boxSizing: "border-box",
         color: "#5c5c5c",
@@ -38,7 +38,7 @@ const styles = {
     emptyBlock: {
         flexGrow: 1,
     },
-};
+});
 
 /**
  * This component returns custom default footer
