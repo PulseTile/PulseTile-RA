@@ -16,7 +16,7 @@ const styles = theme => ({
         alignItems: "center",
         justifyContent: "space-between",
         flex: "0 0 auto",
-        borderTop: "1px solid #e5e5e5",
+        borderTop: `1px solid ${theme.palette.borderColor}`,
         height: 54,
         boxSizing: "border-box",
         color: "#5c5c5c",
