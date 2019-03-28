@@ -13,6 +13,8 @@ const defaultLightPalette = {
     viewButton: "#30ad57",
     disabledColor: "#e9e4e4",
     borderColor: "#e5e5e5",
+    paperColor: "#fff",
+    fontColor: "#000",
 };
 
 const defaultDarkPalette = {
@@ -22,6 +24,8 @@ const defaultDarkPalette = {
     viewButton: "#000",
     disabledColor: "#e9e4e4",
     borderColor: "#000",
+    paperColor: "#fff",
+    fontColor: "#000",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -85,25 +89,25 @@ export function getCurrentTheme(isContrastMode) {
             },
             MuiList: {
                 root: {
-                    backgroundColor: "#fff",
+                    backgroundColor: palette.paperColor,
                 }
             },
             MuiPaper: {
                 elevation1: {
                     boxShadow: "none",
-                    backgroundColor: "#fafafa",
+                    backgroundColor: palette.paperColor,
                 }
             },
             MuiTable: {
                 root: {
-                    backgroundColor: "#fff",
+                    backgroundColor: palette.paperColor,
                     border: `1px solid ${palette.borderColor}`,
                 }
             },
             MuiTableHead: {
                 root: {
                     backgroundColor: palette.borderColor,
-                    color: "#000",
+                    color: palette.fontColor,
                 }
             },
             MuiTableRow: {
@@ -113,7 +117,7 @@ export function getCurrentTheme(isContrastMode) {
             },
             MuiTableCell: {
                 head: {
-                    color: "#000",
+                    color: palette.fontColor,
                     fontSize: 16,
                     fontWeight: 800,
                 },
