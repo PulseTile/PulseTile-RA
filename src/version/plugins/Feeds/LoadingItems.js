@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
 
 /**
  * This component returns list of empty rows if information is loading
@@ -14,9 +13,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 const LoadingItems = ({ classes }) => {
     return (
         <List className={classes.list}>
-            <ListItem button divider>
-                <ListItemText primary="Loading..." />
-            </ListItem>
+            <li className={classes.listItem}>
+                <Typography>Loading...</Typography>
+            </li>
         </List>
     );
 };

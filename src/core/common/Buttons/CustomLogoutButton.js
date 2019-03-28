@@ -42,7 +42,7 @@ const CustomLogoutButton = ({ classes, userLogout, title, isIconAbsent }) => {
     const buttonName = title ? title : "Sign Out";
     return (
         <Tooltip title={buttonName}>
-            <IconButton className={classes.button} onClick={() => userLogout()}>
+            <IconButton className={classes.button} onClick={() => userLogout()} aria-label="Sign Out">
                 {buttonName}
                 { !isIconAbsent && <ExitIcon className={classes.icon} /> }
             </IconButton>

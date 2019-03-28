@@ -13,6 +13,9 @@ const styles = theme => ({
         paddingTop: "25px",
         paddingBottom: "14px"
     },
+    mainHeader: {
+        margin: 0,
+    },
     title: {
         marginTop: 0,
         color: "#fff",
@@ -40,7 +43,9 @@ const TableHeader = ({ classes, resource, translate }) => {
     }
     return (
         <div className={classes.tableHeaderBlock} >
-            <Typography className={classes.title}>{title}</Typography>
+            <h1 className={classes.mainHeader}>
+                <Typography className={classes.title}>{title}</Typography>
+            </h1>
             <Typography className={classes.description}>{description}</Typography>
         </div>
     );

@@ -24,8 +24,8 @@ const VaccinationsList = ({ classes, ...rest }) => (
       title="Vaccinations"
       {...rest}
     >
-        <TextField label="Name" source="vaccinationName" />
-        <DateField label="Date" source="vaccinationDateTime" />
+        <TextField label="Vaccination Name" source="vaccinationName" />
+        <DateField label="Date and Time" source="dateCreated" />
         <TextField label="Source" source="source" />
     </ListTemplate>
 );

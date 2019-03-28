@@ -22,7 +22,7 @@ const styles = theme => ({
  */
 const ViewButton = ({ classes, viewAction, record }) => {
     return (
-        <Button onClick={e => viewAction(e, record)} className={classes.viewButton}>
+        <Button aria-label="View" onClick={e => viewAction(e, record)} className={classes.viewButton}>
             <Typography className={classes.viewButton}>View</Typography>
         </Button>
     );

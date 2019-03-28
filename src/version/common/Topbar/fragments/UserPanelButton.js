@@ -69,7 +69,9 @@ class UserPanelButton extends Component {
                         aria-owns={isOpen ? 'menu-appbar' : undefined}
                         aria-haspopup="true"
                         onClick={this.handleMenu.bind(this)}
-                        color="inherit" >
+                        color="inherit"
+                        aria-label="User Panel"
+                    >
                         <PersonIcon />
                     </IconButton>
                 </Tooltip>

@@ -20,11 +20,11 @@ const styles = theme => ({
         },
     },
     menuBlock: {
-        border: "1px solid #e5e5e5",
+        border: `1px solid ${theme.palette.borderColor}`,
     },
     menuItem: {
         color: `${theme.palette.mainColor} !important`,
-        borderBottom: "1px solid #e5e5e5",
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
         '&:hover': {
             backgroundColor: theme.palette.mainColor,
             color: "#fff !important",
@@ -33,7 +33,7 @@ const styles = theme => ({
     menuItemSelected: {
         backgroundColor: theme.palette.mainColor + '! important',
         color: "#fff !important",
-        borderBottom: "1px solid #e5e5e5",
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
     },
 });
 
@@ -55,7 +55,7 @@ const CustomSidebar = props => {
     }
     return (
         <Sidebar className={classes.sidebarBlock}>
-            <div className={classes.menuBlock}>
+            <div className={classes.menuBlock} role="menubar">
                 {menuItems.map((item, key) => {
                     return (
                         <MenuItemLink
@@ -66,6 +66,8 @@ const CustomSidebar = props => {
                             leftIcon={(currentList === item.url) ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
                             onClick={onMenuClick}
                             selected={currentList === item.url}
+                            aria-label={item.label}
+                            role="menuitem"
                         />
                     )
                 })}
