@@ -54,7 +54,7 @@ function getCurrentPalette(isContrastMode) {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 export function getCurrentTheme(isContrastMode) {
-    const backgroundImage = get(themeImages, 'backgroundImage', null);
+    const backgroundImage = isContrastMode ? null : get(themeImages, 'backgroundImage', null);
     const palette = getCurrentPalette(isContrastMode);
     return createMuiTheme({
         palette: palette,
