@@ -12,6 +12,7 @@ const defaultLightPalette = {
     dangerColor: "#da534f",
     viewButton: "#30ad57",
     disabledColor: "#e9e4e4",
+    borderColor: "#e5e5e5",
 };
 
 const defaultDarkPalette = {
@@ -20,6 +21,7 @@ const defaultDarkPalette = {
     dangerColor: "#000",
     viewButton: "#000",
     disabledColor: "#e9e4e4",
+    borderColor: "#000",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -78,7 +80,7 @@ export function getCurrentTheme(isContrastMode) {
         overrides: {
             MuiInput: {
                 root: {
-                    border: "1px solid #e5e5e5"
+                    border: `1px solid ${palette.borderColor}`,
                 }
             },
             MuiList: {
@@ -95,12 +97,12 @@ export function getCurrentTheme(isContrastMode) {
             MuiTable: {
                 root: {
                     backgroundColor: "#fff",
-                    border: "1px solid #e5e5e5",
+                    border: `1px solid ${palette.borderColor}`,
                 }
             },
             MuiTableHead: {
                 root: {
-                    backgroundColor: "#e5e5e5",
+                    backgroundColor: palette.borderColor,
                     color: "#000",
                 }
             },
