@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import get from "lodash/get";
 import { connect } from 'react-redux';
 import { Route } from "react-router";
-import { connect } from 'react-redux';
 import {
     List,
     Filter,
@@ -227,7 +226,7 @@ class ListTemplate extends Component {
                                 </Paper>
                             }
                         </React.Fragment>
-                        { (idsNumber > 0) ?
+                        { ((idsNumber > 0 && resourceUrl !== 'patients') || (userSearch && resourceUrl === 'patients')) ?
                             <List
                                 resource={resourceUrl}
                                 key={key}
@@ -270,7 +269,6 @@ const mapStateToProps = (state, ownProps)  => {
     return {
         userSearch: state.custom.userSearch.data,
         currentList: get(state, ['admin.resources', ownProps.resource, 'list.ids'], []),
-
     }
 };
 
