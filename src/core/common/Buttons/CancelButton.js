@@ -34,7 +34,7 @@ const styles = theme => ({
  */
 const CancelButton = ({ classes, redirectTo }) => (
     <Tooltip title="Cancel">
-        <IconButton className={classes.button} onClick={() => redirectTo('show')}>
+        <IconButton aria-label="Cancel" className={classes.button} onClick={() => redirectTo('show')}>
             <BlockIcon /> Cancel
         </IconButton>
     </Tooltip>

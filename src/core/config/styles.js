@@ -13,6 +13,9 @@ const defaultLightPalette = {
     disabledColor: "#e9e4e4",
     viewButton: "#30ad57",
     disabledColor: "#e9e4e4",
+    borderColor: "#e5e5e5",
+    paperColor: "#fff",
+    fontColor: "#000",
 };
 
 const defaultDarkPalette = {
@@ -22,6 +25,9 @@ const defaultDarkPalette = {
     disabledColor: "#e9e4e4",
     viewButton: "#000",
     disabledColor: "#e9e4e4",
+    borderColor: "#000",
+    paperColor: "#fff",
+    fontColor: "#000",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -56,16 +62,12 @@ function getCurrentPalette(isContrastMode) {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 export function getCurrentTheme(isContrastMode) {
-    const backgroundImage = get(themeImages, 'backgroundImage', null);
+    const backgroundImage = isContrastMode ? null : get(themeImages, 'backgroundImage', null);
     const palette = getCurrentPalette(isContrastMode);
     return createMuiTheme({
         palette: palette,
         typography: {
-            fontFamily: [
-                '"HK Grotesk"',
-                'Arial',
-                'sans-serif',
-            ].join(','),
+            fontFamily: '"HK Grotesk", Arial, sans-serif',
             fontSize: 14,
         },
         tableHeader: {
@@ -84,30 +86,30 @@ export function getCurrentTheme(isContrastMode) {
         overrides: {
             MuiInput: {
                 root: {
-                    border: "1px solid #e5e5e5"
+                    border: `1px solid ${palette.borderColor}`,
                 }
             },
             MuiList: {
                 root: {
-                    backgroundColor: "#fff",
+                    backgroundColor: palette.paperColor,
                 }
             },
             MuiPaper: {
                 elevation1: {
                     boxShadow: "none",
-                    backgroundColor: "#fafafa",
+                    backgroundColor: palette.paperColor,
                 }
             },
             MuiTable: {
                 root: {
-                    backgroundColor: "#fff",
-                    border: "1px solid #e5e5e5",
+                    backgroundColor: palette.paperColor,
+                    border: `1px solid ${palette.borderColor}`,
                 }
             },
             MuiTableHead: {
                 root: {
-                    backgroundColor: "#e5e5e5",
-                    color: "#000",
+                    backgroundColor: palette.borderColor,
+                    color: palette.fontColor,
                 }
             },
             MuiTableRow: {
@@ -117,7 +119,7 @@ export function getCurrentTheme(isContrastMode) {
             },
             MuiTableCell: {
                 head: {
-                    color: "#000",
+                    color: palette.fontColor,
                     fontSize: 16,
                     fontWeight: 800,
                 },
