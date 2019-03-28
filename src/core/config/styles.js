@@ -59,11 +59,7 @@ export function getCurrentTheme(isContrastMode) {
     return createMuiTheme({
         palette: palette,
         typography: {
-            fontFamily: [
-                '"HK Grotesk"',
-                'Arial',
-                'sans-serif',
-            ].join(','),
+            fontFamily: '"HK Grotesk", Arial, sans-serif',
             fontSize: 14,
         },
         tableHeader: {
