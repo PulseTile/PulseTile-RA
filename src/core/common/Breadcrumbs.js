@@ -9,7 +9,7 @@ const styles = theme => ({
         display: "flex",
         height: 48,
         alignItems: "center",
-        border: "1px solid #e5e5e5",
+        border: `1px solid ${theme.palette.borderColor}`,
         paddingLeft: 10,
         backgroundColor: "#fff",
     },

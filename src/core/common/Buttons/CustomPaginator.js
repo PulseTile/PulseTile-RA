@@ -19,7 +19,7 @@ const styles = theme => ({
     },
     button: {
         display: "block",
-        border: "1px solid #e5e5e5",
+        border: `1px solid ${theme.palette.borderColor}`,
         height: 48,
         width: 48,
         boxSizing: "border-box",
@@ -32,7 +32,7 @@ const styles = theme => ({
     },
     activeButton: {
         display: "block",
-        border: "1px solid #e5e5e5",
+        border: `1px solid ${theme.palette.borderColor}`,
         height: 48,
         width: 48,
         boxSizing: "border-box",
