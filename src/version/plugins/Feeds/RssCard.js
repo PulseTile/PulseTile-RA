@@ -60,9 +60,9 @@ const styles = theme => ({
         height: 48,
         paddingLeft: 15,
         fontSize: "1rem",
-        borderLeft: "1px solid #e5e5e5",
-        borderRight: "1px solid #e5e5e5",
-        borderBottom: "1px solid #e5e5e5",
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
+        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
     },
     feedsItem: {
         fontSize: "1rem",
