@@ -53,7 +53,24 @@ const styles = theme => ({
     },
     respectLogo: {
         width: "auto",
-    }
+    },
+    listItem: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 48,
+        paddingLeft: 15,
+        fontSize: "1rem",
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
+        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
+    },
+    emptyRows: {
+        height: 150,
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
+        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
+    },
 });
 
 /**

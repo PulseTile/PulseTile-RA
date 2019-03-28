@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 
 /**
@@ -29,20 +27,23 @@ class ItemsList extends Component {
                 <List className={classes.list}>
                     {items.map((item, key) => {
                         return (
-                            <ListItem key={key} button divider>
-                                <Typography noWrap={true} className={classes.listItem}>
+                            <li key={key} className={classes.listItem} onClick={() => this.redirectToRespect()}>
+                                <Typography noWrap={true}>
                                     Version {key + 1}
                                 </Typography>
-                            </ListItem>
+                            </li>
                         );
                     })}
                 </List>
             );
         } else {
             return (
-                <ListItem button divider onClick={() => this.redirectToRespect()}>
-                    <ListItemText primary="No versions"/>
-                </ListItem>
+                <List className={classes.list}>
+                    <li className={classes.listItem} onClick={() => this.redirectToRespect()}>
+                        <Typography>No versions</Typography>
+                    </li>
+                    <div className={classes.emptyRows}></div>
+                </List>
             );
         }
     }
