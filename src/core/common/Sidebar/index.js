@@ -55,7 +55,7 @@ const CustomSidebar = props => {
     }
     return (
         <Sidebar className={classes.sidebarBlock}>
-            <div className={classes.menuBlock}>
+            <div className={classes.menuBlock} role="menubar">
                 {menuItems.map((item, key) => {
                     return (
                         <MenuItemLink
@@ -66,6 +66,8 @@ const CustomSidebar = props => {
                             leftIcon={(currentList === item.url) ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
                             onClick={onMenuClick}
                             selected={currentList === item.url}
+                            aria-label={item.label}
+                            role="menuitem"
                         />
                     )
                 })}

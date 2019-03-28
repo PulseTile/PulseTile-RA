@@ -91,6 +91,7 @@ class CustomPaginator extends Component {
                 buttons.push(
                     <Button
                         onClick={() => this.goToPage(i + 1)}
+                        aria-label={ i + 1 }
                         className={(page === i + 1) ? classes.activeButton : classes.button}>
                         { i + 1 }
                     </Button>
@@ -101,6 +102,7 @@ class CustomPaginator extends Component {
                 buttons.push(
                     <Button
                         onClick={() => this.goToPage(i + 1)}
+                        aria-label={ i + 1 }
                         className={(page === i + 1) ? classes.activeButton : classes.button}>
                         { i + 1 }
                     </Button>
@@ -111,6 +113,7 @@ class CustomPaginator extends Component {
                 buttons.push(
                 <Button
                     onClick={() => this.goToPage(i + 1)}
+                    aria-label={ i + 1 }
                     className={(page === i + 1) ? classes.activeButton : classes.button}>
                     { i + 1 }
                 </Button>
@@ -129,23 +132,23 @@ class CustomPaginator extends Component {
         return (
             <div className={classes.paginatorRoot}>
                 <Tooltip title="First page">
-                    <IconButton onClick={() => this.goToPage(1)} className={classes.button} disabled={page === 1}>
+                    <IconButton onClick={() => this.goToPage(1)} className={classes.button} disabled={page === 1} aria-label="First page">
                         <FirstPageIcon />
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Previous page">
-                    <IconButton onClick={() => this.goToPage(page - 1)} className={classes.button} disabled={page === 1}>
+                    <IconButton onClick={() => this.goToPage(page - 1)} className={classes.button} disabled={page === 1} aria-label="Previous page">
                         <KeyboardArrowLeft />
                     </IconButton>
                 </Tooltip>
                 { buttons }
                 <Tooltip title="Next page">
-                    <IconButton onClick={() => this.goToPage(page + 1)} className={classes.button} disabled={page === buttonsNumber}>
+                    <IconButton onClick={() => this.goToPage(page + 1)} className={classes.button} disabled={page === buttonsNumber} aria-label="Next page">
                         <KeyboardArrowRight />
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Last page">
-                    <IconButton onClick={() => this.goToPage(buttonsNumber)} className={classes.button} disabled={page === buttonsNumber}>
+                    <IconButton onClick={() => this.goToPage(buttonsNumber)} className={classes.button} disabled={page === buttonsNumber} aria-label="Last page">
                        <LastPageIcon />
                     </IconButton>
                 </Tooltip>
