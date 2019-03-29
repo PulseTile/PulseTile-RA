@@ -20,6 +20,7 @@ const styles = theme => ({
     showBlock: {
         width: '100%',
         backgroundColor: "white",
+        border: `1px solid ${theme.palette.borderColor}`,
     },
     expansionPanel: {
         height: "49px !important",

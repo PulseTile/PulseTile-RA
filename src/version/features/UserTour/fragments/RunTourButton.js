@@ -26,6 +26,7 @@ const RunUserTour = ({ classes, runTour, isPassed, callback }) => {
                     id="icon-tour"
                     className={classes.rightBlockButton}
                     aria-haspopup="true"
+                    aria-label="Tour"
                     color="inherit"
                     onClick={() => runTour()} >
                     <HelpIcon />

@@ -11,7 +11,7 @@ import HelpIcon from '@material-ui/icons/Help';
  */
 const LinkToCustomer = ({ classes, homepage }) => {
     return (
-        <a href={homepage.link} className={classes.rightBlockButton} target="_blank" >
+        <a href={homepage.link} className={classes.rightBlockButton} target="_blank" aria-label="To Customer">
             <HelpIcon />
         </a>
     );

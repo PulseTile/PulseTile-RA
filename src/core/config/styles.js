@@ -14,6 +14,7 @@ const defaultLightPalette = {
     disabledColor: "#e9e4e4",
     borderColor: "#e5e5e5",
     paperColor: "#fff",
+    toolbarColor: "#e5e5e5",
     fontColor: "#000",
 };
 
@@ -26,6 +27,7 @@ const defaultDarkPalette = {
     borderColor: "#000",
     paperColor: "#fff",
     fontColor: "#000",
+    toolbarColor: "#fff",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -106,8 +108,8 @@ export function getCurrentTheme(isContrastMode) {
             },
             MuiTableHead: {
                 root: {
-                    backgroundColor: palette.borderColor,
-                    color: palette.fontColor,
+                    backgroundColor: isContrastMode ? palette.paperColor : palette.borderColor,
+                    color: isContrastMode ? palette.paperColor : palette.fontColor,
                 }
             },
             MuiTableRow: {
