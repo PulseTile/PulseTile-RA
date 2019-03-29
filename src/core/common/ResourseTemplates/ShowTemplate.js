@@ -8,6 +8,11 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCompressArrowsAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 
 import EditButton from "../../common/Buttons/EditButton";
 
@@ -37,11 +42,21 @@ const styles = theme => ({
             marginBottom: "0px",
         }
     },
+    emptyBlock: {
+        flexGrow: 1,
+    },
     expandIcon: {
-        color: "white",
+        color: theme.palette.paperColor,
+    },
+    expandBlockIcon: {
+        height: 20,
+        paddingTop: 5,
+        paddingRight: 7,
+        color: theme.palette.paperColor,
     },
     expansionTypography: {
-        color: "white",
+        paddingTop: 10,
+        color: theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 700,
     },
@@ -86,13 +101,19 @@ class ShowTemplate extends Component {
     };
 
     render() {
-        const { classes, children, pageTitle, changeViewType, ...rest } = this.props;
+        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
         const { currentPanel } = this.state;
         return (
-            <Grid item xs={12} sm={6} className={classes.showBlock}>
+            <Grid item xs={12} sm={isListOpened ? 6 : 12} className={classes.showBlock}>
                 <ExpansionPanel className={(currentPanel === 'main') ? classes.currentExpansionPanel : classes.expansionPanel} expanded={currentPanel === 'main'} onChange={() => this.handleChange('main')}>
                     <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
                         <Typography className={classes.expansionTypography} >{pageTitle}</Typography>
+                        <div className={classes.emptyBlock}></div>
+                        <Tooltip title={isListOpened ? "Expand" : "Compress"}>
+                            <IconButton onClick={() => toggleListBlock()}>
+                                <FontAwesomeIcon className={classes.expandBlockIcon} icon={isListOpened ? faExpandArrowsAlt : faCompressArrowsAlt} size="1x" />
+                            </IconButton>
+                        </Tooltip>
                     </ExpansionPanelSummary>
                     {
                         (currentPanel === 'main') &&
