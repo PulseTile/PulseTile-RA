@@ -248,10 +248,6 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case UPDATE:
-
-            console.log('UPDATE RESPONSE');
-            console.log('params', params);
-
             return params;
 
         case CREATE:
