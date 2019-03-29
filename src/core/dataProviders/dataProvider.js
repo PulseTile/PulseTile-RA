@@ -243,10 +243,16 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case GET_ONE:
-        case UPDATE:
             return {
                 data: Object.assign({id: response.sourceId}, response),
             };
+
+        case UPDATE:
+
+            console.log('UPDATE RESPONSE');
+            console.log('params', params);
+
+            return params;
 
         case CREATE:
             const dataFromRequest = get(params, 'data', null);

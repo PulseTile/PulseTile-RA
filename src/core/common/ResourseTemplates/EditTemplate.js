@@ -28,6 +28,7 @@ const styles = theme => ({
         display: "flex",
         alignItems: "center",
         height: 49,
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         paddingLeft: 15,
     },
@@ -78,7 +79,7 @@ const EditTemplate = ({ classes, isListOpened, blockTitle, toggleListBlock, chil
                 </IconButton>
             </Tooltip>
         </div>
-        <Edit {...rest}>
+        <Edit undoable={false} {...rest}>
             <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
                 {children}
             </SimpleForm>
