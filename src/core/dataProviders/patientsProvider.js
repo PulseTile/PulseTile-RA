@@ -40,9 +40,8 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
-            // let data = Object.assign({userId: currentUserID}, params.data);
             let data = null;
-            url = `${domainName}/mpi/Patient/${params.nhsNumber}`;
+            url = `${domainName}/mpi/Patient/${params.id}`;
             options.method = "POST";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -146,9 +145,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             };
 
         case UPDATE:
-            return {
-                data: Object.assign({id: response.sourceId}, response),
-            };
+            return params;
 
         case CREATE:
             const dataFromRequest = get(params, 'data', null);
