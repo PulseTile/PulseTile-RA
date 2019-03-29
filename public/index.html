@@ -11,6 +11,16 @@
     -->
 	<link rel="manifest" href="%PUBLIC_URL%/manifest.json">
 	<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+
+	<style>
+		@font-face {
+			font-family: 'HK Grotesk';
+			font-weight: normal;
+			font-style: normal;
+			src: url('./fonts/HKGrotesk-Regular.otf');
+		}
+	</style>
+
 	<!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -41,17 +51,25 @@
 
 	<script type="text/javascript">
         window.config = {
-            domainName: "https://192.168.88.38",
+            domainName: "http://192.168.88.38:8080",
             lightPalette: {
                 mainColor: "#3596f4",
                 dangerColor: "#da534f",
                 contrastColor: "#000",
+                disabledColor: "#e9e4e4",
+				borderColor: "#e5e5e5",
+				paperColor: "#fff",
+				fontColor: "#000",
                 viewButton: "#30ad57",
 			},
 			darkPalette: {
                 mainColor: "#000",
                 dangerColor: "#da534f",
                 contrastColor: "#000",
+                disabledColor: "#e9e4e4",
+                borderColor: "#000",
+                paperColor: "#fff",
+                fontColor: "#000",
                 viewButton: "#000",
 			},
         }

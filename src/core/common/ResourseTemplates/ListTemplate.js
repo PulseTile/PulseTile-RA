@@ -27,6 +27,9 @@ import { ITEMS_PER_PAGE } from "../../config/styles";
 const listStyles = theme => ({
     mainBlock: {
         margin: 0,
+        paddingLeft: 10,
+        paddingTop: 15,
+        paddingRight: 25,
     },
     list: {
         paddingLeft: 0,
@@ -68,15 +71,8 @@ const listStyles = theme => ({
     },
     tableList: {
         '& thead': {
-            backgroundColor: "#e5e5e5",
-            '& tr th span span': {
-                color: "#000",
-            },
             '& tr th': {
                 paddingLeft: 10,
-            },
-            '& tr': {
-                height: 48,
             },
         },
         '& tbody tr:hover': {
@@ -186,7 +182,7 @@ class ListTemplate extends Component {
                         <React.Fragment>
                             <div className={classes.blockTitle}>
                                 <Typography className={classes.title}>{title}</Typography>
-                                <FilterIcon className={classes.filterIcon} onClick={() => this.toggleFilter()} />
+                                <SearchIcon className={classes.filterIcon} onClick={() => this.toggleFilter()} />
                             </div>
                             {
                                 isFilterOpened &&
@@ -197,11 +193,6 @@ class ListTemplate extends Component {
                                         </IconButton>
                                     </Tooltip>
                                     <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                    <Tooltip title="Search">
-                                        <IconButton className={classes.iconButton}>
-                                            <SearchIcon />
-                                        </IconButton>
-                                    </Tooltip>
                                 </Paper>
                             }
                         </React.Fragment>

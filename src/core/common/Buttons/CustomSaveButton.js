@@ -13,7 +13,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.mainColor,
         color: "white",
         border: `1px solid ${theme.palette.mainColor}`,
-        borderRadius: 20,
+        borderRadius: 25,
         fontSize: 16,
         fontWeight: 800,
         padding: 0,

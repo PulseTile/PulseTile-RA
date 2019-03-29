@@ -9,7 +9,7 @@ const styles = theme => ({
         display: "flex",
         height: 48,
         alignItems: "center",
-        border: "1px solid #e5e5e5",
+        border: `1px solid ${theme.palette.borderColor}`,
         paddingLeft: 10,
         backgroundColor: "#fff",
     },
@@ -42,7 +42,9 @@ const styles = theme => ({
 const Breadcrumbs = ({ classes, resource }) => {
     return (
         <div className={classes.breadcrumbsBlock}>
-            <Link to="/" className={classes.link} color="inherit">Home</Link>
+            <Typography>
+                <Link to="/" className={classes.link} color="inherit">Home</Link>
+            </Typography>
             {
                 resource.map((item, key) => {
                     return (

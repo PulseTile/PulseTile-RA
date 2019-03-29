@@ -15,12 +15,14 @@ const styles = theme => ({
     paginatorRoot: {
         display: "flex",
         flexDirection: "row",
+        backgroundColor: "#fff",
     },
     button: {
         display: "block",
-        border: "1px solid #e5e5e5",
-        height: "100%",
-        width: "35px",
+        border: `1px solid ${theme.palette.borderColor}`,
+        height: 48,
+        width: 48,
+        boxSizing: "border-box",
         borderRadius: 0,
         color: theme.palette.mainColor,
         '&:hover': {
@@ -30,9 +32,10 @@ const styles = theme => ({
     },
     activeButton: {
         display: "block",
-        border: "1px solid #e5e5e5",
-        height: "100%",
-        width: "35px",
+        border: `1px solid ${theme.palette.borderColor}`,
+        height: 48,
+        width: 48,
+        boxSizing: "border-box",
         borderRadius: 0,
         color: "white",
         backgroundColor: theme.palette.mainColor,

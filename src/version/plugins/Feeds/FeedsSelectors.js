@@ -81,8 +81,13 @@ class FeedsSelectors extends Component {
                 <div className={classes.dialogItem}>
                 {feedsArray.map((item, key) => (
                     <div key={key} className={classes.dialogLabel}>
-                        <Checkbox checked={this.isFeedsChecked(item.sourceId)} color="primary" onChange={() => this.toggleVisibility(item)} />
-                        <span>{item.name}</span>
+                        <Checkbox
+                            className={classes.checkbox}
+                            checked={this.isFeedsChecked(item.sourceId)}
+                            color="primary"
+                            onChange={() => this.toggleVisibility(item)}
+                        />
+                        <Typography className={classes.checkboxLabel}>{item.name}</Typography>
                     </div>
                 ))}
                 </div>

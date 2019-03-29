@@ -11,6 +11,10 @@ const defaultLightPalette = {
     mainColor: "#0D672F",
     dangerColor: "#da534f",
     viewButton: "#30ad57",
+    disabledColor: "#e9e4e4",
+    borderColor: "#e5e5e5",
+    paperColor: "#fff",
+    fontColor: "#000",
 };
 
 const defaultDarkPalette = {
@@ -18,6 +22,10 @@ const defaultDarkPalette = {
     mainColor: "#000",
     dangerColor: "#000",
     viewButton: "#000",
+    disabledColor: "#e9e4e4",
+    borderColor: "#000",
+    paperColor: "#fff",
+    fontColor: "#000",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -56,6 +64,10 @@ export function getCurrentTheme(isContrastMode) {
     const palette = getCurrentPalette(isContrastMode);
     return createMuiTheme({
         palette: palette,
+        typography: {
+            fontFamily: '"HK Grotesk", Arial, sans-serif',
+            fontSize: 14,
+        },
         tableHeader: {
             tableHeaderBlock: {
                 background: getCardBackground(isContrastMode, palette.mainColor),
@@ -72,9 +84,52 @@ export function getCurrentTheme(isContrastMode) {
         overrides: {
             MuiInput: {
                 root: {
-                    border: "1px solid #e5e5e5"
+                    border: `1px solid ${palette.borderColor}`,
                 }
-            }
+            },
+            MuiList: {
+                root: {
+                    backgroundColor: palette.paperColor,
+                }
+            },
+            MuiPaper: {
+                elevation1: {
+                    boxShadow: "none",
+                    backgroundColor: palette.paperColor,
+                }
+            },
+            MuiTable: {
+                root: {
+                    backgroundColor: palette.paperColor,
+                    border: `1px solid ${palette.borderColor}`,
+                }
+            },
+            MuiTableHead: {
+                root: {
+                    backgroundColor: palette.borderColor,
+                    color: palette.fontColor,
+                }
+            },
+            MuiTableRow: {
+                head: {
+                    height: 48,
+                }
+            },
+            MuiTableCell: {
+                head: {
+                    color: palette.fontColor,
+                    fontSize: 16,
+                    fontWeight: 800,
+                },
+                paddingNone: {
+                    paddingLeft: 10,
+                }
+            },
+            MuiTypography: {
+                body1: {
+                    fontSize: 15,
+                }
+            },
         }
     });
 }
