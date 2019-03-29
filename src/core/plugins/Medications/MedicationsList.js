@@ -25,7 +25,7 @@ export const MedicationsList = ({ classes, ...rest }) => (
       {...rest}
     >
         <TextField source="name" label="Name" />
-        <TextField source="doseAmount" label="Dose Amount" />
+        <DateField source="dateCreated" label="Date" />
         <TextField source="source" label="Source" />
     </ListTemplate>
 );

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import get from "lodash/get";
 import { connect } from 'react-redux';
 import { Route } from "react-router";
 import {
@@ -19,6 +18,9 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
@@ -49,14 +51,23 @@ const listStyles = theme => ({
         fontWeight: 700,
         paddingLeft: 15,
     },
+    emptyBlock: {
+        flexGrow: 1,
+    },
     title: {
-        color: "#fff",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
     },
     filterIcon: {
+        color: `${theme.palette.paperColor} !important`,
         paddingRight: 15,
+    },
+    expandIcon: {
+        height: 20,
+        color: `${theme.palette.paperColor} !important`,
+        paddingRight: 7,
     },
     filterInput: {
         backgroundColor: theme.palette.mainColor,
@@ -99,6 +110,7 @@ const listStyles = theme => ({
 class ListTemplate extends Component {
 
     state = {
+        isListOpened: true,
         isFilterOpened: false,
         filterText: null,
         key: 0,
@@ -145,6 +157,12 @@ class ListTemplate extends Component {
         })
     };
 
+    toggleListBlock = () => {
+        this.setState({
+            isListOpened: !this.state.isListOpened,
+        })
+    };
+
     /**
      * This function check is current page is list page with table (it also used at create and show pages).
      * Settings of <Grid /> component of <ListTemplate /> depends on result of this function.
@@ -184,7 +202,7 @@ class ListTemplate extends Component {
 
     render() {
         const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent, currentList } = this.props;
-        const { isFilterOpened, key, filterText } = this.state;
+        const { isFilterOpened, key, isListOpened, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
         ];
@@ -205,59 +223,71 @@ class ListTemplate extends Component {
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <TableHeader resource={resourceUrl} />
                 <Grid container spacing={16} className={classes.mainBlock}>
-                    <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
-                        <React.Fragment>
-                            <div className={classes.blockTitle}>
-                                <Typography className={classes.title}>
-                                    {titleTable}
-                                </Typography>
-                                { !headerFilterAbsent &&
-                                    <SearchIcon className={classes.filterIcon} onClick={() => this.toggleFilter()}/>
+                    { isListOpened &&
+                        <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
+                            <React.Fragment>
+                                <div className={classes.blockTitle}>
+                                    <Typography className={classes.title}>{title}</Typography>
+                                    <div className={classes.emptyBlock}></div>
+                                    {!this.isListPage() &&
+                                        <Tooltip title="Expand">
+                                            <IconButton onClick={() => history.push("/" + resourceUrl)}  >
+                                                <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
+                                            </IconButton>
+                                        </Tooltip>
+                                    }
+                                    { !headerFilterAbsent &&
+                                        <Tooltip title="Search">
+                                            <IconButton onClick={() => this.toggleFilter()}>
+                                                <SearchIcon className={classes.filterIcon}/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    }
+                                </div>
+                                {
+                                    isFilterOpened &&
+                                    <Paper className={classes.filterInput} elevation={1}>
+                                        <Tooltip title="Menu">
+                                            <IconButton className={classes.iconButton}>
+                                                <FilterIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                    </Paper>
                                 }
-                            </div>
-                            {
-                                isFilterOpened &&
-                                <Paper className={classes.filterInput} elevation={1}>
-                                    <Tooltip title="Menu">
-                                        <IconButton className={classes.iconButton}>
-                                            <FilterIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                </Paper>
-                            }
-                        </React.Fragment>
-                        <List
-                            resource={resourceUrl}
-                            key={key}
-                            filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
-                            title={title}
-                            perPage={ITEMS_PER_PAGE}
-                            actions={null}
-                            bulkActions={false}
-                            pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
-                            {...this.props}
-                        >
-                            { (idsNumber > 0) ?
-                                <Datagrid className={classes.tableList} rowClick="edit">
-                                    {children}
-                                </Datagrid>
-                                :
-                                <EmptyListBlock />
-                            }
-                        </List>
-                    </Grid>
+                            </React.Fragment>
+                            <List
+                                resource={resourceUrl}
+                                key={key}
+                                filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
+                                title={title}
+                                perPage={ITEMS_PER_PAGE}
+                                actions={null}
+                                bulkActions={false}
+                                pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
+                                {...this.props}
+                            >
+                                { (idsNumber > 0) ?
+                                    <Datagrid className={classes.tableList} rowClick="edit">
+                                        {children}
+                                    </Datagrid>
+                                    :
+                                    <EmptyListBlock />
+                                }
+                            </List>
+                        </Grid>
+                    }
                     {
                         (!this.isCreatePage())
                             ?
                             <Route
                                 path={this.getDetailsUrl()}
-                                render={({ match }) => <DetailsTemplate mode="show" {...this.props} id={match.params.id} />}
+                                render={({ match }) => <DetailsTemplate mode="show" isListOpened={isListOpened} toggleListBlock={this.toggleListBlock} {...this.props} id={match.params.id} />}
                             />
                             :
                             <Route
                                 path={createUrl}
-                                render={({ match }) => <CreateBlock {...this.props} id={match.params.id} />}
+                                render={({ match }) => <CreateBlock isListOpened={isListOpened} toggleListBlock={this.toggleListBlock} id={match.params.id} {...this.props} />}
                             />
                     }
                 </Grid>

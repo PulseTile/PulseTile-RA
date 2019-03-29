@@ -15,7 +15,8 @@ export const coreSynopsisData = [
     // { id: "block-contacts", title: "Contacts", list: "contacts", icon: faPhone },
 ];
 
-export const synopsisData = coreSynopsisData.concat(nonCoreSynopsisData);
+const totalSynopsisData = coreSynopsisData.concat(nonCoreSynopsisData);
+export const synopsisData = totalSynopsisData.filter(item => item.isActive);
 
 export const SHOW_HEADING = 'heading';
 export const SHOW_ALL = 'headingAndList';
