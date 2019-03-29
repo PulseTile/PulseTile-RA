@@ -24,7 +24,7 @@ const TopThreeThingsList = ({ classes, ...rest }) => (
       title="Top Three Things"
       {...rest}
     >
-        <DateField source="dateCreated" />
+        <DateField source="dateCreated" label="Date created"  />
         <TextField source="name1" label="Issue #1" />
         <TextField source="name2" label="Issue #2" />
         <TextField source="name3" label="Issue #3" />

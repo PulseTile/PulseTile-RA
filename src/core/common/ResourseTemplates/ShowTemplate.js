@@ -101,7 +101,7 @@ class ShowTemplate extends Component {
     };
 
     render() {
-        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
+        const { classes, children, isListOpened, resourceUrl, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
         const { currentPanel } = this.state;
         return (
             <Grid item xs={12} sm={isListOpened ? 6 : 12} className={classes.showBlock}>
@@ -123,7 +123,7 @@ class ShowTemplate extends Component {
                                     {children}
                                 </SimpleShowLayout>
                             </Show>
-                            <EditButton redirectTo={changeViewType} />
+                            {resourceUrl === "top3Things" && <EditButton redirectTo={changeViewType} />}
                         </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>

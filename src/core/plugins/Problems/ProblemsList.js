@@ -25,7 +25,7 @@ const DiagnosisList = ({ classes, ...rest }) => (
       {...rest}
     >
         <TextField source="problem" label="Problem / Issue" />
-        <DateField source="dateOfOnset" label="Date Of Onset" />
+        <DateField source="dateOfOnset" label="Date" />
         <TextField source="source" label="Source" />
     </ListTemplate>
 );
