@@ -197,7 +197,8 @@ class ListTemplate extends Component {
             this.filterByUserSearch();
         }
 
-        const idsNumber = Array.isArray(currentList) ? currentList.length : 0;
+        const currentListArray = Object.values(currentList);
+        const idsNumber = currentListArray.length > 0 ? currentListArray.length : 0;
 
         return (
             <React.Fragment>
@@ -226,25 +227,25 @@ class ListTemplate extends Component {
                                 </Paper>
                             }
                         </React.Fragment>
-                        { ((idsNumber > 0 && resourceUrl !== 'patients') || (userSearch && resourceUrl === 'patients')) ?
-                            <List
-                                resource={resourceUrl}
-                                key={key}
-                                filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
-                                title={title}
-                                perPage={ITEMS_PER_PAGE}
-                                actions={null}
-                                bulkActions={false}
-                                pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
-                                {...this.props}
-                            >
+                        <List
+                            resource={resourceUrl}
+                            key={key}
+                            filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
+                            title={title}
+                            perPage={ITEMS_PER_PAGE}
+                            actions={null}
+                            bulkActions={false}
+                            pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
+                            {...this.props}
+                        >
+                            { (idsNumber > 0) ?
                                 <Datagrid className={classes.tableList} rowClick="edit">
                                     {children}
                                 </Datagrid>
-                            </List>
-                            :
-                            <EmptyListBlock />
-                        }
+                                :
+                                <EmptyListBlock />
+                            }
+                        </List>
                     </Grid>
                     {
                         (!this.isCreatePage())
@@ -268,7 +269,7 @@ class ListTemplate extends Component {
 const mapStateToProps = (state, ownProps)  => {
     return {
         userSearch: state.custom.userSearch.data,
-        currentList: get(state, ['admin.resources', ownProps.resource, 'list.ids'], []),
+        currentList: state.admin.resources[ownProps.resource].list.ids,
     }
 };
 
