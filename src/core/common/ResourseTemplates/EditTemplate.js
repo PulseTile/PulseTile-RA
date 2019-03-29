@@ -17,13 +17,13 @@ import EditFormToolbar from "../../common/Toolbars/EditFormToolbar";
 const styles = theme => ({
     editBlock: {
         width: '100%',
-        backgroundColor: "#fff",
+        backgroundColor: theme.palette.paperColor,
     },
     blockTitle: {
         display: "flex",
         alignItems: "center",
         height: 49,
-        color: "#fff",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
@@ -53,7 +53,7 @@ const styles = theme => ({
 const EditTemplate = ({ classes, blockTitle, children, changeViewType, ...rest }) => (
     <Grid item xs={12} sm={6} className={classes.editBlock}>
         <Typography className={classes.blockTitle}>{blockTitle}</Typography>
-        <Edit {...rest}>
+        <Edit undoable={false} {...rest}>
             <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
                 {children}
             </SimpleForm>

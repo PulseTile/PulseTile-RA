@@ -213,7 +213,7 @@ class ListTemplate extends Component {
                             {...this.props}
                         >
                             { (idsNumber > 0) ?
-                                <Datagrid className={classes.tableList} rowClick="edit">
+                                <Datagrid className={classes.tableList} rowClick="show">
                                     {children}
                                 </Datagrid>
                                 :
