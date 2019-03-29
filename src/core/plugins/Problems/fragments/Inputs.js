@@ -21,7 +21,7 @@ const styles = {
  */
 const ProblemsInputs = ({ classes, ...rest }) => (
     <React.Fragment>
-        <TextInput className={classes.labelBlock} source="problem" label="Problem issue" fullWidth />
+        <TextInput className={classes.labelBlock} source="problem" label="Problem / Issue" fullWidth />
         <DateInput className={classes.labelBlock} source="dateOfOnset" label="Date of Onset" fullWidth />
         <LongTextInput className={classes.labelBlock} source="description" label="Description" fullWidth />
         <TextInput className={classes.labelBlock} source="code" label="Terminology Code" fullWidth />

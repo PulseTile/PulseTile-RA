@@ -6,9 +6,25 @@ import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
 import FeedsPanels from "../plugins/Feeds/FeedsPanels";
 import Charts from "../../core/pages/Charts";
 
-export const themeShortMenu = [];
+export const themeShortMenu = [
+    { url: '/summary', label: 'Patient Summary' },
+    { url: '/problems', label: 'Problems / Issues' },
+    { url: '/medications', label: 'Medications' },
+    { url: '/vaccinations', label: 'Vaccinations' },
+    { url: '/allergies', label: 'Allergies' },
+    { url: '/contacts', label: 'Contacts' },
+    { url: '/top3Things', label: 'TopThreeThings' },
+];
 
-export const themeFullMenu = [];
+export const themeFullMenu = [
+    { url: '/summary', label: 'Patient Summary' },
+    { url: '/problems', label: 'Problems / Issues' },
+    { url: '/medications', label: 'Medications' },
+    { url: '/vaccinations', label: 'Vaccinations' },
+    { url: '/allergies', label: 'Allergies' },
+    { url: '/contacts', label: 'Contacts' },
+    { url: '/top3Things', label: 'TopThreeThings' },
+];
 
 export const themeCommonElements = {
     topbar: ThemeTopbar,

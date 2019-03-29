@@ -24,7 +24,7 @@ const styles = {
  * @return {boolean}
  */
 function checkForTopThreeThings(resourceUrl, total) {
-    return !(resourceUrl === "top3Things" && total > 0);
+    return (resourceUrl === "top3Things" && total === 0);
 }
 
 /**
@@ -42,7 +42,7 @@ const ListToolbar = ({ classes, isCreatePage, resourceUrl, createPath, history, 
     <div className={classes.paginationBlock}>
         <CustomPaginator resourceUrl={resourceUrl} history={history} itemsPerPage={10} total={total} />
         {
-            (!isCreatePage && checkForTopThreeThings(resourceUrl, total)) &&
+            (checkForTopThreeThings(resourceUrl, total)) &&
                 <CreateButton history={history} redirectPath={createPath} />
         }
     </div>
