@@ -36,6 +36,7 @@ const listStyles = theme => ({
         paddingLeft: 10,
         paddingTop: 15,
         paddingRight: 25,
+        border: `1px solid ${theme.palette.borderColor}`,
     },
     list: {
         paddingLeft: 0,
