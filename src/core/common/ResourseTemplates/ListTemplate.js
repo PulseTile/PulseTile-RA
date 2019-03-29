@@ -269,7 +269,7 @@ class ListTemplate extends Component {
 const mapStateToProps = (state, ownProps)  => {
     return {
         userSearch: state.custom.userSearch.data,
-        currentList: state.admin.resources[ownProps.resource].list.ids,
+        currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
     }
 };
 
