@@ -24,6 +24,7 @@ const styles = theme => ({
     createBlock: {
         width: '100%',
         backgroundColor: theme.palette.paperColor,
+        border: `1px solid ${theme.palette.borderColor}`,
     },
     blockTitle: {
         display: "flex",

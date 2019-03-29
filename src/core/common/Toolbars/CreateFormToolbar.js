@@ -29,6 +29,9 @@ const styles = theme => ({
             backgroundColor: "#fff",
             color: theme.palette.dangerColor,
         }
+    },
+    toolbar: {
+        backgroundColor: theme.palette.toolbarColor,
     }
 });
 
@@ -36,16 +39,16 @@ const styles = theme => ({
  * This component returns toolbar without delete button for create forms
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} classes
  * @param {shape} props
- * @constructor
  */
-const CreateFormToolbar = ({ classes, changeViewType, ...props}) => {
+const CreateFormToolbar = ({ classes, ...props}) => {
     return (
-        <Toolbar {...props} >
+        <Toolbar className={classes.toolbar} {...props} >
             <ListButton label="Cancel" icon={<BlockIcon />} className={classes.listButton} />
             <CustomSaveButton {...props} />
         </Toolbar>
     );
-}
+};
 
 export default withStyles(styles)(CreateFormToolbar);
