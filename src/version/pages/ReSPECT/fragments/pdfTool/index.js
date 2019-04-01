@@ -49,17 +49,14 @@ function getDDMMMYYYY(date){
 
 
 function getClinicalRecommendations(obj){
-    switch(get(obj, 'sections.clinicalRecommendation.focusValue', null)){
-        case 'Life-sustaining treatment':
-            return 5;
-            break;
-        case 'Symptom control':
-            return 95;
-            break;
-        default:
-            return 50;
-            break;
+    const focusValue = get(obj, 'sections.clinicalRecommendations.focusValue', null);
+    let result = 50;
+    if (focusValue < 50) {
+        result = 5;
+    } else if (focusValue > 50) {
+        result = 95;
     }
+    return result;
 }
 
 export default (obj) => {
@@ -81,6 +78,11 @@ export default (obj) => {
         }
     }
 
+    console.log('+++++++++++++++++++++++++++++++++++++++++++++++');
+    console.log(obj.sections.capacityAndRepresentation);
+
+
+
     let form = {
         preferredName: get(obj, 'sections.personalDetails.preferredName', null),
         fullName: get(obj, 'sections.personalDetails.firstName', null) + ' ' + get(obj, 'sections.personalDetails.surname', null),
@@ -93,7 +95,7 @@ export default (obj) => {
         sectionThreeX: get(obj, 'sections.personalPreferences.preferencesValue', null),
         sectionThreeDetails: get(obj, 'sections.personalPreferences.preferencesText', null),
         sectionFourClinicalRecommendationsX: getClinicalRecommendations(obj),
-        sectionFourClinicalRecommendations: get(obj, 'sections.clinicalRecommendation.clinicalGuidance', null),
+        sectionFourClinicalRecommendations: get(obj, 'sections.clinicalRecommendations.clinicalGuidance', null),
         sectionFiveCapacity: get(obj, 'sections.capacityAndRepresentation.capacityFirst', null),
         sectionFiveLegalProxy: get(obj, 'sections.capacityAndRepresentation.capacitySecond', null),
         sectionSixA: (get(obj, 'sections.involvement.variant', null) === 'variantA'),
@@ -258,36 +260,33 @@ export default (obj) => {
     doc.addPage();
     doc.image(page2, 0, 0, {width: doc.page.width, height: doc.page.height});
 
-    switch (get(form, 'sectionFiveCapacity', null)) {
-        case '2': // Yes
-            doc.ellipse(535, 52, 16, 10)
-                .lineWidth(2)
-                .strokeColor('#ff0000')
-                .stroke();
-            break;
-        case '1': // No
-            doc.ellipse(562, 52, 16, 10)
-                .lineWidth(2)
-                .strokeColor('#ff0000')
-                .stroke();
-            break;
+    if (form.sectionFiveCapacity === '1') {
+        doc.ellipse(535, 52, 16, 10)
+            .lineWidth(2)
+            .strokeColor('#ff0000')
+            .stroke();
+    } else if (form.sectionFiveCapacity === '0') {
+        doc.ellipse(562, 52, 16, 10)
+            .lineWidth(2)
+            .strokeColor('#ff0000')
+            .stroke();
     }
 
     // Legal Proxy
     switch (get(form, 'sectionFiveLegalProxy', null)) {
-        case '2': // Yes
+        case 'at0004': // Yes
             doc.ellipse(470, 89, 16, 10)
                 .lineWidth(2)
                 .strokeColor('#ff0000')
                 .stroke();
             break;
-        case '1': // No
+        case 'at0005': // No
             doc.ellipse(498, 89, 14, 10)
                 .lineWidth(2)
                 .strokeColor('#ff0000')
                 .stroke();
             break;
-        case '3': // Unknown
+        case 'at0006': // Unknown
             doc.ellipse(544, 89, 35, 12)
                 .lineWidth(2)
                 .strokeColor('#ff0000')
