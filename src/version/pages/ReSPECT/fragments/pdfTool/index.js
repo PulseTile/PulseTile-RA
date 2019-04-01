@@ -44,19 +44,20 @@ function address(obj){
 
 
 function getDDMMMYYYY(date){
-    return moment(date).isValid() ? moment(date).format('DD-MMM-YYYY') : moment().format('DD-MMM-YYYY');
+    return moment(date).isValid() ? moment(date).format('DD-MMM-YYYY') : null;
 }
-
 
 function getClinicalRecommendations(obj){
     const focusValue = get(obj, 'sections.clinicalRecommendations.focusValue', null);
-    let result = 50;
-    if (focusValue < 50) {
-        result = 5;
+    if (!focusValue) {
+        return null;
+    } else if (focusValue < 50) {
+        return 5;
     } else if (focusValue > 50) {
-        result = 95;
+        return 95;
+    } else if (focusValue === 50) {
+        return 50;
     }
-    return result;
 }
 
 export default (obj) => {
@@ -144,16 +145,16 @@ export default (obj) => {
             details: get(obj, 'sections.emergencyContacts.contactsArray[3].details', null),
         },
         sectionNineConfirmation1: {
-            reviewDate: getDDMMMYYYY(get(obj, ['sections.confirmation.confirmationsArray', [0], 'reviewDate'], null)),
-            designation: get(obj, ['sections.confirmation.confirmationsArray', [0], 'designation'], null),
-            name: get(obj, ['sections.confirmation.confirmationsArray', [0], 'clinicialName'], null),
-            number: get(obj, ['sections.confirmation.confirmationsArray', [0], 'gmcNumber'], null),
+            reviewDate: getDDMMMYYYY(get(obj, 'sections.confirmation.confirmationsArray[0].reviewDate', null)),
+            designation: get(obj, 'sections.confirmation.confirmationsArray[0].designation', null),
+            name: get(obj, 'sections.confirmation.confirmationsArray[0].clinicialName', null),
+            number: get(obj, 'sections.confirmation.confirmationsArray[0].gmcNumber', null),
         },
         sectionNineConfirmation2: {
-            reviewDate: getDDMMMYYYY(get(obj, ['sections.confirmation.confirmationsArray', [1], 'reviewDate'], null)),
-            designation: get(obj, ['sections.confirmation.confirmationsArray', [1], 'designation'], null),
-            name: get(obj, ['sections.confirmation.confirmationsArray', [1], 'clinicialName'], null),
-            number: get(obj, ['sections.confirmation.confirmationsArray', [1], 'gmcNumber'], null),
+            reviewDate: getDDMMMYYYY(get(obj, 'sections.confirmation.confirmationsArray[1].reviewDate', null)),
+            designation: get(obj, 'sections.confirmation.confirmationsArray[1].designation', null),
+            name: get(obj, 'sections.confirmation.confirmationsArray[1].clinicialName', null),
+            number: get(obj, 'sections.confirmation.confirmationsArray[1].gmcNumber', null),
         }
     };
 
@@ -537,25 +538,25 @@ export default (obj) => {
     }
 
     if (get(form, 'sectionNineConfirmation2.reviewDate', null)) {
-        doc.text(form.sectionNineConfirmation2.reviewDate, 31, 740, {
+        doc.text(form.sectionNineConfirmation2.reviewDate, 31, 760, {
             width: 78,
             height: 18
         });
     }
     if (get(form, 'sectionNineConfirmation2.designation', null)) {
-        doc.text(form.sectionNineConfirmation2.designation, 120, 740, {
+        doc.text(form.sectionNineConfirmation2.designation, 120, 760, {
             width: 108,
             height: 18
         });
     }
     if (get(form, 'sectionNineConfirmation2.name', null)) {
-        doc.text(form.sectionNineConfirmation2.name, 234, 740, {
+        doc.text(form.sectionNineConfirmation2.name, 234, 760, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionNineConfirmation2.number', null)) {
-        doc.text(form.sectionNineConfirmation2.number, 395, 740, {
+        doc.text(form.sectionNineConfirmation2.number, 395, 760, {
             width: 108,
             height: 18
         });
