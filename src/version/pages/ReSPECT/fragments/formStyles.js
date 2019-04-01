@@ -38,7 +38,6 @@ export default theme => ({
     },
     radioGroup: {
         marginLeft: 25,
-        marginBottom: 25,
     },
     mainFormLabel: {
         display: "block",

@@ -98,18 +98,26 @@ class Involvement extends Component {
                                         />
                                     }
                                 />
+                                <FormControlLabel
+                                    className={classes.formControlLabel}
+                                    disabled={isVersionInfo}
+                                    value="variantD"
+                                    control={<Radio />}
+                                    label="D - if no other option has been selected, valid reasons must be stated here"
+                                />
                             </RadioGroup>
                         </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>D - if no other option has been selected, valid reasons must be stated here</FormLabel>
-                            <Control.textarea
-                                className={classes.formTextarea}
-                                model="involvement.variantD"
-                                defaultValue={filledValues.variantD}
-                                disabled={isVersionInfo}
-                            />
-                            <FormHelperText>Document full explanation in the clinical record</FormHelperText>
-                        </FormGroup>
+                        { (variant === 'variantD') &&
+                            <FormGroup className={classes.formGroup}>
+                                <Control.textarea
+                                    className={classes.formTextarea}
+                                    model="involvement.variantD"
+                                    defaultValue={filledValues.variantD}
+                                    disabled={isVersionInfo}
+                                />
+                                <FormHelperText>Document full explanation in the clinical record</FormHelperText>
+                            </FormGroup>
+                        }
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Record date, names and roles of those involved in decision making, and where records of discussion can be found</FormLabel>
                             <Control.textarea
