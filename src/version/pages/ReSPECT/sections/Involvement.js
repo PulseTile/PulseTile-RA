@@ -62,7 +62,7 @@ class Involvement extends Component {
         const { classes, sectionsInfo, latestVersionInfo, involvement, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, variant } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, involvement, 'involvement', isVersionInfo, defaultValues);
-        const InsertRadioValues = ['variantC1', 'variantC2', 'variantC3'];
+        const InsertRadioValues = ['at0005', 'at0011', 'at0012'];
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
@@ -115,7 +115,7 @@ class Involvement extends Component {
                             <Control.textarea
                                 className={classes.formTextarea}
                                 model="involvement.detailsOfDecision"
-                                defaultValue={filledValues.records}
+                                defaultValue={filledValues.detailsOfDecision}
                                 disabled={isVersionInfo}
                             />
                             <FormHelperText>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>

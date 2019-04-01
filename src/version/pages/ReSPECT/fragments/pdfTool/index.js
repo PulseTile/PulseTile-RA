@@ -78,11 +78,6 @@ export default (obj) => {
         }
     }
 
-    console.log('+++++++++++++++++++++++++++++++++++++++++++++++');
-    console.log(obj.sections.capacityAndRepresentation);
-
-
-
     let form = {
         preferredName: get(obj, 'sections.personalDetails.preferredName', null),
         fullName: get(obj, 'sections.personalDetails.firstName', null) + ' ' + get(obj, 'sections.personalDetails.surname', null),
@@ -101,10 +96,11 @@ export default (obj) => {
         sectionSixA: (get(obj, 'sections.involvement.variant', null) === 'variantA'),
         sectionSixB: (get(obj, 'sections.involvement.variant', null) === 'variantB'),
         sectionSixC: (get(obj, 'sections.involvement.variant', null) === 'variantC'),
-        sectionSixC1: (get(obj, 'sections.involvement.variant', null) === 'variantC1'),
-        sectionSixC2: (get(obj, 'sections.involvement.variant', null) === 'variantC2'),
-        sectionSixC3: (get(obj, 'sections.involvement.variant', null) === 'variantC3'),
-        sectionSixD: get(obj, 'sections.involvement.records', null),
+        sectionSixC1: (get(obj, 'sections.involvement.variant', null) === 'at0005'),
+        sectionSixC2: (get(obj, 'sections.involvement.variant', null) === 'at0011'),
+        sectionSixC3: (get(obj, 'sections.involvement.variant', null) === 'at0012'),
+        sectionSixD: get(obj, 'sections.involvement.variantD', null),
+        sectionSixDetailsOfDecision: get(obj, 'sections.involvement.detailsOfDecision', null),
         sectionSevenClinician1: {
             designation: ( clinicians[0] ? clinicians[0].designation : '' ),
             name: ( clinicians[0] ? clinicians[0].clinicialName : '' ),
@@ -124,28 +120,28 @@ export default (obj) => {
             dateTime: ( seniorClinician ? getDDMMMYYYY(seniorClinician.dateAndTime) : '' )
         },
         sectionEightContact1: {
-            role: get(obj, ['sections.emergencyContacts.contactsArray', [0], 'role'], null),
-            name: get(obj, ['sections.emergencyContacts.contactsArray', [0], 'name'], null),
-            telephone: get(obj, ['sections.emergencyContacts.contactsArray', [0], 'phone'], null),
-            details: get(obj, ['sections.emergencyContacts.contactsArray', [0], 'details'], null),
+            role: get(obj, 'sections.emergencyContacts.contactsArray[0].role', null),
+            name: get(obj, 'sections.emergencyContacts.contactsArray[0].name', null),
+            telephone: get(obj, 'sections.emergencyContacts.contactsArray[0].phone', null),
+            details: get(obj, 'sections.emergencyContacts.contactsArray[0].details', null),
         },
         sectionEightContact2: {
-            role: get(obj, ['sections.emergencyContacts.contactsArray', [1], 'role'], null),
-            name: get(obj, ['sections.emergencyContacts.contactsArray', [1], 'name'], null),
-            telephone: get(obj, ['sections.emergencyContacts.contactsArray', [1], 'phone'], null),
-            details: get(obj, ['sections.emergencyContacts.contactsArray', [1], 'details'], null),
+            role: get(obj, 'sections.emergencyContacts.contactsArray[1].role', null),
+            name: get(obj, 'sections.emergencyContacts.contactsArray[1].name', null),
+            telephone: get(obj, 'sections.emergencyContacts.contactsArray[1].phone', null),
+            details: get(obj, 'sections.emergencyContacts.contactsArray[1].details', null),
         },
         sectionEightContact3: {
-            role: get(obj, ['sections.emergencyContacts.contactsArray', [2], 'role'], null),
-            name: get(obj, ['sections.emergencyContacts.contactsArray', [2], 'name'], null),
-            telephone: get(obj, ['sections.emergencyContacts.contactsArray', [2], 'phone'], null),
-            details: get(obj, ['sections.emergencyContacts.contactsArray', [2], 'details'], null),
+            role: get(obj, 'sections.emergencyContacts.contactsArray[2].role', null),
+            name: get(obj, 'sections.emergencyContacts.contactsArray[2].name', null),
+            telephone: get(obj, 'sections.emergencyContacts.contactsArray[2].phone', null),
+            details: get(obj, 'sections.emergencyContacts.contactsArray[2].details', null),
         },
         sectionEightContact4: {
-            role: get(obj, ['sections.emergencyContacts.contactsArray', [3], 'role'], null),
-            name: get(obj, ['sections.emergencyContacts.contactsArray', [3], 'name'], null),
-            telephone: get(obj, ['sections.emergencyContacts.contactsArray', [3], 'phone'], null),
-            details: get(obj, ['sections.emergencyContacts.contactsArray', [3], 'details'], null),
+            role: get(obj, 'sections.emergencyContacts.contactsArray[3].role', null),
+            name: get(obj, 'sections.emergencyContacts.contactsArray[3].name', null),
+            telephone: get(obj, 'sections.emergencyContacts.contactsArray[3].phone', null),
+            details: get(obj, 'sections.emergencyContacts.contactsArray[3].details', null),
         },
         sectionNineConfirmation1: {
             reviewDate: getDDMMMYYYY(get(obj, ['sections.confirmation.confirmationsArray', [0], 'reviewDate'], null)),
@@ -344,12 +340,19 @@ export default (obj) => {
 
     if (get(form, 'sectionSixD', null)) {
         doc.fontSize(10)
-            .text(form.sectionSixD, 31, 409, {
+            .text(form.sectionSixD, 31, 359, {
                 width: 553,
                 height: 41
             });
     }
 
+    if (get(form, 'sectionSixDetailsOfDecision', null)) {
+        doc.fontSize(10)
+            .text(form.sectionSixDetailsOfDecision, 31, 419, {
+                width: 553,
+                height: 41
+            });
+    }
 
     if (get(form, 'sectionSevenClinician1.designation', null)) {
         doc.text(form.sectionSevenClinician1.designation, 31, 497, {
@@ -449,84 +452,60 @@ export default (obj) => {
             height: 18
         });
     }
-    if (get(form, 'sectionEightContact1.details', null)) {
-        doc.text(form.sectionEightContact1.details, 439, 605, {
-            width: 145,
-            height: 18
-        });
-    }
 
     if (get(form, 'sectionEightContact2.role', null)) {
-        doc.text(form.sectionEightContact2.role, 31, 605, {
+        doc.text(form.sectionEightContact2.role, 31, 625, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact2.name', null)) {
-        doc.text(form.sectionEightContact2.name, 151, 605, {
+        doc.text(form.sectionEightContact2.name, 151, 625, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact2.telephone', null)) {
-        doc.text(form.sectionEightContact2.telephone, 314, 605, {
+        doc.text(form.sectionEightContact2.telephone, 314, 625, {
             width: 117,
-            height: 18
-        });
-    }
-    if (get(form, 'sectionEightContact2.details', null)) {
-        doc.text(form.sectionEightContact2.details, 439, 605, {
-            width: 145,
             height: 18
         });
     }
 
     if (get(form, 'sectionEightContact3.role', null)) {
-        doc.text(form.sectionEightContact3.role, 31, 605, {
+        doc.text(form.sectionEightContact3.role, 31, 644, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact3.name', null)) {
-        doc.text(form.sectionEightContact3.name, 151, 605, {
+        doc.text(form.sectionEightContact3.name, 151, 644, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact3.telephone', null)) {
-        doc.text(form.sectionEightContact3.telephone, 314, 605, {
+        doc.text(form.sectionEightContact3.telephone, 314, 644, {
             width: 117,
-            height: 18
-        });
-    }
-    if (get(form, 'sectionEightContact3.details', null)) {
-        doc.text(form.sectionEightContact3.details, 439, 605, {
-            width: 145,
             height: 18
         });
     }
 
     if (get(form, 'sectionEightContact4.role', null)) {
-        doc.text(form.sectionEightContact4.role, 31, 605, {
+        doc.text(form.sectionEightContact4.role, 31, 663, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact4.name', null)) {
-        doc.text(form.sectionEightContact4.name, 151, 605, {
+        doc.text(form.sectionEightContact4.name, 151, 663, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact4.telephone', null)) {
-        doc.text(form.sectionEightContact4.telephone, 314, 605, {
+        doc.text(form.sectionEightContact4.telephone, 314, 663, {
             width: 117,
-            height: 18
-        });
-    }
-    if (get(form, 'sectionEightContact4.details', null)) {
-        doc.text(form.sectionEightContact4.details, 439, 605, {
-            width: 145,
             height: 18
         });
     }
