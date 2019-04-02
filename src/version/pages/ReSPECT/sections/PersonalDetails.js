@@ -17,7 +17,7 @@ import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getStateData, getFilledValues, getVersionData } from "../functions";
+import { getSectionStatus, getFilledValues, getVersionData } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const FORM_FIELDS_NUMBER = 9;
