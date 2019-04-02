@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
@@ -21,17 +22,11 @@ import formStyles from "../fragments/formStyles";
 
 const FORM_FIELDS_NUMBER = 9;
 
-const defaultValues = {
-    dateCompleted: moment().format('DD-MMM-YYYY'),
-    nhsNumber: localStorage.getItem('userId'),
-    author: localStorage.getItem('username'),
-};
-
 class PersonalDetails extends Component {
 
     state = {
         isMainPanel: true,
-        birthDate: getStateData(this.props, 'personalDetails.birthDate'),
+        birthDate: get(this.props, 'patientInfo.dateOfBirth', null),
     };
 
     submitForm = data => {
@@ -61,9 +56,47 @@ class PersonalDetails extends Component {
         });
     };
 
+    getUserNameInfo = totalName => {
+        const totalNameArray = totalName.split(' ');
+        const surname = totalNameArray.pop();
+        const preferredName = totalNameArray.shift();
+        return {
+            preferredName: preferredName,
+            firstName: totalNameArray.join(' '),
+            surname: surname
+        }
+    };
+
+    getStreetAddress = totalAddress => {
+        const totalAddressArray = totalAddress.split(' ');
+        return {
+            streetAddress: totalAddressArray[0],
+            addressSecondLine: (totalAddressArray.length >= 5) ? totalAddressArray[1] : '',
+        }
+    };
+
     render() {
-        const { classes, personalDetails, title, onRowClick, sectionsInfo, latestVersionInfo, isVersionInfo } = this.props;
+        const { classes, personalDetails, patientInfo, title, onRowClick, sectionsInfo, latestVersionInfo, isVersionInfo } = this.props;
         const { isMainPanel, birthDate } = this.state;
+
+        const userNameInfo = patientInfo.name ? this.getUserNameInfo(patientInfo.name) : null;
+        const streetAddress = patientInfo.address ? this.getStreetAddress(patientInfo.address) : null;
+
+        const defaultValues = {
+            preferredName: userNameInfo ? userNameInfo.preferredName : null,
+            firstName: userNameInfo ? userNameInfo.firstName : null,
+            surname: userNameInfo ? userNameInfo.surname : null,
+            streetAddress: streetAddress ? streetAddress.streetAddress : null,
+            addressSecondLine: streetAddress ? streetAddress.addressSecondLine : null,
+            city: patientInfo.city,
+            county: patientInfo.district,
+            country: patientInfo.country,
+            postCode: patientInfo.postCode,
+            nhsNumber: localStorage.getItem('userId'),
+            author: localStorage.getItem('username'),
+            dateCompleted: moment().format('DD-MMM-YYYY'),
+        };
+
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, personalDetails, 'personalDetails', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
@@ -75,7 +108,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 model="personalDetails.preferredName"
                                 defaultValue={filledValues.preferredName}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                         </FormGroup>
                         <FormGroup className={classes.smallFormGroup}>
@@ -84,7 +117,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 model="personalDetails.firstName"
                                 defaultValue={filledValues.firstName}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                         </FormGroup>
                         <FormGroup className={classes.smallFormGroup}>
@@ -93,7 +126,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 model="personalDetails.surname"
                                 defaultValue={filledValues.surname}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
@@ -102,7 +135,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 selected={birthDate}
                                 onChange={value => this.changeBirthDate(value)}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
@@ -111,14 +144,14 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 model="personalDetails.streetAddress"
                                 defaultValue={filledValues.streetAddress}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                             <FormHelperText className={classes.formHelpText}>Street address</FormHelperText>
                             <Control.text
                                 className={classes.formInput}
                                 model="personalDetails.addressSecondLine"
                                 defaultValue={filledValues.addressSecondLine}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                             <FormHelperText className={classes.formHelpText}>Address line 2</FormHelperText>
                         </FormGroup>
@@ -127,7 +160,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 model="personalDetails.city"
                                 defaultValue={filledValues.city}
-                                disabled={isVersionInfo}
+                                disabled={true}
                             />
                             <FormHelperText className={classes.formHelpText}>City</FormHelperText>
                         </FormGroup>
@@ -136,7 +169,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 model="personalDetails.county"
                                 defaultValue={filledValues.county}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                             <FormHelperText className={classes.formHelpText}>County</FormHelperText>
                         </FormGroup>
@@ -145,7 +178,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 model="personalDetails.postCode"
                                 defaultValue={filledValues.postCode}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                             <FormHelperText className={classes.formHelpText}>Post code</FormHelperText>
                         </FormGroup>
@@ -154,7 +187,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 model="personalDetails.country"
                                 defaultValue={filledValues.country}
-                                disabled={isVersionInfo}
+                                disabled
                             />
                             <FormHelperText className={classes.formHelpText}>Country</FormHelperText>
                         </FormGroup>
@@ -191,6 +224,7 @@ class PersonalDetails extends Component {
 const mapStateToProps = state => {
     return {
         personalDetails: state.custom.personalDetails.data,
+        patientInfo: state.custom.currentPatient.data,
     }
 };
 
