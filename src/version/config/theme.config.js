@@ -29,10 +29,10 @@ export const themeFullMenu = [
 
 export const themeCommonElements = {
     topbar: ThemeTopbar,
-    footer: ThemeFooter,
     feedsSelectors: FeedsSelectors,
     feedsPanels: FeedsPanels,
     homePage: PatientSummary,
+    isFooterAbsent: true,
 };
 
 export const themeImages = {
