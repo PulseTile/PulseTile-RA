@@ -20,12 +20,10 @@ const styles = theme => ({
  * @param {func}  viewAction
  * @param {shape} record
  */
-const ViewButton = ({ classes, viewAction, record }) => {
-    return (
-        <Button onClick={e => viewAction(e, record)} className={classes.viewButton}>
-            <Typography className={classes.viewButton}>View</Typography>
-        </Button>
-    );
-};
+const ViewButton = ({ classes, viewAction, record }) => (
+    <Button onClick={e => viewAction(e, record)} className={classes.viewButton}>
+        <Typography className={classes.viewButton}>View</Typography>
+    </Button>
+);
 
 export default withStyles(styles)(ViewButton);

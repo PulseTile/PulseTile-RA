@@ -56,12 +56,10 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        removeErrorNotification() {
-             dispatch(httpErrorAction.remove());
-        }
+const mapDispatchToProps = dispatch => ({
+    removeErrorNotification() {
+        dispatch(httpErrorAction.remove());
     }
-};
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

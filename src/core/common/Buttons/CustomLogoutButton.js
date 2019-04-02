@@ -36,15 +36,14 @@ const styles = theme => ({
  * @param {shape}   classes
  * @param {func}    userLogout
  * @param {string}  title
- * @param {boolean} isIconAbsent
+ * @param {boolean} hideIcon
  */
-const CustomLogoutButton = ({ classes, userLogout, title, isIconAbsent }) => {
-    const buttonName = title ? title : "Sign Out";
+const CustomLogoutButton = ({ classes, userLogout, title = "Sign Out", hideIcon }) => {
     return (
-        <Tooltip title={buttonName}>
+        <Tooltip title={title}>
             <IconButton className={classes.button} onClick={() => userLogout()}>
-                {buttonName}
-                { !isIconAbsent && <ExitIcon className={classes.icon} /> }
+                {title}
+                { !hideIcon && <ExitIcon className={classes.icon} /> }
             </IconButton>
         </Tooltip>
     );

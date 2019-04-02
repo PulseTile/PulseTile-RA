@@ -17,7 +17,7 @@ const defaultFullMenu = [
     { url: '/top3Things', label: 'TopThreeThings' },
 ];
 
-function isUrlPresented(currentResource, menuItemsArray) {
+function isResourcePresentedInMenu(currentResource, menuItemsArray) {
     const filterArray = menuItemsArray.filter(item => {
         return item.url === ('/' + currentResource);
     });
@@ -27,13 +27,13 @@ function isUrlPresented(currentResource, menuItemsArray) {
 export function getMenuItems(currentPathname) {
     const pathArray = currentPathname.split('/');
     const currentResource = get(pathArray, [1], null);
-    if (isUrlPresented(currentResource, themeShortMenu) || currentPathname === "/") {
+    if (isResourcePresentedInMenu(currentResource, themeShortMenu) || currentPathname === "/") {
         return themeShortMenu;
     }
-    if (isUrlPresented(currentResource, themeFullMenu)) {
+    if (isResourcePresentedInMenu(currentResource, themeFullMenu)) {
         return themeFullMenu;
     }
-    if (isUrlPresented(currentResource, defaultFullMenu)) {
+    if (isResourcePresentedInMenu(currentResource, defaultFullMenu)) {
         return defaultFullMenu;
     }
     return defaultShortMenu;

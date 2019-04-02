@@ -248,18 +248,13 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case UPDATE:
-
-            console.log('UPDATE RESPONSE');
-            console.log('params', params);
-
             return params;
-
         case CREATE:
             const dataFromRequest = get(params, 'data', null);
             const compositionUid = get(response, 'compositionUid', null);
             const compositionUidArray = compositionUid.split('::');
-            const sourseID = compositionUidArray[0];
-            dataFromRequest.id = get(response, 'host', null) + '-' + sourseID;
+            const sourceID = compositionUidArray[0];
+            dataFromRequest.id = get(response, 'host', null) + '-' + sourceID;
             return {
                 data: dataFromRequest,
             };

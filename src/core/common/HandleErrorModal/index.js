@@ -59,45 +59,37 @@ function isSessionExpired(status, message) {
 }
 
 function getErrorDescription(status, isJwtOld) {
-    let result = 'Something wrong';
-    switch (true) {
-        case Number(status) === 404:
-            result = 'API is currently unavailable';
-            break;
-        case Number(status) > 499:
-            result = 'Something is wrong with the server. Please try again later.';
-            break;
-        case isJwtOld:
-            result = 'Your session has expired. Click the button to log in again.';
-            break;
+    let result = 'Something is wrong';
+    if (Number(status) === 404) {
+        result = 'API is currently unavailable';
+    } else if (Number(status) > 499) {
+        result = 'Something is wrong with the server. Please try again later.';
+    } else if (isJwtOld) {
+        result = 'Your session has expired. Click the button to log in again.';
     }
     return result;
 }
 
-class HandleErrorModal extends Component {
-
-    render() {
-        const { classes, status, message, onClose, ...rest } = this.props;
-        const isJwtOld = isSessionExpired(status, message);
-        const errorDescription = getErrorDescription(status, isJwtOld);
-        return (
-            <Dialog {...rest}>
-                <div className={classes.dialogBlock} >
-                    <Typography className={classes.titleBlock}>
-                        Connection Error
-                    </Typography>
-                    <Typography className={classes.description}>{errorDescription}</Typography>
-                    <div className={classes.toolbar}>
-                        <Button onClick={() => onClose()}>Close</Button>
-                        { isJwtOld
-                            ? <CustomLogoutButton title="Login again" isIconAbsent={true} />
-                            : <Button className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
-                        }
-                    </div>
+const HandleErrorModal = ({ classes, status, message, onClose, ...rest }) => {
+    const isJwtOld = isSessionExpired(status, message);
+    const errorDescription = getErrorDescription(status, isJwtOld);
+    return (
+        <Dialog {...rest}>
+            <div className={classes.dialogBlock} >
+                <Typography className={classes.titleBlock}>
+                    Connection Error
+                </Typography>
+                <Typography className={classes.description}>{errorDescription}</Typography>
+                <div className={classes.toolbar}>
+                    <Button onClick={onClose}>Close</Button>
+                    { isJwtOld
+                        ? <CustomLogoutButton title="Login again" hideIcon={true} />
+                        : <Button className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
+                    }
                 </div>
-            </Dialog>
-        );
-    }
-}
+            </div>
+        </Dialog>
+    );
+};
 
 export default withStyles(styles)(HandleErrorModal);
