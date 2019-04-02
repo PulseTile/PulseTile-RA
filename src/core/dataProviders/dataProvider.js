@@ -196,10 +196,6 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case UPDATE:
-
-            console.log('UPDATE RESPONSE');
-            console.log('params', params);
-
             return params;
 
         case CREATE:
@@ -247,9 +243,6 @@ const dataProvider = (type, resource, params) => {
  * @param {shape}  params
  */
 export default (type, resource, params) => {
-
-    console.log('params', params);
-
     if (resource === `patients`) {
         return newPatientsProvider(type, resource, params);
     }

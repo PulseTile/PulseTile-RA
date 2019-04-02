@@ -3,7 +3,6 @@ import get from "lodash/get";
 import PDFDocument from "@react-pdf/pdfkit";
 import blobStream from "blob-stream";
 import ace from 'brace';
-
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
@@ -58,6 +57,29 @@ function getClinicalRecommendations(obj){
     } else if (focusValue === 50) {
         return 50;
     }
+}
+
+function getWrappedText(text, rowLength) {
+    const textArray = text.split(' ');
+    let rows = [];
+    let currentRow = '';
+    let currentRowArray = [];
+    for (let i = 0, n = textArray.length; i < n; i++) {
+        let item = textArray[i];
+        if ((currentRow.length + item.length) <= rowLength) {
+            currentRow += item + ' ';
+            currentRowArray.push(item);
+        } else {
+            rows.push(currentRowArray.join(' '));
+            currentRow = item + ' ';
+            currentRowArray = [];
+            currentRowArray.push(item);
+        }
+    }
+    if (currentRowArray.length > 0) {
+        rows.push(currentRowArray.join(' '));
+    }
+    return rows;
 }
 
 export default (obj) => {
@@ -160,6 +182,7 @@ export default (obj) => {
 
     doc.image(page1, 0, 0, {width: doc.page.width, height: doc.page.height});
 
+    // SECTION 1
     if (get(form, 'preferredName', null)) {
         doc.fontSize(10)
             .text(form.preferredName, 316, 28, {
@@ -167,28 +190,24 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'fullName', null)) {
         doc.text(form.fullName, 31, 85, {
             width: 267,
             height: 23
         });
     }
-
     if (get(form, 'dateOfBirth', null)) {
         doc.text(form.dateOfBirth, 316, 83, {
             width: 172,
             height: 23
         });
     }
-
     if (get(form, 'dateCompleted', null)) {
         doc.text(form.dateCompleted, 505, 100, {
             width: 75,
             height: 23
         });
     }
-
     if (get(form, 'chiNumber', null)) {
         doc.fontSize(12)
             .text(form.chiNumber, 33, 129, {
@@ -198,30 +217,36 @@ export default (obj) => {
             });
     }
 
+    doc.fontSize(10);
+
     if (get(form, 'address', null)) {
-        doc.fontSize(10)
-            .text(form.address, 316, 115, {
-                width: 172,
-                height: 36,
-                lineGap: -1,
-            });
+        const textRowsArray = getWrappedText(form.address, 35);
+        const initialPositionOY = 115;
+        for (let i = 0, n = textRowsArray.length; i < n; i++) {
+            let row = textRowsArray[i];
+            doc.text(row, 316, initialPositionOY + i * 10);
+        }
     }
 
+    // SECTION 2
     if (get(form, 'sectionTwoDiagnostics', null)) {
-        doc.text(form.sectionTwoDiagnostics, 31, 208, {
-                width: 553,
-                height: 58,
-                lineGap: 1,
-            });
+        const textRowsArray = getWrappedText(form.sectionTwoDiagnostics, 125);
+        const initialPositionOY = 208;
+        for (let i = 0, n = textRowsArray.length; i < n; i++) {
+            let row = textRowsArray[i];
+            doc.text(row, 31, initialPositionOY + i * 15);
+        }
     }
-
     if (get(form, 'sectionTwoDetails', null)) {
-        doc.text(form.sectionTwoDetails, 31, 300, {
-            width: 553,
-            height: 36
-        });
+        const textRowsArray = getWrappedText(form.sectionTwoDetails, 125);
+        const initialPositionOY = 300;
+        for (let i = 0, n = textRowsArray.length; i < n; i++) {
+            let row = textRowsArray[i];
+            doc.text(row, 31, initialPositionOY + i * 15);
+        }
     }
 
+    // SECTION 3
     if (get(form, 'sectionThreeX', null)) {
         doc.fontSize(14)
             .text('X', (278 * (form.sectionThreeX / 100))+169, 389, {
@@ -229,15 +254,17 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'sectionThreeDetails', null)) {
-        doc.fontSize(10)
-            .text(form.sectionThreeDetails, 31, 447, {
-                width: 553,
-                height: 41
-            });
+        const textRowsArray = getWrappedText(form.sectionThreeDetails, 125);
+        const initialPositionOY = 447;
+        doc.fontSize(10);
+        for (let i = 0, n = textRowsArray.length; i < n; i++) {
+            let row = textRowsArray[i];
+            doc.text(row, 31, initialPositionOY + i * 15);
+        }
     }
 
+    // SECTION 4
     if (get(form, 'sectionFourClinicalRecommendationsX', null)) {
         doc.fontSize(14)
             .text('X', (171 * (form.sectionFourClinicalRecommendationsX / 100))+187, 544, {
@@ -245,18 +272,20 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'sectionFourClinicalRecommendations', null)) {
-        doc.fontSize(10)
-            .text(form.sectionFourClinicalRecommendations, 31, 618, {
-                width: 553,
-                height: 100
-            });
+        const textRowsArray = getWrappedText(form.sectionFourClinicalRecommendations, 125);
+        const initialPositionOY = 618;
+        doc.fontSize(10);
+        for (let i = 0, n = textRowsArray.length; i < n; i++) {
+            let row = textRowsArray[i];
+            doc.text(row, 31, initialPositionOY + i * 15);
+        }
     }
 
     doc.addPage();
     doc.image(page2, 0, 0, {width: doc.page.width, height: doc.page.height});
 
+    // SECTION 5
     if (form.sectionFiveCapacity === '1') {
         doc.ellipse(535, 52, 16, 10)
             .lineWidth(2)
@@ -291,6 +320,7 @@ export default (obj) => {
             break;
     }
 
+    // SECTION 6
     if (get(form, 'sectionSixA', null)) {
         doc.fontSize(14)
             .text('X', 34, 163, {
@@ -298,7 +328,6 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'sectionSixB', null)) {
         doc.fontSize(14)
             .text('X', 34, 196, {
@@ -306,7 +335,6 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'sectionSixC', null)) {
         doc.fontSize(14)
             .text('X', 34, 242, {
@@ -314,7 +342,6 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'sectionSixC1', null)) {
         doc.fontSize(14)
             .text('X', 42, 271, {
@@ -322,7 +349,6 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'sectionSixC2', null)) {
         doc.fontSize(14)
             .text('X', 42, 288, {
@@ -330,7 +356,6 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'sectionSixC3', null)) {
         doc.fontSize(14)
             .text('X', 42, 315, {
@@ -338,23 +363,26 @@ export default (obj) => {
                 height: 23
             });
     }
-
     if (get(form, 'sectionSixD', null)) {
-        doc.fontSize(10)
-            .text(form.sectionSixD, 31, 359, {
-                width: 553,
-                height: 41
-            });
+        const textRowsArray = getWrappedText(form.sectionSixD, 125);
+        const initialPositionOY = 359;
+        doc.fontSize(10);
+        for (let i = 0, n = textRowsArray.length; i < n; i++) {
+            let row = textRowsArray[i];
+            doc.text(row, 31, initialPositionOY + i * 15);
+        }
     }
-
     if (get(form, 'sectionSixDetailsOfDecision', null)) {
-        doc.fontSize(10)
-            .text(form.sectionSixDetailsOfDecision, 31, 419, {
-                width: 553,
-                height: 41
-            });
+        const textRowsArray = getWrappedText(form.sectionSixDetailsOfDecision, 125);
+        const initialPositionOY = 419;
+        doc.fontSize(10);
+        for (let i = 0, n = textRowsArray.length; i < n; i++) {
+            let row = textRowsArray[i];
+            doc.text(row, 31, initialPositionOY + i * 15);
+        }
     }
 
+    // SECTION 7
     if (get(form, 'sectionSevenClinician1.designation', null)) {
         doc.text(form.sectionSevenClinician1.designation, 31, 497, {
             width: 111,
@@ -435,6 +463,7 @@ export default (obj) => {
 
     }
 
+    // SECTION 8
     if (get(form, 'sectionEightContact1.role', null)) {
         doc.text(form.sectionEightContact1.role, 31, 605, {
             width: 111,
@@ -511,7 +540,7 @@ export default (obj) => {
         });
     }
 
-
+    // SECTION 9
     if (get(form, 'sectionNineConfirmation1.reviewDate', null)) {
         doc.text(form.sectionNineConfirmation1.reviewDate, 31, 740, {
             width: 78,
