@@ -8,7 +8,7 @@ const styles = theme => ({
         color: "#fff",
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
-        fontWeight: 700,
+        fontWeight: 400,
     },
     expansionPanel: {
         height: "49px !important",

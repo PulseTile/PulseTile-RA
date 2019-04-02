@@ -11,7 +11,7 @@ const styles = theme => ({
     toolbar: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     saveButton: {
         display: "block",
@@ -49,14 +49,9 @@ const styles = theme => ({
             marginRight: 2,
         },
         "& span": {
+            textAlign: "right",
             textTransform: "capitalize",
         },
-        "&:hover": {
-            border: `1px solid ${theme.palette.dangerColor}`,
-            backgroundColor: theme.palette.dangerColor,
-            color: "#fff",
-            borderRadius: 20,
-        }
     }
 });
 

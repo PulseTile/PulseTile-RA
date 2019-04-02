@@ -39,7 +39,7 @@ const styles = theme => ({
         color: "#fff",
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
-        fontWeight: 700,
+        fontWeight: 400,
     },
     tableWrapper: {
         overflowX: 'auto',
@@ -98,10 +98,12 @@ class VersionsTable extends Component {
         const { classes, versionsInfo, toggleMode } = this.props;
         const { currentVersion } = this.state;
         let breadcrumbsResource = [
+            { url: "/summary", title: "Patient Summary", isActive: true },
             { url: null, title: "ReSPECT", isActive: false }
         ];
         if (currentVersion) {
             breadcrumbsResource = [
+                { url: "/summary", title: "Patient Summary", isActive: true },
                 { url: null, title: "ReSPECT", isActive: false, onClickAction: () => this.returnToVersions() },
                 { url: null, title: `Version ${currentVersion}`, isActive: false }
             ];

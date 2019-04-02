@@ -18,7 +18,7 @@ export default theme => ({
         fontWeight: 800,
         color: "#000",
         fontSize: 14,
-        marginBottom: 5,
+        marginBottom: 15,
     },
     formInput: {
         width: '100%',
@@ -27,6 +27,9 @@ export default theme => ({
     },
     formHelpText: {
         marginBottom: 5,
+    },
+    formHelpTextStreetAddress: {
+        marginBottom: 15,
     },
     formTextarea: {
         width: '98%',

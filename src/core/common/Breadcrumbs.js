@@ -51,7 +51,10 @@ const Breadcrumbs = ({ classes, resource }) => {
                         <div key={key} className={classes.breadcrumbsItem}>
                             <div className={classes.separator}></div>
                             {item.isActive
-                                ? <Link to={item.url} className={classes.link} aria-label={item.title} color="inherit">{item.title}</Link>
+                                ?
+                                    <Typography>
+                                        <Link to={item.url} className={classes.link} aria-label={item.title} color="inherit">{item.title}</Link>
+                                    </Typography>
                                 : (item.onClickAction
                                     ? <Typography className={classes.link} onClick={() => item.onClickAction()}>{item.title}</Typography>
                                     : <Typography>{item.title}</Typography>

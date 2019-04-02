@@ -146,7 +146,7 @@ class PersonalDetails extends Component {
                                 defaultValue={filledValues.streetAddress}
                                 disabled
                             />
-                            <FormHelperText className={classes.formHelpText}>Street address</FormHelperText>
+                            <FormHelperText className={classes.formHelpTextStreetAddress}>Street address</FormHelperText>
                             <Control.text
                                 className={classes.formInput}
                                 model="personalDetails.addressSecondLine"
