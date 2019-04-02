@@ -109,7 +109,7 @@ class ShowTemplate extends Component {
     };
 
     render() {
-        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
+        const { classes, children, resourceUrl, isListOpened, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
         const { isMainPanelOpen, isSystemInfoPanelOpen } = this.state;
         return (
             <Grid item xs={12} sm={isListOpened ? 6 : 12} className={classes.showBlock}>
