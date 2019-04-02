@@ -56,8 +56,7 @@ const CustomSidebar = props => {
     return (
         <Sidebar className={classes.sidebarBlock}>
             <div className={classes.menuBlock}>
-                {menuItems.map((item, key) => {
-                    return (
+                {menuItems.map((item, key) => (
                         <MenuItemLink
                             key={key}
                             className={(currentList === item.url) ? classes.menuItemSelected : classes.menuItem}
@@ -68,7 +67,7 @@ const CustomSidebar = props => {
                             selected={currentList === item.url}
                         />
                     )
-                })}
+                )}
             </div>
         </Sidebar>
     )
