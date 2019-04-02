@@ -43,7 +43,7 @@ const ListToolbar = ({ classes, isCreatePage, resourceUrl, createPath, history, 
         <CustomPaginator resourceUrl={resourceUrl} history={history} itemsPerPage={10} total={total} />
         {
             (!isCreatePage && checkForTopThreeThings(resourceUrl, total)) &&
-            <CreateButton history={history} redirectPath={createPath} />
+                <CreateButton history={history} redirectPath={createPath} />
         }
     </div>
 );
