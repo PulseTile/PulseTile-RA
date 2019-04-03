@@ -266,16 +266,15 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
 const dataProvider = (type, resource, params) => {
     let { url, options } = convertDataRequestToHTTP(type, resource, params);
-    let responseInfo = {};
+    let responseInfo = '';
     return fetch(url, options).then(response => {
-        responseInfo.status = get(response, 'status', null);
+        responseInfo = get(response, 'status', null);
         return response.json();
     })
         .then(res => {
-            if (responseInfo.status !== 200) {
-                responseInfo.errorMessage = get(res, 'error', null);
-                let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
-                throw new HttpError(errorString);
+            if (responseInfo !== 200) {
+                responseInfo += '|' + get(res, 'error', null);
+                throw new HttpError(responseInfo);
             }
             return convertHTTPResponse(res, type, resource, params)
         })
