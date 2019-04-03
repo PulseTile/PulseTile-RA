@@ -18,9 +18,10 @@ const styles = theme => ({
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} classes
  * @param {func}  viewAction
+ * @param {shape} record
  */
-const ViewButton = ({ classes, viewAction }) => (
-    <Button onClick={(e, userId) => viewAction(e, userId)} className={classes.viewButton}>
+const ViewButton = ({ classes, viewAction, record }) => (
+    <Button onClick={e => viewAction(e, record)} className={classes.viewButton}>
         <Typography className={classes.viewButton}>View</Typography>
     </Button>
 );

@@ -1,12 +1,15 @@
-import { takeEvery, put } from 'redux-saga/effects';
 import get from "lodash/get";
+import { takeEvery, put } from 'redux-saga/effects';
 
 import { domainName } from "../token";
 import { DEMOGRAPHICS_ACTION, demographicsAction } from "../actions/demographicsAction";
+import { httpErrorAction } from '../actions/httpErrorAction';
+
+const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
+let responseInfo = {};
 
 export default takeEvery(DEMOGRAPHICS_ACTION.REQUEST, function*(action) {
-    const userId = get(action, 'data', null);
-    const url = domainName + '/api/demographics/' + userId;
+    const url = domainName + '/api/demographics/' + patientID;
     let options = {};
     options.method = "GET";
     if (!options.headers) {
@@ -16,8 +19,28 @@ export default takeEvery(DEMOGRAPHICS_ACTION.REQUEST, function*(action) {
         'X-Requested-With': "XMLHttpRequest",
     };
     try {
-        const result = yield fetch(url, options).then(res => res.json());
-        yield put(demographicsAction.success(result))
+        const result = yield fetch(url, options)
+            .then(res => {
+                responseInfo.status = get(res, 'status', null);
+                return res.json()
+            })
+            .then(res => {
+                if (responseInfo.status !== 200) {
+                    responseInfo.errorMessage = get(res, 'error', null);
+                    return false;
+                }
+                return res;
+            });
+
+        if (responseInfo.status === 200) {
+            yield put(demographicsAction.success(result))
+        } else {
+            yield put(httpErrorAction.save({
+                status: responseInfo.status,
+                message: responseInfo.errorMessage
+            }));
+        }
+
     } catch(e) {
         yield put(demographicsAction.error(e))
     }

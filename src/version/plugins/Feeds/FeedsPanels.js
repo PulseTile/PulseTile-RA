@@ -52,7 +52,7 @@ const mapStateToProps = state => {
     return {
         feeds: state.custom.feedsList.data,
         rssFeeds: state.custom.feedsRss.data,
-        loading: state.custom.patientInfo.loading,
+        loading: state.custom.demographics.loading,
         showMode: state.custom.showMode.data,
         showHeadings: state.custom.showHeadings.data,
     };

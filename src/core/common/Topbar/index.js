@@ -19,8 +19,7 @@ import { themeCommonElements } from "../../../version/config/theme.config";
 class CustomTopbar extends Component {
 
     componentDidMount() {
-        const currentUserID = localStorage.getItem('userId');
-        this.props.getDemographicsAction(currentUserID);
+        this.props.getDemographicsAction();
     }
 
     render() {
@@ -50,8 +49,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getDemographicsAction(userId) {
-            dispatch(demographicsAction.request(userId));
+        getDemographicsAction() {
+            dispatch(demographicsAction.request());
         },
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));

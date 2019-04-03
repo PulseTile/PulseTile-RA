@@ -10,7 +10,8 @@ import {
     UPDATE,
     UPDATE_MANY,
     DELETE,
-    DELETE_MANY
+    DELETE_MANY,
+    HttpError,
 } from "react-admin";
 import sort, { ASC, DESC } from 'sort-array-objects';
 
@@ -18,9 +19,10 @@ import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
 import dummyPatients from "../pages/PatientsList/dummyPatients";
+import { httpErrorAction } from '../actions/httpErrorAction';
 
 const apiPatientsUser = 'api/patients';
-const currentUserID = localStorage.getItem('userId');
+const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
 
 /**
  * This constant prepare data for requests (URL and options)
@@ -38,7 +40,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             if (resource === 'patients') {
                 url = `${domainName}/api/${resource}`;
             } else {
-                url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
+                url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}`;
             }
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -51,7 +53,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
         }
 
         case GET_ONE:
-            url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
+            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}/${params.id}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -62,8 +64,8 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
-            let data = Object.assign({userId: currentUserID}, params.data);
-            url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}/${params.id}`;
+            let data = Object.assign({userId: patientID}, params.data);
+            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}/${params.id}`;
             options.method = "PUT";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -77,8 +79,8 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
-            data = Object.assign({userId: currentUserID}, params.data);
-            url = `${domainName}/${apiPatientsUser}/${currentUserID}/${resource}`;
+            data = Object.assign({userId: patientID}, params.data);
+            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}`;
             options.method = "POST";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -241,17 +243,20 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case GET_ONE:
-        case UPDATE:
             return {
                 data: Object.assign({id: response.sourceId}, response),
             };
 
+        case UPDATE:
+            return params;
         case CREATE:
-            let compositionUidArray = response.compositionUid.split('::');
-            let sourseID = compositionUidArray[0];
-            let id = response.host + '-' + sourseID;
+            const dataFromRequest = get(params, 'data', null);
+            const compositionUid = get(response, 'compositionUid', null);
+            const compositionUidArray = compositionUid.split('::');
+            const sourceID = compositionUidArray[0];
+            dataFromRequest.id = get(response, 'host', null) + '-' + sourceID;
             return {
-                data: Object.assign({id: id}, response),
+                data: dataFromRequest,
             };
 
         default:
@@ -261,9 +266,22 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
 const dataProvider = (type, resource, params) => {
     let { url, options } = convertDataRequestToHTTP(type, resource, params);
-    return fetch(url, options).then(response => response.json())
-        .then(res => convertHTTPResponse(res, type, resource, params))
-        .catch(err => console.log('Error: ', err));
+    let responseInfo = '';
+    return fetch(url, options).then(response => {
+        responseInfo = get(response, 'status', null);
+        return response.json();
+    })
+        .then(res => {
+            if (responseInfo !== 200) {
+                responseInfo += '|' + get(res, 'error', null);
+                throw new HttpError(responseInfo);
+            }
+            return convertHTTPResponse(res, type, resource, params)
+        })
+        .catch(err => {
+            console.log('Error: ', err);
+            throw new Error(err);
+        });
 };
 
 const fakePatientsProvider = (type, resource, params) => {

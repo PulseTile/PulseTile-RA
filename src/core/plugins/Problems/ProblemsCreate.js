@@ -1,17 +1,7 @@
 import React from "react";
-import { DisabledInput, TextInput, DateInput, LongTextInput } from "react-admin";
-
-import { withStyles } from '@material-ui/core/styles';
 
 import CreateTemplate from "../../common/ResourseTemplates/CreateTemplate";
-
-const styles = {
-    labelBlock: {
-        '& > div': {
-            marginBottom: "0px !important",
-        },
-    },
-};
+import Inputs from "./fragments/Inputs";
 
 /**
  * This component returns Problems creation form
@@ -22,12 +12,8 @@ const styles = {
  */
 const ProblemsCreate = ({ classes, ...rest }) => (
     <CreateTemplate blockTitle="Problems / Issues" {...rest}>
-        <TextInput className={classes.labelBlock} source="problem" label="Problem issue" />
-        <LongTextInput className={classes.labelBlock} source="description" label="Description" />
-        <DisabledInput className={classes.labelBlock} source="source" label="Source" />
-        <DisabledInput className={classes.labelBlock} source="author" label="Author" />
-        <DisabledInput className={classes.labelBlock} source="dateOfOnset" label="Date" defaultValue={new Date()} />
+        <Inputs />
     </CreateTemplate>
 );
 
-export default withStyles(styles)(ProblemsCreate);
+export default ProblemsCreate;

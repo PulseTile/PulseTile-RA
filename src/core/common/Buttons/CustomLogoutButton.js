@@ -33,15 +33,17 @@ const styles = theme => ({
  * This component returns custom Logout button
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {func}  userLogout
+ * @param {shape}   classes
+ * @param {func}    userLogout
+ * @param {string}  title
+ * @param {boolean} hideIcon
  */
-const CustomLogoutButton = ({ classes, userLogout }) => {
+const CustomLogoutButton = ({ classes, userLogout, title = "Sign Out", hideIcon }) => {
     return (
-        <Tooltip title="Sign Out">
+        <Tooltip title={title}>
             <IconButton className={classes.button} onClick={() => userLogout()}>
-                Sign Out
-                <ExitIcon className={classes.icon} />
+                {title}
+                { !hideIcon && <ExitIcon className={classes.icon} /> }
             </IconButton>
         </Tooltip>
     );

@@ -20,11 +20,12 @@ class PatientsList extends Component {
      * This function redirects to Patient Summary page
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
-     * @param {number} userId
+     * @param {shape} e
+     * @param {shape} record
      */
-    redirectToSummary = (e, userId) => {
+    redirectToSummary = (e, record) => {
         e.stopPropagation();
-        localStorage.setItem('userId', userId);
+        localStorage.setItem('patientId', record.nhsNumber);
         this.props.history.push('/summary');
     };
 

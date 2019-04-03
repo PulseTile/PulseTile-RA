@@ -70,8 +70,7 @@ const styles = theme => ({
 class PatientSummaryInfo extends Component {
 
     componentDidMount() {
-        const currentUserID = localStorage.getItem('userId');
-        this.props.getPatientSynopsis(currentUserID);
+        this.props.getPatientSynopsis();
     }
 
     render() {
@@ -113,7 +112,7 @@ class PatientSummaryInfo extends Component {
 const mapStateToProps = state => {
 
     const patientSummaryProps = {
-        loading: state.custom.patientInfo.loading,
+        loading: state.custom.demographics.loading,
         showMode: state.custom.showMode.data,
         showHeadings: state.custom.showHeadings.data,
     };
@@ -135,9 +134,9 @@ const mapDispatchToProps = dispatch => {
     const synopsisActions = coreSynopsisActions.concat(nonCoreSynopsisActions);
 
     return {
-        getPatientSynopsis(userId) {
+        getPatientSynopsis() {
             synopsisActions.map(item => {
-                return dispatch(item.request(userId));
+                return dispatch(item.request());
             });
         }
     }

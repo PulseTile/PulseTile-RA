@@ -1,14 +1,15 @@
 import React, { createElement } from 'react';
 import get from "lodash/get";
+
 import { withRouter } from 'react-router-dom';
 import { MenuItemLink, Sidebar, getResources } from 'react-admin';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { SHORT_MENU, FULL_MENU, getMenuType } from "./getMenuType";
-import SidebarWithShortMenu from "./SidebarWithShortMenu";
-import SidebarWithFullMenu from "./SidebarWithFullMenu";
+import { getMenuItems } from "./getMenuType";
 
 const styles = theme => ({
     sidebarBlock: {
@@ -44,29 +45,33 @@ const styles = theme => ({
  * @constructor
  */
 const CustomSidebar = props => {
-    const { classes, resources, isSidebarOpen, onMenuClick, location } = props;
+    const { classes, isSidebarOpen, onMenuClick, location } = props;
     const currentPathname = get(location, 'pathname', null);
     const pathNameArray = currentPathname.split('/');
     const currentList = '/' + pathNameArray[1];
-    const menuType = getMenuType(currentPathname);
-    if (isSidebarOpen && menuType === SHORT_MENU) {
-        return (
-            <SidebarWithShortMenu
-              classes={classes}
-              currentList={currentList}
-              onMenuClick={onMenuClick}
-            />
-        );
-    } else if (isSidebarOpen && menuType === FULL_MENU) {
-        return (
-            <SidebarWithFullMenu
-              classes={classes}
-              resources={resources}
-              currentList={currentList}
-              onMenuClick={onMenuClick}
-            />
-        );
+    const menuItems = getMenuItems(currentPathname);
+    if (!isSidebarOpen) {
+        return null;
     }
+    return (
+        <Sidebar className={classes.sidebarBlock}>
+            <div className={classes.menuBlock}>
+                {menuItems.map((item, key) => (
+                        <MenuItemLink
+                            key={key}
+                            className={(currentList === item.url) ? classes.menuItemSelected : classes.menuItem}
+                            to={item.url}
+                            primaryText={item.label}
+                            leftIcon={(currentList === item.url) ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
+                            onClick={onMenuClick}
+                            selected={currentList === item.url}
+                        />
+                    )
+                )}
+            </div>
+        </Sidebar>
+    )
+
     return null;
 };
 

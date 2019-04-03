@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import showHeadings from "./showHeadingsReducer";
 import createCustomReducer from "./createCustomReducer";
+import httpErrorReducer from "./httpErrorReducer";
 
 import {
     SYNOPSIS_ALLERGIES_ACTION,
@@ -11,9 +12,6 @@ import {
 } from "../actions/synopsisActions";
 import { INITIALIZE_ACTION } from "../actions/initializeAction";
 import { DEMOGRAPHICS_ACTION } from "../actions/demographicsAction";
-import { PATIENT_INFO } from "../actions/patientInfoAction";
-import { PATIENTS_STATISTIC } from "../actions/patientsStatisticAction";
-import { USER_INFO_ACTION } from "../actions/userInfoAction";
 import { SHOW_MODE_ACTION } from "../actions/showModeAction";
 
 // LINK TO NON-CORE CUSTOM REDUCERS
@@ -26,11 +24,9 @@ const coreReducers = {
     problemsSynopsis: createCustomReducer(SYNOPSIS_PROBLEMS_ACTION, "data.synopsis"),
     initialize: createCustomReducer(INITIALIZE_ACTION, "data"),
     demographics: createCustomReducer(DEMOGRAPHICS_ACTION, "data.demographics"),
-    patientInfo: createCustomReducer(PATIENT_INFO, "data"),
-    patientsStatistic: createCustomReducer(PATIENTS_STATISTIC, "data"),
+    httpErrors: httpErrorReducer,
     showMode: createCustomReducer(SHOW_MODE_ACTION, "data"),
     showHeadings,
-    userInfo: createCustomReducer(USER_INFO_ACTION, "data"),
 };
 
 const reducers = Object.assign({}, coreReducers, nonCoreReducers);
