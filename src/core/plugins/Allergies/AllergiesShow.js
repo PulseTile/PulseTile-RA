@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, DateField } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 
-import ShowTemplate from "../../common/ResourseTemplates/ShowTemplate";
+import PulseTileCommon from "pulsetile-ra-common";
 
 const styles = {
     labelBlock: {
@@ -18,13 +18,16 @@ const styles = {
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-const AllergiesShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Allergy" {...rest}>
-        <TextField className={classes.labelBlock} label="Cause" source="cause" />
-        <TextField className={classes.labelBlock} label="Reaction / Description" source="reaction" />
-        <TextField className={classes.labelBlock} label="Author" source="author" />
-        <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
-    </ShowTemplate>
-);
+const AllergiesShow = ({ classes, ...rest }) => {
+    const { ShowTemplate } = PulseTileCommon;
+    return (
+        <ShowTemplate pageTitle="Allergy" {...rest}>
+            <TextField className={classes.labelBlock} label="Cause" source="cause" />
+            <TextField className={classes.labelBlock} label="Reaction / Description" source="reaction" />
+            <TextField className={classes.labelBlock} label="Author" source="author" />
+            <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
+        </ShowTemplate>
+    );
+};
 
 export default withStyles(styles)(AllergiesShow);

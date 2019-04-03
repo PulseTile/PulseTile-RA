@@ -1,6 +1,7 @@
 import React from "react";
 
-import EditTemplate from "../../common/ResourseTemplates/EditTemplate";
+import PulseTileCommon from "pulsetile-ra-common";
+
 import Inputs from "./fragments/Inputs";
 
 /**
@@ -11,10 +12,13 @@ import Inputs from "./fragments/Inputs";
  * @param {shape} rest
  * @constructor
  */
-const AllergiesEdit = ({ classes, ...rest }) => (
-    <EditTemplate blockTitle="Allergy"  {...rest}>
-        <Inputs />
-    </EditTemplate>
-);
+const AllergiesEdit = ({ classes, ...rest }) => {
+    const { EditTemplate } = PulseTileCommon;
+    return (
+        <EditTemplate blockTitle="Allergy"  {...rest}>
+            <Inputs />
+        </EditTemplate>
+    );
+};
 
 export default AllergiesEdit;

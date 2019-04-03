@@ -1,6 +1,6 @@
 import React from "react";
 
-import CreateTemplate from "../../common/ResourseTemplates/CreateTemplate";
+import PulseTileCommon from "pulsetile-ra-common";
 import Inputs from "./fragments/Inputs";
 
 /**
@@ -9,10 +9,13 @@ import Inputs from "./fragments/Inputs";
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape} props
  */
-const AllergiesCreate = props => (
-    <CreateTemplate blockTitle="Allergy" {...props}>
-        <Inputs />
-    </CreateTemplate>
-);
+const AllergiesCreate = props => {
+    const { CreateTemplate } = PulseTileCommon;
+    return (
+        <CreateTemplate blockTitle="Allergy" {...props}>
+            <Inputs />
+        </CreateTemplate>
+    )
+};
 
 export default AllergiesCreate;
