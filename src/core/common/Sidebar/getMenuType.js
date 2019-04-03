@@ -18,9 +18,7 @@ const defaultFullMenu = [
 ];
 
 function isResourcePresentedInMenu(currentResource, menuItemsArray) {
-    const filterArray = menuItemsArray.filter(item => {
-        return item.url === ('/' + currentResource);
-    });
+    const filterArray = menuItemsArray.filter(item => item.url === ('/' + currentResource));
     return filterArray.length > 0;
 }
 
