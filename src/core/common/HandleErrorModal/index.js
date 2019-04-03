@@ -1,10 +1,13 @@
 import React, { Component } from "react"
+import get from "lodash/get";
+import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
 import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import { httpErrorAction } from '../../actions/httpErrorAction';
 import CustomLogoutButton from "../Buttons/CustomLogoutButton";
 
 const styles = theme => ({
@@ -54,50 +57,79 @@ const styles = theme => ({
     }
 });
 
-function isSessionExpired(status, message) {
-    return (Number(status) === 400 && message.includes('JWT')) || Number(status) === 403;
-}
-
-function getErrorDescription(status, isJwtOld) {
-    let result = 'Something wrong';
-    switch (true) {
-        case Number(status) === 404:
-            result = 'API is currently unavailable';
-            break;
-        case Number(status) > 499:
-            result = 'Something is wrong with the server. Please try again later.';
-            break;
-        case isJwtOld:
-            result = 'Your session has expired. Click the button to log in again.';
-            break;
-    }
-    return result;
-}
-
 class HandleErrorModal extends Component {
 
+    state = {
+        isErrorModalOpen: false,
+    };
+
+    isSessionExpired = (status, message) => {
+        return (Number(status) === 400 && message.includes('JWT')) || Number(status) === 403;
+    };
+
+    getErrorDescription = (status, isJwtOld) => {
+        let result = 'Something is wrong';
+        if (Number(status) === 404) {
+            result = 'API is currently unavailable';
+        } else if (Number(status) > 499) {
+            result = 'Something is wrong with the server. Please try again later.';
+        } else if (isJwtOld) {
+            result = 'Your session has expired. Click the button to log in again.';
+        }
+        return result;
+    };
+
+    closeModal = () => {
+        this.setState(
+            { isErrorModalOpen: false },
+            () => this.props.removeErrorNotification()
+        );
+    };
+
     render() {
-        const { classes, status, message, onClose, ...rest } = this.props;
-        const isJwtOld = isSessionExpired(status, message);
-        const errorDescription = getErrorDescription(status, isJwtOld);
+        const { classes, status, message, httpErrors, ...rest } = this.props;
+        const { isErrorModalOpen } = this.state;
+
+        const errorStatus = get(httpErrors, 'status', null);
+        const errorMessage = get(httpErrors, 'message', null);
+
+        const isOpen = isErrorModalOpen || (errorStatus && errorMessage);
+
+        const isJwtOld = this.isSessionExpired(errorStatus, errorMessage);
+        const errorDescription = this.getErrorDescription(errorStatus, isJwtOld);
         return (
-            <Dialog {...rest}>
-                <div className={classes.dialogBlock} >
-                    <Typography className={classes.titleBlock}>
-                        Connection Error
-                    </Typography>
-                    <Typography className={classes.description}>{errorDescription}</Typography>
-                    <div className={classes.toolbar}>
-                        <Button aria-label="Close" onClick={() => onClose()}>Close</Button>
-                        { isJwtOld
-                            ? <CustomLogoutButton title="Login again" isIconAbsent={true} />
-                            : <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
-                        }
+            <React.Fragment>
+                <Dialog open={isOpen} {...rest}>
+                    <div className={classes.dialogBlock} >
+                        <Typography className={classes.titleBlock}>
+                            Connection Error
+                        </Typography>
+                        <Typography className={classes.description}>{errorDescription}</Typography>
+                        <div className={classes.toolbar}>
+                            <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
+                            { isJwtOld
+                                ? <CustomLogoutButton title="Login again" hideIcon={true} />
+                                : <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
+                            }
+                        </div>
                     </div>
-                </div>
-            </Dialog>
+                </Dialog>
+            </React.Fragment>
         );
     }
-}
 
-export default withStyles(styles)(HandleErrorModal);
+};
+
+const mapStateToProps = state => {
+    return {
+        httpErrors: state.custom.httpErrors.data
+    };
+};
+
+const mapDispatchToProps = dispatch => ({
+    removeErrorNotification() {
+        dispatch(httpErrorAction.remove());
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(HandleErrorModal));
