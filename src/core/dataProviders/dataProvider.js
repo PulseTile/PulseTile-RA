@@ -249,13 +249,12 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
         case UPDATE:
             return params;
-
         case CREATE:
             const dataFromRequest = get(params, 'data', null);
             const compositionUid = get(response, 'compositionUid', null);
             const compositionUidArray = compositionUid.split('::');
-            const sourseID = compositionUidArray[0];
-            dataFromRequest.id = get(response, 'host', null) + '-' + sourseID;
+            const sourceID = compositionUidArray[0];
+            dataFromRequest.id = get(response, 'host', null) + '-' + sourceID;
             return {
                 data: dataFromRequest,
             };
@@ -267,16 +266,15 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
 const dataProvider = (type, resource, params) => {
     let { url, options } = convertDataRequestToHTTP(type, resource, params);
-    let responseInfo = {};
+    let responseInfo = '';
     return fetch(url, options).then(response => {
-        responseInfo.status = get(response, 'status', null);
+        responseInfo = get(response, 'status', null);
         return response.json();
     })
         .then(res => {
-            if (responseInfo.status !== 200) {
-                responseInfo.errorMessage = get(res, 'error', null);
-                let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
-                throw new HttpError(errorString);
+            if (responseInfo !== 200) {
+                responseInfo += '|' + get(res, 'error', null);
+                throw new HttpError(responseInfo);
             }
             return convertHTTPResponse(res, type, resource, params)
         })

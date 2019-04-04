@@ -9,7 +9,10 @@ let responseInfo = {};
 
 export default function createCustomSagas(actionName, actionType, pluginName) {
     return takeEvery(actionName.REQUEST, function*(action) {
-        const url = domainName + '/api/patients/' + patientID + '/synopsis/' + pluginName;
+        let url = domainName + '/api/patients/' + patientID + '/synopsis/' + pluginName;
+        if (pluginName === 'top3Things') {
+            url = domainName + '/api/patients/' + patientID + '/synopsis/' + pluginName + '/latest';
+        }
         let options = {};
         options.method = "GET";
         if (!options.headers) {
