@@ -17,23 +17,21 @@ const defaultFullMenu = [
     { url: '/top3Things', label: 'TopThreeThings' },
 ];
 
-function isUrlPresented(currentResource, menuItemsArray) {
-    const filterArray = menuItemsArray.filter(item => {
-        return item.url === ('/' + currentResource);
-    });
+function isResourcePresentedInMenu(currentResource, menuItemsArray) {
+    const filterArray = menuItemsArray.filter(item => item.url === ('/' + currentResource));
     return filterArray.length > 0;
 }
 
 export function getMenuItems(currentPathname) {
     const pathArray = currentPathname.split('/');
     const currentResource = get(pathArray, [1], null);
-    if (isUrlPresented(currentResource, themeShortMenu)) {
+    if (isResourcePresentedInMenu(currentResource, themeShortMenu) || currentPathname === "/") {
         return themeShortMenu;
     }
-    if (isUrlPresented(currentResource, themeFullMenu)) {
+    if (isResourcePresentedInMenu(currentResource, themeFullMenu)) {
         return themeFullMenu;
     }
-    if (isUrlPresented(currentResource, defaultFullMenu)) {
+    if (isResourcePresentedInMenu(currentResource, defaultFullMenu)) {
         return defaultFullMenu;
     }
     return defaultShortMenu;
