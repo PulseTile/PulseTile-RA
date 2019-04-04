@@ -5,7 +5,4 @@
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @return {shape}
  */
-export default {
-    vaccinations: ['vaccinationName'],
-    top3Things: [],
-};
+export default {};
