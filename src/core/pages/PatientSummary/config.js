@@ -9,10 +9,10 @@ import { nonCoreSynopsisData } from "../../../version/config/nonCoreSynopsis";
  * @return {array}
  */
 export const coreSynopsisData = [
-    { id: "block-problems", title: "Problems / Issues", list: "problems", icon: faNotesMedical, isActive: true, },
-    { id: "block-medications", title: "Medications", list: "medications", icon: faCapsules, isActive: true },
-    { id: "block-allergies", title: "Allergies", list: "allergies", icon: faAllergies, isActive: true },
-    { id: "block-contacts", title: "Contacts", list: "contacts", icon: faPhone, isActive: true },
+    // { id: "block-problems", title: "Problems / Issues", list: "problems", icon: faNotesMedical, isActive: true, },
+    // { id: "block-medications", title: "Medications", list: "medications", icon: faCapsules, isActive: true },
+    // { id: "block-allergies", title: "Allergies", list: "allergies", icon: faAllergies, isActive: true },
+    // { id: "block-contacts", title: "Contacts", list: "contacts", icon: faPhone, isActive: true },
 ];
 
 const totalSynopsisData = coreSynopsisData.concat(nonCoreSynopsisData);
