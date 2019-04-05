@@ -197,6 +197,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
         case UPDATE:
             return params;
+
         case CREATE:
             const dataFromRequest = get(params, 'data', null);
             const compositionUid = get(response, 'compositionUid', null);
