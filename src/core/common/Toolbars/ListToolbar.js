@@ -16,18 +16,6 @@ const styles = {
 };
 
 /**
- * This function returns false if current resource is TopThreeThings and current patient has more than zero items
- *
- * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {string} resourceUrl
- * @param {number} total
- * @return {boolean}
- */
-function checkForTopThreeThings(resourceUrl, total) {
-    return !(resourceUrl === "top3Things" && total > 0);
-}
-
-/**
  * This component returns toolbar for List
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
@@ -42,8 +30,8 @@ const ListToolbar = ({ classes, isCreatePage, resourceUrl, createPath, history, 
     <div className={classes.paginationBlock}>
         <CustomPaginator resourceUrl={resourceUrl} history={history} itemsPerPage={10} total={total} />
         {
-            (!isCreatePage && checkForTopThreeThings(resourceUrl, total)) &&
-            <CreateButton history={history} redirectPath={createPath} />
+            !isCreatePage &&
+                <CreateButton history={history} redirectPath={createPath} />
         }
     </div>
 );
