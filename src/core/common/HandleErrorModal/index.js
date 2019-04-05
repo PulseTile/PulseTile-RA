@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 import { httpErrorAction } from '../../actions/httpErrorAction';
 import CustomLogoutButton from "../Buttons/CustomLogoutButton";
@@ -15,9 +16,16 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        minHeight: 300,
-        minWidth: 500,
-        marginBottom: 10,
+        [theme.breakpoints.only('xs')]: {
+            paddingTop: 0,
+            paddingLeft: 20,
+            paddingRight: 20,
+        },
+        [theme.breakpoints.up('sm')]: {
+            minHeight: 300,
+            minWidth: 500,
+            marginBottom: 10,
+        },
     },
     titleBlock: {
         display: "flex",
@@ -31,6 +39,7 @@ const styles = theme => ({
         fontWeight: 800,
     },
     description: {
+        padding: 20,
         fontSize: 15,
         textAlign: "center",
     },
@@ -132,4 +141,4 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(HandleErrorModal));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withMobileDialog({breakpoint: 'xs'})(HandleErrorModal)));

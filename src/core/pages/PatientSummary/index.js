@@ -38,14 +38,14 @@ const styles = theme => ({
         flexDirection: "column",
         height: 100,
         backgroundColor: theme.palette.mainColor,
-        background: theme.patientSummaryPanel.topBlock.background,
-        backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",
+        background: theme.patientSummaryPanel.topBlock.background,
+        backgroundSize: "cover",
         color: "#fff",
         '&:hover': {
             cursor: "pointer",
-        }
+        },
     },
     icon: {
         marginBottom: 10,
