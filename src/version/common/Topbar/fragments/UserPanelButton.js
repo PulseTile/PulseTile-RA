@@ -83,7 +83,7 @@ class UserPanelButton extends Component {
                     open={isOpen}
                     onClose={this.handleClose} >
                     <Card className={classes.userPanel}>
-                        <Typography className={classes.userName}>
+                        <Typography variant="h1" className={classes.userName}>
                             {localStorage.getItem('username')}
                         </Typography>
                         <Typography className={classes.userRole}>

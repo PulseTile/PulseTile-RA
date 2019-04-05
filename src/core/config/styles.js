@@ -67,7 +67,7 @@ export function getCurrentTheme(isContrastMode) {
     return createMuiTheme({
         palette: palette,
         typography: {
-            fontFamily: '"HK Grotesk", Arial, sans-serif',
+            fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
             fontSize: 14,
         },
         tableHeader: {
@@ -128,8 +128,13 @@ export function getCurrentTheme(isContrastMode) {
                 }
             },
             MuiTypography: {
+                root: {
+                    fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
+                    fontSize: 17,
+                },
                 body1: {
-                    fontSize: 15,
+                    fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
+                    fontSize: 14,
                 }
             },
         }

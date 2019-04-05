@@ -43,7 +43,7 @@ class SettingsDialog extends Component {
                 <Tooltip title="Settings">
                     <IconButton id="icon-settings" aria-haspopup="true" aria-label="Settings" color="inherit" onClick={() => this.toggleDialog()}>
                         <SettingsIcon />
-                        <Typography className={classes.title}>Home</Typography>
+                        <Typography variant="h1" className={classes.title}>Home</Typography>
                     </IconButton>
                 </Tooltip>
                 <DialogWithStyles open={open} onClose={this.toggleDialog} />
