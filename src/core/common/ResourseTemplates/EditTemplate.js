@@ -29,6 +29,7 @@ const styles = theme => ({
         display: "flex",
         alignItems: "center",
         height: 49,
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         paddingLeft: 15,
     },

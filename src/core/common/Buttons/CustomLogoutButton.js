@@ -41,7 +41,7 @@ const styles = theme => ({
 const CustomLogoutButton = ({ classes, userLogout, title = "Sign Out", hideIcon }) => {
     return (
         <Tooltip title={title}>
-            <IconButton aria-label="Sign Out" className={classes.button} onClick={() => userLogout()}>
+            <IconButton className={classes.button} onClick={() => userLogout()} aria-label="Sign Out">
                 {title}
                 { !hideIcon && <ExitIcon className={classes.icon} /> }
             </IconButton>
