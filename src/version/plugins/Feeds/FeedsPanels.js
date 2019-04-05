@@ -18,13 +18,10 @@ function getCurrentFeedInfo(feedsArray, sourceId) {
  * This component returns set of Feeds panels
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape}   feeds
- * @param {shape}   rssFeeds
- * @param {string}  showMode
- * @param {shape}   showHeadings
- * @param {boolean} loading
+ * @param {shape} props
  */
-const FeedsPanels = ({ feeds, rssFeeds, showMode, showHeadings, loading }) => {
+const FeedsPanels = props => {
+    const { feeds, rssFeeds, showMode, showHeadings, loading } = props;
     const rssFeedsArray = Object.entries(rssFeeds);
     const feedsArray = (feeds && feeds.length > 0) ? feeds : dummyFeeds;
     return rssFeedsArray.length > 0 ? rssFeedsArray.map((item, key) => {
@@ -41,7 +38,7 @@ const FeedsPanels = ({ feeds, rssFeeds, showMode, showHeadings, loading }) => {
                 link={currentFeed.landingPageUrl}
                 loading={loading}
                 items={rssItems}
-                {...this.props}
+                {...props}
             />
         );
     })

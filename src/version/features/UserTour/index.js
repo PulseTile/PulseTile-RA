@@ -73,7 +73,7 @@ export default class UserTour extends Component {
                 {(pathName === PATIENT_SUMMARY)
                     ?
                     (isTourMode
-                        ? <RunUserTour classes={classes} runTour={this.runTour} isPassed={isPassed} callback={this.callback}/>
+                        ? <RunUserTour classes={classes} runTour={this.runTour} isPassed={isPassed} callback={this.callback} />
                         : <LinkToCustomer classes={classes} homepage={homepage} />
                     )
                     : <LinkToHomepage classes={classes} toggleMode={this.toggleMode} />

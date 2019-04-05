@@ -15,7 +15,7 @@ import { PATIENT_SUMMARY } from "../../../../core/config/clientUrls";
  */
 const LinkToHomepage = ({ classes, toggleMode }) => {
     return (
-        <Link to={PATIENT_SUMMARY} className={classes.rightBlockButton} onClick={() => toggleMode()} >
+        <Link to={PATIENT_SUMMARY} className={classes.rightBlockButton} onClick={() => toggleMode()} aria-label="Home">
             <HelpIcon />
         </Link>
     );

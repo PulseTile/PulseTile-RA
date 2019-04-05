@@ -35,7 +35,7 @@ const styles = theme => ({
  */
 const CreateButton = ({ classes, history, redirectPath }) => (
     <Tooltip title="Create">
-        <IconButton className={classes.createButton} onClick={() => history.push(redirectPath)}>
+        <IconButton aria-label="Create" className={classes.createButton} onClick={() => history.push(redirectPath)}>
             <AddIcon /> Create
         </IconButton>
     </Tooltip>

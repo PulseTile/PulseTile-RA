@@ -1,8 +1,6 @@
 import React from "react";
 
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 
 /**
@@ -16,20 +14,20 @@ import Typography from "@material-ui/core/Typography";
 const ItemsList = ({ classes, items }) => {
     if (items.length === 0) {
         return (
-            <ListItem button divider>
-                <ListItemText primary="No data"/>
-            </ListItem>
+            <li className={classes.listItem}>
+                <Typography>No data</Typography>
+            </li>
         );
     }
     return (
         <List className={classes.list}>
             {items.slice(0, 4).map((item, key) => (
                     <a href={item.link} key={key} target="_blank">
-                        <ListItem key={key} button divider>
-                            <Typography noWrap={true} className={classes.feedsItem}>
+                        <li key={key} className={classes.listItem}>
+                            <Typography noWrap={true}>
                                 {item.title}
                             </Typography>
-                        </ListItem>
+                        </li>
                     </a>
                 )
             )}
