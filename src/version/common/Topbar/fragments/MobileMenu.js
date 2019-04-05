@@ -15,6 +15,9 @@ import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 const styles = theme => ({
     menuAndBannerMobile: {
+        [theme.breakpoints.up('md')]: {
+            display: "none",
+        },
         display: "flex",
         width: "100%",
         minHeight: "auto",
@@ -32,12 +35,17 @@ const styles = theme => ({
         paddingRight: 15,
     },
     patientBannerMobile: {
+        paddingLeft: 15,
         backgroundColor: theme.palette.paperColor,
         width: "100%",
         minHeight: "auto",
         '& span': {
             color: theme.palette.fontColor,
         },
+    },
+    patientName: {
+        paddingTop: 15,
+        color: theme.palette.fontColor,
     },
     bannerRow: {
         marginBottom: 5,
@@ -77,7 +85,7 @@ class MobileMenu extends Component {
             <React.Fragment>
                 <div className={classes.menuAndBannerMobile}>
                     <MenuButtonMobile classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
-                    <Typography variant="h6">{get(patientInfo, 'name', null)}</Typography>
+                    <Typography variant="h6" className={classes.patientName}>{get(patientInfo, 'name', null)}</Typography>
                     <FontAwesomeIcon icon={faSortDown} size="1x" className={classes.iconArrowDown} onClick={() => this.toggleMobileBanner()} />
                 </div>
                 { isMobileBannerOpened &&
