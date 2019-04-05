@@ -135,6 +135,10 @@ export function getCurrentTheme(isContrastMode) {
                 body1: {
                     fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
                     fontSize: 14,
+                },
+                body2: {
+                    fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
+                    fontSize: 14,
                 }
             },
         }
