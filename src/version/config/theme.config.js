@@ -3,9 +3,6 @@ import cardBackgroundImage from "../../version/images/blue-ring-01.png";
 import tableHeaderImage from "../../version/images/table-header.png";
 
 import ThemeTopbar from "../common/Topbar";
-import ThemeFooter from "../common/Footer";
-import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
-import FeedsPanels from "../plugins/Feeds/FeedsPanels";
 import PatientSummary from "../../core/pages/PatientSummary";
 
 export const themeShortMenu = [
@@ -30,8 +27,6 @@ export const themeFullMenu = [
 
 export const themeCommonElements = {
     topbar: ThemeTopbar,
-    feedsSelectors: FeedsSelectors,
-    feedsPanels: FeedsPanels,
     homePage: PatientSummary,
     isFooterAbsent: true,
 };
