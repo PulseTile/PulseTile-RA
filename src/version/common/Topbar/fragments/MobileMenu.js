@@ -53,15 +53,15 @@ const styles = theme => ({
 });
 
 const MenuButtonMobile = ({ classes, setSidebarVisibility, isSidebarOpen }) => (
-    <Tooltip title={!isSidebarOpen ? 'Menu' : 'Close'}>
+    <Tooltip title={isSidebarOpen ? 'Menu' : 'Close'}>
         <IconButton
             className={classes.mobileMenuButton}
             aria-haspopup="true"
             color="inherit"
             onClick={() => setSidebarVisibility(!isSidebarOpen)}
-            aria-label={!isSidebarOpen ? 'Menu' : 'Close'}
+            aria-label={isSidebarOpen ? 'Menu' : 'Close'}
         >
-            { !isSidebarOpen ? <MenuIcon /> : <CloseIcon /> }
+            { isSidebarOpen ? <MenuIcon /> : <CloseIcon /> }
         </IconButton>
     </Tooltip>
 );
