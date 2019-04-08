@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import get from "lodash/get";
+import { connect } from 'react-redux';
+import { setSidebarVisibility } from 'react-admin';
 
 import { PATIENT_SUMMARY } from "../../../core/config/clientUrls";
 import { homepage } from './content';
@@ -7,7 +9,7 @@ import RunUserTour from "./fragments/RunTourButton";
 import LinkToCustomer from "./fragments/LinkToCustomer";
 import LinkToHomepage from "./fragments/LinkToHomepage";
 
-export default class UserTour extends Component {
+class UserTour extends Component {
 
     state = {
         isTourRun: false,
@@ -39,9 +41,10 @@ export default class UserTour extends Component {
      * This function runs User Tour
      */
     runTour = () => {
-        this.setState({
-            isTourRun: !this.state.isTourRun,
-        });
+        this.setState(
+            state => ({ isTourRun: !state.isTourRun }),
+            () => this.props.setSidebarVisibility(!this.props.isSidebarOpen)
+        );
     };
 
     /**
@@ -82,3 +85,19 @@ export default class UserTour extends Component {
         );
     }
 };
+
+const mapStateToProps = state => {
+    return {
+        isSidebarOpen: state.admin.ui.sidebarOpen,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setSidebarVisibility(params) {
+            dispatch(setSidebarVisibility(params));
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserTour);

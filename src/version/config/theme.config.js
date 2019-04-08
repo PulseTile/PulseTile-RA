@@ -1,4 +1,6 @@
 import backgroundImage from "../../version/images/Artboard.png";
+import cardBackgroundImage from "../../version/images/blue-ring-01.png";
+import tableHeaderImage from "../../version/images/table-header.png";
 
 import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
@@ -36,4 +38,6 @@ export const themeCommonElements = {
 
 export const themeImages = {
     backgroundImage: backgroundImage,
+    cardBackgroundImage: cardBackgroundImage,
+    tableHeaderImage: tableHeaderImage,
 };
