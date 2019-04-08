@@ -145,10 +145,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 
     const coreSynopsisActions = [
-        synopsisAllergiesAction,
-        synopsisContactsAction,
-        synopsisProblemsAction,
-        synopsisMedicationsAction,
+        // synopsisAllergiesAction,
+        // synopsisContactsAction,
+        // synopsisProblemsAction,
+        // synopsisMedicationsAction,
     ];
 
     const synopsisActions = coreSynopsisActions.concat(nonCoreSynopsisActions);
