@@ -39,10 +39,11 @@ const defaultDarkPalette = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {boolean} isContrastMode
  * @param {string}  themeColor
+ * @param {string}  imageName
  * @return {string}
  */
-function getCardBackground(isContrastMode, themeColor) {
-    const cardBackgroundImage = get(themeImages, 'cardBackgroundImage', null);
+function getBackground(isContrastMode, themeColor, imageName) {
+    const cardBackgroundImage = get(themeImages, imageName, null);
     let result = themeColor;
     if (cardBackgroundImage) {
         result = `url(${cardBackgroundImage}) 0 0 repeat`;
@@ -72,7 +73,7 @@ export function getCurrentTheme(isContrastMode) {
         },
         tableHeader: {
             tableHeaderBlock: {
-                background: getCardBackground(isContrastMode, palette.mainColor),
+                background: getBackground(isContrastMode, palette.mainColor, 'tableHeaderImage'),
             },
         },
         patientSummaryPanel: {
@@ -80,7 +81,7 @@ export function getCurrentTheme(isContrastMode) {
                 background: `url(${backgroundImage})`,
             },
             topBlock: {
-                background: getCardBackground(isContrastMode, palette.mainColor),
+                background: getBackground(isContrastMode, palette.mainColor, 'cardBackgroundImage'),
             }
         },
         overrides: {
