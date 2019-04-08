@@ -201,8 +201,11 @@ const convertHTTPResponse = (response, type, resource, params) => {
         case CREATE:
             const dataFromRequest = get(params, 'data', null);
             const compositionUid = get(response, 'compositionUid', null);
-            const compositionUidArray = compositionUid.split('::');
-            const sourceID = compositionUidArray[0];
+            let sourceID = '';
+            if (compositionUid) {
+                const compositionUidArray = compositionUid.split('::');
+                sourceID = compositionUidArray[0];
+            }
             dataFromRequest.id = get(response, 'host', null) + '-' + sourceID;
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
