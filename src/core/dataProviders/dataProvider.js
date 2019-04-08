@@ -256,6 +256,9 @@ const convertHTTPResponse = (response, type, resource, params) => {
             const compositionUidArray = compositionUid.split('::');
             const sourceID = compositionUidArray[0];
             dataFromRequest.id = get(response, 'host', null) + '-' + sourceID;
+            if (!get(params, 'source', null)) {
+                dataFromRequest.source = 'ethercis';
+            }
             return {
                 data: dataFromRequest,
             };

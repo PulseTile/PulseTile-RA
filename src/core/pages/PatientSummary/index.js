@@ -11,18 +11,15 @@ import {
     synopsisContactsAction,
     synopsisMedicationsAction,
     synopsisProblemsAction } from "../../actions/synopsisActions";
-import { synopsisData, getSynopsisProps, SHOW_ALL } from "./config";
+import { synopsisData, getSynopsisProps } from "./config";
 import SettingsDialog from "./SettingsDialog";
 import Breadcrumbs from "../../common/Breadcrumbs";
-
 import { themeCommonElements } from "../../../version/config/theme.config";
 import { nonCoreSynopsisActions } from "../../../version/config/nonCoreSynopsis";
+import { getSummaryContainerStyles } from "./functions";
 
 const styles = theme => ({
-    summaryContainer: {
-        margin: 0,
-        width: "100%",
-    },
+    summaryContainer: getSummaryContainerStyles(synopsisData),
     card: {
         borderRadius: 0,
     },
@@ -38,29 +35,32 @@ const styles = theme => ({
         flexDirection: "column",
         height: 100,
         backgroundColor: theme.palette.mainColor,
-        background: theme.patientSummaryPanel.topBlock.background,
-        backgroundSize: "cover",
         justifyContent: "center",
         alignItems: "center",
+        position: "relative",
         color: "#fff",
         '&:hover': {
             cursor: "pointer",
-        }
+        },
     },
     icon: {
         marginBottom: 10,
+        zIndex: 99999999,
     },
     mainHeading: {
         margin: 0,
+        zIndex: 99999999,
     },
     title: {
         marginBottom: 0,
         color: "#fff",
         fontSize: 20,
         fontWeight: 800,
+        zIndex: 99999999,
     },
     list: {
         padding: 0,
+        zIndex: 99999999,
     },
     listItem: {
         display: "flex",
@@ -68,6 +68,7 @@ const styles = theme => ({
         justifyContent: "center",
         height: 48,
         paddingLeft: 15,
+        zIndex: 99999999,
         fontSize: "1rem",
         borderLeft: `1px solid ${theme.palette.borderColor}`,
         borderRight: `1px solid ${theme.palette.borderColor}`,
@@ -75,6 +76,7 @@ const styles = theme => ({
     },
     emptyRows: {
         height: 150,
+        zIndex: 99999999,
         borderLeft: `1px solid ${theme.palette.borderColor}`,
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
