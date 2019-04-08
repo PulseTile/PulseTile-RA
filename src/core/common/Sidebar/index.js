@@ -2,7 +2,7 @@ import React, { createElement } from 'react';
 import get from "lodash/get";
 
 import { withRouter } from 'react-router-dom';
-import { MenuItemLink, Sidebar, getResources } from 'react-admin';
+import { MenuItemLink, Sidebar, getResources, Responsive } from 'react-admin';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -18,6 +18,13 @@ const styles = theme => ({
         '& div': {
             marginTop: 0,
         },
+    },
+    mobileSidebar: {
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+        backgroundColor: theme.palette.paperColor,
+        zIndex: 999999999999,
     },
     menuBlock: {
         border: `1px solid ${theme.palette.borderColor}`,
@@ -37,6 +44,27 @@ const styles = theme => ({
     },
 });
 
+const MenuItems = ({ classes, menuItems, currentList, onMenuClick }) => {
+    return (
+        <div className={classes.menuBlock} role="menubar">
+            {menuItems.map((item, key) => (
+                    <MenuItemLink
+                        key={key}
+                        className={(currentList === item.url) ? classes.menuItemSelected : classes.menuItem}
+                        to={item.url}
+                        primaryText={item.label}
+                        leftIcon={(currentList === item.url) ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
+                        onClick={onMenuClick}
+                        selected={currentList === item.url}
+                        aria-label={item.label}
+                        role="menuitem"
+                    />
+                )
+            )}
+        </div>
+    )
+};
+
 /**
  * This component returns custom menu
  *
@@ -54,27 +82,20 @@ const CustomSidebar = props => {
         return null;
     }
     return (
-        <Sidebar className={classes.sidebarBlock}>
-            <div className={classes.menuBlock} role="menubar">
-                {menuItems.map((item, key) => (
-                        <MenuItemLink
-                            key={key}
-                            className={(currentList === item.url) ? classes.menuItemSelected : classes.menuItem}
-                            to={item.url}
-                            primaryText={item.label}
-                            leftIcon={(currentList === item.url) ? <FontAwesomeIcon icon={faCircle} size="xs" />  : null}
-                            onClick={onMenuClick}
-                            selected={currentList === item.url}
-                            aria-label={item.label}
-                            role="menuitem"
-                        />
-                    )
-                )}
-            </div>
-        </Sidebar>
-    )
-
-    return null;
+        <Responsive
+            small={
+                <div className={classes.mobileSidebar}>
+                    <MenuItems classes={classes} menuItems={menuItems} currentList={currentList} onMenuClick={onMenuClick} />
+                </div>
+            }
+            medium={
+                <Sidebar className={classes.sidebarBlock}>
+                    <MenuItems classes={classes} menuItems={menuItems} currentList={currentList} onMenuClick={onMenuClick} />
+                </Sidebar>
+            }
+        >
+        </Responsive>
+    );
 };
 
 const mapStateToProps = state => ({

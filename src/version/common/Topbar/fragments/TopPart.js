@@ -43,6 +43,9 @@ const styles = theme => ({
         width: "auto",
     },
     nhsLogo: {
+        [theme.breakpoints.only('xs')]: {
+            display: "none",
+        },
         width: "auto",
         maxWidth: "100%",
         marginRight: 24

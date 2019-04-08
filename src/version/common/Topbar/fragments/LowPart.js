@@ -6,18 +6,22 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
-import Menu from '@material-ui/core/Menu';
 
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
 import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
+import MobileMenu from "./MobileMenu";
 
 const styles = theme => ({
     lowPart: {
         display: "flex",
+        minHeight: "auto",
         flexDirection: "column",
         padding: 0,
     },
     menuAndBanner: {
+        [theme.breakpoints.only('xs')]: {
+            display: "none",
+        },
         display: "flex",
         width: "100%",
         minHeight: "auto",
@@ -85,7 +89,7 @@ const styles = theme => ({
 const MenuButton = ({ classes, setSidebarVisibility, isSidebarOpen }) => {
     return (
         <div className={classes.menuButtonBlock}>
-            <Button variant="contained" color="primary" className={classes.menuButton} onClick={() => setSidebarVisibility(!isSidebarOpen)}>
+            <Button aria-label={!isSidebarOpen ? 'Menu' : 'Close'} variant="contained" color="primary" className={classes.menuButton} onClick={() => setSidebarVisibility(!isSidebarOpen)}>
                 { !isSidebarOpen ? <MenuIcon /> : <CloseIcon /> }
                 { !isSidebarOpen ? 'Menu' : 'Close' }
             </Button>
@@ -151,6 +155,7 @@ class LowPart extends Component {
                             <PatientBanner location={location} classes={classes} patientInfo={patientInfo} />
                     }
                 </div>
+                <MobileMenu setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} patientInfo={patientInfo} />
             </Toolbar>
         );
     }

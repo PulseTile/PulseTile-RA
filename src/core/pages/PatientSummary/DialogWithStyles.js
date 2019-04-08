@@ -12,19 +12,27 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 import { showModeAction } from "../../actions/showModeAction";
 import { showHeadingsAction } from "../../actions/showHeadingsAction";
 import { synopsisData, showModesArray, SHOW_ALL, getHeadingsLists } from "./config";
 import { themeCommonElements } from "../../../version/config/theme.config";
 
-const styles = {
+const styles = theme => ({
     dialogBlock: {
-        minHeight: 300,
-        minWidth: 500,
-        marginTop: 5,
-        marginLeft: 20,
-        marginBottom: 20,
+        [theme.breakpoints.only('xs')]: {
+            paddingTop: 0,
+            paddingLeft: 20,
+            paddingRight: 20,
+        },
+        [theme.breakpoints.up('sm')]: {
+            minHeight: 300,
+            minWidth: 500,
+            marginTop: 5,
+            marginLeft: 20,
+            marginBottom: 20,
+        },
     },
     dialogItem: {
         minHeight: 100,
@@ -58,7 +66,7 @@ const styles = {
         float: "right",
         height: 25,
     }
-};
+});
 
 /**
  * This component returns content and functionality of dialog window
@@ -197,4 +205,4 @@ const mapDispatchToProps = dispatch => {
 export default compose(
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps)
-)(DialogContent);
+)(withMobileDialog({breakpoint: 'xs'})(DialogContent));
