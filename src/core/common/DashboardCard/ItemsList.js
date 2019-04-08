@@ -16,9 +16,11 @@ import Typography from "@material-ui/core/Typography";
 const ItemsList = ({ classes, items, list, history }) => {
     if (items && items.length === 0) {
         return (
-            <li className={classes.listItem}>
-                <Typography>No data</Typography>
-            </li>
+            <List className={classes.list}>
+                <li className={classes.listItem}>
+                    <Typography>No data</Typography>
+                </li>
+            </List>
         );
     } else {
         return (
