@@ -1,9 +1,4 @@
-// NON-CORE PLUGINS CONFIGURATION LIST
-
-// VACCINATIONS
 import VaccinationsList from "../plugins/Vaccinations/VaccinationsList";
-
-// TOP THREE THINGS
 import TopThreeThingsList from "../plugins/TopThreeThings/TopThreeThingsList";
 
 export default [
