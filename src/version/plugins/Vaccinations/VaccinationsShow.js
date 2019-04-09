@@ -19,12 +19,11 @@ const styles = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const VaccinationsShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Problem / Diagnosis" {...rest}>
-        <TextField className={classes.labelBlock} source="vaccinationName" />
-        <TextField className={classes.labelBlock} source="route" />
-        <TextField className={classes.labelBlock} source="author" />
-        <DateField className={classes.labelBlock} source="vaccinationDateTime" />
-        <TextField className={classes.labelBlock} source="source" />
+    <ShowTemplate pageTitle="Vaccination" {...rest}>
+        <TextField className={classes.labelBlock} source="vaccinationName" label="Vaccination name" />
+        <TextField className={classes.labelBlock} source="comment" label="Comment" />
+        <TextField className={classes.labelBlock} source="author" label="Author" />
+        <DateField className={classes.labelBlock} source="vaccinationDateTime" label="Date" />
     </ShowTemplate>
 );
 

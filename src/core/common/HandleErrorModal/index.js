@@ -106,10 +106,10 @@ class HandleErrorModal extends Component {
                         </Typography>
                         <Typography className={classes.description}>{errorDescription}</Typography>
                         <div className={classes.toolbar}>
-                            <Button onClick={() => this.closeModal()}>Close</Button>
+                            <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
                             { isJwtOld
                                 ? <CustomLogoutButton title="Login again" hideIcon={true} />
-                                : <Button className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
+                                : <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
                             }
                         </div>
                     </div>

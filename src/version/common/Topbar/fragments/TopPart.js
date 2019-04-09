@@ -91,12 +91,12 @@ const TopPart = ({ classes, logout, location }) => {
     return (
         <Toolbar className={classes.topPart}>
             <div className={classes.homeButtonItem}>
-                <Link id="icon-home" to="/" className={classes.homeButton} color="inherit" >
+                <Link id="icon-home" to="/" className={classes.homeButton} color="inherit" aria-label="Home" >
                     <HomeIcon />
                 </Link>
             </div>
             <div className={classes.mainLogoItem}>
-                <Link to="/" className={classes.homeButton} color="inherit" >
+                <Link to="/" className={classes.homeButton} color="inherit" aria-label="Home" >
                     <CardMedia
                         id="logo-image"
                         className={classes.image}

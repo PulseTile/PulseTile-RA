@@ -14,6 +14,7 @@ const defaultLightPalette = {
     disabledColor: "#e9e4e4",
     borderColor: "#e5e5e5",
     paperColor: "#fff",
+    toolbarColor: "#e5e5e5",
     fontColor: "#000",
 };
 
@@ -26,6 +27,7 @@ const defaultDarkPalette = {
     borderColor: "#000",
     paperColor: "#fff",
     fontColor: "#000",
+    toolbarColor: "#fff",
     background: "#fff",
     text: "#000",
     divider: "#000",
@@ -60,7 +62,7 @@ function getCurrentPalette(isContrastMode) {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 export function getCurrentTheme(isContrastMode) {
-    const backgroundImage = get(themeImages, 'backgroundImage', null);
+    const backgroundImage = isContrastMode ? null : get(themeImages, 'backgroundImage', null);
     const palette = getCurrentPalette(isContrastMode);
     return createMuiTheme({
         palette: palette,
@@ -106,8 +108,8 @@ export function getCurrentTheme(isContrastMode) {
             },
             MuiTableHead: {
                 root: {
-                    backgroundColor: palette.borderColor,
-                    color: palette.fontColor,
+                    backgroundColor: isContrastMode ? palette.paperColor : palette.borderColor,
+                    color: isContrastMode ? palette.paperColor : palette.fontColor,
                 }
             },
             MuiTableRow: {

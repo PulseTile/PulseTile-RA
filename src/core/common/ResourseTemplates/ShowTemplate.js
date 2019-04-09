@@ -8,6 +8,11 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCompressArrowsAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 
 import EditButton from "../../common/Buttons/EditButton";
 
@@ -15,6 +20,7 @@ const styles = theme => ({
     showBlock: {
         width: '100%',
         backgroundColor: "white",
+        border: `1px solid ${theme.palette.borderColor}`,
     },
     expansionPanel: {
         height: "49px !important",
@@ -37,11 +43,21 @@ const styles = theme => ({
             marginBottom: "0px",
         }
     },
+    emptyBlock: {
+        flexGrow: 1,
+    },
     expandIcon: {
-        color: "white",
+        color: theme.palette.paperColor,
+    },
+    expandBlockIcon: {
+        height: 20,
+        paddingTop: 5,
+        paddingRight: 7,
+        color: theme.palette.paperColor,
     },
     expansionTypography: {
-        color: "white",
+        paddingTop: 10,
+        color: theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 700,
     },
@@ -76,50 +92,63 @@ const styles = theme => ({
 class ShowTemplate extends Component {
 
     state = {
-        currentPanel: "main",
+        isMainPanelOpen: true,
+        isSystemInfoPanelOpen: true,
     };
 
-    handleChange = panel => {
+    toggleMainPanel = () => {
         this.setState({
-            currentPanel: panel,
+            isMainPanelOpen: !this.state.isMainPanelOpen,
+        });
+    };
+
+    toggleSystemInfoPanel = () => {
+        this.setState({
+            isSystemInfoPanelOpen: !this.state.isSystemInfoPanelOpen,
         });
     };
 
     render() {
-        const { classes, children, pageTitle, changeViewType, ...rest } = this.props;
-        const { currentPanel } = this.state;
+        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
+        const { isMainPanelOpen, isSystemInfoPanelOpen } = this.state;
         return (
-            <Grid item xs={12} sm={6} className={classes.showBlock}>
-                <ExpansionPanel className={(currentPanel === 'main') ? classes.currentExpansionPanel : classes.expansionPanel} expanded={currentPanel === 'main'} onChange={() => this.handleChange('main')}>
+            <Grid item xs={12} sm={isListOpened ? 6 : 12} className={classes.showBlock}>
+                <ExpansionPanel className={isMainPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isMainPanelOpen} onChange={() => this.toggleMainPanel()}>
                     <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
                         <Typography className={classes.expansionTypography} >{pageTitle}</Typography>
+                        <div className={classes.emptyBlock}></div>
+                        <Tooltip title={isListOpened ? "Expand" : "Compress"}>
+                            <IconButton onClick={() => toggleListBlock()}>
+                                <FontAwesomeIcon className={classes.expandBlockIcon} icon={isListOpened ? faExpandArrowsAlt : faCompressArrowsAlt} size="1x" />
+                            </IconButton>
+                        </Tooltip>
                     </ExpansionPanelSummary>
                     {
-                        (currentPanel === 'main') &&
-                        <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                            <Show className={classes.showDetails} title={pageTitle} {...rest}>
-                                <SimpleShowLayout className={classes.showLayoutDetails}>
-                                    {children}
-                                </SimpleShowLayout>
-                            </Show>
-                            <EditButton redirectTo={changeViewType} />
-                        </ExpansionPanelDetails>
+                        isMainPanelOpen &&
+                            <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                                <Show className={classes.showDetails} title={pageTitle} {...rest}>
+                                    <SimpleShowLayout className={classes.showLayoutDetails}>
+                                        {children}
+                                    </SimpleShowLayout>
+                                </Show>
+                                <EditButton redirectTo={changeViewType} />
+                            </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>
-                <ExpansionPanel className={(currentPanel === 'systemInfo') ? classes.currentExpansionPanel : classes.expansionPanel} expanded={currentPanel === 'systemInfo'} onChange={() => this.handleChange('systemInfo')}>
+                <ExpansionPanel className={isSystemInfoPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isSystemInfoPanelOpen} onChange={() => this.toggleSystemInfoPanel()}>
                     <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
                         <Typography className={classes.expansionTypography} >System Information</Typography>
                     </ExpansionPanelSummary>
                     {
-                        (currentPanel === 'systemInfo') &&
-                        <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                            <Show className={classes.showDetails} title={pageTitle} {...rest}>
-                                <SimpleShowLayout className={classes.showLayoutDetails}>
-                                    <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
-                                    <TextField className={classes.labelBlock} label="Source" source="source" />
-                                </SimpleShowLayout>
-                            </Show>
-                        </ExpansionPanelDetails>
+                        isSystemInfoPanelOpen &&
+                            <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                                <Show className={classes.showDetails} title={pageTitle} {...rest}>
+                                    <SimpleShowLayout className={classes.showLayoutDetails}>
+                                        <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
+                                        <TextField className={classes.labelBlock} label="Source" source="source" />
+                                    </SimpleShowLayout>
+                                </Show>
+                            </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>
             </Grid>
