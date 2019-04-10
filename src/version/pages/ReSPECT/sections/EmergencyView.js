@@ -27,7 +27,7 @@ import { getAuthorName } from "../functions";
 import sections from "../sections";
 import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER } from "../statuses";
 import formStyles from "../fragments/formStyles";
-import cprVariants from "../fragments/cprVariants";
+import { cprVariants } from "../fragments/cprVariants";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),

@@ -47,7 +47,7 @@ const InsertedRadioButtonGroup = ({ classes, isSelected, variant, handleChange, 
                 C - This person is less than 16 (Scotland) / 18 (UK)
             </FormLabel>
             { isSelected &&
-                <RadioGroup name="variant" className={classes.radioGroup} value={variant} onChange={e => handleChange(e)}>
+                <RadioGroup name="nonSelectABCreason" className={classes.radioGroup} value={variant} onChange={e => handleChange(e)}>
                     <FormHelperText>
                         Please select 1 or 2, and also 3 as applicable or explain in section D below.
                     </FormHelperText>

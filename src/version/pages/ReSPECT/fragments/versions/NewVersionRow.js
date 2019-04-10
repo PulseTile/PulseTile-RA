@@ -56,7 +56,7 @@ class NewVersionRow extends Component {
                         <Typography>{moment().format('HH:mm')}</Typography>
                     </TableCell>
                     <TableCell align="right">
-                        <Tooltip title="Proceed">
+                        <Tooltip title="Proceed" disableHoverListener={true}>
                             <IconButton className={classes.editButton} onClick={() => this.toggleMode()}>
                                 Latest
                                 <EditIcon />

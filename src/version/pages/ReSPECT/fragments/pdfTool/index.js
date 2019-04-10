@@ -9,6 +9,8 @@ import 'brace/theme/monokai';
 import page1 from "./page1";
 import page2 from "./page2";
 
+import { FOCUS_LEFT, FOCUS_RIGHT } from "../../fragments/cprVariants";
+
 function address(obj){
     let arr = [];
 
@@ -50,9 +52,9 @@ function getClinicalRecommendations(obj){
     const focusValue = get(obj, 'sections.clinicalRecommendations.focusValue', null);
     if (!focusValue) {
         return null;
-    } else if (focusValue < 50) {
+    } else if (focusValue === FOCUS_LEFT) {
         return 5;
-    } else if (focusValue > 50) {
+    } else if (focusValue === FOCUS_RIGHT) {
         return 95;
     } else if (focusValue === 50) {
         return 50;
@@ -116,13 +118,13 @@ export default (obj) => {
         sectionFourClinicalRecommendations: get(obj, 'sections.clinicalRecommendations.clinicalGuidance', null),
         sectionFiveCapacity: get(obj, 'sections.capacityAndRepresentation.capacityFirst', null),
         sectionFiveLegalProxy: get(obj, 'sections.capacityAndRepresentation.capacitySecond', null),
-        sectionSixA: (get(obj, 'sections.involvement.variant', null) === 'variantA'),
-        sectionSixB: (get(obj, 'sections.involvement.variant', null) === 'variantB'),
-        sectionSixC: (get(obj, 'sections.involvement.variant', null) === 'variantC'),
-        sectionSixC1: (get(obj, 'sections.involvement.variant', null) === 'at0005'),
-        sectionSixC2: (get(obj, 'sections.involvement.variant', null) === 'at0011'),
-        sectionSixC3: (get(obj, 'sections.involvement.variant', null) === 'at0012'),
-        sectionSixD: get(obj, 'sections.involvement.variantD', null),
+        sectionSixA: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'valueSetA'),
+        sectionSixB: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'valueSetB'),
+        sectionSixC: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'valueSetC'),
+        sectionSixC1: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'at0005'),
+        sectionSixC2: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'at0011'),
+        sectionSixC3: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'at0012'),
+        sectionSixD: get(obj, 'sections.involvement.documentExplanation', null),
         sectionSixDetailsOfDecision: get(obj, 'sections.involvement.detailsOfDecision', null),
         sectionSevenClinician1: {
             designation: ( clinicians[0] ? clinicians[0].designation : '' ),

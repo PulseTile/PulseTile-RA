@@ -32,13 +32,13 @@ class Involvement extends Component {
 
     state = {
         isMainPanel: true,
-        variant: getStateData(this.props, 'involvement.variant'),
+        variant: getStateData(this.props, 'involvement.nonSelectABCreason'),
     };
 
     submitForm = data => {
         const { variant } = this.state;
         const additionalData = {
-            variant: variant,
+            nonSelectABCreason: variant,
             dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
@@ -69,29 +69,29 @@ class Involvement extends Component {
                     <LocalForm model="involvement" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
-                            <RadioGroup name="variant" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
+                            <RadioGroup name="nonSelectABCreason" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     disabled={isVersionInfo}
-                                    value="variantA"
+                                    value="valueSetA"
                                     control={<Radio />}
                                     label="A - This person has the mental capacity to participate in making these recommendations. They have benn fully involved in making this plan."
                                 />
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     disabled={isVersionInfo}
-                                    value="variantB"
+                                    value="valueSetB"
                                     control={<Radio />}
                                     label="B - This person does not have the mental capacity to participate in making these recommendations. This plan has been made in accordance with capacity law, including, where applicable, in consultation with their legal proxy, or where no proxy, with relevant family members / friends."
                                 />
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     disabled={isVersionInfo}
-                                    value="variantC"
+                                    value="valueSetC"
                                     control={<Radio />}
                                     label={
                                         <InsertedRadioButtonGroup
-                                            isSelected={variant === 'variantC' || InsertRadioValues.indexOf(variant) !== -1}
+                                            isSelected={variant === 'valueSetC' || InsertRadioValues.indexOf(variant) !== -1}
                                             variant={variant}
                                             isVersionInfo={isVersionInfo}
                                             handleChange={this.handleChange}
@@ -101,18 +101,18 @@ class Involvement extends Component {
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     disabled={isVersionInfo}
-                                    value="variantD"
+                                    value="valueSetD"
                                     control={<Radio />}
                                     label="D - if no other option has been selected, valid reasons must be stated here"
                                 />
                             </RadioGroup>
                         </FormGroup>
-                        { (variant === 'variantD') &&
+                        { (variant === 'valueSetD') &&
                             <FormGroup className={classes.formGroup}>
                                 <Control.textarea
                                     className={classes.formTextarea}
-                                    model="involvement.variantD"
-                                    defaultValue={filledValues.variantD}
+                                    model="involvement.documentExplanation"
+                                    defaultValue={filledValues.documentExplanation}
                                     disabled={isVersionInfo}
                                 />
                                 <FormHelperText>Document full explanation in the clinical record</FormHelperText>

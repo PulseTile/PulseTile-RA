@@ -17,12 +17,12 @@ import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues, getStateData } from "../functions";
+import { getSectionStatus, getFilledValues, getStateData, getInitialFocusValue } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import Signature from "../fragments/Signature";
 import formStyles from "../fragments/formStyles";
-import cprVariants from "../fragments/cprVariants";
+import { cprVariants, FOCUS_LEFT, FOCUS_RIGHT } from "../fragments/cprVariants";
 
 const FORM_FIELDS_NUMBER = 3;
 
@@ -33,12 +33,14 @@ const defaultValues = {
     author: localStorage.getItem('username'),
 };
 
+
+
 class ClinicalRecommendations extends Component {
 
     state = {
         isMainPanel: true,
         cprValue: getStateData(this.props, 'clinicalRecommendations.cprValue'),
-        focusValue: [getStateData(this.props, 'clinicalRecommendations.focusValue', 50)],
+        focusValue: getInitialFocusValue(this.props, 'clinicalRecommendations.focusValue', 50),
         firstSignature: null,
         secondSignature: null,
     };
@@ -47,7 +49,7 @@ class ClinicalRecommendations extends Component {
         const { focusValue, cprValue } = this.state;
         const additionalData = {
             cprValue: cprValue,
-            focusValue: get(focusValue, '[0]', 0),
+            focusValue: get(focusValue, '[0]', 0) >= 50 ? FOCUS_RIGHT : FOCUS_LEFT,
             dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
@@ -98,16 +100,6 @@ class ClinicalRecommendations extends Component {
                     />
                     <LocalForm  model="clinicalRecommendations" onSubmit={values => this.submitForm(values)}>
 
-                        {/*<Signature name="firstSignature" onEnd={this.addSignature} />*/}
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
-                            <Control.text
-                                className={classes.formInput}
-                                model="clinicalRecommendations.clinicalSignatureFirst"
-                                defaultValue={filledValues.clinicalSignatureFirst}
-                            />
-                        </FormGroup>
-
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Clinical Guidance</FormLabel>
                             <Control.textarea
@@ -143,8 +135,9 @@ class ClinicalRecommendations extends Component {
                             <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
                             <Control.text
                                 className={classes.formInput}
-                                model="clinicalRecommendations.clinicalSignatureSecond"
-                                defaultValue={filledValues.clinicalSignatureSecond}
+                                model="clinicalRecommendations.clinicalSignature"
+                                defaultValue={filledValues.clinicalSignature}
+                                disabled={isVersionInfo}
                             />
                         </FormGroup>
 

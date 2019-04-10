@@ -31,14 +31,14 @@ class CapacityAndRepresentation extends Component {
     state = {
         isMainPanel: true,
         capacityFirst: getStateData(this.props, 'capacityAndRepresentation.capacityFirst'),
-        capacitySecond: getStateData(this.props, 'capacityAndRepresentation.capacitySecond'),
+        LegalProxy: getStateData(this.props, 'capacityAndRepresentation.LegalProxy'),
     };
 
     submitForm = data => {
-        const { capacityFirst, capacitySecond } = this.state;
+        const { capacityFirst, LegalProxy } = this.state;
         const additionalData = {
             capacityFirst: capacityFirst,
-            capacitySecond: capacitySecond,
+            LegalProxy: LegalProxy,
             dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
@@ -68,7 +68,7 @@ class CapacityAndRepresentation extends Component {
 
     render() {
         const { classes, sectionsInfo, latestVersionInfo, capacityAndRepresentation, title, onRowClick, isVersionInfo } = this.props;
-        const { isMainPanel, capacityFirst, capacitySecond } = this.state;
+        const { isMainPanel, capacityFirst, LegalProxy } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, capacityAndRepresentation, 'capacityAndRepresentation', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
@@ -93,7 +93,7 @@ class CapacityAndRepresentation extends Component {
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
-                            <RadioGroup name="capacitySecond" className={classes.radioGroup} value={capacitySecond} onChange={e => this.handleChecking(e)}>
+                            <RadioGroup name="LegalProxy" className={classes.radioGroup} value={LegalProxy} onChange={e => this.handleChecking(e)}>
                                 <FormControlLabel
                                     value="at0004"
                                     disabled={isVersionInfo}

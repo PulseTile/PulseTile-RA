@@ -3,6 +3,7 @@ import moment from "moment";
 
 import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER } from "./statuses";
 import sections from "./sections";
+import { FOCUS_LEFT, FOCUS_RIGHT } from "./fragments/cprVariants";
 
 export function getAuthorName() {
     return localStorage.getItem('username') ? localStorage.getItem('username') : '-';
@@ -49,6 +50,23 @@ export function getStateData(props, toSearch, defaultValue = null) {
         result = get(latestVersionInfo, toSearch, defaultValue);
     }
     return result;
+}
+
+export function getInitialFocusValue(props, toSearch, defaultValue = null) {
+    const { isVersionInfo, sectionsInfo, latestVersionInfo } = props;
+    let result = get(props, toSearch, defaultValue);
+    if (isVersionInfo) {
+        result = get(sectionsInfo, toSearch, defaultValue);
+    } else if (latestVersionInfo) {
+        result = get(latestVersionInfo, toSearch, defaultValue);
+    }
+    let focusValue = 50;
+    if (result === FOCUS_LEFT) {
+        focusValue = 5;
+    } else if (result === FOCUS_RIGHT) {
+        focusValue = 95;
+    }
+    return [focusValue];
 }
 
 export function getVersionData(sectionName, formData, otherSectionsInfo) {

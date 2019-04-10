@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import Typography from '@material-ui/core/Typography';
 import FormGroup from '@material-ui/core/FormGroup';
 
 import RenderTrack from "./RenderTrack";
@@ -33,13 +34,11 @@ const styles = theme => ({
     },
     leftDescriptionBlock: {
         width: "25%",
-        color: "#fff",
         textAlign: "left",
         paddingLeft: 25,
     },
     rightDescriptionBlock: {
         width: "25%",
-        color: "#fff",
         textAlign: "right",
         paddingRight: 25,
     },
@@ -49,6 +48,11 @@ const styles = theme => ({
         flexWrap: "wrap",
         margin: "2em",
     },
+    text: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        color: theme.palette.paperColor,
+    }
 });
 
 const RangeLine = ({ classes, onChangeRange, sourceName, title, helpTitle, leftText, rightText }) => (
@@ -60,10 +64,10 @@ const RangeLine = ({ classes, onChangeRange, sourceName, title, helpTitle, leftT
         <FormGroup>
             <div className={classes.descriptionBlock}>
                 <div className={classes.leftDescriptionBlock}>
-                    <p>{leftText}</p>
+                    <Typography className={classes.text}>{leftText}</Typography>
                 </div>
                 <div className={classes.rightDescriptionBlock}>
-                    <p>{rightText}</p>
+                    <Typography className={classes.text}>{rightText}</Typography>
                 </div>
             </div>
             <div className={classes.rangeLine}>
