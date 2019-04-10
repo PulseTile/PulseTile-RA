@@ -40,6 +40,9 @@ const styles = theme => ({
         paddingLeft: 9,
     },
     nhsLogo: {
+        [theme.breakpoints.only('xs')]: {
+            display: "none",
+        },
         width: "auto",
         maxWidth: "100%",
         marginRight: 24
