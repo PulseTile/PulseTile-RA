@@ -59,7 +59,7 @@ const SectionToolbar = ({ classes, onRowClick, isLastSection }) => {
     return (
         <Toolbar className={classes.toolbar}>
             { !isLastSection &&
-            <Tooltip title="Finished">
+            <Tooltip title="Finished" disableHoverListener={true}>
                 <IconButton type="submit" className={classes.saveButton}>
                     Save
                     <DoneIcon />

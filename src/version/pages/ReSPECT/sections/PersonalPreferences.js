@@ -15,8 +15,9 @@ import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import RangeLine from "../fragments/RangeLine";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues, getStateData } from "../functions";
+import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine } from "../functions";
 import formStyles from "../fragments/formStyles";
+import { PREFERENCE_LEFT, PREFERENCE_RIGHT } from "../fragments/cprVariants";
 
 const FORM_FIELDS_NUMBER = 2;
 
@@ -29,13 +30,13 @@ class PersonalPreferences extends Component {
 
     state = {
         isMainPanel: true,
-        preferencesValue: [getStateData(this.props, 'personalPreferences.preferencesValue', 50)],
+        preferencesValue: getInitialRangeLine(this.props, 'personalPreferences.preferencesValue', PREFERENCE_LEFT, PREFERENCE_RIGHT, 50),
     };
 
     submitForm = data => {
         const { preferencesValue } = this.state;
         const additionalData = {
-            preferencesValue: get(preferencesValue, '[0]', 0),
+            preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? PREFERENCE_RIGHT : PREFERENCE_LEFT,
             status: getSectionStatus(data, FORM_FIELDS_NUMBER),
             dateCompleted: moment().format('DD-MMM-YYYY'),
         };

@@ -6,3 +6,6 @@ export const cprVariants = [
 
 export const FOCUS_LEFT = "LifeSustainingTreatment";
 export const FOCUS_RIGHT = "SymptomControl";
+
+export const PREFERENCE_LEFT = "PrioritisingSustainingLife";
+export const PREFERENCE_RIGHT = "PrioritisingComfort";

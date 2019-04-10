@@ -17,7 +17,7 @@ import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues, getStateData, getInitialFocusValue } from "../functions";
+import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import Signature from "../fragments/Signature";
@@ -40,7 +40,7 @@ class ClinicalRecommendations extends Component {
     state = {
         isMainPanel: true,
         cprValue: getStateData(this.props, 'clinicalRecommendations.cprValue'),
-        focusValue: getInitialFocusValue(this.props, 'clinicalRecommendations.focusValue', 50),
+        focusValue: getInitialRangeLine(this.props, 'clinicalRecommendations.focusValue', FOCUS_LEFT, FOCUS_RIGHT, 50),
         firstSignature: null,
         secondSignature: null,
     };
