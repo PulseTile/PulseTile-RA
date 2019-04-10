@@ -65,4 +65,7 @@ export default theme => ({
         color: theme.palette.mainColor,
         fontWeight: 800,
     },
+    checkbox: {
+        float: "left",
+    }
 });

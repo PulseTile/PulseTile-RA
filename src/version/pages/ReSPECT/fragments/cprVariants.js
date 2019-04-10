@@ -4,5 +4,5 @@ export const cprVariants = [
     { id: "NotforCPR", mainTitle: "CPR attempts NOT recommended", helpTitle: "Adult or child" },
 ];
 
-export const FOCUS_LEFT = "Life-sustaining treatment";
-export const FOCUS_RIGHT = "Symptom control";
+export const FOCUS_LEFT = "LifeSustainingTreatment";
+export const FOCUS_RIGHT = "SymptomControl";

@@ -160,7 +160,7 @@ class CliniciansSignatures extends Component {
                             </FormGroup>
 
                             <FormGroup className={classes.smallFormGroup}>
-                                <Control.checkbox model="clinicalSignaturesRow.isSrc" disabled={isVersionInfo}/>
+                                <Control.checkbox className={classes.checkbox} model="clinicalSignaturesRow.isSrc" disabled={isVersionInfo}/>
                                 <Typography>Senior responsible clinician</Typography>
                             </FormGroup>
                             <AddNewButton />
