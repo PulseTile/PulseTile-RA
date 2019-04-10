@@ -67,7 +67,7 @@ class UserSearch extends Component {
         const { searchText } = this.state;
         return (
             <div className={classes.mainBlock}>
-                <Tooltip>
+                <Tooltip disableHoverListener={true}>
                     <IconButton
                         className={classes.icon}
                         aria-haspopup="true"
@@ -85,7 +85,7 @@ class UserSearch extends Component {
                     onChange={e => this.handleChange(e)}
                 />
                 { userSearch &&
-                    <Tooltip title="Clean Search">
+                    <Tooltip title="Clean Search" disableHoverListener={true}>
                         <IconButton
                             className={classes.icon}
                             aria-haspopup="true"
@@ -96,7 +96,7 @@ class UserSearch extends Component {
                         </IconButton>
                     </Tooltip>
                 }
-                <Tooltip title="Patients Search">
+                <Tooltip title="Patients Search" disableHoverListener={true}>
                     <IconButton
                         className={classes.icon}
                         aria-haspopup="true"

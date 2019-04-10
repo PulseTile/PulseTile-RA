@@ -40,7 +40,7 @@ class SettingsDialog extends Component {
         const { open } = this.state;
         return (
             <div className={classes.settingsIconBlock}>
-                <Tooltip title="Settings">
+                <Tooltip title="Settings" disableHoverListener={true}>
                     <IconButton id="icon-settings" aria-haspopup="true" aria-label="Settings" color="inherit" onClick={() => this.toggleDialog()}>
                         <SettingsIcon />
                         <Typography variant="h1" className={classes.title}>Home</Typography>

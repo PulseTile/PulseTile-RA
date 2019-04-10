@@ -62,7 +62,7 @@ class UserPanelButton extends Component {
         const { isOpen, anchorEl } = this.state;
         return (
             <div className={classes.rightBlockItem} ref={this.button}>
-                <Tooltip title="User panel">
+                <Tooltip title="User panel" disableHoverListener={true}>
                     <IconButton
                         id="icon-profile"
                         className={classes.rightBlockButton}

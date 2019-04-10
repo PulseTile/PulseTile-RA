@@ -29,7 +29,7 @@ class ContrastMode extends Component {
         const { classes, contrastMode } = this.props;
         return (
             <div className={classes.rightBlockItem}>
-                <Tooltip title="Contrast mode">
+                <Tooltip title="Contrast mode" disableHoverListener={true}>
                     <IconButton
                         className={classes.rightBlockButton}
                         aria-haspopup="true"
