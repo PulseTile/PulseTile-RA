@@ -95,19 +95,19 @@ class CapacityAndRepresentation extends Component {
                             <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
                             <RadioGroup name="LegalProxy" className={classes.radioGroup} value={LegalProxy} onChange={e => this.handleChecking(e)}>
                                 <FormControlLabel
-                                    value="at0004"
+                                    value="Yes"
                                     disabled={isVersionInfo}
                                     control={<Radio />}
                                     label={<RadioButtonWithLink onRowClick={onRowClick} />}
                                 />
                                 <FormControlLabel
-                                    value="at0005"
+                                    value="No"
                                     disabled={isVersionInfo}
                                     control={<Radio />}
                                     label="No"
                                 />
                                 <FormControlLabel
-                                    value="at0006"
+                                    value="Unknown"
                                     disabled={isVersionInfo}
                                     control={<Radio />}
                                     label="Unknown"

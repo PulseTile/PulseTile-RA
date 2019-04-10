@@ -62,7 +62,7 @@ class Involvement extends Component {
         const { classes, sectionsInfo, latestVersionInfo, involvement, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, variant } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, involvement, 'involvement', isVersionInfo, defaultValues);
-        const InsertRadioValues = ['at0005', 'at0011', 'at0012'];
+        const InsertRadioValues = ['valueSetC1', 'valueSetC2', 'valueSetC3'];
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
