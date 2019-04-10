@@ -14,14 +14,14 @@ const styles = {
 };
 
 /**
- * This component returns block with Personal Notes details component
+ * This component returns block with Clinical Notes details component
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const PersonalNotesShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Personal Note" {...rest}>
-        <TextField className={classes.labelBlock} source="noteType" label="Type" />
-        <TextField className={classes.labelBlock} source="notes" label="Note" />
+    <ShowTemplate pageTitle="Clinical Note" {...rest}>
+        <TextField className={classes.labelBlock} source="clinicalNotesType" label="Type" />
+        <TextField className={classes.labelBlock} source="note" label="Note" />
         <TextField className={classes.labelBlock} source="author" label="Author" />
     </ShowTemplate>
 );

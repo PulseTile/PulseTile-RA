@@ -17,7 +17,8 @@ export const themeFullMenu = [
     { url: '/allergies', label: 'Allergies' },
     { url: '/contacts', label: 'Contacts' },
     { url: '/top3Things', label: 'TopThreeThings' },
-    { url: '/personalNotes', label: 'Personal Notes' },
+    { url: '/clinicalnotes', label: 'Clinical Notes' },
+    { url: '/personalnotes', label: 'Personal Notes' },
     { url: '/procedures', label: 'Procedures' },
 ];
 

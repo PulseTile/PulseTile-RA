@@ -1,5 +1,6 @@
 import VaccinationsList from "../plugins/Vaccinations/VaccinationsList";
 import TopThreeThingsList from "../plugins/TopThreeThings/TopThreeThingsList";
+import ClinicalNotesList from "../plugins/ClinicalNotes/ClinicalNotesList";
 import ProceduresList from "../plugins/Procedures/ProceduresList";
 import PersonalNotesList from "../plugins/PersonalNotes/PersonalNotesList";
 
@@ -15,12 +16,17 @@ export default [
         list: TopThreeThingsList,
     },
     {
+        name: "clinicalnotes",
+        label: "Clinical Notes",
+        list: ClinicalNotesList,
+    },
+    {
         name: "procedures",
         label: "Procedures",
         list: ProceduresList,
     },
     {
-        name: "personalNotes",
+        name: "personalnotes",
         label: "Personal Notes",
         list: PersonalNotesList,
     },

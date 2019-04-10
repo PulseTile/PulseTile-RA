@@ -3,9 +3,9 @@ import { Route } from "react-router";
 import { DateField, TextField } from "react-admin";
 
 import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
-import PersonalNotesCreate from "./PersonalNotesCreate";
-import PersonalNotesEdit from "./PersonalNotesEdit";
-import PersonalNotesShow from "./PersonalNotesShow";
+import ClinicalNotesCreate from "./ClinicalNotesCreate";
+import ClinicalNotesEdit from "./ClinicalNotesEdit";
+import ClinicalNotesShow from "./ClinicalNotesShow";
 
 /**
  * This component returns block with Personal Notes list
@@ -17,14 +17,14 @@ import PersonalNotesShow from "./PersonalNotesShow";
  */
 const PersonalNotesList = ({ classes, ...rest }) => (
     <ListTemplate
-        create={PersonalNotesCreate}
-        edit={PersonalNotesEdit}
-        show={PersonalNotesShow}
-        resourceUrl="personalnotes"
-        title="Personal Notes"
+        create={ClinicalNotesCreate}
+        edit={ClinicalNotesEdit}
+        show={ClinicalNotesShow}
+        resourceUrl="clinicalnotes"
+        title="Clinical Notes"
         {...rest}
     >
-        <TextField label="Type" source="noteType" />
+        <TextField label="Type" source="clinicalNotesType" />
         <TextField label="Author" source="author" />
         <DateField label="Date Created" source="dateCreated" />
         <TextField label="Source" source="source" />
