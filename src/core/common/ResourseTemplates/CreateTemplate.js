@@ -21,11 +21,6 @@ import { faCompressArrowsAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-
 import CreateFormToolbar from "../../common/Toolbars/CreateFormToolbar";
 
 const styles = theme => ({
-    createBlock: {
-        width: '100%',
-        backgroundColor: theme.palette.paperColor,
-        border: `1px solid ${theme.palette.borderColor}`,
-    },
     blockTitle: {
         display: "flex",
         alignItems: "center",
@@ -68,7 +63,7 @@ const styles = theme => ({
  * @param {shape}   rest
  */
 const CreateTemplate = ({ classes, isListOpened, toggleListBlock, blockTitle, children, ...rest }) => (
-    <Grid item xs={12} sm={isListOpened ? 6 : 12} className={classes.createBlock}>
+    <Grid item xs={12} sm={isListOpened ? 6 : 12}>
         <div className={classes.blockTitle}>
             <Typography className={classes.title}>{blockTitle}</Typography>
             <div className={classes.emptyBlock}></div>
