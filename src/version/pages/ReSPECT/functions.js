@@ -52,12 +52,6 @@ export function getStateData(props, toSearch, defaultValue = null) {
 }
 
 export function getVersionData(sectionName, formData, otherSectionsInfo) {
-
-    console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    console.log('sectionName', sectionName);
-    console.log('formData', formData);
-    console.log('otherSectionsInfo', otherSectionsInfo);
-
     return {
         sections: {
             personalDetails: (sectionName === 'personalDetails')

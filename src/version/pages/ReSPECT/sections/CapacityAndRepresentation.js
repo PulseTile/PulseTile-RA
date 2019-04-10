@@ -54,6 +54,12 @@ class CapacityAndRepresentation extends Component {
         });
     };
 
+    handleCheckingBoolean = e => {
+        this.setState({
+            [e.target.name]: (e.target.value === 'true'),
+        })
+    };
+
     handleChecking = e => {
         this.setState({
             [e.target.name]: e.target.value,
@@ -70,15 +76,15 @@ class CapacityAndRepresentation extends Component {
                     <LocalForm  model="capacityAndRepresentation" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Does the person have sufficient capacity to participate in making the recommendations on this plan?</FormLabel>
-                            <RadioGroup name="capacityFirst" className={classes.radioGroup} value={capacityFirst} onChange={e => this.handleChecking(e)}>
+                            <RadioGroup name="capacityFirst" className={classes.radioGroup} value={String(capacityFirst)} onChange={e => this.handleCheckingBoolean(e)}>
                                 <FormControlLabel
-                                    value="1"
+                                    value="true"
                                     disabled={isVersionInfo}
                                     control={<Radio />}
                                     label="Yes"
                                 />
                                 <FormControlLabel
-                                    value="0"
+                                    value="false"
                                     disabled={isVersionInfo}
                                     control={<Radio />}
                                     label="No"
