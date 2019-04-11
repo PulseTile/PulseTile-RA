@@ -56,19 +56,12 @@ const steps = [
     {
         title: 'Guided Step 3',
         lowTitle: 'Click on a heading or icon for further information',
-        target: '#block-problems',
+        target: '#block-top3Things',
         content: 'Click on the icon, or heading to view the detailed information within.',
         placement: 'bottom',
     },
     {
         title: 'Guided Step 4',
-        lowTitle: '',
-        target: '#block-medications',
-        content: 'Or you can click on a specific individual item to discover relevant detail',
-        placement: 'right',
-    },
-    {
-        title: 'Guided Step 5',
         lowTitle: 'Select Settings...',
         target: '#icon-settings',
         content: 'Use the settings cog to change the view of your dashboard.',
