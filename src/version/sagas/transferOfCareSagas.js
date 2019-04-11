@@ -14,6 +14,7 @@ export default takeEvery(TRANSFER_OF_CARE_ACTION.CREATE, function*(action) {
     }
     options.headers = {
         Authorization: "Bearer " + token,
+        'X-Requested-With': "XMLHttpRequest",
     };
     try {
         const result = yield fetch(url, options).then(res => res.json());

@@ -9,10 +9,12 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
+import Typography from '@material-ui/core/Typography';
 
 import { transferOfCareAction } from "../../../actions/transferOfCareAction";
 import SectionToolbar from "./SectionToolbar";
-import selectors from "./selectors";
+import RecordsSelector from "./RecordsSelector";
+import { selectors, recordsTypes } from "./selectors";
 
 const styles = {
     formGroup: {
@@ -59,11 +61,18 @@ class TransferOfCareInputs extends Component {
 
     state = {
         transferDateTime: null,
+        recordType: null,
     };
 
     changeDate = value => {
         this.setState({
             transferDateTime: value,
+        });
+    };
+
+    selectRecord = value => {
+        this.setState({
+            recordType: value,
         });
     };
 
@@ -81,7 +90,7 @@ class TransferOfCareInputs extends Component {
 
     render() {
         const { classes } = this.props;
-        const { transferDateTime } = this.state;
+        const { transferDateTime, recordType } = this.state;
         return (
             <React.Fragment>
                 <LocalForm model="transferOfCare" onSubmit={values => this.submitForm(values)}>
@@ -117,6 +126,23 @@ class TransferOfCareInputs extends Component {
                             onChange={value => this.changeDate(value)}
                         />
                     </FormGroup>
+
+                    <FormGroup className={classes.formGroup}>
+                        <FormLabel className={classes.formLabel}>Type</FormLabel>
+                        <select className={classes.formSelect} onChange={value => this.selectRecord(value)} required>
+                            <option value=''>-- Select to --</option>
+                            { recordsTypes.map((item, key) => {
+                                return (
+                                    <option key={key} value={item.id}>{item.label}</option>
+                                )
+                            })}
+                        </select>
+                    </FormGroup>
+
+                    { recordType
+                        ? <RecordsSelector classes={classes} />
+                        : <Typography>No records added</Typography>
+                    }
 
                     <FormGroup className={classes.formGroup}>
                         <FormLabel className={classes.formLabel}>Reason for contact</FormLabel>
