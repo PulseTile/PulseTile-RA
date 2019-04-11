@@ -19,7 +19,7 @@ const styles = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const ReferralsShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Clinical Note" {...rest}>
+    <ShowTemplate pageTitle="Referral" {...rest}>
         <TextField className={classes.labelBlock} source="referralFrom" label="Referral From" />
         <TextField className={classes.labelBlock} source="referralTo" label="Referral To" />
         <DateField className={classes.labelBlock} source="dateOfReferral" label="Date of Referral" />

@@ -18,6 +18,7 @@ export const themeFullMenu = [
     { url: '/contacts', label: 'Contacts' },
     { url: '/top3Things', label: 'TopThreeThings' },
     { url: '/clinicalnotes', label: 'Clinical Notes' },
+    { url: '/mdt', label: 'MDT' },
     { url: '/personalnotes', label: 'Personal Notes' },
     { url: '/procedures', label: 'Procedures' },
     { url: '/referrals', label: 'Referrals' },
