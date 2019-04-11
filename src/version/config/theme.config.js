@@ -20,6 +20,7 @@ export const themeFullMenu = [
     { url: '/clinicalnotes', label: 'Clinical Notes' },
     { url: '/personalnotes', label: 'Personal Notes' },
     { url: '/procedures', label: 'Procedures' },
+    { url: '/referrals', label: 'Referrals' },
 ];
 
 export const themeCommonElements = {
