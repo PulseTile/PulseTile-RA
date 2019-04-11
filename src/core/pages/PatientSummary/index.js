@@ -86,7 +86,9 @@ const styles = theme => ({
 class PatientSummaryInfo extends Component {
 
     componentDidMount() {
-        this.props.getPatientSynopsis();
+        if (localStorage.getItem('userId') && localStorage.getItem('username')) {
+            this.props.getPatientSynopsis();
+        }
     }
 
     render() {
