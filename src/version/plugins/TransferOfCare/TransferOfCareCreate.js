@@ -1,18 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 
 import CreateTemplate from "../../../core/common/ResourseTemplates/CreateTemplate";
-import Inputs from "./fragments/Inputs";
+import Form from "./fragments/Form";
 
 /**
  * This component returns TransferOfCare creation form
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {shape} rest
+ * @param {shape} props
  */
-const TransferOfCareCreate = ({ classes, ...rest }) => (
-    <CreateTemplate blockTitle="Transfer Of Care" {...rest}>
-        <Inputs />
+const TransferOfCareCreate = props => (
+    <CreateTemplate isCustom={true} blockTitle="Transfer Of Care" {...props}>
+        <Form {...props} />
     </CreateTemplate>
 );
 

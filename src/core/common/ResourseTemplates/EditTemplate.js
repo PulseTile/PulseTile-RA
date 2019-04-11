@@ -56,6 +56,7 @@ const styles = theme => ({
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape}   classes
+ * @param {boolean} isCustom
  * @param {boolean} isListOpened
  * @param {string}  blockTitle
  * @param {func}    toggleListBlock
@@ -64,7 +65,7 @@ const styles = theme => ({
  * @param {shape}   rest
  * @constructor
  */
-const EditTemplate = ({ classes, isListOpened, blockTitle, toggleListBlock, children, changeViewType, ...rest }) => (
+const EditTemplate = ({ classes, isCustom, isListOpened, blockTitle, toggleListBlock, children, changeViewType, ...rest }) => (
     <Grid item xs={12} sm={isListOpened ? 6 : 12}>
         <div className={classes.blockTitle}>
             <Typography className={classes.title}>{blockTitle}</Typography>
@@ -75,11 +76,18 @@ const EditTemplate = ({ classes, isListOpened, blockTitle, toggleListBlock, chil
                 </IconButton>
             </Tooltip>
         </div>
-        <Edit undoable={false} {...rest}>
-            <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
-                {children}
-            </SimpleForm>
-        </Edit>
+        { !isCustom
+            ?
+                <Edit undoable={false} {...rest}>
+                    <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
+                        {children}
+                    </SimpleForm>
+                </Edit>
+            :
+                <React.Fragment>
+                    {children}
+                </React.Fragment>
+        }
     </Grid>
 );
 
