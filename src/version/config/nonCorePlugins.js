@@ -5,6 +5,7 @@ import MdtList from "../plugins/MDT/MdtList";
 import ProceduresList from "../plugins/Procedures/ProceduresList";
 import PersonalNotesList from "../plugins/PersonalNotes/PersonalNotesList";
 import ReferralsList from "../plugins/Referrals/ReferralsList";
+import TransferOfCareList from "../plugins/TransferOfCare/TransferOfCareList";
 
 export default [
     {
@@ -41,5 +42,10 @@ export default [
         name: "referrals",
         label: "Referrals",
         list: ReferralsList,
+    },
+    {
+        name: "toc",
+        label: "Transfers of Care",
+        list: TransferOfCareList,
     }
 ];
