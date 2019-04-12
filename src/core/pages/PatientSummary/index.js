@@ -27,6 +27,8 @@ const styles = theme => ({
         backgroundColor: theme.palette.mainColor,
     },
     container: {
+        width: "100%",
+        height: "100%",
         background: theme.patientSummaryPanel.container.background,
         backgroundSize: "cover",
     },
@@ -88,7 +90,9 @@ const styles = theme => ({
 class PatientSummaryInfo extends Component {
 
     componentDidMount() {
-        this.props.getPatientSynopsis();
+        if (localStorage.getItem('userId') && localStorage.getItem('username')) {
+            this.props.getPatientSynopsis();
+        }
     }
 
     render() {

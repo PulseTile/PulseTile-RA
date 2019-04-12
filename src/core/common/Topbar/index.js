@@ -19,7 +19,9 @@ import { themeCommonElements } from "../../../version/config/theme.config";
 class CustomTopbar extends Component {
 
     componentDidMount() {
-        this.props.getDemographicsAction();
+        if (localStorage.getItem('userId') && localStorage.getItem('username')) {
+            this.props.getDemographicsAction();
+        }
     }
 
     render() {

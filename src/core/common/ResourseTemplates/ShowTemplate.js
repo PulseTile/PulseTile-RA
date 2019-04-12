@@ -17,11 +17,6 @@ import { faCompressArrowsAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-
 import EditButton from "../../common/Buttons/EditButton";
 
 const styles = theme => ({
-    showBlock: {
-        width: '100%',
-        backgroundColor: "white",
-        border: `1px solid ${theme.palette.borderColor}`,
-    },
     expansionPanel: {
         height: "49px !important",
         '& > div': {
@@ -112,7 +107,7 @@ class ShowTemplate extends Component {
         const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
         const { isMainPanelOpen, isSystemInfoPanelOpen } = this.state;
         return (
-            <Grid item xs={12} sm={isListOpened ? 6 : 12} className={classes.showBlock}>
+            <Grid item xs={12} sm={isListOpened ? 6 : 12}>
                 <ExpansionPanel className={isMainPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isMainPanelOpen} onChange={() => this.toggleMainPanel()}>
                     <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
                         <Typography className={classes.expansionTypography} >{pageTitle}</Typography>
