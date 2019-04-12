@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import { Route } from "react-router";
 import {
@@ -188,7 +189,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, children, classes, history, currentList } = this.props;
+        const { create, resourceUrl, title, children, classes, history, currentList, userSearch } = this.props;
         const { isFilterOpened, isListOpened, key, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -236,8 +237,7 @@ class ListTemplate extends Component {
                             <List
                                 resource={resourceUrl}
                                 key={key}
-                                filter={{ filterText: filterText }}
-                                title={title}
+                                filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}                                title={title}
                                 perPage={ITEMS_PER_PAGE}
                                 actions={null}
                                 bulkActions={false}
@@ -273,10 +273,11 @@ class ListTemplate extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ownProps)  => {
     return {
-        currentList: state.admin.resources[ownProps.resource].list.ids,
-    };
+        userSearch: state.custom.userSearch.data,
+        currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
+    }
 };
 
 export default connect(mapStateToProps, null)(withStyles(listStyles)(ListTemplate));

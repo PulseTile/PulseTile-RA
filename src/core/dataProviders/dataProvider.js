@@ -37,11 +37,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
     const options = {};
     switch (type) {
         case GET_LIST: {
-            if (resource === 'patients') {
-                url = `${domainName}/api/${resource}`;
-            } else {
-                url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}`;
-            }
+            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -289,46 +285,6 @@ const dataProvider = (type, resource, params) => {
             console.log('Error: ', err);
             throw new Error(err);
         });
-};
-
-const fakePatientsProvider = (type, resource, params) => {
-    switch (type) {
-        case GET_LIST:
-            const pageNumber = get(params, 'pagination.page', 1);
-            const numberPerPage = get(params, 'pagination.perPage', 10);
-            const results = getResultsFromResponse(resource, dummyPatients, params);
-            const resultsFiltering = getFilterResults(resource, results, params);
-            const resultsSorting = getSortedResults(resultsFiltering, params);
-            const startItem = (pageNumber - 1) * numberPerPage;
-            const endItem = pageNumber * numberPerPage;
-            const paginationResults = resultsSorting.slice(startItem, endItem);
-            return {
-                data: paginationResults,
-                total: resultsSorting.length,
-            };
-
-        case GET_ONE:
-        case UPDATE:
-            let response = {};
-            for (let i = 0, n = dummyPatients.length; i < n; i++) {
-                let item = dummyPatients[i];
-                if (item.id === params.id) {
-                    response = item;
-                    break;
-                }
-            }
-            return {
-                data: Object.assign({id: params.id}, response),
-            };
-
-        case CREATE:
-            return {
-                data: Object.assign({id: params.data.nhsNumber}, params.data)
-            };
-
-        default:
-            return { data: 'No results' };
-    }
 };
 
 /**

@@ -26,18 +26,23 @@ const styles = {
 const FormInputs = ({ classes }) => {
     return (
         <React.Fragment>
-            <TextInput source="name" label="Name" fullWidth />
+            <TextInput source="prefix" label="Prefix" fullWidth />
+            <div className={classes.halfWidthBlock}>
+                <TextInput className={classes.halfWidth} source="firstName" label="Name" />
+                <TextInput className={classes.halfWidth} source="lastName" label="Surname" />
+            </div>
             <DateInput source="dateOfBirth" label="Born" fullWidth />
             <RadioButtonGroupInput source="gender" label="Gender" choices={genderChoices} />
             <TextInput source="address" label="Address" fullWidth />
             <div className={classes.halfWidthBlock}>
                 <TextInput className={classes.halfWidth} source="city" label="City" />
-                <TextInput className={classes.halfWidth} source="county" label="County" />
+                <TextInput className={classes.halfWidth} source="district" label="District" />
             </div>
             <div className={classes.halfWidthBlock}>
                 <TextInput className={classes.halfWidth} source="postCode" label="Post Code" />
                 <TextInput className={classes.halfWidth} source="country" label="Country" />
             </div>
+            <TextInput source="phone" label="Telephone Number" fullWidth />
             <TextInput source="nhsNumber" label="CHI Number" fullWidth />
         </React.Fragment>
     );

@@ -3,7 +3,7 @@ import cardBackgroundImage from "../../version/images/blue-ring-01.png";
 import tableHeaderImage from "../../version/images/table-header.png";
 
 import ThemeTopbar from "../common/Topbar";
-import PatientSummary from "../../core/pages/PatientSummary";
+import PatientsList from "../../core/pages/PatientsList";
 
 export const themeShortMenu = [
     { url: '/summary', label: 'Patient Summary' },
@@ -27,7 +27,7 @@ export const themeFullMenu = [
 
 export const themeCommonElements = {
     topbar: ThemeTopbar,
-    homePage: PatientSummary,
+    homePage: PatientsList,
     isFooterAbsent: true,
 };
 
