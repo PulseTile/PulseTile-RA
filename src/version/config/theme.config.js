@@ -1,6 +1,5 @@
 import backgroundImage from "../../version/images/containerBackground.png";
 import cardBackgroundImage from "../../version/images/blue-ring-01.png";
-import tableHeaderImage from "../../version/images/table-header.png";
 
 import ThemeTopbar from "../common/Topbar";
 import PatientsList from "../../core/pages/PatientsList";
@@ -34,5 +33,4 @@ export const themeCommonElements = {
 export const themeImages = {
     backgroundImage: backgroundImage,
     cardBackgroundImage: cardBackgroundImage,
-    tableHeaderImage: tableHeaderImage,
 };
