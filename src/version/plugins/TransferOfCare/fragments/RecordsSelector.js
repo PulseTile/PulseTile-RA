@@ -55,8 +55,7 @@ class RecordsSelector extends Component {
     };
 
     render() {
-        const { classes, recordType, recordsList, selectItem } = this.props;
-        const { recordsArray } = this.state;
+        const { classes, recordType, recordsList, selectItem, recordsArray } = this.props;
         return (
             <React.Fragment>
                 <FormGroup className={classes.formGroup}>
@@ -86,10 +85,6 @@ class RecordsSelector extends Component {
 
 };
 
-const mapStateToProps = state => {
-    return {
-        recordsList: get(state, 'custom.transferOfCare.list', [])
-    };
-};
 
-export default connect(mapStateToProps, null)(withStyles(styles)(RecordsSelector));
+
+export default RecordsSelector;

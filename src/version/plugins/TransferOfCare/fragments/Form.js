@@ -149,10 +149,7 @@ class TransferOfCareInputs extends Component {
 
     render() {
         const { classes } = this.props;
-        const { transferDateTime, recordType } = this.state;
-
-        console.log('--------------> ', this.state.recordsArray );
-
+        const { transferDateTime, recordType, recordsArray } = this.state;
         return (
             <React.Fragment>
                 <LocalForm model="transferOfCare" onSubmit={values => this.submitForm(values)}>
@@ -202,7 +199,7 @@ class TransferOfCareInputs extends Component {
                     </FormGroup>
 
                     { recordType
-                        ? <RecordsSelector classes={classes} recordType={recordType} selectItem={this.selectItem} />
+                        ? <RecordsSelector classes={classes} recordType={recordType} selectItem={this.selectItem} recordsArray={recordsArray} />
                         : <Typography className={classes.text}>No records added</Typography>
                     }
 
@@ -224,6 +221,12 @@ class TransferOfCareInputs extends Component {
     }
 };
 
+const mapStateToProps = state => {
+    return {
+        recordsList: get(state, 'custom.transferOfCare.list', [])
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         createNewItem(data) {
@@ -235,4 +238,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(TransferOfCareInputs));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TransferOfCareInputs));
