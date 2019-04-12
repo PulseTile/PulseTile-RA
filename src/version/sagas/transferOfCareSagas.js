@@ -16,6 +16,7 @@ const createNewItem = takeEvery(TRANSFER_OF_CARE_ACTION.CREATE, function*(action
         Authorization: "Bearer " + token,
         'X-Requested-With': "XMLHttpRequest",
     };
+    options.body = JSON.stringify(action.data);
     try {
         const result = yield fetch(url, options).then(res => res.json());
         yield put(transferOfCareAction.success(result))

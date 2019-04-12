@@ -82,9 +82,6 @@ class RecordsSelector extends Component {
             </React.Fragment>
         );
     }
-
 };
-
-
 
 export default RecordsSelector;

@@ -83,8 +83,8 @@ class TransferOfCareInputs extends Component {
     };
 
     selectItem = e => {
-        const { recordsList, recordType } = this.props;
-        const { recordsArray } = this.state;
+        const { recordsList } = this.props;
+        const { recordsArray, recordType } = this.state;
         let currentItem = null;
         const value = e.target.value;
         for (let i = 0, n = recordsList.length; i < n; i++) {
@@ -138,7 +138,7 @@ class TransferOfCareInputs extends Component {
         const { createNewItem } = this.props;
         const { transferDateTime, recordsArray } = this.state;
         const additionalData = {
-            transferDateTime: transferDateTime,
+            transferDateTime: moment(transferDateTime).format('DD-MMM-YYYY'),
             records: recordsArray,
             dateCreated: moment().format('DD-MMM-YYYY'),
             userId: patientID,
@@ -148,7 +148,7 @@ class TransferOfCareInputs extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, recordsList } = this.props;
         const { transferDateTime, recordType, recordsArray } = this.state;
         return (
             <React.Fragment>
@@ -199,7 +199,13 @@ class TransferOfCareInputs extends Component {
                     </FormGroup>
 
                     { recordType
-                        ? <RecordsSelector classes={classes} recordType={recordType} selectItem={this.selectItem} recordsArray={recordsArray} />
+                        ? <RecordsSelector
+                            classes={classes}
+                            recordType={recordType}
+                            selectItem={this.selectItem}
+                            recordsArray={recordsArray}
+                            recordsList={recordsList}
+                        />
                         : <Typography className={classes.text}>No records added</Typography>
                     }
 
