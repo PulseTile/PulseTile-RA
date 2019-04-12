@@ -9,6 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import headerLogo from "../../../images/logo-header.png";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
+import UserSearch from "../../../../core/common/Topbar/fragments/UserSearch";
 import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
 
@@ -112,6 +113,7 @@ const TopPart = ({ classes, logout, location }) => {
                 </Link>
             </div>
             <div className={classes.emptyBlock}></div>
+            <UserSearch location={location} />
             <CardMedia
                 className={classes.nhsLogo}
                 component="img"

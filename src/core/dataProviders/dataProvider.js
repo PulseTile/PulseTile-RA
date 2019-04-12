@@ -19,7 +19,7 @@ import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
 import dummyPatients from "../pages/PatientsList/dummyPatients";
-import { httpErrorAction } from '../actions/httpErrorAction';
+import newPatientsProvider from "./patientsProvider";
 
 const apiPatientsUser = 'api/patients';
 const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
@@ -341,7 +341,7 @@ const fakePatientsProvider = (type, resource, params) => {
  */
 export default (type, resource, params) => {
     if (resource === `patients`) {
-        return fakePatientsProvider(type, resource, params);
+        return newPatientsProvider(type, resource, params);
     }
     return dataProvider(type, resource, params);
 };
