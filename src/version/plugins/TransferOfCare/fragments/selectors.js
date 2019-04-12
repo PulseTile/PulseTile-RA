@@ -7,6 +7,6 @@ export const selectors = [
 
 export const recordsTypes = [
     { id: "problems", label: "Problems / Issues" },
-    { id: "medications", label: "Problems / Issues" },
-    { id: "referrals", label: "Problems / Issues" },
+    { id: "medications", label: "Medications" },
+    { id: "referrals", label: "Referrals" },
 ];

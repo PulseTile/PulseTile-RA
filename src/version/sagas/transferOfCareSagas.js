@@ -5,7 +5,7 @@ import { TRANSFER_OF_CARE_ACTION, transferOfCareAction } from "../actions/transf
 
 const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
 
-export default takeEvery(TRANSFER_OF_CARE_ACTION.CREATE, function*(action) {
+const createNewItem = takeEvery(TRANSFER_OF_CARE_ACTION.CREATE, function*(action) {
     const url = domainName + '/api/patients/' + patientID + '/events/toc';
     let options = {};
     options.method = 'POST';
@@ -23,3 +23,26 @@ export default takeEvery(TRANSFER_OF_CARE_ACTION.CREATE, function*(action) {
         yield put(transferOfCareAction.error(e))
     }
 });
+
+const getSelectorsItem = takeEvery(TRANSFER_OF_CARE_ACTION.REQUEST, function*(action) {
+    const url = domainName + '/api/patients/' + patientID + '/' + action.data;
+    let options = {};
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    options.headers = {
+        Authorization: "Bearer " + token,
+        'X-Requested-With': "XMLHttpRequest",
+    };
+    try {
+        const result = yield fetch(url, options).then(res => res.json());
+        yield put(transferOfCareAction.list(result))
+    } catch(e) {
+        yield put(transferOfCareAction.error(e))
+    }
+});
+
+export default [
+    createNewItem,
+    getSelectorsItem,
+];

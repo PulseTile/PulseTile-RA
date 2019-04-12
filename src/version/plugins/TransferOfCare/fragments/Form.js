@@ -46,6 +46,9 @@ const styles = {
         height: 180,
         padding: 10,
     },
+    text: {
+        padding: 20,
+    }
 };
 
 const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
@@ -70,10 +73,11 @@ class TransferOfCareInputs extends Component {
         });
     };
 
-    selectRecord = value => {
-        this.setState({
-            recordType: value,
-        });
+    selectRecord = e => {
+        this.setState(
+            { recordType: e.target.value },
+            () => this.props.getSelectorItems(this.state.recordType)
+        );
     };
 
     submitForm = data => {
@@ -129,7 +133,7 @@ class TransferOfCareInputs extends Component {
 
                     <FormGroup className={classes.formGroup}>
                         <FormLabel className={classes.formLabel}>Type</FormLabel>
-                        <select className={classes.formSelect} onChange={value => this.selectRecord(value)} required>
+                        <select className={classes.formSelect} onChange={e => this.selectRecord(e)} required>
                             <option value=''>-- Select to --</option>
                             { recordsTypes.map((item, key) => {
                                 return (
@@ -140,8 +144,8 @@ class TransferOfCareInputs extends Component {
                     </FormGroup>
 
                     { recordType
-                        ? <RecordsSelector classes={classes} />
-                        : <Typography>No records added</Typography>
+                        ? <RecordsSelector classes={classes} recordType={recordType} />
+                        : <Typography className={classes.text}>No records added</Typography>
                     }
 
                     <FormGroup className={classes.formGroup}>
@@ -166,6 +170,9 @@ const mapDispatchToProps = dispatch => {
     return {
         createNewItem(data) {
             dispatch(transferOfCareAction.create(data));
+        },
+        getSelectorItems(data) {
+            dispatch(transferOfCareAction.request(data));
         }
     }
 };

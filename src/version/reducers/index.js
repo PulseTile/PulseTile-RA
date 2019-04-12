@@ -1,6 +1,7 @@
 import contrastMode from "./contrastModeReducer";
 import selectedFeedsList from "./selectedFeedsReducer";
 import feedsRss from "./feedsRssReducer";
+import transferOfCareReducer from "./transferOfCareReducer";
 
 import {
     SYNOPSIS_TOP_THREE_THINGS_ACTION,
@@ -23,4 +24,5 @@ export default {
     feedsList: createCustomReducer(FEEDS_LIST_ACTION, "data"),
     selectedFeedsList,
     feedsRss,
+    transferOfCare: transferOfCareReducer,
 };
