@@ -6,7 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
 
-import helmLogo from "../../../images/helm-logo.png";
+import headerLogo from "../../../images/logo-header.png";
 import nhsLogo from "../../../images/nhs.png";
 import UserTour from "../../../features/UserTour";
 import ContrastMode from "../../../features/ContrastMode";
@@ -106,7 +106,7 @@ const TopPart = ({ classes, logout, location }) => {
                         component="img"
                         alt="Pulse Tile"
                         height="38px"
-                        image={helmLogo}
+                        image={headerLogo}
                         title="Pulse Tile"
                     />
                 </Link>
