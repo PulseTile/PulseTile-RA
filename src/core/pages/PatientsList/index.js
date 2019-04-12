@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { TextField, DateField, ShowButton } from "react-admin";
+import { TextField, DateField, ShowButton, setSidebarVisibility } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
@@ -38,6 +38,10 @@ const styles = theme => ({
  */
 class PatientsList extends Component {
 
+    componentDidMount() {
+        this.props.setSidebarVisibility(false);
+    }
+
     /**
      * This function redirects to Patient Summary page
      *
@@ -50,6 +54,7 @@ class PatientsList extends Component {
         this.props.updateCurrentPatient(record);
         localStorage.setItem('patientId', record.nhsNumber);
         this.props.history.push('/summary');
+        this.props.setSidebarVisibility(true);
     };
 
     render() {
@@ -57,15 +62,15 @@ class PatientsList extends Component {
         if (!userSearch) {
             return (
                 <div className={classes.content}>
-                <div className={classes.imageBlock} >
-                    <CardMedia
-                        className={classes.image}
-                        component="img"
-                        alt="NHS Scotland"
-                        image={image}
-                        title="ReSPECT"
-                    />
-                </div>
+                    <div className={classes.imageBlock} >
+                        <CardMedia
+                            className={classes.image}
+                            component="img"
+                            alt="NHS Scotland"
+                            image={image}
+                            title="ReSPECT"
+                        />
+                    </div>
                 </div>
             )
         }
@@ -82,7 +87,7 @@ class PatientsList extends Component {
             >
                 <TextField source="name" label="Name" />
                 <TextField source="address" label="Address" />
-                <DateField source="dateOfBirth" label="Born (age)" />
+                <DateField source="birthDate" label="Born (age)" />
                 <TextField source="nhsNumber" label="CHI No." />
                 <ViewButton viewAction={this.redirectToSummary} />
             </ListTemplate>
@@ -100,7 +105,10 @@ const mapDispatchToProps = dispatch => {
     return {
         updateCurrentPatient(data) {
             dispatch(currentPatientAction.update(data));
-        }
+        },
+        setSidebarVisibility(params) {
+            dispatch(setSidebarVisibility(params));
+        },
     }
 };
 

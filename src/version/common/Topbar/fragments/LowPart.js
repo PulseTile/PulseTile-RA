@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -90,6 +91,22 @@ function pageHasTitle(location) {
 }
 
 /**
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} location
+ * @return {boolean}
+ */
+function pageHasPatientBanner(location) {
+    const pathName = location.pathname;
+    const pathArray = pathName.split('/');
+    const currentResource = get(pathArray, [1], null);
+    const pagesWithBanner = [
+        'charts',
+        'patients'
+    ];
+    return pagesWithBanner.indexOf(currentResource) !== -1  ||  pathName === '/';
+}
+
+/**
  * This component returns button which toggle sidebar menu
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
@@ -124,6 +141,7 @@ class LowPart extends Component {
     render() {
         const { classes, isSidebarOpen, setSidebarVisibility, location, patientInfo } = this.props;
         const isPageHasTitle = pageHasTitle(location);
+        const isPageHasPatientBanner = pageHasPatientBanner(location);
         return (
             <Toolbar className={classes.lowPart}>
                 {
@@ -133,7 +151,7 @@ class LowPart extends Component {
                 <div className={classes.menuAndBanner}>
                     <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
                     {
-                        !isPageHasTitle &&
+                        !isPageHasPatientBanner &&
                             <PatientBanner location={location} classes={classes} patientInfo={patientInfo} />
                     }
                 </div>

@@ -40,9 +40,27 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
-            let data = null;
+            let userName = get(params, 'data.firstName', null);
+            let updateData = {
+                name: {
+                    family: get(params, 'data.lastName', null),
+                    given: userName.split(' '),
+                    prefix: get(params, 'data.prefix', null),
+                },
+                telecom: String(get(params, 'data.phone', null)),
+                gender: get(params, 'data.gender', null),
+                birthDate: get(params, 'data.birthDate', null),
+                address: {
+                    line: get(params, 'data.address', null),
+                    city: get(params, 'data.city', null),
+                    district: get(params, 'data.district', null),
+                    postalCode: get(params, 'data.postCode', null),
+                    country: get(params, 'data.country', null)
+                },
+                id: String(params.id)
+            };
             url = `${domainName}/mpi/Patient/${params.id}`;
-            options.method = "POST";
+            options.method = "PUT";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -51,21 +69,21 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
                 'Content-Type': 'application/json',
                 'X-Requested-With': "XMLHttpRequest",
             };
-            options.body = JSON.stringify(data);
+            options.body = JSON.stringify(updateData);
             break;
 
         case CREATE:
             let patientId = get(params, 'data.nhsNumber', null);
             let name = get(params, 'data.firstName', null);
-            data = {
+            let data = {
                 name: {
                     family: get(params, 'data.lastName', null),
                     given: name.split(' '),
                     prefix: get(params, 'data.prefix', null),
                 },
-                telecom: get(params, 'data.phone', null),
+                telecom: String(get(params, 'data.phone', null)),
                 gender: get(params, 'data.gender', null),
-                birthDate: get(params, 'data.dateOfBirth', null),
+                birthDate: get(params, 'data.birthDate', null),
                 address: {
                     line: get(params, 'data.address', null),
                     city: get(params, 'data.city', null),
@@ -136,7 +154,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     country: country,
                     district: district,
                     postCode: postCode,
-                    dateOfBirth: get(patientFromResponse, 'birthDate', null),
+                    birthDate: get(patientFromResponse, 'birthDate', null),
                     department: get(patientFromResponse, 'department', null),
                     gender: get(patientFromResponse, 'gender', null),
                     nhsNumber: id,
@@ -149,7 +167,20 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
 
         case CREATE:
             const dataFromRequest = get(params, 'data', null);
-            dataFromRequest.id = get(response, 'uuid', null);
+            const compositionUid = get(response, 'compositionUid', null);
+            let sourceID = '';
+            if (compositionUid) {
+                const compositionUidArray = compositionUid.split('::');
+                sourceID = compositionUidArray[0];
+            }
+            dataFromRequest.id = Number(get(params, 'data.nhsNumber', null));
+            dataFromRequest.name = get(params, 'data.prefix', null) + ' ' + get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
+            if (!get(params, 'source', null)) {
+                dataFromRequest.source = 'ethercis';
+            }
+
+            console.log('dataFromRequest', dataFromRequest );
+
             return {
                 data: dataFromRequest,
             };
@@ -187,7 +218,7 @@ function getPatientsList(patientsArray) {
             country: get(addressFromResponse, [[0], 'country'], null),
             district: get(addressFromResponse, [[0], 'district'], null),
             postCode: get(addressFromResponse, [[0], 'postalCode'], null),
-            dateOfBirth: get(item, 'resource.birthDate', null),
+            birthDate: get(item, 'resource.birthDate', null),
             department: get(item, 'resource.department', null),
             gender: get(item, 'resource.gender', null),
             nhsNumber: get(item, ['resource', 'identifier', [0], 'value'], null),

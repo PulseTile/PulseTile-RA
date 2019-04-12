@@ -5,7 +5,6 @@ import ThemeTopbar from "../common/Topbar";
 import PatientsList from "../../core/pages/PatientsList";
 
 export const themeShortMenu = [
-    { url: '/', label: 'Patient Summary' },
     { url: '/patients', label: 'Patients' },
 ];
 
