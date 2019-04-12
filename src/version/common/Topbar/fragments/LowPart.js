@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { pageHasTitle } from "../../../../core/common/Topbar/functions";
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
 import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
 import MobileMenu from "./MobileMenu";
@@ -76,6 +75,19 @@ const styles = theme => ({
         marginBottom: 5,
     },
 });
+
+/**
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} location
+ * @return {boolean}
+ */
+function pageHasTitle(location) {
+    const pathName = location.pathname;
+    const pagesWithTitle = [
+        '/charts',
+    ];
+    return pagesWithTitle.indexOf(pathName) !== -1;
+}
 
 /**
  * This component returns button which toggle sidebar menu

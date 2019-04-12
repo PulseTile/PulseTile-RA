@@ -126,7 +126,9 @@ class ShowTemplate extends Component {
                                         {children}
                                     </SimpleShowLayout>
                                 </Show>
-                                {resourceUrl === "top3Things" && <EditButton redirectTo={changeViewType} />}
+                                {(resourceUrl === "top3Things" || resourceUrl === "patients") &&
+                                    <EditButton redirectTo={changeViewType} />
+                                }
                             </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>
