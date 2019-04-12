@@ -23,7 +23,7 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: "15%",
+        marginTop: "20%",
     },
     image: {
         width: "auto",

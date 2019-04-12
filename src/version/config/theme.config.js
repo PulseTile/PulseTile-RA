@@ -5,13 +5,8 @@ import ThemeTopbar from "../common/Topbar";
 import PatientsList from "../../core/pages/PatientsList";
 
 export const themeShortMenu = [
-    { url: '/summary', label: 'Patient Summary' },
-    { url: '/problems', label: 'Problems / Issues' },
-    { url: '/medications', label: 'Medications' },
-    { url: '/vaccinations', label: 'Vaccinations' },
-    { url: '/allergies', label: 'Allergies' },
-    { url: '/contacts', label: 'Contacts' },
-    { url: '/top3Things', label: 'TopThreeThings' },
+    { url: '/', label: 'Patient Summary' },
+    { url: '/patients', label: 'Patients' },
 ];
 
 export const themeFullMenu = [
