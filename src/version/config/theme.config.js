@@ -1,4 +1,4 @@
-import backgroundImage from "../../version/images/Artboard.png";
+import backgroundImage from "../../version/images/containerBackground.png";
 import cardBackgroundImage from "../../version/images/blue-ring-01.png";
 import tableHeaderImage from "../../version/images/table-header.png";
 

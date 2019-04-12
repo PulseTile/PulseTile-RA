@@ -13,17 +13,22 @@ import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
 
-const styles = {
+const styles = theme => ({
+    content: {
+        width: "100%",
+        height: "100%",
+        backgroundImage: theme.patientSummaryPanel.container.background,
+    },
     imageBlock: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: "5%",
+        marginTop: "15%",
     },
     image: {
         width: "auto",
     },
-};
+});
 
 /**
  * This component returns block with Patients list
@@ -51,6 +56,7 @@ class PatientsList extends Component {
         const { userSearch, classes } = this.props;
         if (!userSearch) {
             return (
+                <div className={classes.content}>
                 <div className={classes.imageBlock} >
                     <CardMedia
                         className={classes.image}
@@ -59,6 +65,7 @@ class PatientsList extends Component {
                         image={image}
                         title="ReSPECT"
                     />
+                </div>
                 </div>
             )
         }
