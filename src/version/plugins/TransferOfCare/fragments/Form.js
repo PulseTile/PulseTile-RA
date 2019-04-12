@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { DisabledInput, TextInput, DateInput, LongTextInput } from "react-admin";
 import moment from "moment";
 import DatePicker from "react-datepicker";
@@ -65,6 +66,7 @@ class TransferOfCareInputs extends Component {
     state = {
         transferDateTime: null,
         recordType: null,
+        recordsArray: [],
     };
 
     changeDate = value => {
@@ -80,11 +82,64 @@ class TransferOfCareInputs extends Component {
         );
     };
 
+    selectItem = e => {
+        const { recordsList, recordType } = this.props;
+        const { recordsArray } = this.state;
+        let currentItem = null;
+        const value = e.target.value;
+        for (let i = 0, n = recordsList.length; i < n; i++) {
+            let item = recordsList[i];
+            if (item.sourceId === value) {
+                currentItem = item;
+                break;
+            }
+        }
+        if (currentItem) {
+            recordsArray.push({
+                name: this.getSelectorValue(currentItem, recordType),
+                type: recordType,
+                typeTitle: recordType,
+                date: this.getDataValue(currentItem, recordType),
+                source: get(currentItem, 'source', null),
+                sourceId: value,
+            });
+        }
+
+        this.setState({
+            recordsArray: recordsArray,
+        });
+    };
+
+    getSelectorValue = (item, recordType) => {
+        let result = '';
+        if (recordType === 'problems') {
+            result = get(item, 'problem', null);
+        } else if (recordType === 'medications') {
+            result = get(item, 'name', null) + ' ' + get(item, 'doseAmount', null);
+        } else if (recordType === 'referrals') {
+            result = get(item, 'referralFrom', null) + ' ' + get(item, 'referralTo', null);
+        }
+        return result;
+    };
+
+    getDataValue = (item, recordType) => {
+        let result = '';
+        if (recordType === 'problems') {
+            result = moment(get(item, 'dateOfOnset', null)).format('DD-MM-YYYY');
+        } else if (recordType === 'medications') {
+            result = moment(get(item, 'dateCreated', null)).format('DD-MM-YYYY');
+        } else if (recordType === 'referrals') {
+            result = moment(get(item, 'dateOfReferral', null)).format('DD-MM-YYYY');
+        }
+        return result;
+    };
+
     submitForm = data => {
         const { createNewItem } = this.props;
-        const { transferDateTime } = this.state;
+        const { transferDateTime, recordsArray } = this.state;
         const additionalData = {
             transferDateTime: transferDateTime,
+            records: recordsArray,
             dateCreated: moment().format('DD-MMM-YYYY'),
             userId: patientID,
         };
@@ -95,6 +150,9 @@ class TransferOfCareInputs extends Component {
     render() {
         const { classes } = this.props;
         const { transferDateTime, recordType } = this.state;
+
+        console.log('--------------> ', this.state.recordsArray );
+
         return (
             <React.Fragment>
                 <LocalForm model="transferOfCare" onSubmit={values => this.submitForm(values)}>
@@ -144,7 +202,7 @@ class TransferOfCareInputs extends Component {
                     </FormGroup>
 
                     { recordType
-                        ? <RecordsSelector classes={classes} recordType={recordType} />
+                        ? <RecordsSelector classes={classes} recordType={recordType} selectItem={this.selectItem} />
                         : <Typography className={classes.text}>No records added</Typography>
                     }
 

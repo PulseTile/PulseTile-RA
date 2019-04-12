@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import get from "lodash/get";
 import { connect } from 'react-redux';
-import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -43,35 +42,6 @@ const styles = theme => ({
 
 class RecordsSelector extends Component {
 
-    state = {
-        recordsArray: [],
-    };
-
-    selectItem = e => {
-        const { recordsList, recordType } = this.props;
-        const { recordsArray } = this.state;
-        let currentItem = null;
-        for (let i = 0, n = recordsList.length; i < n; i++) {
-            let item = recordsList[i];
-            if (item.sourceId === e.target.value) {
-                currentItem = item;
-                break;
-            }
-        }
-        if (currentItem) {
-            recordsArray.push({
-                name: this.getSelectorValue(currentItem, recordType),
-                type: recordType,
-                date: this.getDataValue(currentItem, recordType),
-                source: get(currentItem, 'source', null),
-            })
-        }
-
-        this.setState({
-            recordsArray: recordsArray,
-        });
-    };
-
     getSelectorValue = (item, recordType) => {
         let result = '';
         if (recordType === 'problems') {
@@ -84,29 +54,14 @@ class RecordsSelector extends Component {
         return result;
     };
 
-    getDataValue = (item, recordType) => {
-        let result = '';
-        if (recordType === 'problems') {
-            result = moment(get(item, 'dateOfOnset', null)).format('DD-MM-YYYY');
-        } else if (recordType === 'medications') {
-            result = moment(get(item, 'dateCreated', null)).format('DD-MM-YYYY');
-        } else if (recordType === 'referrals') {
-            result = moment(get(item, 'dateOfReferral', null)).format('DD-MM-YYYY');
-        }
-        return result;
-    };
-
     render() {
-        const { classes, recordType, recordsList } = this.props;
+        const { classes, recordType, recordsList, selectItem } = this.props;
         const { recordsArray } = this.state;
-
-        console.log('recordsArray', recordsArray);
-
         return (
             <React.Fragment>
                 <FormGroup className={classes.formGroup}>
                     <FormLabel className={classes.formLabel}>Records</FormLabel>
-                    <select className={classes.formSelect} onChange={e => this.selectItem(e)} required>
+                    <select className={classes.formSelect} onChange={e => selectItem(e)} required>
                         <option value=''>-- Select to --</option>
                         { recordsList && recordsList.map((item, key) => {
                             return (
