@@ -18,6 +18,8 @@ const styles = theme => ({
         width: "100%",
         height: "100%",
         backgroundImage: theme.patientSummaryPanel.container.background,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
     },
     imageBlock: {
         display: "flex",

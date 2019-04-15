@@ -25,6 +25,8 @@ const styles = theme => ({
     },
     media: {
         backgroundColor: theme.palette.mainColor,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
     },
     container: {
         width: "100%",
