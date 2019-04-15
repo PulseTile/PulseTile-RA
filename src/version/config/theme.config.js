@@ -15,7 +15,7 @@ export const themeFullMenu = [
     { url: '/vaccinations', label: 'Vaccinations' },
     { url: '/allergies', label: 'Allergies' },
     { url: '/contacts', label: 'Contacts' },
-    { url: '/top3Things', label: 'TopThreeThings' },
+    { url: '/top3Things', label: 'About Me' },
 ];
 
 export const themeCommonElements = {

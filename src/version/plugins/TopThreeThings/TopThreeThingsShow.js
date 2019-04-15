@@ -19,7 +19,7 @@ const styles = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const TopThreeThingsShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Top Three Things" {...rest}>
+    <ShowTemplate pageTitle="About Me" {...rest}>
         <TextField className={classes.labelBlock}  source="name1" label="Issue #1" />
         <TextField className={classes.labelBlock}  source="description1" label="Description #1" />
         <TextField className={classes.labelBlock}  source="name2" label="Issue #2" />

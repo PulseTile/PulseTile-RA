@@ -21,7 +21,7 @@ const TopThreeThingsList = ({ classes, ...rest }) => (
       edit={TopThreeThingsEdit}
       show={TopThreeThingsShow}
       resourceUrl="top3Things"
-      title="Top Three Things"
+      title="About Me"
       {...rest}
     >
         <DateField source="dateCreated" label="Date created"  />

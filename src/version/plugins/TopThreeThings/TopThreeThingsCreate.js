@@ -11,7 +11,7 @@ import Inputs from "./fragments/Inputs";
  * @param {shape} rest
  */
 const TopThreeThingsCreate = ({ classes, ...rest }) => (
-    <CreateTemplate blockTitle="Top Three Things" {...rest}>
+    <CreateTemplate blockTitle="About Me" {...rest}>
         <Inputs />
     </CreateTemplate>
 );
