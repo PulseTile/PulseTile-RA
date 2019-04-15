@@ -34,9 +34,6 @@ const styles = theme => ({
     homeButton : {
         color: "white",
     },
-    image: {
-        width: "auto",
-    },
     mainLogoItem: {
         display: "inline-flex",
         justifyContent: "center",
@@ -109,7 +106,6 @@ const TopPart = ({ classes, logout, location }) => {
                         className={classes.image}
                         component="img"
                         alt="Pulse Tile"
-                        height="38px"
                         image={headerLogo}
                         title="Pulse Tile"
                     />
