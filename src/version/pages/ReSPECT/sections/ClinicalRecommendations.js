@@ -27,8 +27,7 @@ import { cprVariants, FOCUS_LEFT, FOCUS_RIGHT } from "../fragments/cprVariants";
 const FORM_FIELDS_NUMBER = 3;
 
 const defaultValues = {
-    clinicalSignatureFirst: localStorage.getItem('username'),
-    clinicalSignatureSecond: localStorage.getItem('username'),
+    clinicalSignature: localStorage.getItem('username'),
     dateCompleted: moment().format('DD-MMM-YYYY'),
     author: localStorage.getItem('username'),
 };
