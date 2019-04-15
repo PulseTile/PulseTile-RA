@@ -24,7 +24,6 @@ import formStyles from "../fragments/formStyles";
 const FORM_FIELDS_NUMBER = 4;
 
 const defaultValues = {
-    dateCompleted: moment().format('DD-MMM-YYYY'),
     author: localStorage.getItem('username'),
 };
 
@@ -32,14 +31,13 @@ class Involvement extends Component {
 
     state = {
         isMainPanel: true,
-        variant: getStateData(this.props, 'involvement.nonSelectABCreason'),
+        variant: getStateData(this.props, 'involvement.involvementCode'),
     };
 
     submitForm = data => {
         const { variant } = this.state;
         const additionalData = {
-            nonSelectABCreason: variant,
-            dateCompleted: moment().format('DD-MMM-YYYY'),
+            involvementCode: variant,
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
@@ -69,7 +67,7 @@ class Involvement extends Component {
                     <LocalForm model="involvement" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
-                            <RadioGroup name="nonSelectABCreason" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
+                            <RadioGroup name="involvementCode" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     disabled={isVersionInfo}
@@ -111,8 +109,8 @@ class Involvement extends Component {
                             <FormGroup className={classes.formGroup}>
                                 <Control.textarea
                                     className={classes.formTextarea}
-                                    model="involvement.documentExplanation"
-                                    defaultValue={filledValues.documentExplanation}
+                                    model="involvement.notSelectABCReason"
+                                    defaultValue={filledValues.notSelectABCReason}
                                     disabled={isVersionInfo}
                                 />
                                 <FormHelperText>Document full explanation in the clinical record</FormHelperText>
@@ -128,19 +126,9 @@ class Involvement extends Component {
                             />
                             <FormHelperText>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
                         </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text
-                                className={classes.formInput}
-                                model="involvement.dateCompleted"
-                                defaultValue={filledValues.dateCompleted}
-                                disabled
-                            />
-                        </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="involvement" filledValues={filledValues} />
             </React.Fragment>
         );
     }

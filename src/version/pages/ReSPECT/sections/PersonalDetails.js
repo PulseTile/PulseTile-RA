@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
-import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -35,7 +34,6 @@ class PersonalDetails extends Component {
         const additionalData = {
             birthDate: birthDate,
             status: getSectionStatus(data, FORM_FIELDS_NUMBER),
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         const versionData = getVersionData('personalDetails', formData, sectionsInfo);
@@ -94,7 +92,6 @@ class PersonalDetails extends Component {
             postCode: patientInfo.postCode,
             nhsNumber: localStorage.getItem('userId'),
             author: localStorage.getItem('username'),
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
 
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, personalDetails, 'personalDetails', isVersionInfo, defaultValues);
@@ -200,22 +197,12 @@ class PersonalDetails extends Component {
                                 disabled
                             />
                         </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text
-                                className={classes.formInput}
-                                model="personalDetails.dateCompleted"
-                                defaultValue={filledValues.dateCompleted}
-                                disabled
-                            />
-                        </FormGroup>
                         {
                             !isVersionInfo &&
                                 <SectionToolbar onRowClick={onRowClick} />
                         }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="personalDetails" filledValues={filledValues} />
             </React.Fragment>
         );
     }

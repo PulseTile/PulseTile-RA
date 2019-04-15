@@ -119,7 +119,6 @@ class EmergencyView extends Component {
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="personalDetails" filledValues={filledValues} />
             </React.Fragment>
         );
     }

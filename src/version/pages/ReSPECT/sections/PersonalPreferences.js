@@ -22,7 +22,6 @@ import { PREFERENCE_LEFT, PREFERENCE_RIGHT } from "../fragments/cprVariants";
 const FORM_FIELDS_NUMBER = 2;
 
 const defaultValues = {
-    dateCompleted: moment().format('DD-MMM-YYYY'),
     author: localStorage.getItem('username'),
 };
 
@@ -38,7 +37,6 @@ class PersonalPreferences extends Component {
         const additionalData = {
             preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? PREFERENCE_RIGHT : PREFERENCE_LEFT,
             status: getSectionStatus(data, FORM_FIELDS_NUMBER),
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addPersonalPreferences(formData);
@@ -84,19 +82,9 @@ class PersonalPreferences extends Component {
                             />
                             <FormHelperText>Optional</FormHelperText>
                         </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text
-                                className={classes.formInput}
-                                model="personalPreferences.dateCompleted"
-                                defaultValue={filledValues.dateCompleted}
-                                disabled
-                            />
-                        </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="personalPreferences" filledValues={filledValues} />
             </React.Fragment>
         );
     }

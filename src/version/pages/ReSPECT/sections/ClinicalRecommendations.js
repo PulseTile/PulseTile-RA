@@ -3,6 +3,8 @@ import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -42,6 +44,7 @@ class ClinicalRecommendations extends Component {
         focusValue: getInitialRangeLine(this.props, 'clinicalRecommendations.focusValue', FOCUS_LEFT, FOCUS_RIGHT, 50),
         firstSignature: null,
         secondSignature: null,
+        dateCompleted: null,
     };
 
     submitForm = data => {
@@ -49,7 +52,6 @@ class ClinicalRecommendations extends Component {
         const additionalData = {
             cprValue: cprValue,
             focusValue: get(focusValue, '[0]', 0) >= 50 ? FOCUS_RIGHT : FOCUS_LEFT,
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
@@ -82,9 +84,15 @@ class ClinicalRecommendations extends Component {
         });
     };
 
+    changeDateCompleted = value => {
+        this.setState({
+            dateCompleted: value,
+        })
+    };
+
     render() {
         const { classes, sectionsInfo, latestVersionInfo, clinicalRecommendations, title, onRowClick, isVersionInfo } = this.props;
-        const { isMainPanel, focusValue, cprValue } = this.state;
+        const { isMainPanel, focusValue, cprValue, dateCompleted } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalRecommendations, 'clinicalRecommendations', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
@@ -139,20 +147,19 @@ class ClinicalRecommendations extends Component {
                                 disabled={isVersionInfo}
                             />
                         </FormGroup>
-
                         <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text
+                            <FormLabel className={classes.formLabel}>Date completed</FormLabel>
+                            <DatePicker
                                 className={classes.formInput}
-                                model="clinicalRecommendations.dateDecision"
-                                defaultValue={filledValues.dateCompleted}
-                                disabled
+                                selected={dateCompleted}
+                                onChange={value => this.changeDateCompleted(value)}
+                                todayButton="Today"
                             />
                         </FormGroup>
+
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="clinicalRecommendations" filledValues={filledValues} />
             </React.Fragment>
         );
     }

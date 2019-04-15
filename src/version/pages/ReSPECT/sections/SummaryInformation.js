@@ -19,7 +19,6 @@ import formStyles from "../fragments/formStyles";
 const FORM_FIELDS_NUMBER = 1;
 
 const defaultValues = {
-    dateCompleted: moment().format('DD-MMM-YYYY'),
     author: localStorage.getItem('username'),
 };
 
@@ -32,7 +31,6 @@ class SummaryInformation extends Component {
     submitForm = data => {
         const additionalData = {
             status: getSectionStatus(data, FORM_FIELDS_NUMBER),
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addSummaryInformation(formData);
@@ -76,19 +74,9 @@ class SummaryInformation extends Component {
                                 Details of other relevant planning documents and where to find them (e.g. Advance Decision to Refuse Treatment, Advance Care Plan). Also include known wishes about organ donation.
                             </FormHelperText>
                         </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text
-                                className={classes.formInput}
-                                model="summaryInformation.dateCompleted"
-                                defaultValue={filledValues.dateCompleted}
-                                disabled
-                            />
-                        </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="summaryInformation" filledValues={filledValues} />
             </React.Fragment>
         );
     }

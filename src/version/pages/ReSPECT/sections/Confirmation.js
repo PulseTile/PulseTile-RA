@@ -22,7 +22,6 @@ import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
     clinicalSignature: localStorage.getItem('username'),
-    dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
     author: localStorage.getItem('username'),
 };
@@ -39,6 +38,7 @@ class Confirmation extends Component {
         isMainPanel: true,
         reviewDate: null,
         rowsArray: getStateData(this.props, 'confirmation.confirmationsArray', []),
+        dateCompleted: null,
     };
 
     attachDispatch(dispatch) {
@@ -50,7 +50,6 @@ class Confirmation extends Component {
         const additionalData = {
             confirmationsArray: rowsArray,
             status: (rowsArray.length > 0) ? STATUS_COMPLETED : STATUS_INCOMPLETE,
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addConfirmations(formData);
@@ -90,9 +89,15 @@ class Confirmation extends Component {
         });
     };
 
+    changeDateCompleted = value => {
+        this.setState({
+            dateCompleted: value,
+        })
+    };
+
     render() {
         const { classes, sectionsInfo, latestVersionInfo, confirmation, title, onRowClick, isVersionInfo } = this.props;
-        const { isMainPanel, rowsArray, reviewDate } = this.state;
+        const { isMainPanel, rowsArray, reviewDate, dateCompleted } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, confirmation, 'confirmation', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
@@ -142,13 +147,17 @@ class Confirmation extends Component {
                     }
                     <LocalForm model="confirmation" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.mainFormLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="confirmation.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
+                            <FormLabel className={classes.formLabel}>Date completed</FormLabel>
+                            <DatePicker
+                                className={classes.formInput}
+                                selected={dateCompleted}
+                                onChange={value => this.changeDateCompleted(value)}
+                                todayButton="Today"
+                            />
                         </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="confirmation" filledValues={filledValues} />
             </React.Fragment>
         );
     }

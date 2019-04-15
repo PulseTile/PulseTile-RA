@@ -22,7 +22,6 @@ import formStyles from "../fragments/formStyles";
 const FORM_FIELDS_NUMBER = 2;
 
 const defaultValues = {
-    dateCompleted: moment().format('DD-MMM-YYYY'),
     author: localStorage.getItem('username'),
 };
 
@@ -39,7 +38,6 @@ class CapacityAndRepresentation extends Component {
         const additionalData = {
             capacityFirst: capacityFirst,
             LegalProxy: LegalProxy,
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
@@ -114,14 +112,9 @@ class CapacityAndRepresentation extends Component {
                                 />
                             </RadioGroup>
                         </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="capacityAndRepresentation.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
-                        </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="capacityAndRepresentation" filledValues={filledValues} />
             </React.Fragment>
         );
     }

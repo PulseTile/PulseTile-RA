@@ -18,7 +18,6 @@ import { getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
-    dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
     author: localStorage.getItem('username'),
 };
@@ -52,7 +51,6 @@ class EmergencyContacts extends Component {
         const additionalData = {
             contactsArray: rowsArray,
             status: (rowsArray.length > 0) ? STATUS_COMPLETED : STATUS_INCOMPLETE,
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addEmergencyContacts(formData);
@@ -119,14 +117,9 @@ class EmergencyContacts extends Component {
                             <FormLabel className={classes.formLabel}>Other details</FormLabel>
                             <Control.textarea className={classes.formTextarea} model="emergencyContacts.details" defaultValue={filledValues.details}  />
                         </FormGroup>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.mainFormLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="emergencyContacts.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
-                        </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="emergencyContacts" filledValues={filledValues} />
             </React.Fragment>
         );
     }

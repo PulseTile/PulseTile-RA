@@ -24,7 +24,6 @@ import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
     clinicalSignature: localStorage.getItem('username'),
-    dateCompleted: moment().format('DD-MMM-YYYY'),
     nhsNumber: localStorage.getItem('userId'),
     author: localStorage.getItem('username'),
 };
@@ -52,7 +51,6 @@ class CliniciansSignatures extends Component {
         const additionalData = {
             signaturesArray: rowsArray,
             status: (rowsArray.length > 0) ? STATUS_COMPLETED : STATUS_INCOMPLETE,
-            dateCompleted: moment().format('DD-MMM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addCliniciansSignatures(formData);
@@ -167,20 +165,10 @@ class CliniciansSignatures extends Component {
                         </LocalForm>
                     }
                     <LocalForm  model="clinicalSignatures" onSubmit={values => this.submitForm(values)}>
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.mainFormLabel}>Date Completed</FormLabel>
-                            <Control.text
-                                className={classes.formInput}
-                                model="clinicalSignatures.dateCompleted"
-                                defaultValue={filledValues.dateCompleted}
-                                disabled
-                            />
-                        </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
 
                 </MainFormBlock>
-                <SystemInformationBlock classes={classes} modelName="clinicalSignatures" filledValues={filledValues} />
             </React.Fragment>
         );
     }
