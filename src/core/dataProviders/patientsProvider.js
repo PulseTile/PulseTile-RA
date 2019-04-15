@@ -163,7 +163,16 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             };
 
         case UPDATE:
-            return params;
+            let newPrefix = get(params, 'data.prefix', null);
+            let newFirstName = get(params, 'data.firstName', null);
+            let newLastName = get(params, 'data.lastName', null);
+            let newData = params.data;
+            newData.name = [newPrefix, newFirstName, newLastName].join(' ');
+            return {
+                id: get(params, 'id', null),
+                data: newData,
+                previousData: get(params, 'previousData', {})
+            };
 
         case CREATE:
             const dataFromRequest = get(params, 'data', null);

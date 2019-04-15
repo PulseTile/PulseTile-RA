@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import SettingsIcon from '@material-ui/icons/Settings';
 import CleanIcon from '@material-ui/icons/HighlightOff';
 import SearchIcon from '@material-ui/icons/Search';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -28,12 +27,13 @@ const styles = theme => ({
         height: "95%",
         paddingTop: 0,
         paddingBottom: 0,
-        paddingLeft: 15,
+        paddingLeft: 20,
+        borderRadius: 18,
         border: 0,
         backgroundColor: theme.palette.disabledColor,
     },
     icon: {
-        color: "#000",
+        color: theme.palette.fontColor,
     },
 });
 
@@ -67,15 +67,6 @@ class UserSearch extends Component {
         const { searchText } = this.state;
         return (
             <div className={classes.mainBlock}>
-                <Tooltip disableHoverListener={true}>
-                    <IconButton
-                        className={classes.icon}
-                        aria-haspopup="true"
-                        color="inherit"
-                    >
-                        <SettingsIcon />
-                    </IconButton>
-                </Tooltip>
                 <input
                     className={classes.input}
                     type="text"
@@ -85,16 +76,16 @@ class UserSearch extends Component {
                     onChange={e => this.handleChange(e)}
                 />
                 { userSearch &&
-                    <Tooltip title="Clean Search" disableHoverListener={true}>
-                        <IconButton
-                            className={classes.icon}
-                            aria-haspopup="true"
-                            color="inherit"
-                            onClick={() => this.onRemoveClick()}
-                        >
-                            <CleanIcon />
-                        </IconButton>
-                    </Tooltip>
+                <Tooltip title="Clean Search" disableHoverListener={true}>
+                    <IconButton
+                        className={classes.icon}
+                        aria-haspopup="true"
+                        color="inherit"
+                        onClick={() => this.onRemoveClick()}
+                    >
+                        <CleanIcon />
+                    </IconButton>
+                </Tooltip>
                 }
                 <Tooltip title="Patients Search" disableHoverListener={true}>
                     <IconButton

@@ -17,6 +17,9 @@ const styles = theme => ({
     content: {
         width: "100%",
         height: "100%",
+        backgroundImage: theme.patientSummaryPanel.container.background,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
     },
     imageBlock: {
         display: "flex",
@@ -86,8 +89,8 @@ class PatientsList extends Component {
             >
                 <TextField source="name" label="Name" />
                 <TextField source="address" label="Address" />
-                <DateField source="birthDate" label="Born (age)" />
-                <TextField source="nhsNumber" label="CHI No." />
+                <DateField source="birthDate" label="Born" />
+                <TextField source="nhsNumber" label="NHS No." />
                 <ViewButton viewAction={this.redirectToSummary} />
             </ListTemplate>
         )
