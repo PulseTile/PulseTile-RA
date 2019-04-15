@@ -34,6 +34,9 @@ const styles = theme => ({
     homeButton : {
         color: "white",
     },
+    image: {
+        width: "auto",
+    },
     mainLogoItem: {
         display: "inline-flex",
         justifyContent: "center",
