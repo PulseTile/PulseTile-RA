@@ -4,14 +4,13 @@ import { takeEvery, put } from 'redux-saga/effects';
 import { token, domainName } from "../token";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
-const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
 let responseInfo = {};
 
 export default function createCustomSagas(actionName, actionType, pluginName) {
     return takeEvery(actionName.REQUEST, function*(action) {
-        let url = domainName + '/api/patients/' + patientID + '/synopsis/' + pluginName;
+        let url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/synopsis/' + pluginName;
         if (pluginName === 'top3Things') {
-            url = domainName + '/api/patients/' + patientID + '/synopsis/' + pluginName + '/latest';
+            url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/synopsis/' + pluginName + '/latest';
         }
         let options = {};
         options.method = "GET";
