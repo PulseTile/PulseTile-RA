@@ -5,11 +5,10 @@ import { domainName } from "../token";
 import { DEMOGRAPHICS_ACTION, demographicsAction } from "../actions/demographicsAction";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
-const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
 let responseInfo = {};
 
 export default takeEvery(DEMOGRAPHICS_ACTION.REQUEST, function*(action) {
-    const url = domainName + '/api/demographics/' + patientID;
+    const url = domainName + '/api/demographics/' + localStorage.getItem('patientId');
     let options = {};
     options.method = "GET";
     if (!options.headers) {
