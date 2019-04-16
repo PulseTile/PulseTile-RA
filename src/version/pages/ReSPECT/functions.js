@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import moment from "moment";
 
-import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER } from "./statuses";
+import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER, DATE_FORMAT } from "./statuses";
 import sections from "./sections";
 
 export function getAuthorName() {
@@ -163,7 +163,7 @@ export function getVersionData(sectionName, formData, otherSectionsInfo) {
                 }),
         },
         status: getVersionStatus(otherSectionsInfo),
-        dateCompleted: moment().format('DD-MMM-YYYY'),
+        dateCompleted: moment().format(DATE_FORMAT),
         author: localStorage.getItem('username'),
     }
 }

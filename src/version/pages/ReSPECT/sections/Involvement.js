@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
@@ -13,15 +12,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
 import { involvementAction } from "../../../actions/ReSPECT/involvenentAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import InsertedRadioButtonGroup from "../fragments/InsertedRadioButtonGroup";
-import { TOTAL_ROWS_NUMBER } from "../statuses";
+import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
 import { getSectionStatus, getStateData, getFilledValues } from "../functions";
 import formStyles from "../fragments/formStyles";
 
-const FORM_FIELDS_NUMBER = 4;
+const FORM_FIELDS_NUMBER = 2;
 
 const defaultValues = {
     author: localStorage.getItem('username'),
@@ -38,6 +36,7 @@ class Involvement extends Component {
         const { variant } = this.state;
         const additionalData = {
             involvementCode: variant,
+            dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);

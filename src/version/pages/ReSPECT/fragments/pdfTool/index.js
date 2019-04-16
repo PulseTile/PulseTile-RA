@@ -10,6 +10,7 @@ import page1 from "./page1";
 import page2 from "./page2";
 
 import { FOCUS_LEFT, FOCUS_RIGHT } from "../../fragments/cprVariants";
+import { DATE_FORMAT } from "../../statuses";
 
 function address(obj){
     let arr = [];
@@ -45,7 +46,7 @@ function address(obj){
 
 
 function getDDMMMYYYY(date){
-    return moment(date).isValid() ? moment(date).format('DD-MMM-YYYY') : null;
+    return moment(date).isValid() ? moment(date).format(DATE_FORMAT) : null;
 }
 
 function getClinicalRecommendations(obj){

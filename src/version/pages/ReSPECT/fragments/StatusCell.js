@@ -16,8 +16,8 @@ const styles = {
     },
 };
 
-const StatusCell = ({ classes, item, currentRow, status  }) => {
-    if (item.id === currentRow) {
+const StatusCell = ({ classes, item, currentRow, status, isVersionInfo }) => {
+    if (!isVersionInfo && item.id === currentRow) {
         return (
             <span className={classes.tableCellInpogress}>{STATUS_EDITING}</span>
         );

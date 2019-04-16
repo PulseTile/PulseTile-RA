@@ -41,7 +41,7 @@ class TableBodyBlock extends Component {
     };
 
     render() {
-        const { classes, sections, onRowClick, currentRow, sectionsInfo } = this.props;
+        const { classes, sections, onRowClick, currentRow, sectionsInfo, isVersionInfo } = this.props;
         return (
             <TableBody>
                 {
@@ -55,7 +55,7 @@ class TableBodyBlock extends Component {
                                     <span>{item.section}</span>
                                 </TableCell>
                                 <TableCell align="right">
-                                     <StatusCell item={item} currentRow={currentRow} status={status} />
+                                     <StatusCell item={item} isVersionInfo={isVersionInfo} currentRow={currentRow} status={status} />
                                 </TableCell>
                                 <TableCell align="right">
                                     <span>{dateCompleted}</span>

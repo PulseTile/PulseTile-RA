@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control, actions } from 'react-redux-form';
 import moment from "moment";
@@ -12,15 +11,14 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Typography from '@material-ui/core/Typography';
 
 import { clinicalSignaturesAction } from "../../../actions/ReSPECT/clinicalSignaturesAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
-import Signature from "../fragments/Signature";
-import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED } from "../statuses";
+import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT } from "../statuses";
 import { getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
+import WarningMessage from "../fragments/WarningMessage";
 
 const defaultValues = {
     clinicalSignature: localStorage.getItem('username'),
@@ -51,6 +49,7 @@ class CliniciansSignatures extends Component {
         const additionalData = {
             signaturesArray: rowsArray,
             status: (rowsArray.length > 0) ? STATUS_COMPLETED : STATUS_INCOMPLETE,
+            dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addCliniciansSignatures(formData);
@@ -97,6 +96,7 @@ class CliniciansSignatures extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }

@@ -35,12 +35,12 @@ const styles = theme => ({
 const AddNewButton = ({ classes }) => {
     return (
         <Toolbar>
-        <Tooltip title="Add new">
-            <IconButton type="submit" className={classes.addNewButton}>
-                Add new
-                <AddIcon />
-            </IconButton>
-        </Tooltip>
+            <Tooltip title="Add new" disableHoverListener={true}>
+                <IconButton type="submit" className={classes.addNewButton}>
+                    Add new
+                    <AddIcon />
+                </IconButton>
+            </Tooltip>
         </Toolbar>
     );
 };

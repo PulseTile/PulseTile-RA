@@ -13,6 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { modalOpenAction } from "../../../../actions/ReSPECT/modalOpenAction";
 import ModalWindow from "./ModalWindow";
 import { getAuthorName } from "../../functions";
+import { DATE_FORMAT } from "../../statuses";
 
 const styles = theme => ({
     rowInProgress: {
@@ -50,7 +51,7 @@ class NewVersionRow extends Component {
                         <Typography>{versionsNumber}</Typography>
                     </TableCell>
                     <TableCell scope="row" padding="none">
-                        <Typography>{moment().format('DD-MMM-YYYY')}</Typography>
+                        <Typography>{moment().format(DATE_FORMAT)}</Typography>
                     </TableCell>
                     <TableCell scope="row" padding="none">
                         <Typography>{moment().format('HH:mm')}</Typography>

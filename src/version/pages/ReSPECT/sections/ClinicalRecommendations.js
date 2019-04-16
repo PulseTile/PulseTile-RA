@@ -15,14 +15,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
 import { clinicalRecommendationsAction } from "../../../actions/ReSPECT/clinicalRecommendationsAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
-import { TOTAL_ROWS_NUMBER } from "../statuses";
+import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
-import Signature from "../fragments/Signature";
 import formStyles from "../fragments/formStyles";
 import { cprVariants, FOCUS_LEFT, FOCUS_RIGHT } from "../fragments/cprVariants";
 
@@ -30,11 +28,9 @@ const FORM_FIELDS_NUMBER = 3;
 
 const defaultValues = {
     clinicalSignature: localStorage.getItem('username'),
-    dateCompleted: moment().format('DD-MMM-YYYY'),
+    dateCompleted: moment().format(DATE_FORMAT),
     author: localStorage.getItem('username'),
 };
-
-
 
 class ClinicalRecommendations extends Component {
 
@@ -48,10 +44,11 @@ class ClinicalRecommendations extends Component {
     };
 
     submitForm = data => {
-        const { focusValue, cprValue } = this.state;
+        const { focusValue, cprValue, dateCompleted } = this.state;
         const additionalData = {
             cprValue: cprValue,
             focusValue: get(focusValue, '[0]', 0) >= 50 ? FOCUS_RIGHT : FOCUS_LEFT,
+            dateCompleted: moment(dateCompleted).format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
@@ -154,6 +151,7 @@ class ClinicalRecommendations extends Component {
                                 selected={dateCompleted}
                                 onChange={value => this.changeDateCompleted(value)}
                                 todayButton="Today"
+                                disabled={isVersionInfo}
                             />
                         </FormGroup>
 

@@ -8,7 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-import { STATUS_INCOMPLETE, STATUS_COMPLETED } from "../../statuses";
+import { STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT } from "../../statuses";
 import StatusCell from "../StatusCell";
 import NewVersionRow from "./NewVersionRow";
 
@@ -50,6 +50,7 @@ class TableBodyBlock extends Component {
                     versionsInfo && versionsInfo.reverse().map((item, key) => {
                         const status = get(item, 'status', STATUS_INCOMPLETE);
                         const dateCompleted = get(item, 'dateCompleted', '-');
+                        const timeCompleted = get(item, 'timeCompleted', '-');
                         const rowClassName = this.getRowClassName(status, item);
                         const version = versionsNumber--;
                         return (
@@ -58,10 +59,10 @@ class TableBodyBlock extends Component {
                                     <span>{version}</span>
                                 </TableCell>
                                 <TableCell scope="row" padding="none">
-                                    <span>{moment(dateCompleted).format('DD-MMM-YYYY')}</span>
+                                    <span>{dateCompleted}</span>
                                 </TableCell>
                                 <TableCell scope="row" padding="none">
-                                    <span>{moment(dateCompleted).format('HH:mm')}</span>
+                                    <span>{timeCompleted}</span>
                                 </TableCell>
                                 <TableCell align="right">
                                     <span>{status}</span>

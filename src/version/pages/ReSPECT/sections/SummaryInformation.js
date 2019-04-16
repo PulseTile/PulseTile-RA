@@ -9,12 +9,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { summaryInformationAction } from "../../../actions/ReSPECT/summaryInformationAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
-import { TOTAL_ROWS_NUMBER } from "../statuses";
+import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues } from "../functions";
 import formStyles from "../fragments/formStyles";
+import WarningMessage from "../fragments/WarningMessage";
 
 const FORM_FIELDS_NUMBER = 1;
 
@@ -31,6 +31,7 @@ class SummaryInformation extends Component {
     submitForm = data => {
         const additionalData = {
             status: getSectionStatus(data, FORM_FIELDS_NUMBER),
+            dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addSummaryInformation(formData);
@@ -51,6 +52,7 @@ class SummaryInformation extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <LocalForm  model="summaryInformation" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Summary of relevant information for this plan.</FormLabel>

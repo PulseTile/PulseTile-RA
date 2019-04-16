@@ -8,14 +8,14 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 
 import { emergencyContactsAction } from "../../../actions/ReSPECT/emergencyContactsAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
-import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE } from "../statuses";
+import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE, DATE_FORMAT } from "../statuses";
 import { getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
+import WarningMessage from "../fragments/WarningMessage";
 
 const defaultValues = {
     nhsNumber: localStorage.getItem('userId'),
@@ -51,6 +51,7 @@ class EmergencyContacts extends Component {
         const additionalData = {
             contactsArray: rowsArray,
             status: (rowsArray.length > 0) ? STATUS_COMPLETED : STATUS_INCOMPLETE,
+            dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addEmergencyContacts(formData);
@@ -81,6 +82,7 @@ class EmergencyContacts extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }
@@ -115,7 +117,12 @@ class EmergencyContacts extends Component {
                     <LocalForm  model="emergencyContacts" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Other details</FormLabel>
-                            <Control.textarea className={classes.formTextarea} model="emergencyContacts.details" defaultValue={filledValues.details}  />
+                            <Control.textarea
+                                className={classes.formTextarea}
+                                model="emergencyContacts.details"
+                                defaultValue={filledValues.details}
+                                disabled={isVersionInfo}
+                            />
                         </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>

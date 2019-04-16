@@ -58,14 +58,24 @@ export default theme => ({
     titleBlock: {
         paddingLeft: 25,
     },
+    firstTitle: {
+        marginTop: 20,
+        marginBottom: 20,
+    },
     secondTitle: {
-        fontSize: 20,
+        marginBottom: 20,
     },
     sectionLink: {
         color: theme.palette.mainColor,
         fontWeight: 800,
+        cursor: "pointer"
     },
     checkbox: {
         float: "left",
+    },
+    warningBlock: {
+        margin: 20,
+        border: `2px solid ${theme.palette.dangerColor}`,
+        padding: 10,
     }
 });

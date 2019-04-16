@@ -10,15 +10,14 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 
 import { confirmationAction } from "../../../actions/ReSPECT/confirmationAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
-import Signature from "../fragments/Signature";
-import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE } from "../statuses";
+import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE, DATE_FORMAT } from "../statuses";
 import { getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
+import WarningMessage from "../fragments/WarningMessage";
 
 const defaultValues = {
     clinicalSignature: localStorage.getItem('username'),
@@ -46,10 +45,11 @@ class Confirmation extends Component {
     }
 
     submitForm = data => {
-        const { rowsArray } = this.state;
+        const { rowsArray, dateCompleted } = this.state;
         const additionalData = {
             confirmationsArray: rowsArray,
             status: (rowsArray.length > 0) ? STATUS_COMPLETED : STATUS_INCOMPLETE,
+            dateCompleted: moment(dateCompleted).format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addConfirmations(formData);
@@ -102,6 +102,7 @@ class Confirmation extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }
@@ -153,6 +154,7 @@ class Confirmation extends Component {
                                 selected={dateCompleted}
                                 onChange={value => this.changeDateCompleted(value)}
                                 todayButton="Today"
+                                disabled={isVersionInfo}
                             />
                         </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }

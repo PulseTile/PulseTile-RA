@@ -10,14 +10,14 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { personalPreferencesAction } from "../../../actions/ReSPECT/personalPreferencesAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import RangeLine from "../fragments/RangeLine";
-import { TOTAL_ROWS_NUMBER } from "../statuses";
-import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine } from "../functions";
+import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
+import { getSectionStatus, getFilledValues, getInitialRangeLine } from "../functions";
 import formStyles from "../fragments/formStyles";
 import { PREFERENCE_LEFT, PREFERENCE_RIGHT } from "../fragments/cprVariants";
+import WarningMessage from "../fragments/WarningMessage";
 
 const FORM_FIELDS_NUMBER = 2;
 
@@ -36,9 +36,10 @@ class PersonalPreferences extends Component {
         const { preferencesValue } = this.state;
         const additionalData = {
             preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? PREFERENCE_RIGHT : PREFERENCE_LEFT,
-            status: getSectionStatus(data, FORM_FIELDS_NUMBER),
+            dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
+        formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
         this.props.addPersonalPreferences(formData);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
@@ -63,6 +64,7 @@ class PersonalPreferences extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <RangeLine
                         onChangeRange={this.setRangeInput}
                         sourceName={preferencesValue}

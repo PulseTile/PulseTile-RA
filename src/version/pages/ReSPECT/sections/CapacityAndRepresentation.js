@@ -11,13 +11,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
 import { capacityAndRepresentationAction } from "../../../actions/ReSPECT/capacityAndRepresentationAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import RadioButtonWithLink from "../fragments/RadioButtonWithLink";
-import { TOTAL_ROWS_NUMBER } from "../statuses";
+import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
+import WarningMessage from "../fragments/WarningMessage";
 
 const FORM_FIELDS_NUMBER = 2;
 
@@ -38,6 +38,7 @@ class CapacityAndRepresentation extends Component {
         const additionalData = {
             capacityFirst: capacityFirst,
             LegalProxy: LegalProxy,
+            dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
@@ -71,6 +72,7 @@ class CapacityAndRepresentation extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <LocalForm  model="capacityAndRepresentation" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Does the person have sufficient capacity to participate in making the recommendations on this plan?</FormLabel>

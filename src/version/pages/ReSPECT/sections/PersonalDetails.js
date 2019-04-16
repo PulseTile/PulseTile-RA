@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
+import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -12,12 +13,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { personalDetailsAction } from "../../../actions/ReSPECT/personalDetailsAction";
 import { versionsServerAction } from "../../../actions/ReSPECT/versionsServerAction";
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
-import { TOTAL_ROWS_NUMBER } from "../statuses";
+import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues, getVersionData } from "../functions";
 import formStyles from "../fragments/formStyles";
+import WarningMessage from "../fragments/WarningMessage";
 
 const FORM_FIELDS_NUMBER = 9;
 
@@ -34,6 +35,7 @@ class PersonalDetails extends Component {
         const additionalData = {
             birthDate: birthDate,
             status: getSectionStatus(data, FORM_FIELDS_NUMBER),
+            dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         const versionData = getVersionData('personalDetails', formData, sectionsInfo);
@@ -98,6 +100,7 @@ class PersonalDetails extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <LocalForm  model="personalDetails" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Preferred Name</FormLabel>

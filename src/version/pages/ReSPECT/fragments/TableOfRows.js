@@ -8,6 +8,8 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 
+import { DATE_FORMAT } from "../statuses";
+
 const styles = theme => ({
     tableList: {
         '& thead': {
@@ -50,7 +52,7 @@ const TableOfContacts = ({ classes, headers, rowsArray }) => {
                             {headers.map((headerItem, key) => {
                                 let label = rowItem[headerItem.id];
                                 if (headerItem.isDate) {
-                                    label = moment(label).format('DD-MMM-YYYY');
+                                    label = moment(label).format(DATE_FORMAT);
                                 } else if (headerItem.isBinary) {
                                     label = rowItem[headerItem.id] ? 'Yes' : 'No';
                                 }

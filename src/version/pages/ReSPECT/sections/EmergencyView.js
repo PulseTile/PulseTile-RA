@@ -5,8 +5,7 @@ import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormLabel from '@material-ui/core/FormLabel';
+import Typography from '@material-ui/core/Typography';
 
 import { personalDetailsAction } from "../../../actions/ReSPECT/personalDetailsAction";
 import { summaryInformationAction } from "../../../actions/ReSPECT/summaryInformationAction";
@@ -20,14 +19,14 @@ import { confirmationAction } from "../../../actions/ReSPECT/confirmationAction"
 import { emergencyContactsAction } from "../../../actions/ReSPECT/emergencyContactsAction";
 import { versionsAction } from "../../../actions/ReSPECT/versionsAction";
 
-import SystemInformationBlock from "../fragments/SystemInformationBlock";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { getAuthorName } from "../functions";
 import sections from "../sections";
-import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER } from "../statuses";
+import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER, DATE_FORMAT, TIME_FORMAT } from "../statuses";
 import formStyles from "../fragments/formStyles";
 import { cprVariants } from "../fragments/cprVariants";
+import WarningMessage from "../fragments/WarningMessage";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -46,9 +45,9 @@ class EmergencyView extends Component {
         });
     };
 
-    redirectToSection = e => {
+    redirectToSection = (e, sectionNumber) => {
         e.preventDefault();
-        this.props.onRowClick(4);
+        this.props.onRowClick(sectionNumber);
     };
 
     getVersionStatus = sectionsInfo => {
@@ -85,13 +84,14 @@ class EmergencyView extends Component {
         const { sectionsInfo, versionsInfo, toggleMode, createNewVersion } = this.props;
         sectionsInfo.emergencyView = {
             status: STATUS_COMPLETED,
-            dateCompleted: moment().format('DD-MMM-YYYY HH:mm'),
+            dateCompleted: moment().format(DATE_FORMAT),
             author: getAuthorName(),
         };
         const formData = {
             sections: sectionsInfo,
             status: this.getVersionStatus(sectionsInfo),
-            dateCompleted: moment().format('DD-MMM-YYYY HH:mm'),
+            dateCompleted: moment().format(DATE_FORMAT),
+            timeCompleted: moment().format(TIME_FORMAT),
             author: getAuthorName(),
         };
         const updateVersionsInfo = Array.isArray(versionsInfo) ? versionsInfo.concat(formData) : [formData];
@@ -100,22 +100,18 @@ class EmergencyView extends Component {
     };
 
     render() {
-        const { classes, emergencyView, title, onRowClick, isVersionInfo } = this.props;
+        const { classes, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel } = this.state;
-        const filledValues = Object.assign({}, defaultValues, emergencyView);
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <div className={classes.titleBlock}>
-                        <h1>Emergency (CPR) view</h1>
-                        <p className={classes.secondTitle}>{this.getCprLabel()}</p>
-                        <p>For more information, see <a className={classes.sectionLink} onClick={e => this.redirectToSection(e)}>Section 4</a> for the latest clinical recommendations</p>
+                        <Typography variant="h1" className={classes.firstTitle}>Emergency (CPR) view</Typography>
+                        <Typography className={classes.secondTitle}>{this.getCprLabel()}</Typography>
+                        <Typography>For more information, see <a className={classes.sectionLink} onClick={e => this.redirectToSection(e, 4)}>Section 4</a> for the latest clinical recommendations</Typography>
                     </div>
                     <LocalForm onSubmit={values => this.submitForm(values)} model="personalDetails">
-                        <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Date Completed</FormLabel>
-                            <Control.text className={classes.formInput} model="personalDetails.dateCompleted" defaultValue={filledValues.dateCompleted} disabled />
-                        </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>
                 </MainFormBlock>
