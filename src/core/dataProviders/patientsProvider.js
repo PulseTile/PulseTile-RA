@@ -57,7 +57,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
                     postalCode: get(params, 'data.postCode', null),
                     country: get(params, 'data.country', null)
                 },
-                id: String(params.id)
+                id: get(params, 'data.nhsNumber', null)
             };
             url = `${domainName}/mpi/Patient/${params.id}`;
             options.method = "PUT";
@@ -169,7 +169,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             let newData = params.data;
             newData.name = [newPrefix, newFirstName, newLastName].join(' ');
             return {
-                id: get(params, 'id', null),
+                id: get(params, 'data.nhsNumber', null),
                 data: newData,
                 previousData: get(params, 'previousData', {})
             };

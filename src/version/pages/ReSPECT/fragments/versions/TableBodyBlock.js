@@ -8,8 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-import { STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT } from "../../statuses";
-import StatusCell from "../StatusCell";
+import { STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT, TIME_FORMAT } from "../../statuses";
 import NewVersionRow from "./NewVersionRow";
 
 const styles = theme => ({
@@ -44,37 +43,42 @@ class TableBodyBlock extends Component {
         const { classes, currentVersion, toggleMode, showVersion, versionsInfo } = this.props;
         let versionsNumber = Array.isArray(versionsInfo) ? versionsInfo.length : 0;
         return (
-            <TableBody>
-                <NewVersionRow versionsNumber={versionsNumber + 1} toggleMode={toggleMode} />
-                {
-                    versionsInfo && versionsInfo.reverse().map((item, key) => {
-                        const status = get(item, 'status', STATUS_INCOMPLETE);
-                        const dateCompleted = get(item, 'dateCompleted', '-');
-                        const timeCompleted = get(item, 'timeCompleted', '-');
-                        const rowClassName = this.getRowClassName(status, item);
-                        const version = versionsNumber--;
-                        return (
-                            <TableRow className={(currentVersion === version) ? classes.currentRow : classes[rowClassName]} key={key} onClick={() => showVersion(version)}>
-                                <TableCell scope="row" padding="none">
-                                    <span>{version}</span>
-                                </TableCell>
-                                <TableCell scope="row" padding="none">
-                                    <span>{dateCompleted}</span>
-                                </TableCell>
-                                <TableCell scope="row" padding="none">
-                                    <span>{timeCompleted}</span>
-                                </TableCell>
-                                <TableCell align="right">
-                                    <span>{status}</span>
-                                </TableCell>
-                                <TableCell align="right">
-                                    <span>{get(item, 'author', STATUS_INCOMPLETE)}</span>
-                                </TableCell>
-                            </TableRow>
-                        )
-                    })
-                }
-            </TableBody>
+            <React.Fragment>
+                <TableBody>
+                    <NewVersionRow versionsNumber={versionsNumber + 1} toggleMode={toggleMode} />
+                    {
+                        versionsInfo && versionsInfo.map((item, key) => {
+                            const status = get(item, 'status', STATUS_INCOMPLETE);
+                            const dateCreated = get(item, 'dateCreated', '-');
+                            const date = moment(dateCreated).format(DATE_FORMAT);
+                            const time = moment(dateCreated).format(TIME_FORMAT);
+                            const author = get(item, 'author', null);
+                            const rowClassName = this.getRowClassName(status, item);
+                            const version = get(item, 'version', null);
+                            const sourceId = get(item, 'sourceId', null);
+                            return (
+                                <TableRow className={(currentVersion === version) ? classes.currentRow : classes[rowClassName]} key={key} onClick={() => showVersion(version, sourceId)}>
+                                    <TableCell scope="row" padding="none">
+                                        <span>{version}</span>
+                                    </TableCell>
+                                    <TableCell scope="row" padding="none">
+                                        <span>{date}</span>
+                                    </TableCell>
+                                    <TableCell scope="row" padding="none">
+                                        <span>{time}</span>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <span>{status}</span>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <span>{author}</span>
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        })
+                    }
+                </TableBody>
+            </React.Fragment>
         );
     }
 };

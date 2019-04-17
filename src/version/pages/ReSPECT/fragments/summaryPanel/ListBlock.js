@@ -29,7 +29,7 @@ class ItemsList extends Component {
                         return (
                             <li key={key} className={classes.listItem} onClick={() => this.redirectToRespect()}>
                                 <Typography noWrap={true}>
-                                    Version {key + 1}
+                                    Version {item.version}
                                 </Typography>
                             </li>
                         );

@@ -229,7 +229,7 @@ class ListTemplate extends Component {
                         <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
                             <React.Fragment>
                                 <div className={classes.blockTitle}>
-                                    <Typography className={classes.title}>{title}</Typography>
+                                    <Typography className={classes.title}>{titleTable}</Typography>
                                     <div className={classes.emptyBlock}></div>
                                     {!this.isListPage() &&
                                         <Tooltip title="Expand">

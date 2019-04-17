@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
 import Dialog from '@material-ui/core/Dialog';
@@ -9,8 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import DoneIcon from '@material-ui/icons/Done';
-
-import { versionsServerAction } from "../../../../actions/ReSPECT/versionsServerAction";
 
 const styles = theme => ({
     dialogBlock: {
@@ -91,7 +88,6 @@ const styles = theme => ({
 class ModalWindow extends Component {
 
     onProceedClick = () => {
-        this.props.createNewVersion();
         this.props.toggleMode();
     };
 
@@ -128,12 +124,4 @@ class ModalWindow extends Component {
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        createNewVersion() {
-            dispatch(versionsServerAction.create());
-        },
-    }
-};
-
-export default connect(null, mapDispatchToProps)(withStyles(styles)(ModalWindow));
+export default withStyles(styles)(ModalWindow);

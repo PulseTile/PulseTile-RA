@@ -18,7 +18,7 @@ import { clinicalSignaturesAction } from "../../actions/ReSPECT/clinicalSignatur
 import { emergencyViewAction } from "../../actions/ReSPECT/emergencyViewAction";
 import { confirmationAction } from "../../actions/ReSPECT/confirmationAction";
 import { emergencyContactsAction } from "../../actions/ReSPECT/emergencyContactsAction";
-import { versionsAction } from "../../actions/ReSPECT/versionsAction";
+import { versionsServerAction } from "../../actions/ReSPECT/versionsServerAction";
 
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
 import RespectPageHeader from "./fragments/RespectPageHeader";
@@ -89,7 +89,16 @@ class SectionsTable extends Component {
     componentDidMount() {
         const userId = localStorage.getItem('userId');
         this.props.getSectionsInfo(userId);
-        this.props.getVersionsInfo(userId);
+        this.props.getVersionsFromServer();
+    }
+
+    componentWillMount() {
+        const { versionsList } = this.props;
+        const versionsNumber = versionsList.length;
+        let latestVersion = get(versionsList, [versionsNumber - 1], null);
+        if (latestVersion) {
+            this.props.getLatestVersion(latestVersion.sourceId, latestVersion.version);
+        }
     }
 
     onRowClick = id => {
@@ -109,25 +118,19 @@ class SectionsTable extends Component {
     };
 
     render() {
-        const { classes, isVersionMode, sectionsInfo, toggleMode, versionsInfo, currentVersion, sectionForShow } = this.props;
+        const { classes, sectionsInfo, toggleMode, currentVersionInfo, latestVersionInfo, versionsList, currentVersion, sectionForShow } = this.props;
         const { currentRow } = this.state;
         const breadcrumbsResource = [
             { url: null, title: "ReSPECT", isActive: false, onClickAction: toggleMode },
             { url: null, title: 'New Version', isActive: false }
         ];
-
         let isVersionInfo = false;
         let versionSectionsInfo = null;
-        let latestVersionInfo = null;
         if (currentVersion && sectionForShow) {
-            versionSectionsInfo = get(versionsInfo, [ [currentVersion - 1], 'sections' ], null);
+            versionSectionsInfo = currentVersionInfo;
             isVersionInfo = true;
-        } else if (Array.isArray(versionsInfo) && versionsInfo.length > 0) {
-            const versionsNumber = versionsInfo.length;
-            latestVersionInfo = get(versionsInfo, [ [versionsNumber - 1], 'sections' ], null);
         }
         const currentSection = this.getCurrentSection(currentRow);
-
         return (
             <React.Fragment>
                 <RespectPageHeader />
@@ -185,7 +188,9 @@ const mapStateToProps = state => {
             confirmation: state.custom.confirmation.data,
             emergencyContacts: state.custom.emergencyContacts.data,
         },
-        versionsInfo: state.custom.versionsInfo.data,
+        currentVersionInfo: get(state, 'custom.versionsServerInfo.version', null),
+        latestVersionInfo: get(state, 'custom.versionsServerInfo.latest', []),
+        versionsList: get(state, 'custom.versionsServerInfo.data', []),
     }
 };
 
@@ -203,9 +208,12 @@ const mapDispatchToProps = dispatch => {
             dispatch(confirmationAction.request(userId));
             dispatch(emergencyContactsAction.request(userId));
         },
-        getVersionsInfo(userId) {
-            dispatch(versionsAction.request(userId));
-        }
+        getVersionsFromServer() {
+            dispatch(versionsServerAction.request());
+        },
+        getLatestVersion(sourceId, version) {
+            dispatch(versionsServerAction.requestLatest(sourceId, version));
+        },
     }
 };
 

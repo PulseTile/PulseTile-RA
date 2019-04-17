@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import TableFooter from '@material-ui/core/TableFooter';
 
 import { versionsAction } from "../../actions/ReSPECT/versionsAction";
 import { versionsServerAction } from "../../actions/ReSPECT/versionsServerAction";
@@ -15,6 +16,7 @@ import RespectPageHeader from "./fragments/RespectPageHeader";
 import TableHeadBlock from "./fragments/versions/TableHeadBlock";
 import TableBodyBlock from "./fragments/versions/TableBodyBlock";
 import CurrentVersionBlock from "./fragments/versions/CurrentVersionBlock";
+import EmptyRow from "./fragments/versions/EmptyRow";
 
 const styles = theme => ({
     root: {
@@ -76,15 +78,15 @@ class VersionsTable extends Component {
     };
 
     componentDidMount() {
-        this.props.getVersionsInfo();
+        // this.props.getVersionsInfo();
 
         this.props.getVersionsFromServer();
     };
 
-    showVersion = version => {
+    showVersion = (version, sourceId) => {
         this.setState(
             state => ({ currentVersion: version }),
-            () => this.props.getOneVersion(this.state.version)
+            () => this.props.getOneVersion(sourceId, version)
         );
     };
 
@@ -108,6 +110,7 @@ class VersionsTable extends Component {
                 { url: null, title: `Version ${currentVersion}`, isActive: false }
             ];
         }
+        let versionsNumber = Array.isArray(versionsInfo) ? versionsInfo.length : 0;
         return (
             <React.Fragment>
                 <RespectPageHeader />
@@ -117,14 +120,19 @@ class VersionsTable extends Component {
                         <div className={classes.blockTitle}>
                             <Typography className={classes.title}>ReSPECT Versions</Typography>
                         </div>
-                        <Paper className={classes.root}>
-                            <div className={classes.tableWrapper}>
-                                <Table className={classes.tableList} aria-labelledby="tableTitle">
-                                    <TableHeadBlock />
-                                    <TableBodyBlock currentVersion={currentVersion} toggleMode={toggleMode} showVersion={this.showVersion} versionsInfo={versionsInfo} />
-                                </Table>
-                            </div>
-                        </Paper>
+                        { versionsNumber === 0
+                            ? <EmptyRow toggleMode={toggleMode} />
+                            :
+                                <Paper className={classes.root}>
+                                    <div className={classes.tableWrapper}>
+                                        <Table className={classes.tableList} aria-labelledby="tableTitle">
+                                            <TableHeadBlock />
+                                            <TableBodyBlock currentVersion={currentVersion} toggleMode={toggleMode} showVersion={this.showVersion} versionsInfo={versionsInfo} />
+                                        </Table>
+                                    </div>
+                                </Paper>
+                        }
+
                     </Grid>
                     {
                         currentVersion &&
@@ -141,21 +149,17 @@ class VersionsTable extends Component {
 
 const mapStateToProps = state => {
     return {
-        versionsInfo: state.custom.versionsInfo.data,
+        versionsInfo: state.custom.versionsServerInfo.data,
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getVersionsInfo() {
-            dispatch(versionsAction.request());
-        },
-
         getVersionsFromServer() {
             dispatch(versionsServerAction.request());
         },
-        getOneVersion() {
-            dispatch(versionsServerAction.requestOne());
+        getOneVersion(sourceId, version) {
+            dispatch(versionsServerAction.requestOne(sourceId, version));
         },
     }
 };

@@ -72,17 +72,13 @@ const styles = theme => ({
 class CurrentVersionBlock extends Component {
 
     render() {
-        const { classes, currentVersion, versionsInfo, toggleMode } = this.props;
-        const versionInfo = get(versionsInfo, [[currentVersion - 1], 'sections'], []);
-
-        const infoToPrint = get(versionsInfo, [currentVersion - 1], null);
-
+        const { classes, currentVersion, versionInfo, toggleMode } = this.props;
         return (
             <Grid className={classes.mainBlock} item xs={12} sm={6}>
                 <div className={classes.blockTitle}>
                     <Typography className={classes.title}>ReSPECT Sections (Version {currentVersion})</Typography>
                     <Tooltip title="Create">
-                        <IconButton className={classes.printButton} onClick={() => createPDF(infoToPrint)} >
+                        <IconButton className={classes.printButton} onClick={() => createPDF(versionInfo)} >
                             <PrintIcon />
                         </IconButton>
                     </Tooltip>
@@ -103,7 +99,7 @@ class CurrentVersionBlock extends Component {
 
 const mapStateToProps = state => {
     return {
-        versionsInfo: state.custom.versionsInfo.data,
+        versionInfo: get(state, 'custom.versionsServerInfo.version', null),
     }
 };
 

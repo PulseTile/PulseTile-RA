@@ -88,7 +88,6 @@ class RespectSummaryPanel extends Component {
 
     render() {
         const { classes, loading, history, showMode, versionsServerInfo, toggleRespectModal } = this.props;
-        const items = get(versionsServerInfo, 'result', []);
         return (
             <Grid item xs={12} sm={6} md={6} lg={3}>
                 <Card className={classes.card}>
@@ -102,7 +101,7 @@ class RespectSummaryPanel extends Component {
                         <ListBlock
                             loading={loading}
                             classes={classes}
-                            items={items}
+                            items={versionsServerInfo}
                             history={history}
                             toggleRespectModal={toggleRespectModal}
                         />
