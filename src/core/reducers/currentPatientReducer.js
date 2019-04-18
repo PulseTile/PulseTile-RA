@@ -49,12 +49,6 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: true,
             };
-        case CURRENT_PATIENT_ACTION.UPDATE:
-            return {
-                ...state,
-                loading: false,
-                data: action.data,
-            };
         case CURRENT_PATIENT_ACTION.SUCCESS:
             return {
                 ...state,

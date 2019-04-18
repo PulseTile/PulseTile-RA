@@ -25,7 +25,7 @@ class PersonalDetails extends Component {
 
     state = {
         isMainPanel: true,
-        birthDate: get(this.props, 'patientInfo.dateOfBirth', null),
+        birthDate: get(this.props, 'patientInfo.birthDate', null),
     };
 
     submitForm = data => {
@@ -212,7 +212,7 @@ class PersonalDetails extends Component {
 const mapStateToProps = state => {
     return {
         personalDetails: state.custom.personalDetails.data,
-        patientInfo: state.custom.currentPatient.data,
+        patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
     }
 };
 
