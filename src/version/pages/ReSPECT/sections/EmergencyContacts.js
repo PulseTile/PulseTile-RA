@@ -15,7 +15,6 @@ import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE, DATE_FORMAT } from "../statuses";
 import { getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
-import WarningMessage from "../fragments/WarningMessage";
 
 const defaultValues = {
     nhsNumber: localStorage.getItem('userId'),
@@ -82,7 +81,6 @@ class EmergencyContacts extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }

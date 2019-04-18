@@ -17,7 +17,6 @@ import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues, getInitialRangeLine } from "../functions";
 import formStyles from "../fragments/formStyles";
 import { PREFERENCE_LEFT, PREFERENCE_RIGHT } from "../fragments/cprVariants";
-import WarningMessage from "../fragments/WarningMessage";
 
 const FORM_FIELDS_NUMBER = 2;
 
@@ -65,7 +64,6 @@ class PersonalPreferences extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <RangeLine
                         onChangeRange={this.setRangeInput}
                         sourceName={preferencesValue}

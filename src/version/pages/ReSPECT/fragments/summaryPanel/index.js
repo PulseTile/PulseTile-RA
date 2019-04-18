@@ -97,15 +97,15 @@ class RespectSummaryPanel extends Component {
                             ReSPECT
                         </Typography>
                     </div>
-                    { (showMode === SHOW_ALL || !showMode) &&
-                        <ListBlock
-                            loading={loading}
-                            classes={classes}
-                            items={versionsServerInfo}
-                            history={history}
-                            toggleRespectModal={toggleRespectModal}
-                        />
-                    }
+                    {/*{ (showMode === SHOW_ALL || !showMode) &&*/}
+                        {/*<ListBlock*/}
+                            {/*loading={loading}*/}
+                            {/*classes={classes}*/}
+                            {/*items={versionsServerInfo}*/}
+                            {/*history={history}*/}
+                            {/*toggleRespectModal={toggleRespectModal}*/}
+                        {/*/>*/}
+                    {/*}*/}
                 </Card>
             </Grid>
         );

@@ -18,7 +18,6 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues, getVersionData } from "../functions";
 import formStyles from "../fragments/formStyles";
-import WarningMessage from "../fragments/WarningMessage";
 
 const FORM_FIELDS_NUMBER = 9;
 
@@ -100,7 +99,6 @@ class PersonalDetails extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <LocalForm  model="personalDetails" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Preferred Name</FormLabel>

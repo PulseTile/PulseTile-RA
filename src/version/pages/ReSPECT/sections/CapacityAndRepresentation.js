@@ -17,7 +17,6 @@ import RadioButtonWithLink from "../fragments/RadioButtonWithLink";
 import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues, getStateData } from "../functions";
 import formStyles from "../fragments/formStyles";
-import WarningMessage from "../fragments/WarningMessage";
 
 const FORM_FIELDS_NUMBER = 2;
 
@@ -72,7 +71,6 @@ class CapacityAndRepresentation extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <LocalForm  model="capacityAndRepresentation" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Does the person have sufficient capacity to participate in making the recommendations on this plan?</FormLabel>

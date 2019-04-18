@@ -24,7 +24,6 @@ import sections from "../sections";
 import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER, DATE_FORMAT, TIME_FORMAT } from "../statuses";
 import formStyles from "../fragments/formStyles";
 import { cprVariants } from "../fragments/cprVariants";
-import WarningMessage from "../fragments/WarningMessage";
 
 const defaultValues = {
     dateCompleted: moment().format('DD-MMM-YYYY'),
@@ -103,7 +102,6 @@ class EmergencyView extends Component {
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
-                    <WarningMessage isVersionInfo={isVersionInfo} onRowClick={onRowClick} />
                     <div className={classes.titleBlock}>
                         <Typography variant="h1" className={classes.firstTitle}>Emergency (CPR) view</Typography>
                         <Typography className={classes.secondTitle}>{this.getCprLabel()}</Typography>
