@@ -16,7 +16,7 @@ import { SHOW_ALL } from "../../../../../core/pages/PatientSummary/config";
 
 const styles = theme => ({
     card: {
-        minHeight: 302,
+        borderRadius: 0,
     },
     media: {
         backgroundColor: theme.palette.mainColor,
