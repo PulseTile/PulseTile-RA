@@ -43,22 +43,22 @@ export function getFilledValues(sectionsInfo, latestVersionInfo, sectionStoreDat
 
 export function getStateData(props, toSearch, defaultValue = null) {
     const { isVersionInfo, sectionsInfo, latestVersionInfo } = props;
-    let result = get(props, toSearch, defaultValue);
+    let result = get(latestVersionInfo, toSearch, defaultValue);
     if (isVersionInfo) {
         result = get(sectionsInfo, toSearch, defaultValue);
-    } else if (latestVersionInfo) {
-        result = get(latestVersionInfo, toSearch, defaultValue);
+    } else if (get(props, toSearch, null)) {
+        result = get(props, toSearch, defaultValue);
     }
     return result;
 }
 
 export function getInitialRangeLine(props, toSearch, leftValue, rightValue, defaultValue = null) {
     const { isVersionInfo, sectionsInfo, latestVersionInfo } = props;
-    let result = get(props, toSearch, defaultValue);
+    let result = get(latestVersionInfo, toSearch, defaultValue);
     if (isVersionInfo) {
         result = get(sectionsInfo, toSearch, defaultValue);
-    } else if (latestVersionInfo) {
-        result = get(latestVersionInfo, toSearch, defaultValue);
+    } else if (get(props, toSearch, null)) {
+        result = get(props, toSearch, defaultValue);
     }
     let focusValue = 50;
     if (result === leftValue) {

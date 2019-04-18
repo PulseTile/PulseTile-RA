@@ -28,14 +28,13 @@ class PersonalPreferences extends Component {
 
     state = {
         isMainPanel: true,
-        preferencesValue: getInitialRangeLine(this.props, 'personalPreferences.preferencesValue', PREFERENCE_LEFT, PREFERENCE_RIGHT, 50),
+        preferencesValue: getInitialRangeLine(this.props, 'personalPreferences.preferencesValue', 5, 95, 50),
     };
 
     submitForm = data => {
         const { preferencesValue } = this.state;
         const additionalData = {
-            // preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? PREFERENCE_RIGHT : PREFERENCE_LEFT,
-            preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? 5 : 95,
+            preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? 95 : 5,
             dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
