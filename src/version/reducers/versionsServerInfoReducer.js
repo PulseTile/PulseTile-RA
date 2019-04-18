@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import moment from "moment";
 
 import { VERSIONS_SERVER_ACTION } from "../actions/ReSPECT/versionsServerAction";
 
@@ -48,11 +49,28 @@ export default (state = initialState, action) => {
             };
         case VERSIONS_SERVER_ACTION.SUCCESS_PUT:
 
-            console.log('action', action);
+            const newVersion = get(action, "data", null);
+            const versionsArray = get(state, "data", []);
+
+            console.log('-----------------------------------------------');
+            console.log('newVersion', newVersion);
+            console.log('versionsArray', versionsArray);
+
+            const newArray = versionsArray.unshift({
+                author: localStorage.getItem('username'),
+                dateCreated: Math.round(new Date().getTime()/1000),
+                source: newVersion.host,
+                sourceId: newVersion.host + '-' + newVersion.compositionUid,
+                status: "Completed",
+                version: newVersion.version,
+            });
+
+            console.log('newArray',versionsArray );
 
             return {
                 ...state,
                 loading: false,
+                data: versionsArray,
             };
         case VERSIONS_SERVER_ACTION.ERROR:
             return {

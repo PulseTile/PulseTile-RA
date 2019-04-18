@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import moment from "moment";
 
-import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER, DATE_FORMAT } from "./statuses";
+import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER, DATE_FORMAT, DATE_TIME_FORMAT } from "./statuses";
 import sections from "./sections";
 
 export function getAuthorName() {
@@ -69,104 +69,62 @@ export function getInitialRangeLine(props, toSearch, leftValue, rightValue, defa
     return [focusValue];
 }
 
-export function getVersionData(sectionName, formData, otherSectionsInfo) {
-    return {
-        sections: {
-            personalDetails: (sectionName === 'personalDetails')
-                ? formData
-                : get(otherSectionsInfo, 'personalDetails', {
-                    nhsNumber: null,
-                    dateCompleted: null,
-                    preferredName: null,
-                    firstName: null,
-                    surname: null,
-                    streetAddress: null,
-                    addressSecondLine: null,
-                    city: null,
-                    county: null,
-                    postCode: null,
-                    country: null,
-                    birthDate: null,
-                    status: null
-                }),
-            summaryInformation: (sectionName === 'summaryInformation')
-                ? formData
-                : get(otherSectionsInfo, 'summaryInformation', {
-                    dateCompleted: null,
-                    summary: null,
-                    details: null,
-                    status: null,
-                }),
-            personalPreferences: (sectionName === 'personalPreferences')
-                ? formData
-                : get(otherSectionsInfo, 'personalPreferences', {
-                    dateCompleted: null,
-                    preferencesText: null,
-                    preferencesValue: null,
-                    status: null
-                }),
-            clinicalRecommendations: (sectionName === 'clinicalRecommendations')
-                ? formData
-                : get(otherSectionsInfo, 'clinicalRecommendations', {
-                    clinicalSignatureFirst: null,
-                    clinicalSignatureSecond: null,
-                    dateCompleted: null,
-                    clinicalGuidance: null,
-                    cprValue: null,
-                    focusValue: null,
-                    status: null,
-                }),
+export function getEmptyJson(sectionName) {
 
-
-            capacityAndRepresentation: (sectionName === 'capacityAndRepresentation')
-                ? formData
-                : get(otherSectionsInfo, 'capacityAndRepresentation', {
-                    dateCompleted: null,
-                    capacityFirst: null,
-                    capacitySecond: null,
-                    status: null,
-                }),
-            involvement: (sectionName === 'involvement')
-                ? formData
-                : get(otherSectionsInfo, 'involvement', {
-                    dateCompleted: null,
-                    records: null,
-                    variant: null,
-                    status: null,
-                }),
-            clinicalSignatures: (sectionName === 'clinicalSignatures')
-                ? formData
-                : get(otherSectionsInfo, 'clinicalSignatures', {
-                    dateCompleted:null,
-                    signaturesArray: null,
-                    status: null,
-                }),
-            emergencyContacts: (sectionName === 'emergencyContacts')
-                ? formData
-                : get(otherSectionsInfo, 'emergencyContacts', {
-                    dateCompleted: null,
-                    contactsArray: null,
-                    status: null,
-                }),
-            confirmation: (sectionName === 'confirmation')
-                ? formData
-                : get(otherSectionsInfo, 'confirmation', {
-                    dateCompleted: null,
-                    confirmationsArray: null,
-                    status: null,
-                }),
-            emergencyView: (sectionName === 'emergencyView')
-                ? formData
-                : get(otherSectionsInfo, 'emergencyView', {
-                    status: null,
-                    dateCompleted: null,
-                    author: null,
-                }),
+    const RespectJson = {
+        summaryInformation: {
+            dateCompleted: moment().format(DATE_FORMAT),
+            summary: null,
+            details: null,
+            status: STATUS_INCOMPLETE,
         },
-        status: getVersionStatus(otherSectionsInfo),
-        dateCompleted: moment().format(DATE_FORMAT),
-        author: localStorage.getItem('username'),
-    }
+        personalPreferences: {
+            dateCompleted: moment().format(DATE_FORMAT),
+            preferencesText: null,
+            preferencesValue: 5,
+            status: STATUS_INCOMPLETE,
+        },
+        clinicalRecommendation: {
+            clinicalGuidance: null,
+            clinicalSignature: null,
+            focusValue: null,
+            cprValue: 'NotforCPR',
+            dateDecision: moment().format(DATE_FORMAT),
+            dateCompleted: moment().format(DATE_FORMAT),
+            status: STATUS_INCOMPLETE,
+        },
+        capacityAndRepresentation: {
+            dateCompleted: moment().format(DATE_FORMAT),
+            capacityFirst: null,
+            legalProxyValue: 'Unknown',
+            status: STATUS_INCOMPLETE,
+        },
+        involvement: {
+            dateCompleted: moment().format(DATE_FORMAT),
+            notSelectingReason: null,
+            involvementValue: 'valueSetD',
+            documentExplanation: null,
+            status: STATUS_INCOMPLETE,
+        },
+        clinicalSignatures: {
+            dateCompleted: moment().format(DATE_FORMAT),
+            signaturesArray: [],
+            status: STATUS_INCOMPLETE,
+        },
+        emergencyContacts: {
+            dateCompleted: moment().format(DATE_FORMAT),
+            contactsArray: [],
+            details: null,
+            status: STATUS_INCOMPLETE,
+        },
+        confirmation: {
+            dateCompleted: moment().format(DATE_FORMAT),
+            confirmationsArray: [],
+            status: STATUS_INCOMPLETE,
+        }
+    };
+
+    return get(RespectJson, sectionName, null);
 }
 
 function getVersionStatus(sectionsInfo) {

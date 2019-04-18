@@ -21,7 +21,7 @@ import { confirmationAction } from "../../../../actions/ReSPECT/confirmationActi
 import { emergencyContactsAction } from "../../../../actions/ReSPECT/emergencyContactsAction";
 
 import { STATUS_COMPLETED, DATE_FORMAT } from "../../statuses";
-import { getAuthorName } from "../../functions";
+import { getAuthorName, getEmptyJson } from "../../functions";
 
 const styles = theme => ({
     publishButton: {
@@ -57,14 +57,14 @@ class PublishButton extends Component {
             author: getAuthorName(),
             dateCreated: moment().format(DATE_FORMAT),
             status: STATUS_COMPLETED,
-            summaryInformation: this.props.summaryInformation,
-            personalPreferences: this.props.personalPreferences,
-            clinicalRecommendations: this.props.clinicalRecommendations,
-            capacityAndRepresentation: this.props.capacityAndRepresentation,
-            involvement: this.props.involvement,
-            clinicalSignatures: this.props.clinicalSignatures,
-            emergencyContacts: this.props.emergencyContacts,
-            confirmation: this.props.confirmation,
+            summaryInformation: this.props.summaryInformation ? this.props.summaryInformation : getEmptyJson('summaryInformation'),
+            personalPreferences: this.props.personalPreferences ? this.props.personalPreferences : getEmptyJson('personalPreferences'),
+            clinicalRecommendations: this.props.clinicalRecommendations ? this.props.clinicalRecommendations : getEmptyJson('personalPreferences'),
+            capacityAndRepresentation: this.props.capacityAndRepresentation ? this.props.capacityAndRepresentation : getEmptyJson('capacityAndRepresentation'),
+            involvement: this.props.involvement ? this.props.involvement : getEmptyJson('involvement'),
+            clinicalSignatures: this.props.clinicalSignatures ? this.props.clinicalSignatures : getEmptyJson('clinicalSignatures'),
+            emergencyContacts: this.props.emergencyContacts ? this.props.emergencyContacts : getEmptyJson('emergencyContacts'),
+            confirmation: this.props.confirmation ? this.props.confirmation : getEmptyJson('confirmation'),
         };
 
         if (latestVersion) {

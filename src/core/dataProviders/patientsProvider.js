@@ -41,6 +41,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
 
         case UPDATE:
             let userName = get(params, 'data.firstName', null);
+            let userId = get(params, 'data.nhsNumber', null);
             let updateData = {
                 name: {
                     family: get(params, 'data.lastName', null),
@@ -57,7 +58,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
                     postalCode: get(params, 'data.postCode', null),
                     country: get(params, 'data.country', null)
                 },
-                id: get(params, 'data.nhsNumber', null)
+                id: userId.toString(),
             };
             url = `${domainName}/mpi/Patient/${params.id}`;
             options.method = "PUT";

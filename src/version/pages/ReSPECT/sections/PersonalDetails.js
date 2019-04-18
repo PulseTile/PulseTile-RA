@@ -16,7 +16,7 @@ import { versionsServerAction } from "../../../actions/ReSPECT/versionsServerAct
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
-import { getSectionStatus, getFilledValues, getVersionData } from "../functions";
+import { getSectionStatus, getFilledValues } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const FORM_FIELDS_NUMBER = 9;
@@ -37,8 +37,7 @@ class PersonalDetails extends Component {
             dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
-        const versionData = getVersionData('personalDetails', formData, sectionsInfo);
-        addPersonalDetails(formData, versionData);
+        addPersonalDetails(formData);
         const nextStep = (currentRow > TOTAL_ROWS_NUMBER) ? null : (currentRow + 1);
         onRowClick(nextStep);
     };
@@ -218,7 +217,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addPersonalDetails(sectionData, versionData) {
+        addPersonalDetails(sectionData) {
             dispatch(personalDetailsAction.create(sectionData));
         }
     }
