@@ -10,7 +10,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { modalOpenAction } from "../../../../actions/ReSPECT/modalOpenAction";
 import ModalWindow from "./ModalWindow";
 import { getAuthorName } from "../../functions";
 import { DATE_FORMAT } from "../../statuses";
@@ -41,7 +40,7 @@ class NewVersionRow extends Component {
     };
 
     render() {
-        const { classes, versionsNumber, versionsServerInfo, toggleMode } = this.props;
+        const { classes, versionsNumber, toggleMode } = this.props;
         const { isOpenModal } = this.state;
         return (
             <React.Fragment>

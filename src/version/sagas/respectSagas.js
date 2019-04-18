@@ -83,29 +83,34 @@ const createNewVersion = takeEvery(VERSIONS_SERVER_ACTION.CREATE, function*(acti
         yield put(versionsServerAction.error(e))
     }
 });
-//
-// const putOneSection = takeEvery(VERSIONS_SERVER_ACTION.PUT, function*(action) {
-//     const url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/respectforms/';
-//     let options = {};
-//     options.method = "POST";
-//     if (!options.headers) {
-//         options.headers = new Headers({ Accept: 'application/json' });
-//     }
-//     options.headers = {
-//         'X-Requested-With': "XMLHttpRequest",
-//     };
-//     try {
-//         const result = yield fetch(url, options).then(res => res.json());
-//         yield put(versionsServerAction.success(result))
-//     } catch(e) {
-//         yield put(versionsServerAction.error(e))
-//     }
-// });
+
+const putOneSection = takeEvery(VERSIONS_SERVER_ACTION.PUT, function*(action) {
+    const sourceId = get(action, 'sourceId', null);
+    const versionId = get(action, 'versionId', null);
+    const versionData = get(action, 'versionData', null);
+    const url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/respectforms/' + sourceId + '/' + versionId;
+    let options = {};
+    options.method = "PUT";
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    options.headers = {
+        'Content-Type': 'application/json',
+        'X-Requested-With': "XMLHttpRequest",
+    };
+    options.body = JSON.stringify(versionData);
+    try {
+        const result = yield fetch(url, options).then(res => res.json());
+        yield put(versionsServerAction.successPut(result))
+    } catch(e) {
+        yield put(versionsServerAction.error(e))
+    }
+});
 
 export default [
     getVersionsList,
     getVersionById,
     getLatestVersion,
     createNewVersion,
-    // putOneSection,
+    putOneSection,
 ]

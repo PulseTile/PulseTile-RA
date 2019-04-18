@@ -55,17 +55,15 @@ const styles = theme => ({
     }
 });
 
-const SectionToolbar = ({ classes, onRowClick, isLastSection }) => {
+const SectionToolbar = ({ classes, onRowClick }) => {
     return (
         <Toolbar className={classes.toolbar}>
-            { !isLastSection &&
             <Tooltip title="Finished" disableHoverListener={true}>
                 <IconButton type="submit" className={classes.saveButton}>
                     Save
                     <DoneIcon />
                 </IconButton>
             </Tooltip>
-            }
             <Button className={classes.cancelButton} onClick={() => onRowClick(null)}>Cancel</Button>
         </Toolbar>
     );

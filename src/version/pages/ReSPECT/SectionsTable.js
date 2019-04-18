@@ -25,6 +25,7 @@ import RespectPageHeader from "./fragments/RespectPageHeader";
 import TableHeadBlock from "./fragments/TableHeadBlock";
 import TableBodyBlock from "./fragments/TableBodyBlock";
 import CurrentSectionBlock from "./fragments/CurrentSectionBlock";
+import PublishButton from "./fragments/buttons/PublishButton";
 import sections from "./sections";
 
 const styles = theme => ({
@@ -153,6 +154,7 @@ class SectionsTable extends Component {
                                         isVersionInfo={isVersionInfo}
                                     />
                                 </Table>
+                                <PublishButton toggleMode={toggleMode} versionsList={versionsList} isVersionInfo={isVersionInfo} />
                             </div>
                         </Paper>
                     </Grid>

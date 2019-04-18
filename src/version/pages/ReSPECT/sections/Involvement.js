@@ -29,13 +29,13 @@ class Involvement extends Component {
 
     state = {
         isMainPanel: true,
-        variant: getStateData(this.props, 'involvement.involvementCode'),
+        variant: getStateData(this.props, 'involvement.involvementValue'),
     };
 
     submitForm = data => {
         const { variant } = this.state;
         const additionalData = {
-            involvementCode: variant,
+            involvementValue: variant,
             dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
@@ -66,7 +66,7 @@ class Involvement extends Component {
                     <LocalForm model="involvement" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
-                            <RadioGroup name="involvementCode" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
+                            <RadioGroup name="involvementValue" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     disabled={isVersionInfo}
@@ -108,8 +108,8 @@ class Involvement extends Component {
                             <FormGroup className={classes.formGroup}>
                                 <Control.textarea
                                     className={classes.formTextarea}
-                                    model="involvement.notSelectABCReason"
-                                    defaultValue={filledValues.notSelectABCReason}
+                                    model="involvement.notSelectingReason"
+                                    defaultValue={filledValues.notSelectingReason}
                                     disabled={isVersionInfo}
                                 />
                                 <FormHelperText>Document full explanation in the clinical record</FormHelperText>
@@ -119,8 +119,8 @@ class Involvement extends Component {
                             <FormLabel className={classes.formLabel}>Record date, names and roles of those involved in decision making, and where records of discussion can be found</FormLabel>
                             <Control.textarea
                                 className={classes.formTextarea}
-                                model="involvement.detailsOfDecision"
-                                defaultValue={filledValues.detailsOfDecision}
+                                model="involvement.documentExplanation"
+                                defaultValue={filledValues.documentExplanation}
                                 disabled={isVersionInfo}
                             />
                             <FormHelperText>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>

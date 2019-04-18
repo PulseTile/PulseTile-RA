@@ -16,7 +16,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
-                data: action.data,
             };
         case VERSIONS_SERVER_ACTION.CREATE:
             return {
@@ -46,6 +45,14 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: false,
                 newVersion: get(action, "data", null),
+            };
+        case VERSIONS_SERVER_ACTION.SUCCESS_PUT:
+
+            console.log('action', action);
+
+            return {
+                ...state,
+                loading: false,
             };
         case VERSIONS_SERVER_ACTION.ERROR:
             return {

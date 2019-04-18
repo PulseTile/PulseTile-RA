@@ -10,7 +10,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import { emergencyContactsAction } from "../../../actions/ReSPECT/emergencyContactsAction";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
-import AddNewButton from "../fragments/AddNewButton";
+import AddNewButton from "../fragments/buttons/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE, DATE_FORMAT } from "../statuses";
 import { getFilledValues, getStateData } from "../functions";

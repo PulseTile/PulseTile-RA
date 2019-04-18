@@ -35,7 +35,8 @@ class PersonalPreferences extends Component {
     submitForm = data => {
         const { preferencesValue } = this.state;
         const additionalData = {
-            preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? PREFERENCE_RIGHT : PREFERENCE_LEFT,
+            // preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? PREFERENCE_RIGHT : PREFERENCE_LEFT,
+            preferencesValue: get(preferencesValue, '[0]', 0) >= 50 ? 5 : 95,
             dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);

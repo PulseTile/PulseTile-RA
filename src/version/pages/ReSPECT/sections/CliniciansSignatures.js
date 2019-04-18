@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { clinicalSignaturesAction } from "../../../actions/ReSPECT/clinicalSignaturesAction";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
-import AddNewButton from "../fragments/AddNewButton";
+import AddNewButton from "../fragments/buttons/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT } from "../statuses";
 import { getFilledValues, getStateData } from "../functions";

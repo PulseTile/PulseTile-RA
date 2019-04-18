@@ -222,7 +222,6 @@ const mapDispatchToProps = dispatch => {
     return {
         addPersonalDetails(sectionData, versionData) {
             dispatch(personalDetailsAction.create(sectionData));
-            dispatch(versionsServerAction.put(versionData))
         }
     }
 };

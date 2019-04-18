@@ -33,8 +33,13 @@ const styles = theme => ({
         float: "right",
         height: 25,
     },
+    modalBody: {
+        paddingTop: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
     mainText: {
-        marginTop: 70,
+        paddingBottom: 10,
         textAlign: "center",
         fontWeight: 800,
         fontSize: 16,
@@ -104,9 +109,17 @@ class ModalWindow extends Component {
                             </IconButton>
                         </Tooltip>
                     </div>
-                    <Typography className={classes.mainText}>
-                        Please confirm you would like to create a new version
-                    </Typography>
+                    <div className={classes.modalBody}>
+                        <Typography className={classes.mainText}>
+                            Please confirm you would like to create a new version
+                        </Typography>
+                        <Typography className={classes.mainText}>
+                            While editing you can Save your changes temporarily before you then Publish a new version.
+                        </Typography>
+                        <Typography className={classes.mainText}>
+                            In order to publish a new version, the completion of sections 4 and 6 are mandatory.
+                        </Typography>
+                    </div>
                     <div className={classes.toolbar}>
                         <Tooltip title="Proceed">
                             <IconButton className={classes.proceedButton} onClick={() => this.onProceedClick()}>

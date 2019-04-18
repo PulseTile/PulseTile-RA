@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import get from "lodash/get";
 import { connect } from 'react-redux';
-import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -20,7 +19,6 @@ import { emergencyContactsAction } from "../../../actions/ReSPECT/emergencyConta
 import { versionsAction } from "../../../actions/ReSPECT/versionsAction";
 
 import MainFormBlock from "../fragments/MainFormBlock";
-import SectionToolbar from "../fragments/SectionToolbar";
 import { getAuthorName } from "../functions";
 import sections from "../sections";
 import { STATUS_INCOMPLETE, STATUS_IN_PROGRESS, STATUS_COMPLETED, TOTAL_ROWS_NUMBER, DATE_FORMAT, TIME_FORMAT } from "../statuses";
@@ -111,9 +109,6 @@ class EmergencyView extends Component {
                         <Typography className={classes.secondTitle}>{this.getCprLabel()}</Typography>
                         <Typography>For more information, see <a className={classes.sectionLink} onClick={e => this.redirectToSection(e, 4)}>Section 4</a> for the latest clinical recommendations</Typography>
                     </div>
-                    <LocalForm onSubmit={values => this.submitForm(values)} model="personalDetails">
-                        { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
-                    </LocalForm>
                 </MainFormBlock>
             </React.Fragment>
         );

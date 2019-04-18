@@ -49,6 +49,7 @@ class ClinicalRecommendations extends Component {
             cprValue: cprValue,
             focusValue: get(focusValue, '[0]', 0) >= 50 ? FOCUS_RIGHT : FOCUS_LEFT,
             dateCompleted: moment(dateCompleted).format(DATE_FORMAT),
+            dateDecision: moment(dateCompleted).format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
