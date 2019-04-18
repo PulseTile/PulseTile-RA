@@ -9,7 +9,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
 import { STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT, TIME_FORMAT } from "../../statuses";
-import NewVersionRow from "./NewVersionRow";
 
 const styles = theme => ({
     rowCompleted: {
@@ -40,12 +39,10 @@ class TableBodyBlock extends Component {
     };
 
     render() {
-        const { classes, currentVersion, toggleMode, showVersion, versionsInfo } = this.props;
-        let versionsNumber = Array.isArray(versionsInfo) ? versionsInfo.length : 0;
+        const { classes, currentVersion, showVersion, versionsInfo } = this.props;
         return (
             <React.Fragment>
                 <TableBody>
-                    <NewVersionRow versionsNumber={versionsNumber + 1} toggleMode={toggleMode} />
                     {
                         versionsInfo && versionsInfo.map((item, key) => {
                             const status = get(item, 'status', STATUS_INCOMPLETE);

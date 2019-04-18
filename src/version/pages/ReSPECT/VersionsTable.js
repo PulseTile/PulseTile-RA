@@ -6,9 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import TableFooter from '@material-ui/core/TableFooter';
 
-import { versionsAction } from "../../actions/ReSPECT/versionsAction";
 import { versionsServerAction } from "../../actions/ReSPECT/versionsServerAction";
 
 import Breadcrumbs from "../../../core/common/Breadcrumbs";
@@ -17,6 +15,7 @@ import TableHeadBlock from "./fragments/versions/TableHeadBlock";
 import TableBodyBlock from "./fragments/versions/TableBodyBlock";
 import CurrentVersionBlock from "./fragments/versions/CurrentVersionBlock";
 import EmptyRow from "./fragments/versions/EmptyRow";
+import VersionUpdateButton from "./fragments/buttons/VersionUpdateButton";
 
 const styles = theme => ({
     root: {
@@ -78,8 +77,6 @@ class VersionsTable extends Component {
     };
 
     componentDidMount() {
-        // this.props.getVersionsInfo();
-
         this.props.getVersionsFromServer();
     };
 
@@ -123,14 +120,19 @@ class VersionsTable extends Component {
                         { versionsNumber === 0
                             ? <EmptyRow toggleMode={toggleMode} />
                             :
-                                <Paper className={classes.root}>
-                                    <div className={classes.tableWrapper}>
-                                        <Table className={classes.tableList} aria-labelledby="tableTitle">
-                                            <TableHeadBlock />
-                                            <TableBodyBlock currentVersion={currentVersion} toggleMode={toggleMode} showVersion={this.showVersion} versionsInfo={versionsInfo} />
-                                        </Table>
+                                <React.Fragment>
+                                    <Paper className={classes.root}>
+                                        <div className={classes.tableWrapper}>
+                                            <Table className={classes.tableList} aria-labelledby="tableTitle">
+                                                <TableHeadBlock />
+                                                <TableBodyBlock currentVersion={currentVersion} toggleMode={toggleMode} showVersion={this.showVersion} versionsInfo={versionsInfo} />
+                                            </Table>
+                                        </div>
+                                    </Paper>
+                                    <div>
+                                        <VersionUpdateButton toggleMode={toggleMode} />
                                     </div>
-                                </Paper>
+                                </React.Fragment>
                         }
 
                     </Grid>

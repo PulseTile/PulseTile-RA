@@ -29,15 +29,6 @@ export const getSectionStatus = (data, totalNumber) => {
  * @return {shape}
  */
 export function getFilledValues(sectionsInfo, latestVersionInfo, sectionStoreData, sectionName, isVersionInfo, defaultValues) {
-    // let result = Object.assign({}, defaultValues, sectionStoreData);
-    // if (isVersionInfo) {
-    //     const versionStoreData = get(sectionsInfo, sectionName, null);
-    //     result = Object.assign({}, defaultValues, versionStoreData);
-    // } else if (latestVersionInfo) {
-    //     const latestStoreData = get(latestVersionInfo, sectionName, null);
-    //     result = Object.assign({}, defaultValues, latestStoreData);
-    // }
-
     const latestStoreData = get(latestVersionInfo, sectionName, null);
     let result = Object.assign({}, defaultValues, latestStoreData);
     if (isVersionInfo) {
