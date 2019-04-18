@@ -49,6 +49,15 @@ class UserSearch extends Component {
         })
     };
 
+    componentWillReceiveProps(nextProps) {
+        const { userSearch } = nextProps;
+        if (!userSearch) {
+            this.setState({
+                searchText: '',
+            });
+        }
+    }
+
     onRemoveClick = () => {
         this.setState(() => {
             return {
@@ -76,16 +85,16 @@ class UserSearch extends Component {
                     onChange={e => this.handleChange(e)}
                 />
                 { userSearch &&
-                <Tooltip title="Clean Search" disableHoverListener={true}>
-                    <IconButton
-                        className={classes.icon}
-                        aria-haspopup="true"
-                        color="inherit"
-                        onClick={() => this.onRemoveClick()}
-                    >
-                        <CleanIcon />
-                    </IconButton>
-                </Tooltip>
+                    <Tooltip title="Clean Search" disableHoverListener={true}>
+                        <IconButton
+                            className={classes.icon}
+                            aria-haspopup="true"
+                            color="inherit"
+                            onClick={() => this.onRemoveClick()}
+                        >
+                            <CleanIcon />
+                        </IconButton>
+                    </Tooltip>
                 }
                 <Tooltip title="Patients Search" disableHoverListener={true}>
                     <IconButton

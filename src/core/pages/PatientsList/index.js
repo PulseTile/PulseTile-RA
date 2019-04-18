@@ -53,7 +53,7 @@ class PatientsList extends Component {
      */
     redirectToSummary = (e, record) => {
         e.stopPropagation();
-        this.props.updateCurrentPatient(record);
+        this.props.updateCurrentPatient(record.nhsNumber);
         localStorage.setItem('patientId', record.nhsNumber);
         this.props.history.push('/summary');
         this.props.setSidebarVisibility(true);
@@ -106,7 +106,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         updateCurrentPatient(data) {
-            dispatch(currentPatientAction.update(data));
+            dispatch(currentPatientAction.request(data));
         },
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));

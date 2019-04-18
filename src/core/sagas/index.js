@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 
 // CORE SAGAS
+import currentPatientSagas from "./currentPatientSagas";
 import initializeSagas from "./initializeSagas";
 import demographicsSagas from "./demographicsSagas";
 import httpErrorSagas from "./httpErrorSagas";
@@ -19,6 +20,7 @@ import {
 import nonCoreSagas from "../../version/sagas";
 
 const coreSagas = [
+    currentPatientSagas,
     createSynopsisSagas(SYNOPSIS_ALLERGIES_ACTION, synopsisAllergiesAction, 'allergies'),
     createSynopsisSagas(SYNOPSIS_CONTACTS_ACTION, synopsisContactsAction, 'contacts'),
     createSynopsisSagas(SYNOPSIS_MEDICATIONS_ACTION, synopsisMedicationsAction, 'medications'),

@@ -45,6 +45,7 @@ export default async (type, params) => {
                 .then(response => {
                     document.cookie = 'JSESSIONID=;';
                     localStorage.removeItem('userId');
+                    localStorage.removeItem('patientId');
                     localStorage.removeItem('username');
                     localStorage.removeItem('role');
                     window.location = get(response, 'redirectURL', '');

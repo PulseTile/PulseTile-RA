@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import get from "lodash/get";
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,6 +11,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
 import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
 import MobileMenu from "./MobileMenu";
+
+import { currentPatientAction } from "../../../../core/actions/currentPatientAction";
 
 const styles = theme => ({
     lowPart: {
@@ -134,6 +137,12 @@ export function pageHasPatientBanner(location) {
  */
 class LowPart extends Component {
 
+    componentDidMount() {
+        if (localStorage.getItem('patientId')) {
+            this.props.getCurrentPatientAction();
+        }
+    }
+
     componentWillMount() {
         this.props.setSidebarVisibility(true);
     }
@@ -162,4 +171,19 @@ class LowPart extends Component {
 
 };
 
-export default withStyles(styles)(LowPart);
+const mapStateToProps = state => {
+    return {
+        patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getCurrentPatientAction() {
+            dispatch(currentPatientAction.request());
+        },
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LowPart));

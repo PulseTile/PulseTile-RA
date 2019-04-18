@@ -8,7 +8,6 @@ import AppBar from '@material-ui/core/AppBar';
 import TopPart from "./fragments/TopPart";
 import LowPart from "./fragments/LowPart";
 
-import { demographicsAction } from "../../actions/demographicsAction";
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 /**
@@ -17,12 +16,6 @@ import { themeCommonElements } from "../../../version/config/theme.config";
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 class CustomTopbar extends Component {
-
-    componentDidMount() {
-        if (localStorage.getItem('patientId')) {
-            this.props.getDemographicsAction();
-        }
-    }
 
     render() {
         const ThemeTopBar = get(themeCommonElements, 'topbar', false);
@@ -51,9 +44,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getDemographicsAction() {
-            dispatch(demographicsAction.request());
-        },
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
