@@ -50,8 +50,7 @@ class PublishButton extends Component {
         const { versionsList } = this.props;
         let latestVersion = null;
         if (Array.isArray(versionsList)) {
-            const versionsNumber = versionsList.length;
-            latestVersion = versionsList[versionsNumber - 1];
+            latestVersion = versionsList[0];
         }
 
         let versionData = {

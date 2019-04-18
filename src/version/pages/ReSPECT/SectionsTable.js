@@ -95,8 +95,7 @@ class SectionsTable extends Component {
 
     componentWillMount() {
         const { versionsList } = this.props;
-        const versionsNumber = versionsList.length;
-        let latestVersion = get(versionsList, [versionsNumber - 1], null);
+        let latestVersion = get(versionsList, [0], null);
         if (latestVersion) {
             this.props.getLatestVersion(latestVersion.sourceId, latestVersion.version);
         }

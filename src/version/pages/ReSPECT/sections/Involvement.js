@@ -40,6 +40,9 @@ class Involvement extends Component {
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);
+        if (additionalData.involvementValue !== "valueSetD") {
+            formData.notSelectingReason = "";
+        }
         this.props.addInvolvement(formData);
         const nextStep = (this.props.currentRow > TOTAL_ROWS_NUMBER) ? null : (this.props.currentRow + 1);
         this.props.onRowClick(nextStep);
