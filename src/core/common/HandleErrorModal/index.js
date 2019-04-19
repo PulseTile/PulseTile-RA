@@ -73,7 +73,7 @@ class HandleErrorModal extends Component {
     };
 
     isSessionExpired = (status, message) => {
-        return (Number(status) === 400 && message.includes('JWT')) || Number(status) === 403;
+        return (Number(status) === 400 && (message.includes('JWT') || message.includes('secretSessionId')) || Number(status) === 403);
     };
 
     getErrorDescription = (status, isJwtOld) => {

@@ -16,7 +16,7 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/buttons/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT } from "../statuses";
-import { getFilledValues, getStateData } from "../functions";
+import { getFilledValues, getStateData, getDateUnix } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
@@ -28,14 +28,14 @@ const defaultValues = {
 const tableHeadersArray = [
     { id: 'clinicialName', label: 'Clinician Name', isNumeric: false, isBinary: false, isDate: false, disablePadding: true },
     { id: 'isSrc', label: 'SRC', isNumeric: false, isBinary: true, isDate: false, disablePadding: true },
-    { id: 'dateAndTime', label: 'Date', isNumeric: false, isBinary: false, isDate: true, disablePadding: false },
+    { id: 'dateSigned', label: 'Date', isNumeric: false, isBinary: false, isDate: true, disablePadding: false },
 ];
 
 class CliniciansSignatures extends Component {
 
     state = {
         isMainPanel: true,
-        dateAndTime: null,
+        dateSigned: null,
         rowsArray: getStateData(this.props, 'clinicalSignatures.signaturesArray', []),
     };
 
@@ -64,20 +64,20 @@ class CliniciansSignatures extends Component {
 
     changeDateAndTime = value => {
         this.setState({
-            dateAndTime: value,
+            dateSigned: value,
         })
     };
 
     addNewRow = values => {
-        const { rowsArray, dateAndTime } = this.state;
+        const { rowsArray, dateSigned } = this.state;
         const additionalData = {
-            dateAndTime: dateAndTime,
+            dateSigned: getDateUnix(moment(dateSigned).format(DATE_FORMAT)),
         };
         const newRow = Object.assign({}, values, additionalData);
         const newRowsArray = rowsArray.concat(newRow);
         this.setState({
             rowsArray: newRowsArray,
-            dateAndTime: null,
+            dateSigned: null,
         });
         this.formDispatch(actions.reset('clinicalSignaturesRow'));
     };
@@ -90,7 +90,7 @@ class CliniciansSignatures extends Component {
 
     render() {
         const { classes, sectionsInfo, latestVersionInfo, clinicalSignatures, title, onRowClick, isVersionInfo } = this.props;
-        const { isMainPanel, rowsArray, dateAndTime } = this.state;
+        const { isMainPanel, rowsArray, dateSigned } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalSignatures, 'clinicalSignatures', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
@@ -135,7 +135,7 @@ class CliniciansSignatures extends Component {
                                 <FormLabel className={classes.formLabel}>Date & Time</FormLabel>
                                 <DatePicker
                                     className={classes.formInput}
-                                    selected={dateAndTime}
+                                    selected={dateSigned}
                                     timeFormat="HH:mm"
                                     timeIntervals={15}
                                     dateFormat="M/d/yyyy HH:mm"

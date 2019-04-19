@@ -3,6 +3,7 @@ import get from "lodash/get";
 
 import { domainName } from "../../core/token";
 import { VERSIONS_SERVER_ACTION, versionsServerAction } from "../actions/ReSPECT/versionsServerAction";
+import { httpErrorAction } from '../../core/actions/httpErrorAction';
 
 const getVersionsList = takeEvery(VERSIONS_SERVER_ACTION.REQUEST, function*(action) {
     const url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/respectforms';
@@ -99,9 +100,31 @@ const putOneSection = takeEvery(VERSIONS_SERVER_ACTION.PUT, function*(action) {
         'X-Requested-With': "XMLHttpRequest",
     };
     options.body = JSON.stringify(versionData);
+
+    let responseInfo = {};
     try {
-        const result = yield fetch(url, options).then(res => res.json());
-        yield put(versionsServerAction.successPut(result))
+        const result = yield fetch(url, options)
+            .then(res => {
+                responseInfo.status = get(res, 'status', null);
+                return res.json()
+            })
+            .then(res => {
+                if (responseInfo.status !== 200) {
+                    responseInfo.errorMessage = get(res, 'error', null);
+                    return false;
+                }
+                return res;
+            });
+
+        if (responseInfo.status === 200) {
+            yield put(versionsServerAction.successPut(result))
+        } else {
+            yield put(httpErrorAction.save({
+                status: responseInfo.status,
+                message: responseInfo.errorMessage
+            }));
+        }
+
     } catch(e) {
         yield put(versionsServerAction.error(e))
     }

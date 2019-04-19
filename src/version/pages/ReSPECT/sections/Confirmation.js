@@ -71,7 +71,7 @@ class Confirmation extends Component {
     addNewRow = values => {
         const { rowsArray, reviewDate } = this.state;
         const additionalData = {
-            reviewDate: getDateUnix(reviewDate),
+            reviewDate: getDateUnix(moment(reviewDate).format(DATE_FORMAT)),
         };
         const newRow = Object.assign({}, values, additionalData);
         const newRowsArray = rowsArray.concat(newRow);

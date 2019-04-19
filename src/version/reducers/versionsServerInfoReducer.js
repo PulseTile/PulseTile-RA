@@ -58,7 +58,7 @@ export default (state = initialState, action) => {
             const sourceId = get(compositionIdArray, [0], null);
             const versionId = get(compositionIdArray, [2], null);
 
-            const newArray = versionsArray.unshift({
+            versionsArray.unshift({
                 author: localStorage.getItem('username'),
                 dateCreated: Math.round(new Date().getTime()/1000),
                 source: newVersion.host,
@@ -66,8 +66,6 @@ export default (state = initialState, action) => {
                 status: "Completed",
                 version: versionId,
             });
-
-            console.log('newArray',versionsArray );
 
             return {
                 ...state,
