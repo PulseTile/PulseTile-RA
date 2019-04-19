@@ -120,16 +120,17 @@ class SectionsTable extends Component {
     render() {
         const { classes, sectionsInfo, toggleMode, currentVersionInfo, latestVersionInfo, versionsList, currentVersion, sectionForShow } = this.props;
         const { currentRow } = this.state;
-        const breadcrumbsResource = [
-            { url: null, title: "ReSPECT", isActive: false, onClickAction: toggleMode },
-            { url: null, title: 'New Version', isActive: false }
-        ];
         let isVersionInfo = false;
         let versionSectionsInfo = null;
         if (currentVersion && sectionForShow) {
             versionSectionsInfo = currentVersionInfo;
             isVersionInfo = true;
         }
+        const versionTitle = isVersionInfo ? 'Version ' + currentVersion : 'New version';
+        const breadcrumbsResource = [
+            { url: null, title: "ReSPECT", isActive: false, onClickAction: toggleMode },
+            { url: null, title: versionTitle, isActive: false }
+        ];
         const currentSection = this.getCurrentSection(currentRow);
         return (
             <React.Fragment>

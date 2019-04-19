@@ -52,17 +52,19 @@ export default (state = initialState, action) => {
             const newVersion = get(action, "data", null);
             const versionsArray = get(state, "data", []);
 
-            console.log('-----------------------------------------------');
-            console.log('newVersion', newVersion);
-            console.log('versionsArray', versionsArray);
+            const compositionIdString = get(newVersion, 'compositionUid', null);
+            const compositionIdArray = compositionIdString.split('::');
+
+            const sourceId = get(compositionIdArray, [0], null);
+            const versionId = get(compositionIdArray, [2], null);
 
             const newArray = versionsArray.unshift({
                 author: localStorage.getItem('username'),
                 dateCreated: Math.round(new Date().getTime()/1000),
                 source: newVersion.host,
-                sourceId: newVersion.host + '-' + newVersion.compositionUid,
+                sourceId: newVersion.host + '-' + sourceId,
                 status: "Completed",
-                version: newVersion.version,
+                version: versionId,
             });
 
             console.log('newArray',versionsArray );

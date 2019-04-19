@@ -47,11 +47,20 @@ const styles = theme => ({
 class PublishButton extends Component {
 
     onClickHandler() {
+
+        console.log('++++++++++++++++++++++++++');
+
         const { versionsList } = this.props;
         let latestVersion = null;
         if (Array.isArray(versionsList)) {
             latestVersion = versionsList[0];
         }
+
+        console.log('versionsList', versionsList);
+        console.log('latestVersion', latestVersion);
+
+
+        console.log('-------------------------');
 
         let versionData = {
             author: getAuthorName(),
@@ -66,6 +75,9 @@ class PublishButton extends Component {
             emergencyContacts: this.props.emergencyContacts ? this.props.emergencyContacts : getEmptyJson('emergencyContacts'),
             confirmation: this.props.confirmation ? this.props.confirmation : getEmptyJson('confirmation'),
         };
+
+        console.log('********************************');
+
 
         if (latestVersion) {
             this.props.updateVersion(latestVersion.sourceId, latestVersion.version, versionData);

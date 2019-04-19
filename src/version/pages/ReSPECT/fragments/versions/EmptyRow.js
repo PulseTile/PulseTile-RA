@@ -19,10 +19,12 @@ const styles = theme => ({
     },
 });
 
-const EmptyRow = ({ classes, versionsInfo, toggleMode }) => (
+const EmptyRow = ({ classes, versionsInfo, toggleMode, isLoading }) => (
     <React.Fragment>
         <div className={classes.emptyBlock}>
-            <Typography>No Records found</Typography>
+            <Typography>
+                { isLoading ? 'Loading...' : 'No Records found' }
+            </Typography>
         </div>
         <div>
             <VersionCreateButton toggleMode={toggleMode} />

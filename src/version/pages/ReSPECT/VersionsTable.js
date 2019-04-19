@@ -94,7 +94,7 @@ class VersionsTable extends Component {
     };
 
     render() {
-        const { classes, versionsInfo, toggleMode } = this.props;
+        const { classes, versionsInfo, toggleMode, isLoading } = this.props;
         const { currentVersion } = this.state;
         let breadcrumbsResource = [
             { url: "/summary", title: "Patient Summary", isActive: true },
@@ -118,7 +118,7 @@ class VersionsTable extends Component {
                             <Typography className={classes.title}>ReSPECT Versions</Typography>
                         </div>
                         { versionsNumber === 0
-                            ? <EmptyRow toggleMode={toggleMode} />
+                            ? <EmptyRow toggleMode={toggleMode} isLoading={isLoading} />
                             :
                                 <React.Fragment>
                                     <Paper className={classes.root}>
@@ -152,6 +152,7 @@ class VersionsTable extends Component {
 const mapStateToProps = state => {
     return {
         versionsInfo: state.custom.versionsServerInfo.data,
+        isLoading: state.custom.versionsServerInfo.loading,
     }
 };
 
