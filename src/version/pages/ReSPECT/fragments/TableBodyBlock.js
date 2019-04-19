@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { STATUS_INCOMPLETE, STATUS_COMPLETED } from "../statuses";
 import StatusCell from "./StatusCell";
 
-const styles = {
+const styles = theme => ({
     rowCompleted: {
         backgroundColor: "#fff",
     },
@@ -26,17 +26,29 @@ const styles = {
             fontWeight: 600,
         },
     },
-};
+    rowPreview: {
+        backgroundColor: theme.palette.mainColor,
+        '& td span': {
+            fontWeight: 600,
+            color: theme.palette.paperColor,
+        },
+    }
+});
 
 class TableBodyBlock extends Component {
 
-    getRowClassName = (status, item) => {
+    getRowClassName = (status, item, isVersionInfo) => {
         let result = 'rowInComplete';
         if (status === STATUS_COMPLETED) {
             result = 'rowCompleted';
         } else if (item.id === this.props.currentRow) {
             result = 'rowInProgress';
         }
+
+        if (isVersionInfo && item.id === this.props.currentRow) {
+            result = 'rowPreview';
+        }
+
         return result;
     };
 
@@ -48,7 +60,7 @@ class TableBodyBlock extends Component {
                     sections.map((item, key) => {
                         const status = get(sectionsInfo, [ item.name, 'status'], STATUS_INCOMPLETE);
                         const dateCompleted = get(sectionsInfo, [ item.name, 'dateCompleted'], '-');
-                        const rowClassName = this.getRowClassName(status, item);
+                        const rowClassName = this.getRowClassName(status, item, isVersionInfo);
                         return (
                             <TableRow className={classes[rowClassName]} key={key} onClick={() => onRowClick(item.id)}>
                                 <TableCell scope="row" padding="none">

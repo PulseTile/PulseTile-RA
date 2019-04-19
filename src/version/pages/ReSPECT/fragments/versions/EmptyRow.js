@@ -27,7 +27,7 @@ const EmptyRow = ({ classes, versionsInfo, toggleMode, isLoading }) => (
             </Typography>
         </div>
         <div>
-            <VersionCreateButton toggleMode={toggleMode} />
+            { !isLoading && <VersionCreateButton toggleMode={toggleMode} /> }
         </div>
     </React.Fragment>
 );
