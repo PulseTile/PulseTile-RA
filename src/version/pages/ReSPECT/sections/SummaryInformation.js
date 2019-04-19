@@ -60,7 +60,7 @@ class SummaryInformation extends Component {
                                 defaultValue={filledValues.summary}
                                 disabled={isVersionInfo}
                             />
-                            <FormHelperText>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
+                            <FormHelperText className={classes.formHelpText}>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Details of other relevant planning documents</FormLabel>
@@ -70,7 +70,7 @@ class SummaryInformation extends Component {
                                 defaultValue={filledValues.details}
                                 disabled={isVersionInfo}
                             />
-                            <FormHelperText>
+                            <FormHelperText className={classes.formHelpText}>
                                 Details of other relevant planning documents and where to find them (e.g. Advance Decision to Refuse Treatment, Advance Care Plan). Also include known wishes about organ donation.
                             </FormHelperText>
                         </FormGroup>

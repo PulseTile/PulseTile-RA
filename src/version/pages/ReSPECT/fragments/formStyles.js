@@ -26,10 +26,14 @@ export default theme => ({
         paddingLeft: 10,
     },
     formHelpText: {
-        marginBottom: 5,
+        marginTop: 10,
+        marginBottom: 10,
+        fontSize: 14,
     },
     formHelpTextStreetAddress: {
+        marginTop: 10,
         marginBottom: 15,
+        fontSize: 14,
     },
     formTextarea: {
         width: '98%',

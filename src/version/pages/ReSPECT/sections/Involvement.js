@@ -115,7 +115,7 @@ class Involvement extends Component {
                                     defaultValue={filledValues.notSelectingReason}
                                     disabled={isVersionInfo}
                                 />
-                                <FormHelperText>Document full explanation in the clinical record</FormHelperText>
+                                <FormHelperText className={classes.formHelpText}>Document full explanation in the clinical record</FormHelperText>
                             </FormGroup>
                         }
                         <FormGroup className={classes.formGroup}>
@@ -126,7 +126,7 @@ class Involvement extends Component {
                                 defaultValue={filledValues.documentExplanation}
                                 disabled={isVersionInfo}
                             />
-                            <FormHelperText>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
+                            <FormHelperText className={classes.formHelpText}>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
                         </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>

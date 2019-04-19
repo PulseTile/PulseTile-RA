@@ -80,7 +80,7 @@ class PersonalPreferences extends Component {
                                 defaultValue={filledValues.preferencesText}
                                 disabled={isVersionInfo}
                             />
-                            <FormHelperText>Optional</FormHelperText>
+                            <FormHelperText className={classes.formHelpText}>Optional</FormHelperText>
                         </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>

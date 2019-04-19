@@ -113,7 +113,7 @@ class ClinicalRecommendations extends Component {
                                 defaultValue={filledValues.clinicalGuidance}
                                 disabled={isVersionInfo}
                             />
-                            <FormHelperText>
+                            <FormHelperText className={classes.formHelpText}>
                                 Now provide clinical guidance on specific inverventions that may or may not be wanted or clinicaly appropriate,
                                 includingbeing taken or admitted to hospital +/- receiving life support.
                             </FormHelperText>

@@ -52,14 +52,19 @@ const styles = theme => ({
         paddingTop: 5,
         paddingBottom: 5,
         color: theme.palette.paperColor,
-    }
+    },
+    formHelpText: {
+        marginTop: 10,
+        marginBottom: 10,
+        fontSize: 14,
+    },
 });
 
 const RangeLine = ({ classes, onChangeRange, sourceName, title, helpTitle, leftText, rightText }) => (
     <React.Fragment>
         <FormControl className={classes.titleBlock}>
             <FormLabel className={classes.mainTitle}>{title}</FormLabel>
-            <FormHelperText>{helpTitle}</FormHelperText>
+            <FormHelperText className={classes.formHelpText}>{helpTitle}</FormHelperText>
         </FormControl>
         <FormGroup>
             <div className={classes.descriptionBlock}>
