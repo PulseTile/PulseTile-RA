@@ -15,7 +15,7 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/buttons/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE, DATE_FORMAT } from "../statuses";
-import { getFilledValues, getStateData } from "../functions";
+import { getFilledValues, getStateData, getDateUnix } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
@@ -71,7 +71,7 @@ class Confirmation extends Component {
     addNewRow = values => {
         const { rowsArray, reviewDate } = this.state;
         const additionalData = {
-            reviewDate: reviewDate,
+            reviewDate: getDateUnix(reviewDate),
         };
         const newRow = Object.assign({}, values, additionalData);
         const newRowsArray = rowsArray.concat(newRow);

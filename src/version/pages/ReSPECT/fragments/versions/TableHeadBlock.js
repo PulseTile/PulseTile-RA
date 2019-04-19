@@ -8,7 +8,7 @@ const rows = [
     { id: 'version', numeric: false, disablePadding: false, label: 'Version' },
     { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
     { id: 'time', numeric: false, disablePadding: false, label: 'Time' },
-    { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
+    // { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
     { id: 'author', numeric: false, disablePadding: false, label: 'Author' },
 ];
 

@@ -33,6 +33,7 @@ class VersionCreateButton extends Component {
 
     onClickHandler() {
         this.props.createNewVersion();
+        this.props.getVersionsFromServer();
         this.props.toggleMode();
     };
 
@@ -53,6 +54,9 @@ const mapDispatchToProps = dispatch => {
     return {
         createNewVersion() {
             dispatch(versionsServerAction.create());
+        },
+        getVersionsFromServer() {
+            dispatch(versionsServerAction.request());
         },
     }
 };

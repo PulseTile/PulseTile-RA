@@ -30,7 +30,7 @@ const PatientShow = ({ classes, ...rest }) => (
         <TextField className={classes.labelBlock} label="City" source="city" />
         <TextField className={classes.labelBlock} label="Country" source="country" />
         <TextField className={classes.labelBlock} label="Telephone Number" source="phone" />
-        <TextField className={classes.labelBlock} label="NHS number" source="nhsNumber" />
+        <TextField className={classes.labelBlock} label="CHI number" source="nhsNumber" />
     </ShowTemplate>
 );
 

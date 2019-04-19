@@ -64,9 +64,9 @@ class TableBodyBlock extends Component {
                                     <TableCell scope="row" padding="none">
                                         <span>{time}</span>
                                     </TableCell>
-                                    <TableCell align="right">
-                                        <span>{status}</span>
-                                    </TableCell>
+                                    {/*<TableCell align="right">*/}
+                                        {/*<span>{status}</span>*/}
+                                    {/*</TableCell>*/}
                                     <TableCell align="right">
                                         <span>{author}</span>
                                     </TableCell>

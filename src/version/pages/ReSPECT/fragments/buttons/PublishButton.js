@@ -46,21 +46,16 @@ const styles = theme => ({
 
 class PublishButton extends Component {
 
+    componentWillUnmount() {
+        this.props.removeFormData();
+    }
+
     onClickHandler() {
-
-        console.log('++++++++++++++++++++++++++');
-
         const { versionsList } = this.props;
         let latestVersion = null;
         if (Array.isArray(versionsList)) {
             latestVersion = versionsList[0];
         }
-
-        console.log('versionsList', versionsList);
-        console.log('latestVersion', latestVersion);
-
-
-        console.log('-------------------------');
 
         let versionData = {
             author: getAuthorName(),
@@ -75,9 +70,6 @@ class PublishButton extends Component {
             emergencyContacts: this.props.emergencyContacts ? this.props.emergencyContacts : getEmptyJson('emergencyContacts'),
             confirmation: this.props.confirmation ? this.props.confirmation : getEmptyJson('confirmation'),
         };
-
-        console.log('********************************');
-
 
         if (latestVersion) {
             this.props.updateVersion(latestVersion.sourceId, latestVersion.version, versionData);
@@ -118,6 +110,8 @@ const mapDispatchToProps = dispatch => {
     return {
         updateVersion(sourceId, versionId, versionData) {
             dispatch(versionsServerAction.put(sourceId, versionId, versionData));
+        },
+        removeFormData() {
             dispatch(personalDetailsAction.remove());
             dispatch(summaryInformationAction.remove());
             dispatch(personalPreferencesAction.remove());
@@ -128,7 +122,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(emergencyViewAction.remove());
             dispatch(confirmationAction.remove());
             dispatch(emergencyContactsAction.remove());
-        },
+        }
     }
 };
 

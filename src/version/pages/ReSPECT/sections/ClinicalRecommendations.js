@@ -18,7 +18,7 @@ import { clinicalRecommendationsAction } from "../../../actions/ReSPECT/clinical
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
-import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine } from "../functions";
+import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine, getDateUnix } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import formStyles from "../fragments/formStyles";
@@ -49,7 +49,7 @@ class ClinicalRecommendations extends Component {
             cprValue: cprValue,
             focusValue: get(focusValue, '[0]', 0) >= 50 ? FOCUS_RIGHT : FOCUS_LEFT,
             dateCompleted: moment(dateCompleted).format(DATE_FORMAT),
-            dateDecision: moment(dateCompleted).format(DATE_FORMAT),
+            dateDecision: getDateUnix(),
         };
         const formData = Object.assign({}, data, additionalData);
         formData.status = getSectionStatus(formData, FORM_FIELDS_NUMBER);

@@ -28,7 +28,8 @@ const styles = theme => ({
         marginTop: "10%",
     },
     image: {
-        width: "auto",
+        width: "30%",
+        height: "30%",
     },
 });
 
@@ -90,7 +91,7 @@ class PatientsList extends Component {
                 <TextField source="name" label="Name" />
                 <TextField source="address" label="Address" />
                 <DateField source="birthDate" label="Born" />
-                <TextField source="nhsNumber" label="NHS No." />
+                <TextField source="nhsNumber" label="CHI No." />
                 <ViewButton viewAction={this.redirectToSummary} />
             </ListTemplate>
         )

@@ -127,18 +127,10 @@ export function getEmptyJson(sectionName) {
     return get(RespectJson, sectionName, null);
 }
 
-function getVersionStatus(sectionsInfo) {
-    let completedSectionsCount = 0;
-    sections.forEach(item => {
-        if (get(sectionsInfo, [item.name, 'status'], null) === STATUS_COMPLETED) {
-            completedSectionsCount++;
-        }
-    });
-    let result = STATUS_INCOMPLETE;
-    if (completedSectionsCount === TOTAL_ROWS_NUMBER) {
-        result = STATUS_COMPLETED;
-    } else if (completedSectionsCount > 0) {
-        result = STATUS_IN_PROGRESS;
-    }
-    return result;
+export function getDateUnix(date = null) {
+    let dateCreated = date ? date : moment().format(DATE_FORMAT);
+    let dateArray = dateCreated.split('-');
+    let newDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+
+    return (new Date(newDate).getTime());
 }
