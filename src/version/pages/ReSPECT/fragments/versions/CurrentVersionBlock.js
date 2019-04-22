@@ -72,13 +72,28 @@ const styles = theme => ({
 class CurrentVersionBlock extends Component {
 
     render() {
-        const { classes, currentVersion, versionInfo, toggleMode } = this.props;
+        const { classes, currentVersion, versionInfo, toggleMode, patientInfo } = this.props;
+
+        const personalDetails = {
+            preferredName: get(patientInfo, 'prefix', null),
+            firstName: get(patientInfo, 'firstName', null),
+            surname: get(patientInfo, 'lastName', null),
+            streetAddress: get(patientInfo, 'address', null),
+            addressSecondLine: "",
+            city: get(patientInfo, 'city', null),
+            county: get(patientInfo, 'district', null),
+            postCode: get(patientInfo, 'postCode', null),
+            country: get(patientInfo, 'country', null),
+            nhsNumber: get(patientInfo, 'nhsNumber', null),
+            birthDate: get(patientInfo, 'birthDate', null),
+        };
+
         return (
             <Grid className={classes.mainBlock} item xs={12} sm={6}>
                 <div className={classes.blockTitle}>
                     <Typography className={classes.title}>ReSPECT Sections (Version {currentVersion})</Typography>
                     <Tooltip title="Create">
-                        <IconButton className={classes.printButton} onClick={() => createPDF(versionInfo)} >
+                        <IconButton className={classes.printButton} onClick={() => createPDF(versionInfo, personalDetails)} >
                             <PrintIcon />
                         </IconButton>
                     </Tooltip>
@@ -99,6 +114,7 @@ class CurrentVersionBlock extends Component {
 
 const mapStateToProps = state => {
     return {
+        patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
         versionInfo: get(state, 'custom.versionsServerInfo.version', null),
     }
 };

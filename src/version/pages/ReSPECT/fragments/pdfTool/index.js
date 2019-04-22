@@ -12,15 +12,15 @@ import page2 from "./page2";
 import { FOCUS_LEFT, FOCUS_RIGHT } from "../../fragments/cprVariants";
 import { DATE_FORMAT } from "../../statuses";
 
-function address(obj){
+function address(personalDetails){
     let arr = [];
 
-    let streetAddress = get(obj, 'sections.personalDetails.streetAddress', null);
-    let addressSecondLine = get(obj, 'sections.personalDetails.addressSecondLine', null);
-    let city = get(obj, 'sections.personalDetails.city', null);
-    let country = get(obj, 'sections.personalDetails.country', null);
-    let county = get(obj, 'sections.personalDetails.county', null);
-    let postCode = get(obj, 'sections.personalDetails.postCode', null);
+    let streetAddress = get(personalDetails, 'streetAddress', null);
+    let addressSecondLine = get(personalDetails, 'addressSecondLine', null);
+    let city = get(personalDetails, 'city', null);
+    let country = get(personalDetails, 'country', null);
+    let county = get(personalDetails, 'county', null);
+    let postCode = get(personalDetails, 'postCode', null);
 
     if (streetAddress) {
         arr.push(streetAddress);
@@ -50,7 +50,7 @@ function getDDMMMYYYY(date){
 }
 
 function getClinicalRecommendations(obj){
-    const focusValue = get(obj, 'sections.clinicalRecommendations.focusValue', null);
+    const focusValue = get(obj, 'clinicalRecommendations.focusValue', null);
     if (!focusValue) {
         return null;
     } else if (focusValue === FOCUS_LEFT) {
@@ -63,6 +63,12 @@ function getClinicalRecommendations(obj){
 }
 
 function getWrappedText(text, rowLength) {
+    if (!text) {
+        return null;
+    }
+
+    console.log('+++++++++++++++++++++++++++++++++++++++++++');
+
     const textArray = text.split(' ');
     let rows = [];
     let currentRow = '';
@@ -85,7 +91,7 @@ function getWrappedText(text, rowLength) {
     return rows;
 }
 
-export default (obj) => {
+export default (obj, personalDetails) => {
 
     let doc = new PDFDocument();
     let stream = doc.pipe(blobStream());
@@ -93,7 +99,7 @@ export default (obj) => {
     let seniorClinician;
     let clinicians = [];
 
-    const signaturesArray = get(obj, 'sections.clinicalSignatures.signaturesArray', []);
+    const signaturesArray = get(obj, 'clinicalSignatures.signaturesArray', []);
     const signaturesNumber = signaturesArray.length;
     for (let i = 0; i < signaturesNumber; i++) {
         let item = signaturesArray[i];
@@ -105,28 +111,30 @@ export default (obj) => {
     }
 
     let form = {
-        preferredName: get(obj, 'sections.personalDetails.preferredName', null),
-        fullName: get(obj, 'sections.personalDetails.firstName', null) + ' ' + get(obj, 'sections.personalDetails.surname', null),
-        dateOfBirth: getDDMMMYYYY(get(obj, 'sections.personalDetails.birthDate', null)),
-        dateCompleted: get(obj, 'sections.personalDetails.dateCompleted', null),
-        chiNumber: get(obj, 'sections.personalDetails.nhsNumber', null),
-        address: address(obj),
-        sectionTwoDiagnostics: get(obj, 'sections.summaryInformation.summary', null),
-        sectionTwoDetails: get(obj, 'sections.summaryInformation.details', null),
-        sectionThreeX: get(obj, 'sections.personalPreferences.preferencesValue', null),
-        sectionThreeDetails: get(obj, 'sections.personalPreferences.preferencesText', null),
+
+        preferredName: get(personalDetails, 'preferredName', null),
+        fullName: get(personalDetails, 'firstName', null) + ' ' + get(personalDetails, 'surname', null),
+        dateOfBirth: getDDMMMYYYY(get(personalDetails, 'birthDate', null)),
+        dateCompleted: get(personalDetails, 'dateCompleted', null),
+        chiNumber: get(personalDetails, 'nhsNumber', null),
+        address: address(personalDetails),
+
+        sectionTwoDiagnostics: get(obj, 'summaryInformation.summary', null),
+        sectionTwoDetails: get(obj, 'summaryInformation.details', null),
+        sectionThreeX: get(obj, 'personalPreferences.preferencesValue', null),
+        sectionThreeDetails: get(obj, 'personalPreferences.preferencesText', null),
         sectionFourClinicalRecommendationsX: getClinicalRecommendations(obj),
-        sectionFourClinicalRecommendations: get(obj, 'sections.clinicalRecommendations.clinicalGuidance', null),
-        sectionFiveCapacity: get(obj, 'sections.capacityAndRepresentation.capacityFirst', null),
-        sectionFiveLegalProxy: get(obj, 'sections.capacityAndRepresentation.capacitySecond', null),
-        sectionSixA: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'valueSetA'),
-        sectionSixB: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'valueSetB'),
-        sectionSixC: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'valueSetC'),
-        sectionSixC1: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'at0005'),
-        sectionSixC2: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'at0011'),
-        sectionSixC3: (get(obj, 'sections.involvement.nonSelectABCreason', null) === 'at0012'),
-        sectionSixD: get(obj, 'sections.involvement.documentExplanation', null),
-        sectionSixDetailsOfDecision: get(obj, 'sections.involvement.detailsOfDecision', null),
+        sectionFourClinicalRecommendations: get(obj, 'clinicalRecommendations.clinicalGuidance', null),
+        sectionFiveCapacity: get(obj, 'capacityAndRepresentation.capacityFirst', null),
+        sectionFiveLegalProxy: get(obj, 'capacityAndRepresentation.capacitySecond', null),
+        sectionSixA: (get(obj, 'involvement.nonSelectABCreason', null) === 'valueSetA'),
+        sectionSixB: (get(obj, 'involvement.nonSelectABCreason', null) === 'valueSetB'),
+        sectionSixC: (get(obj, 'involvement.nonSelectABCreason', null) === 'valueSetC'),
+        sectionSixC1: (get(obj, 'involvement.nonSelectABCreason', null) === 'at0005'),
+        sectionSixC2: (get(obj, 'involvement.nonSelectABCreason', null) === 'at0011'),
+        sectionSixC3: (get(obj, 'involvement.nonSelectABCreason', null) === 'at0012'),
+        sectionSixD: get(obj, 'involvement.documentExplanation', null),
+        sectionSixDetailsOfDecision: get(obj, 'involvement.detailsOfDecision', null),
         sectionSevenClinician1: {
             designation: ( clinicians[0] ? clinicians[0].designation : '' ),
             name: ( clinicians[0] ? clinicians[0].clinicialName : '' ),
@@ -146,40 +154,40 @@ export default (obj) => {
             dateTime: ( seniorClinician ? getDDMMMYYYY(seniorClinician.dateAndTime) : '' )
         },
         sectionEightContact1: {
-            role: get(obj, 'sections.emergencyContacts.contactsArray[0].role', null),
-            name: get(obj, 'sections.emergencyContacts.contactsArray[0].name', null),
-            telephone: get(obj, 'sections.emergencyContacts.contactsArray[0].phone', null),
-            details: get(obj, 'sections.emergencyContacts.contactsArray[0].details', null),
+            role: get(obj, 'emergencyContacts.contactsArray[0].role', null),
+            name: get(obj, 'emergencyContacts.contactsArray[0].name', null),
+            telephone: get(obj, 'emergencyContacts.contactsArray[0].phone', null),
+            details: get(obj, 'emergencyContacts.contactsArray[0].details', null),
         },
         sectionEightContact2: {
-            role: get(obj, 'sections.emergencyContacts.contactsArray[1].role', null),
-            name: get(obj, 'sections.emergencyContacts.contactsArray[1].name', null),
-            telephone: get(obj, 'sections.emergencyContacts.contactsArray[1].phone', null),
-            details: get(obj, 'sections.emergencyContacts.contactsArray[1].details', null),
+            role: get(obj, 'emergencyContacts.contactsArray[1].role', null),
+            name: get(obj, 'emergencyContacts.contactsArray[1].name', null),
+            telephone: get(obj, 'emergencyContacts.contactsArray[1].phone', null),
+            details: get(obj, 'emergencyContacts.contactsArray[1].details', null),
         },
         sectionEightContact3: {
-            role: get(obj, 'sections.emergencyContacts.contactsArray[2].role', null),
-            name: get(obj, 'sections.emergencyContacts.contactsArray[2].name', null),
-            telephone: get(obj, 'sections.emergencyContacts.contactsArray[2].phone', null),
-            details: get(obj, 'sections.emergencyContacts.contactsArray[2].details', null),
+            role: get(obj, 'secons.emergencyContacts.contactsArray[2].role', null),
+            name: get(obj, 'emergencyContacts.contactsArray[2].name', null),
+            telephone: get(obj, 'emergencyContacts.contactsArray[2].phone', null),
+            details: get(obj, 'emergencyContacts.contactsArray[2].details', null),
         },
         sectionEightContact4: {
-            role: get(obj, 'sections.emergencyContacts.contactsArray[3].role', null),
-            name: get(obj, 'sections.emergencyContacts.contactsArray[3].name', null),
-            telephone: get(obj, 'sections.emergencyContacts.contactsArray[3].phone', null),
-            details: get(obj, 'sections.emergencyContacts.contactsArray[3].details', null),
+            role: get(obj, 'emergencyContacts.contactsArray[3].role', null),
+            name: get(obj, 'emergencyContacts.contactsArray[3].name', null),
+            telephone: get(obj, 'emergencyContacts.contactsArray[3].phone', null),
+            details: get(obj, 'emergencyContacts.contactsArray[3].details', null),
         },
         sectionNineConfirmation1: {
-            reviewDate: getDDMMMYYYY(get(obj, 'sections.confirmation.confirmationsArray[0].reviewDate', null)),
-            designation: get(obj, 'sections.confirmation.confirmationsArray[0].designation', null),
-            name: get(obj, 'sections.confirmation.confirmationsArray[0].clinicialName', null),
-            number: get(obj, 'sections.confirmation.confirmationsArray[0].gmcNumber', null),
+            reviewDate: getDDMMMYYYY(get(obj, 'confirmation.confirmationsArray[0].reviewDate', null)),
+            designation: get(obj, 'confirmation.confirmationsArray[0].designation', null),
+            name: get(obj, 'confirmation.confirmationsArray[0].clinicialName', null),
+            number: get(obj, 'confirmation.confirmationsArray[0].gmcNumber', null),
         },
         sectionNineConfirmation2: {
-            reviewDate: getDDMMMYYYY(get(obj, 'sections.confirmation.confirmationsArray[1].reviewDate', null)),
-            designation: get(obj, 'sections.confirmation.confirmationsArray[1].designation', null),
-            name: get(obj, 'sections.confirmation.confirmationsArray[1].clinicialName', null),
-            number: get(obj, 'sections.confirmation.confirmationsArray[1].gmcNumber', null),
+            reviewDate: getDDMMMYYYY(get(obj, 'confirmation.confirmationsArray[1].reviewDate', null)),
+            designation: get(obj, 'confirmation.confirmationsArray[1].designation', null),
+            name: get(obj, 'confirmation.confirmationsArray[1].clinicialName', null),
+            number: get(obj, 'confirmation.confirmationsArray[1].gmcNumber', null),
         }
     };
 
@@ -213,7 +221,7 @@ export default (obj) => {
     }
     if (get(form, 'chiNumber', null)) {
         doc.fontSize(12)
-            .text(form.chiNumber, 33, 129, {
+            .text(form.chiNumber.toString(), 33, 129, {
                 width: 285,
                 height: 23,
                 characterSpacing: 16.5
@@ -399,7 +407,7 @@ export default (obj) => {
         });
     }
     if (get(form, 'sectionSevenClinician1.number', null)) {
-        doc.text(form.sectionSevenClinician1.number, 314, 497, {
+        doc.text(form.sectionSevenClinician1.number.toString(), 314, 497, {
             width: 85,
             height: 18
         });
@@ -480,7 +488,7 @@ export default (obj) => {
         });
     }
     if (get(form, 'sectionEightContact1.telephone', null)) {
-        doc.text(form.sectionEightContact1.telephone, 314, 605, {
+        doc.text(form.sectionEightContact1.telephone.toString(), 314, 605, {
             width: 117,
             height: 18
         });
@@ -563,7 +571,7 @@ export default (obj) => {
         });
     }
     if (get(form, 'sectionNineConfirmation1.number', null)) {
-        doc.text(form.sectionNineConfirmation1.number, 395, 740, {
+        doc.text(form.sectionNineConfirmation1.number.toString(), 395, 740, {
             width: 108,
             height: 18
         });
@@ -588,12 +596,11 @@ export default (obj) => {
         });
     }
     if (get(form, 'sectionNineConfirmation2.number', null)) {
-        doc.text(form.sectionNineConfirmation2.number, 395, 760, {
+        doc.text(form.sectionNineConfirmation2.number.toString(), 395, 760, {
             width: 108,
             height: 18
         });
     }
-
 
     doc.end();
     stream.on('finish', function() {

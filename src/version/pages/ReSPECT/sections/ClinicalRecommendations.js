@@ -92,16 +92,6 @@ class ClinicalRecommendations extends Component {
         const { classes, sectionsInfo, latestVersionInfo, clinicalRecommendations, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, focusValue, cprValue, dateCompleted } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalRecommendations, 'clinicalRecommendations', isVersionInfo, defaultValues);
-
-        console.log('======================================================');
-
-        console.log('dateCompleted', dateCompleted);
-        console.log('filledValues', filledValues);
-        console.log('moment', new Date(filledValues.dateCompleted));
-
-
-        console.log('======================================================');
-
         return (
             <React.Fragment>
                 <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>

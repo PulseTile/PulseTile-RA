@@ -14,7 +14,6 @@ import { CLINICAL_SIGNATURES_ACTION } from "../actions/ReSPECT/clinicalSignature
 import { EMERGENCY_CONTACTS_ACTION } from "../actions/ReSPECT/emergencyContactsAction";
 import { CONFIRMATION_ACTION } from "../actions/ReSPECT/confirmationAction";
 import { EMERGENCY_VIEW_ACTION } from "../actions/ReSPECT/emergencyViewAction";
-import { VERSIONS_ACTION } from "../actions/ReSPECT/versionsAction";
 
 /**
  * This component returns version reducers
@@ -35,7 +34,5 @@ export default {
     emergencyContacts: createRespectPluginReducer(EMERGENCY_CONTACTS_ACTION),
     confirmation: createRespectPluginReducer(CONFIRMATION_ACTION),
     emergencyView: createRespectPluginReducer(EMERGENCY_VIEW_ACTION),
-    versionsInfo: createRespectPluginReducer(VERSIONS_ACTION),
-
     versionsServerInfo,
 };
