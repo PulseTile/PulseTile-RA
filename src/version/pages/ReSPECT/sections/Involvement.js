@@ -65,7 +65,7 @@ class Involvement extends Component {
         const InsertRadioValues = ['valueSetC1', 'valueSetC2', 'valueSetC3'];
         return (
             <React.Fragment>
-                <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     <LocalForm model="involvement" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>

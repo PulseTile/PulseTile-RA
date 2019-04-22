@@ -42,11 +42,11 @@ class EmergencyView extends Component {
     };
 
     render() {
-        const { classes, title } = this.props;
+        const { classes, title, isVersionInfo } = this.props;
         const { isMainPanel } = this.state;
         return (
             <React.Fragment>
-                <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     <div className={classes.titleBlock}>
                         <Typography variant="h1" className={classes.firstTitle}>Emergency (CPR) view</Typography>
                         <Typography className={classes.secondTitle}>{this.getCprLabel()}</Typography>

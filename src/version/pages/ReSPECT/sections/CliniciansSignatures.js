@@ -94,7 +94,7 @@ class CliniciansSignatures extends Component {
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalSignatures, 'clinicalSignatures', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
-                <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }

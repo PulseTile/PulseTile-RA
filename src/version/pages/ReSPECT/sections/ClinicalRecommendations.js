@@ -94,7 +94,7 @@ class ClinicalRecommendations extends Component {
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalRecommendations, 'clinicalRecommendations', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
-                <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     <RangeLine
                         onChangeRange={this.setRangeInput}
                         sourceName={focusValue}

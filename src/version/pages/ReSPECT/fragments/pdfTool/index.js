@@ -66,9 +66,6 @@ function getWrappedText(text, rowLength) {
     if (!text) {
         return null;
     }
-
-    console.log('+++++++++++++++++++++++++++++++++++++++++++');
-
     const textArray = text.split(' ');
     let rows = [];
     let currentRow = '';
@@ -91,7 +88,22 @@ function getWrappedText(text, rowLength) {
     return rows;
 }
 
-export default (obj, personalDetails) => {
+export default (obj, patientInfo) => {
+
+    const personalDetails = {
+        preferredName: get(patientInfo, 'prefix', null),
+        firstName: get(patientInfo, 'firstName', null),
+        surname: get(patientInfo, 'lastName', null),
+        streetAddress: get(patientInfo, 'address', null),
+        addressSecondLine: "",
+        city: get(patientInfo, 'city', null),
+        county: get(patientInfo, 'district', null),
+        postCode: get(patientInfo, 'postCode', null),
+        country: get(patientInfo, 'country', null),
+        nhsNumber: get(patientInfo, 'nhsNumber', null),
+        birthDate: get(patientInfo, 'birthDate', null),
+    };
+
 
     let doc = new PDFDocument();
     let stream = doc.pipe(blobStream());
@@ -110,6 +122,8 @@ export default (obj, personalDetails) => {
         }
     }
 
+    console.log('obj', obj);
+
     let form = {
 
         preferredName: get(personalDetails, 'preferredName', null),
@@ -121,20 +135,25 @@ export default (obj, personalDetails) => {
 
         sectionTwoDiagnostics: get(obj, 'summaryInformation.summary', null),
         sectionTwoDetails: get(obj, 'summaryInformation.details', null),
+
         sectionThreeX: get(obj, 'personalPreferences.preferencesValue', null),
         sectionThreeDetails: get(obj, 'personalPreferences.preferencesText', null),
+
         sectionFourClinicalRecommendationsX: getClinicalRecommendations(obj),
         sectionFourClinicalRecommendations: get(obj, 'clinicalRecommendations.clinicalGuidance', null),
+
         sectionFiveCapacity: get(obj, 'capacityAndRepresentation.capacityFirst', null),
-        sectionFiveLegalProxy: get(obj, 'capacityAndRepresentation.capacitySecond', null),
-        sectionSixA: (get(obj, 'involvement.nonSelectABCreason', null) === 'valueSetA'),
-        sectionSixB: (get(obj, 'involvement.nonSelectABCreason', null) === 'valueSetB'),
-        sectionSixC: (get(obj, 'involvement.nonSelectABCreason', null) === 'valueSetC'),
-        sectionSixC1: (get(obj, 'involvement.nonSelectABCreason', null) === 'at0005'),
-        sectionSixC2: (get(obj, 'involvement.nonSelectABCreason', null) === 'at0011'),
-        sectionSixC3: (get(obj, 'involvement.nonSelectABCreason', null) === 'at0012'),
-        sectionSixD: get(obj, 'involvement.documentExplanation', null),
-        sectionSixDetailsOfDecision: get(obj, 'involvement.detailsOfDecision', null),
+        sectionFiveLegalProxy: get(obj, 'capacityAndRepresentation.legalProxyValue', null),
+
+        sectionSixA: (get(obj, 'involvement.involvementValue', null) === 'valueSetA'),
+        sectionSixB: (get(obj, 'involvement.involvementValue', null) === 'valueSetB'),
+        sectionSixC: (get(obj, 'involvement.involvementValue', null) === 'valueSetC'),
+        sectionSixC1: (get(obj, 'involvement.involvementValue', null) === 'valueSetC1'),
+        sectionSixC2: (get(obj, 'involvement.involvementValue', null) === 'valueSetC2'),
+        sectionSixC3: (get(obj, 'involvement.involvementValue', null) === 'valueSetC3'),
+        sectionSixD: (get(obj, 'involvement.involvementValue', null)  === 'valueSetD'),
+        sectionSixNotSelectingReason: get(obj, 'involvement.notSelectingReason', null),
+
         sectionSevenClinician1: {
             designation: ( clinicians[0] ? clinicians[0].designation : '' ),
             name: ( clinicians[0] ? clinicians[0].clinicialName : '' ),
@@ -190,6 +209,9 @@ export default (obj, personalDetails) => {
             number: get(obj, 'confirmation.confirmationsArray[1].gmcNumber', null),
         }
     };
+
+    console.log('Form', form);
+
 
     doc.image(page1, 0, 0, {width: doc.page.width, height: doc.page.height});
 
@@ -297,12 +319,12 @@ export default (obj, personalDetails) => {
     doc.image(page2, 0, 0, {width: doc.page.width, height: doc.page.height});
 
     // SECTION 5
-    if (form.sectionFiveCapacity === '1') {
+    if (form.sectionFiveCapacity) {
         doc.ellipse(535, 52, 16, 10)
             .lineWidth(2)
             .strokeColor('#ff0000')
             .stroke();
-    } else if (form.sectionFiveCapacity === '0') {
+    } else {
         doc.ellipse(562, 52, 16, 10)
             .lineWidth(2)
             .strokeColor('#ff0000')
@@ -311,19 +333,19 @@ export default (obj, personalDetails) => {
 
     // Legal Proxy
     switch (get(form, 'sectionFiveLegalProxy', null)) {
-        case 'at0004': // Yes
+        case 'Yes': // Yes
             doc.ellipse(470, 89, 16, 10)
                 .lineWidth(2)
                 .strokeColor('#ff0000')
                 .stroke();
             break;
-        case 'at0005': // No
+        case 'No': // No
             doc.ellipse(498, 89, 14, 10)
                 .lineWidth(2)
                 .strokeColor('#ff0000')
                 .stroke();
             break;
-        case 'at0006': // Unknown
+        case 'Unknown': // Unknown
             doc.ellipse(544, 89, 35, 12)
                 .lineWidth(2)
                 .strokeColor('#ff0000')
@@ -374,17 +396,8 @@ export default (obj, personalDetails) => {
                 height: 23
             });
     }
-    if (get(form, 'sectionSixD', null)) {
-        const textRowsArray = getWrappedText(form.sectionSixD, 125);
-        const initialPositionOY = 359;
-        doc.fontSize(10);
-        for (let i = 0, n = textRowsArray.length; i < n; i++) {
-            let row = textRowsArray[i];
-            doc.text(row, 31, initialPositionOY + i * 15);
-        }
-    }
-    if (get(form, 'sectionSixDetailsOfDecision', null)) {
-        const textRowsArray = getWrappedText(form.sectionSixDetailsOfDecision, 125);
+    if (get(form, 'sectionSixNotSelectingReason', null)) {
+        const textRowsArray = getWrappedText(form.sectionSixNotSelectingReason, 125);
         const initialPositionOY = 419;
         doc.fontSize(10);
         for (let i = 0, n = textRowsArray.length; i < n; i++) {
@@ -394,6 +407,7 @@ export default (obj, personalDetails) => {
     }
 
     // SECTION 7
+    doc.fontSize(10);
     if (get(form, 'sectionSevenClinician1.designation', null)) {
         doc.text(form.sectionSevenClinician1.designation, 31, 497, {
             width: 111,
@@ -475,6 +489,7 @@ export default (obj, personalDetails) => {
     }
 
     // SECTION 8
+    doc.fontSize(10);
     if (get(form, 'sectionEightContact1.role', null)) {
         doc.text(form.sectionEightContact1.role, 31, 605, {
             width: 111,
@@ -552,6 +567,7 @@ export default (obj, personalDetails) => {
     }
 
     // SECTION 9
+    doc.fontSize(10);
     if (get(form, 'sectionNineConfirmation1.reviewDate', null)) {
         doc.text(form.sectionNineConfirmation1.reviewDate, 31, 740, {
             width: 78,

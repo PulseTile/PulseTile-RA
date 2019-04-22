@@ -26,14 +26,14 @@ const styles = theme => ({
         justifyContent: "space-between",
         alignItems: "center",
         height: 49,
-        color: "#fff",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
         paddingLeft: 15,
     },
     title: {
-        color: "#fff",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 400,
@@ -43,9 +43,9 @@ const styles = theme => ({
     },
     tableList: {
         '& thead': {
-            backgroundColor: "#e5e5e5",
+            backgroundColor: theme.palette.borderColor,
             '& tr th span span': {
-                color: "#000",
+                color: theme.palette.fontColor,
             },
             '& tr th': {
                 paddingLeft: 10,
@@ -61,11 +61,11 @@ const styles = theme => ({
             backgroundColor: theme.palette.mainColor,
         },
         '& tbody tr:hover td span': {
-            color: "#fff"
+            color: theme.palette.paperColor,
         }
     },
     printButton: {
-        color: "#fff",
+        color: theme.palette.paperColor,
     }
 });
 
@@ -73,27 +73,12 @@ class CurrentVersionBlock extends Component {
 
     render() {
         const { classes, currentVersion, versionInfo, toggleMode, patientInfo } = this.props;
-
-        const personalDetails = {
-            preferredName: get(patientInfo, 'prefix', null),
-            firstName: get(patientInfo, 'firstName', null),
-            surname: get(patientInfo, 'lastName', null),
-            streetAddress: get(patientInfo, 'address', null),
-            addressSecondLine: "",
-            city: get(patientInfo, 'city', null),
-            county: get(patientInfo, 'district', null),
-            postCode: get(patientInfo, 'postCode', null),
-            country: get(patientInfo, 'country', null),
-            nhsNumber: get(patientInfo, 'nhsNumber', null),
-            birthDate: get(patientInfo, 'birthDate', null),
-        };
-
         return (
             <Grid className={classes.mainBlock} item xs={12} sm={6}>
                 <div className={classes.blockTitle}>
                     <Typography className={classes.title}>ReSPECT Sections (Version {currentVersion})</Typography>
-                    <Tooltip title="Create">
-                        <IconButton className={classes.printButton} onClick={() => createPDF(versionInfo, personalDetails)} >
+                    <Tooltip title="Print">
+                        <IconButton className={classes.printButton} onClick={() => createPDF(versionInfo, patientInfo)} >
                             <PrintIcon />
                         </IconButton>
                     </Tooltip>

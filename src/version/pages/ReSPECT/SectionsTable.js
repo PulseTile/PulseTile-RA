@@ -7,6 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import PrintIcon from '@material-ui/icons/Print';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { personalDetailsAction } from "../../actions/ReSPECT/personalDetailsAction";
 import { summaryInformationAction } from "../../actions/ReSPECT/summaryInformationAction";
@@ -27,6 +30,7 @@ import TableBodyBlock from "./fragments/TableBodyBlock";
 import CurrentSectionBlock from "./fragments/CurrentSectionBlock";
 import PublishButton from "./fragments/buttons/PublishButton";
 import sections from "./sections";
+import createPDF from "./fragments/pdfTool";
 
 const styles = theme => ({
     root: {
@@ -41,14 +45,14 @@ const styles = theme => ({
         justifyContent: "space-between",
         alignItems: "center",
         height: 49,
-        color: "#fff",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
         paddingLeft: 15,
     },
     title: {
-        color: "#fff",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 400,
@@ -58,9 +62,9 @@ const styles = theme => ({
     },
     tableList: {
         '& thead': {
-            backgroundColor: "#e5e5e5",
+            backgroundColor: theme.palette.borderColor,
             '& tr th span span': {
-                color: "#000",
+                color: theme.palette.fontColor,
             },
             '& tr th': {
                 paddingLeft: 10,
@@ -76,8 +80,11 @@ const styles = theme => ({
             backgroundColor: theme.palette.mainColor,
         },
         '& tbody tr:hover td span': {
-            color: "#fff"
+            color: theme.palette.paperColor,
         }
+    },
+    printButton: {
+        color: theme.palette.paperColor,
     },
 });
 
@@ -118,7 +125,7 @@ class SectionsTable extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, toggleMode, currentVersionInfo, latestVersionInfo, versionsList, currentVersion, sectionForShow } = this.props;
+        const { classes, sectionsInfo, toggleMode, currentVersionInfo, latestVersionInfo, versionsList, currentVersion, sectionForShow, patientInfo } = this.props;
         const { currentRow } = this.state;
         let isVersionInfo = false;
         let versionSectionsInfo = null;
@@ -140,6 +147,13 @@ class SectionsTable extends Component {
                     <Grid className={classes.list} item xs={12} sm={currentRow ? 6 : 12}>
                         <div className={classes.blockTitle}>
                             <Typography className={classes.title}>ReSPECT Sections</Typography>
+                            { isVersionInfo &&
+                                <Tooltip title="Print">
+                                    <IconButton className={classes.printButton} onClick={() => createPDF(currentVersionInfo, patientInfo)} >
+                                        <PrintIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            }
                         </div>
                         <Paper className={classes.root}>
                             <div className={classes.tableWrapper}>
@@ -193,6 +207,7 @@ const mapStateToProps = state => {
         currentVersionInfo: get(state, 'custom.versionsServerInfo.version', null),
         latestVersionInfo: get(state, 'custom.versionsServerInfo.latest', []),
         versionsList: get(state, 'custom.versionsServerInfo.data', []),
+        patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
     }
 };
 

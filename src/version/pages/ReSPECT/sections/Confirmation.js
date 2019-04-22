@@ -100,7 +100,7 @@ class Confirmation extends Component {
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, confirmation, 'confirmation', isVersionInfo, defaultValues);
         return (
             <React.Fragment>
-                <MainFormBlock isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
+                <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     { (rowsArray && rowsArray.length > 0) &&
                         <TableOfRows headers={tableHeadersArray} rowsArray={rowsArray} />
                     }
