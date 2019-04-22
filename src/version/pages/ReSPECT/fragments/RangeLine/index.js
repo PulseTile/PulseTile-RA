@@ -57,6 +57,7 @@ const styles = theme => ({
         marginTop: 10,
         marginBottom: 10,
         fontSize: 14,
+        lineHeight: "1.3em",
     },
 });
 

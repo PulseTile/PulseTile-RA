@@ -29,11 +29,13 @@ export default theme => ({
         marginTop: 10,
         marginBottom: 10,
         fontSize: 14,
+        lineHeight: "1.3em",
     },
     formHelpTextStreetAddress: {
         marginTop: 10,
         marginBottom: 15,
         fontSize: 14,
+        lineHeight: "1.3em",
     },
     formTextarea: {
         width: '98%',

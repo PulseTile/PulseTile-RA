@@ -130,7 +130,7 @@ class PersonalDetails extends Component {
                             <FormLabel className={classes.formLabel}>Date of Birth</FormLabel>
                             <DatePicker
                                 className={classes.formInput}
-                                selected={birthDate}
+                                selected={birthDate ? birthDate : new Date(filledValues.birthDate)}
                                 onChange={value => this.changeBirthDate(value)}
                                 disabled
                             />

@@ -149,7 +149,7 @@ class Confirmation extends Component {
                             <FormLabel className={classes.formLabel}>Date completed</FormLabel>
                             <DatePicker
                                 className={classes.formInput}
-                                selected={dateCompleted}
+                                selected={dateCompleted ? dateCompleted : new Date(filledValues.dateCompleted)}
                                 onChange={value => this.changeDateCompleted(value)}
                                 todayButton="Today"
                                 disabled={isVersionInfo}
