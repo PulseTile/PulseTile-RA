@@ -18,7 +18,7 @@ import { clinicalRecommendationsAction } from "../../../actions/ReSPECT/clinical
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
-import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine, getDateUnix } from "../functions";
+import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine, getDateUnix, getDateForDatepicker } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
 import formStyles from "../fragments/formStyles";
@@ -92,6 +92,10 @@ class ClinicalRecommendations extends Component {
         const { classes, sectionsInfo, latestVersionInfo, clinicalRecommendations, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, focusValue, cprValue, dateCompleted } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalRecommendations, 'clinicalRecommendations', isVersionInfo, defaultValues);
+
+        const dateFromStorage = get(filledValues, 'dateCompleted', null);
+        const dateToForm = dateCompleted ? dateCompleted : getDateForDatepicker(dateFromStorage);
+
         return (
             <React.Fragment>
                 <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
@@ -149,7 +153,7 @@ class ClinicalRecommendations extends Component {
                             <FormLabel className={classes.formLabel}>Date completed</FormLabel>
                             <DatePicker
                                 className={classes.formInput}
-                                selected={dateCompleted ? dateCompleted : new Date(filledValues.dateCompleted)}
+                                selected={dateToForm}
                                 onChange={value => this.changeDateCompleted(value)}
                                 todayButton="Today"
                                 disabled={isVersionInfo}

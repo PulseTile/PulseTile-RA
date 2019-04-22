@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control, actions } from 'react-redux-form';
 import moment from "moment";
@@ -15,7 +16,7 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/buttons/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_COMPLETED, STATUS_INCOMPLETE, DATE_FORMAT } from "../statuses";
-import { getFilledValues, getStateData, getDateUnix } from "../functions";
+import { getFilledValues, getStateData, getDateUnix, getDateForDatepicker } from "../functions";
 import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
@@ -98,6 +99,10 @@ class Confirmation extends Component {
         const { classes, sectionsInfo, latestVersionInfo, confirmation, title, onRowClick, isVersionInfo } = this.props;
         const { isMainPanel, rowsArray, reviewDate, dateCompleted } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, confirmation, 'confirmation', isVersionInfo, defaultValues);
+
+        const dateFromStorage = get(filledValues, 'dateCompleted', null);
+        const dateToForm = dateCompleted ? dateCompleted : getDateForDatepicker(dateFromStorage);
+
         return (
             <React.Fragment>
                 <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
@@ -149,7 +154,7 @@ class Confirmation extends Component {
                             <FormLabel className={classes.formLabel}>Date completed</FormLabel>
                             <DatePicker
                                 className={classes.formInput}
-                                selected={dateCompleted ? dateCompleted : new Date(filledValues.dateCompleted)}
+                                selected={dateToForm}
                                 onChange={value => this.changeDateCompleted(value)}
                                 todayButton="Today"
                                 disabled={isVersionInfo}

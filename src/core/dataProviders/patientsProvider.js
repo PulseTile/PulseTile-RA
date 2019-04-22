@@ -188,9 +188,6 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
             }
-
-            console.log('dataFromRequest', dataFromRequest );
-
             return {
                 data: dataFromRequest,
             };

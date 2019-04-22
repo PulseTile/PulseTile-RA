@@ -131,6 +131,12 @@ export function getDateUnix(date = null) {
     let dateCreated = date ? date : moment().format(DATE_FORMAT);
     let dateArray = dateCreated.split('-');
     let newDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
-
     return (new Date(newDate).getTime());
+}
+
+export function getDateForDatepicker(date = null) {
+    let dateCreated = date ? date : moment().format(DATE_FORMAT);
+    let dateArray = dateCreated.split('-');
+    let newDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+    return new Date(newDate);
 }
