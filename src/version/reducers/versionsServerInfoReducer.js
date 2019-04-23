@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                newVersion: get(action, "data", null),
+                first: get(action, "data", null),
             };
         case VERSIONS_SERVER_ACTION.SUCCESS_PUT:
 
@@ -71,6 +71,7 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: false,
                 data: versionsArray,
+                first: null,
             };
         case VERSIONS_SERVER_ACTION.ERROR:
             return {

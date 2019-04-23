@@ -49,7 +49,7 @@ class Confirmation extends Component {
         const additionalData = {
             confirmationsArray: rowsArray,
             status: (rowsArray.length > 0) ? STATUS_COMPLETED : STATUS_INCOMPLETE,
-            dateCompleted: moment(dateCompleted).format(DATE_FORMAT),
+            dateCompleted: dateCompleted ? moment(dateCompleted).format(DATE_FORMAT) : moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);
         this.props.addConfirmations(formData);

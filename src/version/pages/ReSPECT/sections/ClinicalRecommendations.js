@@ -48,7 +48,7 @@ class ClinicalRecommendations extends Component {
         const additionalData = {
             cprValue: cprValue,
             focusValue: get(focusValue, '[0]', 0) >= 50 ? FOCUS_RIGHT : FOCUS_LEFT,
-            dateCompleted: moment(dateCompleted).format(DATE_FORMAT),
+            dateCompleted: dateCompleted ? moment(dateCompleted).format(DATE_FORMAT) : moment().format(DATE_FORMAT),
             dateDecision: getDateUnix(),
         };
         const formData = Object.assign({}, data, additionalData);
@@ -86,6 +86,12 @@ class ClinicalRecommendations extends Component {
         this.setState({
             dateCompleted: value,
         })
+    };
+
+    getDateToForm = (dateCompleted) => {
+        const filledValues = this.getFilledValuesArray();
+        const dateFromStorage = get(filledValues, 'dateCompleted', null);
+        return dateCompleted ? dateCompleted : getDateForDatepicker(dateFromStorage);
     };
 
     render() {

@@ -125,7 +125,7 @@ class SectionsTable extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, toggleMode, currentVersionInfo, latestVersionInfo, versionsList, currentVersion, sectionForShow, patientInfo } = this.props;
+        const { classes, sectionsInfo, toggleMode, currentVersionInfo, latestVersionInfo, versionsList, firstVersionInfo, currentVersion, sectionForShow, patientInfo } = this.props;
         const { currentRow } = this.state;
         let isVersionInfo = false;
         let versionSectionsInfo = null;
@@ -168,7 +168,7 @@ class SectionsTable extends Component {
                                         isVersionInfo={isVersionInfo}
                                     />
                                 </Table>
-                                <PublishButton toggleMode={toggleMode} versionsList={versionsList} isVersionInfo={isVersionInfo} />
+                                <PublishButton toggleMode={toggleMode} versionsList={versionsList} firstVersionInfo={firstVersionInfo} isVersionInfo={isVersionInfo} />
                             </div>
                         </Paper>
                     </Grid>
@@ -206,6 +206,7 @@ const mapStateToProps = state => {
         },
         currentVersionInfo: get(state, 'custom.versionsServerInfo.version', null),
         latestVersionInfo: get(state, 'custom.versionsServerInfo.latest', []),
+        firstVersionInfo: get(state, 'custom.versionsServerInfo.first', null),
         versionsList: get(state, 'custom.versionsServerInfo.data', []),
         patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
     }

@@ -51,10 +51,21 @@ class PublishButton extends Component {
     }
 
     onClickHandler() {
-        const { versionsList } = this.props;
-        let latestVersion = null;
-        if (Array.isArray(versionsList)) {
-            latestVersion = versionsList[0];
+        const { versionsList, firstVersionInfo } = this.props;
+
+        let sourceId = null;
+        let versionId = null;
+
+        if (firstVersionInfo) {
+            const host = get(firstVersionInfo, 'host', null);
+            const compositionId = get(firstVersionInfo, 'compositionUid', null);
+            const compositionIdArray = compositionId.split('::');
+            sourceId = host + '-' + get(compositionIdArray, [0], null);
+            versionId = get(compositionIdArray, [2], null);
+        } else if (Array.isArray(versionsList)) {
+            const latestVersion = versionsList[0];
+            sourceId = latestVersion.sourceId;
+            versionId = latestVersion.version;
         }
 
         let versionData = {
@@ -71,14 +82,14 @@ class PublishButton extends Component {
             confirmation: this.props.confirmation ? this.props.confirmation : getEmptyJson('confirmation'),
         };
 
-        if (latestVersion) {
-            this.props.updateVersion(latestVersion.sourceId, latestVersion.version, versionData);
+        if (sourceId && versionId) {
+            this.props.updateVersion(sourceId, versionId, versionData);
             this.props.toggleMode();
         }
     };
 
     render() {
-        const { classes, isVersionInfo, versionsList, clinicalRecommendations, involvement } = this.props;
+        const { classes, isVersionInfo, clinicalRecommendations, involvement } = this.props;
         if (!isVersionInfo && get(clinicalRecommendations, 'status', null) === STATUS_COMPLETED && get(involvement, 'status', null) === STATUS_COMPLETED) {
             return (
                 <Tooltip title="Publish">
