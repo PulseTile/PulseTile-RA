@@ -31,9 +31,9 @@ const styles = theme => ({
 
 class VersionCreateButton extends Component {
 
-    onClickHandler() {
-        this.props.createNewVersion();
-        this.props.getVersionsFromServer();
+    async onClickHandler() {
+        await this.props.createNewVersion();
+        await this.props.getVersionsFromServer();
         this.props.toggleMode();
     };
 

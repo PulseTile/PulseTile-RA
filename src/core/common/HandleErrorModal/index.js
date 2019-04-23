@@ -102,6 +102,10 @@ class HandleErrorModal extends Component {
         const errorStatus = get(httpErrors, 'status', null);
         const errorMessage = get(httpErrors, 'message', null);
 
+        let isWrongPatient = false;
+        if (errorMessage) {
+            isWrongPatient = errorMessage.includes('patient');
+        }
         const isOpen = isErrorModalOpen || (errorStatus && errorMessage);
 
         const isJwtOld = this.isSessionExpired(errorStatus, errorMessage);
@@ -113,9 +117,16 @@ class HandleErrorModal extends Component {
                         <Typography className={classes.titleBlock}>
                             Connection Error
                         </Typography>
-                        <Typography className={classes.description}>{errorDescription}</Typography>
+                        <Typography className={classes.description}>
+                            {
+                                isWrongPatient ? errorMessage : errorDescription
+                            }
+                        </Typography>
                         <div className={classes.toolbar}>
-                            <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
+                            {
+                                !isWrongPatient &&
+                                    <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
+                            }
                             { isJwtOld
                                 ? <CustomLogoutButton title="Login again" hideIcon={true} />
                                 : <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
