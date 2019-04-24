@@ -75,7 +75,6 @@ class PersonalDetails extends Component {
             firstName: userNameInfo ? userNameInfo.firstName : null,
             surname: userNameInfo ? userNameInfo.surname : null,
             streetAddress: patientInfo.address,
-            addressSecondLine: '',
             city: patientInfo.city,
             county: patientInfo.district,
             country: patientInfo.country,
@@ -135,13 +134,6 @@ class PersonalDetails extends Component {
                                 disabled
                             />
                             <FormHelperText className={classes.formHelpTextStreetAddress}>Street address</FormHelperText>
-                            <Control.text
-                                className={classes.formInput}
-                                model="personalDetails.addressSecondLine"
-                                defaultValue={filledValues.addressSecondLine}
-                                disabled
-                            />
-                            <FormHelperText className={classes.formHelpText}>Address line 2</FormHelperText>
                         </FormGroup>
                         <FormGroup className={classes.smallFormGroup}>
                             <Control.text
