@@ -293,7 +293,7 @@ export default (type, resource, params) => {
         .then(res => {
             const search = get(params, 'filter.filterText', null);
             if (responseInfo.status === 404 && search) {
-                responseInfo.errorMessage = 'No patient with the name "' + search + '" could be found';
+                responseInfo.errorMessage = 'No patient by that surname, please try again';
                 let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
                 throw new HttpError(errorString);
             }

@@ -164,7 +164,12 @@ class LowPart extends Component {
                             <PatientBanner location={location} classes={classes} patientInfo={patientInfo} />
                     }
                 </div>
-                <MobileMenu setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} patientInfo={patientInfo} />
+                <MobileMenu
+                    isPageHasPatientBanner={isPageHasPatientBanner}
+                    setSidebarVisibility={setSidebarVisibility}
+                    isSidebarOpen={isSidebarOpen}
+                    patientInfo={patientInfo}
+                />
             </Toolbar>
         );
     }

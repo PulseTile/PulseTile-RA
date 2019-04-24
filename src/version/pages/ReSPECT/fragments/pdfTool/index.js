@@ -235,8 +235,11 @@ export default (obj, patientInfo) => {
             height: 23
         });
     }
-    if (get(form, 'dateCompleted', null)) {
-        doc.text(form.dateCompleted, 505, 100, {
+
+    const defaultDate = moment().format(DATE_FORMAT);
+    const dateCompleted = get(form, 'dateCompleted', defaultDate);
+    if (dateCompleted) {
+        doc.text(dateCompleted, 505, 100, {
             width: 75,
             height: 23
         });

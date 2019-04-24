@@ -79,16 +79,21 @@ class MobileMenu extends Component {
     };
 
     render() {
-        const { classes, setSidebarVisibility, isSidebarOpen, patientInfo } = this.props;
+        const { classes, setSidebarVisibility, isSidebarOpen, patientInfo, isPageHasPatientBanner } = this.props;
         const { isMobileBannerOpened } = this.state;
         return (
             <React.Fragment>
                 <div className={classes.menuAndBannerMobile}>
                     <MenuButtonMobile classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
-                    <Typography variant="h6" className={classes.patientName}>{get(patientInfo, 'name', null)}</Typography>
-                    <FontAwesomeIcon icon={faSortDown} size="1x" className={classes.iconArrowDown} onClick={() => this.toggleMobileBanner()} />
+                    {
+                        !isPageHasPatientBanner &&
+                            <React.Fragment>
+                                <Typography variant="h6" className={classes.patientName}>{get(patientInfo, 'name', null)}</Typography>
+                                <FontAwesomeIcon icon={faSortDown} size="1x" className={classes.iconArrowDown} onClick={() => this.toggleMobileBanner()} />
+                            </React.Fragment>
+                    }
                 </div>
-                { isMobileBannerOpened &&
+                { (isMobileBannerOpened && !isPageHasPatientBanner) &&
                     <div className={classes.patientBannerMobile}>
                         <Typography variant="body2" className={classes.bannerRow}>
                             <span>Doctor: </span>

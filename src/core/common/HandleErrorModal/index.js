@@ -128,8 +128,12 @@ class HandleErrorModal extends Component {
                                     <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
                             }
                             { isJwtOld
-                                ? <CustomLogoutButton title="Login again" hideIcon={true} />
-                                : <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
+                                ?
+                                    <CustomLogoutButton title="Login again" hideIcon={true} />
+                                :
+                                    <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>
+                                        { isWrongPatient ? 'Close' : 'Reload page' }
+                                    </Button>
                             }
                         </div>
                     </div>

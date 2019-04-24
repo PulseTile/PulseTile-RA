@@ -81,7 +81,6 @@ class PublishButton extends Component {
             emergencyContacts: this.props.emergencyContacts ? this.props.emergencyContacts : getEmptyJson('emergencyContacts'),
             confirmation: this.props.confirmation ? this.props.confirmation : getEmptyJson('confirmation'),
         };
-
         if (sourceId && versionId) {
             this.props.updateVersion(sourceId, versionId, versionData);
             this.props.toggleMode();

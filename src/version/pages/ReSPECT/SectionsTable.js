@@ -88,6 +88,8 @@ const styles = theme => ({
     },
 });
 
+let isFirst = true;
+
 class SectionsTable extends Component {
 
     state = {
@@ -105,6 +107,16 @@ class SectionsTable extends Component {
         let latestVersion = get(versionsList, [0], null);
         if (latestVersion) {
             this.props.getLatestVersion(latestVersion.sourceId, latestVersion.version);
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { firstVersionInfo, getVersionsFromServer } = nextProps;
+        if (get(firstVersionInfo, 'compositionUid', null) && isFirst) {
+            isFirst = false;
+            setTimeout(() => {
+                getVersionsFromServer();
+            }, 10000);
         }
     }
 

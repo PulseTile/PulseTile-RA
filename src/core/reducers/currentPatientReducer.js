@@ -20,6 +20,7 @@ function getPatientInfo(response) {
     const country = get(addressArray, [[0], 'country'], null);
     const postCode = get(addressArray, [[0], 'postalCode'], null);
     const line = get(addressArray, [[0], 'line', [0]], null);
+    const addressSecondLine = get(addressArray, [[0], 'line', [1]], null);
     const district = get(addressArray, [[0], 'district'], null);
     return {
         data: {
@@ -29,6 +30,7 @@ function getPatientInfo(response) {
             lastName: lastName,
             name: [prefix, firstName, lastName].join(' '),
             address: line,
+            addressSecondLine: addressSecondLine,
             city: city,
             country: country,
             district: district,

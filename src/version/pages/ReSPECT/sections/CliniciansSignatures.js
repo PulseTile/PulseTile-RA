@@ -15,7 +15,7 @@ import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/buttons/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
-import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT } from "../statuses";
+import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT, DATE_TIME_PICKER_FORMAT } from "../statuses";
 import { getFilledValues, getStateData, getDateUnix } from "../functions";
 import formStyles from "../fragments/formStyles";
 
@@ -138,7 +138,7 @@ class CliniciansSignatures extends Component {
                                     selected={dateSigned}
                                     timeFormat="HH:mm"
                                     timeIntervals={15}
-                                    dateFormat="M/d/yyyy HH:mm"
+                                    dateFormat={DATE_TIME_PICKER_FORMAT}
                                     timeInputLabel="Time:"
                                     showTimeInput
                                     onChange={value => this.changeDateAndTime(value)}

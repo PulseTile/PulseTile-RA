@@ -12,10 +12,9 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { personalDetailsAction } from "../../../actions/ReSPECT/personalDetailsAction";
-import { versionsServerAction } from "../../../actions/ReSPECT/versionsServerAction";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
-import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
+import { TOTAL_ROWS_NUMBER, DATE_FORMAT, DATE_PICKER_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues } from "../functions";
 import formStyles from "../fragments/formStyles";
 
@@ -65,27 +64,18 @@ class PersonalDetails extends Component {
         }
     };
 
-    getStreetAddress = totalAddress => {
-        const totalAddressArray = totalAddress.split(' ');
-        return {
-            streetAddress: totalAddressArray[0],
-            addressSecondLine: (totalAddressArray.length >= 5) ? totalAddressArray[1] : '',
-        }
-    };
-
     render() {
         const { classes, personalDetails, patientInfo, title, onRowClick, sectionsInfo, latestVersionInfo, isVersionInfo } = this.props;
         const { isMainPanel, birthDate } = this.state;
 
         const userNameInfo = patientInfo.name ? this.getUserNameInfo(patientInfo.name) : null;
-        const streetAddress = patientInfo.address ? this.getStreetAddress(patientInfo.address) : null;
 
         const defaultValues = {
             preferredName: userNameInfo ? userNameInfo.preferredName : null,
             firstName: userNameInfo ? userNameInfo.firstName : null,
             surname: userNameInfo ? userNameInfo.surname : null,
-            streetAddress: streetAddress ? streetAddress.streetAddress : null,
-            addressSecondLine: streetAddress ? streetAddress.addressSecondLine : null,
+            streetAddress: patientInfo.address,
+            addressSecondLine: '',
             city: patientInfo.city,
             county: patientInfo.district,
             country: patientInfo.country,
@@ -132,6 +122,7 @@ class PersonalDetails extends Component {
                                 className={classes.formInput}
                                 selected={birthDate ? birthDate : new Date(filledValues.birthDate)}
                                 onChange={value => this.changeBirthDate(value)}
+                                dateFormat={DATE_PICKER_FORMAT}
                                 disabled
                             />
                         </FormGroup>

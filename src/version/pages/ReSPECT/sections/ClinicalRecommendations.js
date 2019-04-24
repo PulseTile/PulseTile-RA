@@ -17,7 +17,7 @@ import Radio from '@material-ui/core/Radio';
 import { clinicalRecommendationsAction } from "../../../actions/ReSPECT/clinicalRecommendationsAction";
 import MainFormBlock from "../fragments/MainFormBlock";
 import SectionToolbar from "../fragments/SectionToolbar";
-import { TOTAL_ROWS_NUMBER, DATE_FORMAT } from "../statuses";
+import { TOTAL_ROWS_NUMBER, DATE_FORMAT, DATE_PICKER_FORMAT } from "../statuses";
 import { getSectionStatus, getFilledValues, getStateData, getInitialRangeLine, getDateUnix, getDateForDatepicker } from "../functions";
 import RangeLine from "../fragments/RangeLine";
 import RadioButtonName from "../fragments/RadioButtonName";
@@ -163,6 +163,7 @@ class ClinicalRecommendations extends Component {
                                 onChange={value => this.changeDateCompleted(value)}
                                 todayButton="Today"
                                 disabled={isVersionInfo}
+                                dateFormat={DATE_PICKER_FORMAT}
                             />
                         </FormGroup>
 

@@ -12,7 +12,7 @@ const styles = theme => ({
     createButton: {
         display: "block",
         float: "right",
-        width: 100,
+        width: 110,
         height: 40,
         margin: 8,
         padding: 0,
@@ -31,9 +31,12 @@ const styles = theme => ({
 
 class VersionCreateButton extends Component {
 
+    state = {
+        isLoading: false,
+    };
+
     async onClickHandler() {
         await this.props.createNewVersion();
-        await this.props.getVersionsFromServer();
         this.props.toggleMode();
     };
 
@@ -54,9 +57,6 @@ const mapDispatchToProps = dispatch => {
     return {
         createNewVersion() {
             dispatch(versionsServerAction.create());
-        },
-        getVersionsFromServer() {
-            dispatch(versionsServerAction.request());
         },
     }
 };

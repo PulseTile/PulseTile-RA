@@ -12,7 +12,10 @@ import StatusCell from "./StatusCell";
 
 const styles = theme => ({
     rowCompleted: {
-        backgroundColor: "#fff",
+        backgroundColor: theme.palette.paperColor,
+    },
+    rowStatusNone: {
+        backgroundColor: theme.palette.paperColor,
     },
     rowInComplete: {
         backgroundColor: "#f1f0f0",
@@ -47,6 +50,9 @@ class TableBodyBlock extends Component {
 
         if (isVersionInfo && item.id === this.props.currentRow) {
             result = 'rowPreview';
+        }
+        if (isVersionInfo && (item.id === 1 || item.id === 10)) {
+            result = 'rowStatusNone';
         }
 
         return result;
