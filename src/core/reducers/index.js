@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 
+import currentPatientReducer from "./currentPatientReducer";
 import showHeadings from "./showHeadingsReducer";
 import createCustomReducer from "./createCustomReducer";
 import httpErrorReducer from "./httpErrorReducer";
+import userSearchReducer from "./userSearchReducer";
 
 import {
     SYNOPSIS_ALLERGIES_ACTION,
@@ -27,6 +29,8 @@ const coreReducers = {
     httpErrors: httpErrorReducer,
     showMode: createCustomReducer(SHOW_MODE_ACTION, "data"),
     showHeadings,
+    userSearch: userSearchReducer,
+    currentPatient: currentPatientReducer,
 };
 
 const reducers = Object.assign({}, coreReducers, nonCoreReducers);
