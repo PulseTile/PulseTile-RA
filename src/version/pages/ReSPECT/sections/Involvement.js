@@ -68,14 +68,14 @@ class Involvement extends Component {
                 <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
                     <LocalForm model="involvement" onSubmit={values => this.submitForm(values)}>
                         <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
+                            <FormLabel className={classes.formLabel}>The clinician(s) signing this plan is/are confirming that (select A,B or C, OR complete section D below):</FormLabel>
                             <RadioGroup name="involvementValue" className={classes.radioGroup} value={variant} onChange={e => this.handleChange(e)}>
                                 <FormControlLabel
                                     className={classes.formControlLabel}
                                     disabled={isVersionInfo}
                                     value="valueSetA"
                                     control={<Radio />}
-                                    label="A - This person has the mental capacity to participate in making these recommendations. They have benn fully involved in making this plan."
+                                    label="A - This person has the mental capacity to participate in making these recommendations. They have been fully involved in making this plan."
                                 />
                                 <FormControlLabel
                                     className={classes.formControlLabel}
@@ -126,7 +126,6 @@ class Involvement extends Component {
                                 defaultValue={filledValues.documentExplanation}
                                 disabled={isVersionInfo}
                             />
-                            <FormHelperText className={classes.formHelpText}>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
                         </FormGroup>
                         { !isVersionInfo && <SectionToolbar onRowClick={onRowClick} /> }
                     </LocalForm>

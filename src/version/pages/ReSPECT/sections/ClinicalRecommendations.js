@@ -108,7 +108,7 @@ class ClinicalRecommendations extends Component {
                     <RangeLine
                         onChangeRange={this.setRangeInput}
                         sourceName={focusValue}
-                        title="Clinical recomendations for emergency care and treatment"
+                        title="Clinical recommendations for emergency care and treatment"
                         helpTitle="Please mark along the scale"
                         leftText="Focus on life sustaining treatment as per guidance below"
                         rightText="Focus on sympton control as per guidance below"
@@ -124,8 +124,8 @@ class ClinicalRecommendations extends Component {
                                 disabled={isVersionInfo}
                             />
                             <FormHelperText className={classes.formHelpText}>
-                                Now provide clinical guidance on specific inverventions that may or may not be wanted or clinicaly appropriate,
-                                includingbeing taken or admitted to hospital +/- receiving life support.
+                                Now provide clinical guidance on specific inverventions that may or may not be wanted or Clinically appropriate,
+                                including being taken or admitted to hospital +/- receiving life support.
                             </FormHelperText>
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>

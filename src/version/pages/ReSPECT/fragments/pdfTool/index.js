@@ -139,8 +139,6 @@ export default (obj, patientInfo) => {
         }
     }
 
-    console.log('obj', obj);
-
     let form = {
 
         preferredName: get(personalDetails, 'preferredName', null),
@@ -229,9 +227,6 @@ export default (obj, patientInfo) => {
         }
     };
 
-    console.log('Form', form);
-
-
     doc.image(page1, 0, 0, {width: doc.page.width, height: doc.page.height});
 
     // SECTION 1
@@ -256,7 +251,7 @@ export default (obj, patientInfo) => {
     }
 
     const defaultDate = moment().format(DATE_FORMAT);
-    const dateCompleted = get(form, 'dateCompleted', defaultDate);
+    const dateCompleted = get(form, 'dateCompleted', null) ? form.dateCompleted : defaultDate;
     if (dateCompleted) {
         doc.text(dateCompleted, 505, 100, {
             width: 75,

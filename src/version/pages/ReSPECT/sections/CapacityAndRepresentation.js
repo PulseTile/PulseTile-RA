@@ -90,7 +90,7 @@ class CapacityAndRepresentation extends Component {
                             </RadioGroup>
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Do that have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
+                            <FormLabel className={classes.formLabel}>Do they have legal proxy (e.g. welfare attorney, person with parental responsibility who can participate on their behalf in making recommendations?</FormLabel>
                             <RadioGroup name="legalProxyValue" className={classes.radioGroup} value={legalProxyValue} onChange={e => this.handleChecking(e)}>
                                 <FormControlLabel
                                     value="Yes"

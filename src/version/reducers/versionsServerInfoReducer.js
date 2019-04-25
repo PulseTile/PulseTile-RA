@@ -74,6 +74,7 @@ export default (state = initialState, action) => {
                 loading: false,
                 data: versionsArray,
                 first: null,
+                version: null,
             };
         case VERSIONS_SERVER_ACTION.ERROR:
             return {

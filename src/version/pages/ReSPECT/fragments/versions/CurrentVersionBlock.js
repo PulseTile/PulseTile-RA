@@ -32,6 +32,15 @@ const styles = theme => ({
         fontWeight: 700,
         paddingLeft: 15,
     },
+    blockLoading: {
+        paddingTop: 15,
+        paddingBottom: 15,
+        textAlign: "center",
+        backgroundColor: theme.palette.paperColor,
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
+        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
+    },
     title: {
         color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
@@ -72,7 +81,7 @@ const styles = theme => ({
 class CurrentVersionBlock extends Component {
 
     render() {
-        const { classes, currentVersion, versionInfo, toggleMode, patientInfo } = this.props;
+        const { classes, currentVersion, versionInfo, toggleMode, patientInfo, isLoading } = this.props;
         return (
             <Grid className={classes.mainBlock} item xs={12} sm={6}>
                 <div className={classes.blockTitle}>
@@ -83,14 +92,23 @@ class CurrentVersionBlock extends Component {
                         </IconButton>
                     </Tooltip>
                 </div>
-                <Paper className={classes.root}>
-                    <div className={classes.tableWrapper}>
-                        <Table className={classes.tableList} aria-labelledby="tableTitle">
-                            <TableHeadBlock />
-                            <SectionsInfo sections={sections} versionInfo={versionInfo} toggleMode={toggleMode} currentVersion={currentVersion} />
-                        </Table>
-                    </div>
-                </Paper>
+                {
+                    isLoading
+                        ?
+                            <div className={classes.blockLoading}>
+                                <Typography>Loading...</Typography>
+                            </div>
+                        :
+                            <Paper className={classes.root}>
+                                <div className={classes.tableWrapper}>
+                                    <Table className={classes.tableList} aria-labelledby="tableTitle">
+                                        <TableHeadBlock />
+                                        <SectionsInfo sections={sections} versionInfo={versionInfo} toggleMode={toggleMode} currentVersion={currentVersion} />
+                                    </Table>
+                                </div>
+                            </Paper>
+                }
+
             </Grid>
         );
     }
@@ -101,6 +119,7 @@ const mapStateToProps = state => {
     return {
         patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
         versionInfo: get(state, 'custom.versionsServerInfo.version', null),
+        isLoading: get(state, 'custom.versionsServerInfo.loading', null),
     }
 };
 

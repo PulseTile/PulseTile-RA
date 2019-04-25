@@ -60,7 +60,7 @@ class SummaryInformation extends Component {
                                 defaultValue={filledValues.summary}
                                 disabled={isVersionInfo}
                             />
-                            <FormHelperText className={classes.formHelpText}>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recomendations recorder.</FormHelperText>
+                            <FormHelperText className={classes.formHelpText}>Including diagnosis, communication needs (e.g. interpreter, communication aids) and reasons for the preferences and recommendations recorded.</FormHelperText>
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Details of other relevant planning documents</FormLabel>
