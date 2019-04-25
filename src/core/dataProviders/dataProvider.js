@@ -18,7 +18,6 @@ import sort, { ASC, DESC } from 'sort-array-objects';
 import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
-import dummyPatients from "../pages/PatientsList/dummyPatients";
 import newPatientsProvider from "./patientsProvider";
 import { httpErrorAction } from '../actions/httpErrorAction';
 

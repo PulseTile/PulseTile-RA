@@ -16,17 +16,11 @@ import SectionToolbar from "../fragments/SectionToolbar";
 import AddNewButton from "../fragments/buttons/AddNewButton";
 import TableOfRows from "../fragments/TableOfRows";
 import { TOTAL_ROWS_NUMBER, STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT, DATE_TIME_PICKER_FORMAT } from "../statuses";
-import { getFilledValues, getStateData, getDateUnix } from "../functions";
+import { getStateData, getDateUnix } from "../functions";
 import formStyles from "../fragments/formStyles";
 
-const defaultValues = {
-    clinicalSignature: localStorage.getItem('username'),
-    nhsNumber: localStorage.getItem('userId'),
-    author: localStorage.getItem('username'),
-};
-
 const tableHeadersArray = [
-    { id: 'clinicialName', label: 'Clinician Name', isNumeric: false, isBinary: false, isDate: false, disablePadding: true },
+    { id: 'clinicialName', label: 'Clinical Name', isNumeric: false, isBinary: false, isDate: false, disablePadding: true },
     { id: 'isSrc', label: 'SRC', isNumeric: false, isBinary: true, isDate: false, disablePadding: true },
     { id: 'dateSigned', label: 'Date', isNumeric: false, isBinary: false, isDate: true, disablePadding: false },
 ];
@@ -37,6 +31,7 @@ class CliniciansSignatures extends Component {
         isMainPanel: true,
         dateSigned: null,
         rowsArray: getStateData(this.props, 'clinicalSignatures.signaturesArray', []),
+        clinicalSignature: localStorage.getItem('username'),
     };
 
     attachDispatch(dispatch) {
@@ -80,6 +75,7 @@ class CliniciansSignatures extends Component {
             dateSigned: null,
         });
         this.formDispatch(actions.reset('clinicalSignaturesRow'));
+        this.formDispatch(actions.push('clinicalSignaturesRow.clinicalSignature', localStorage.getItem('username')));
     };
 
     addSignature = (name, ref) => {
@@ -89,9 +85,8 @@ class CliniciansSignatures extends Component {
     };
 
     render() {
-        const { classes, sectionsInfo, latestVersionInfo, clinicalSignatures, title, onRowClick, isVersionInfo } = this.props;
-        const { isMainPanel, rowsArray, dateSigned } = this.state;
-        const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, clinicalSignatures, 'clinicalSignatures', isVersionInfo, defaultValues);
+        const { classes, title, onRowClick, isVersionInfo } = this.props;
+        const { isMainPanel, rowsArray, dateSigned, clinicalSignature } = this.state;
         return (
             <React.Fragment>
                 <MainFormBlock isVersionInfo={isVersionInfo} isMainPanel={isMainPanel} classes={classes} title={title} togglePanel={this.togglePanel}>
@@ -105,7 +100,7 @@ class CliniciansSignatures extends Component {
                             getDispatch={(dispatch) => this.attachDispatch(dispatch)}
                         >
                             <FormGroup className={classes.formGroup}>
-                                <FormLabel className={classes.mainFormLabel}>Clinician Signature</FormLabel>
+                                <FormLabel className={classes.mainFormLabel}>Clinical Signature</FormLabel>
                             </FormGroup>
                             <FormGroup className={classes.smallFormGroup}>
                                 <FormLabel className={classes.formLabel}>Designation (grade / speciality)</FormLabel>
@@ -116,7 +111,7 @@ class CliniciansSignatures extends Component {
                                 />
                             </FormGroup>
                             <FormGroup className={classes.smallFormGroup}>
-                                <FormLabel className={classes.formLabel}>Clinicial name</FormLabel>
+                                <FormLabel className={classes.formLabel}>Clinical name</FormLabel>
                                 <Control.text
                                     className={classes.formInput}
                                     model="clinicalSignaturesRow.clinicialName"
@@ -151,7 +146,8 @@ class CliniciansSignatures extends Component {
                                 <Control.text
                                     className={classes.formInput}
                                     model="clinicalSignaturesRow.clinicalSignature"
-                                    defaultValue={filledValues.clinicalSignature}
+                                    defaultValue={clinicalSignature}
+                                    disabled={true}
                                 />
                             </FormGroup>
 

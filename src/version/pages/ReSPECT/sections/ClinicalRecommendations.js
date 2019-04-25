@@ -152,7 +152,7 @@ class ClinicalRecommendations extends Component {
                                 className={classes.formInput}
                                 model="clinicalRecommendations.clinicalSignature"
                                 defaultValue={filledValues.clinicalSignature}
-                                disabled={isVersionInfo}
+                                disabled={true}
                             />
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>

@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import get from "lodash/get";
 import { Route } from "react-router";
+import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-import { STATUS_INCOMPLETE, STATUS_COMPLETED } from "../statuses";
+import { STATUS_INCOMPLETE, STATUS_COMPLETED, DATE_FORMAT } from "../statuses";
 import StatusCell from "./StatusCell";
 
 const styles = theme => ({
@@ -65,7 +66,12 @@ class TableBodyBlock extends Component {
                 {
                     sections.map((item, key) => {
                         const status = get(sectionsInfo, [ item.name, 'status'], STATUS_INCOMPLETE);
-                        const dateCompleted = get(sectionsInfo, [ item.name, 'dateCompleted'], '-');
+                        const dateCompleted = get(sectionsInfo, [ item.name, 'dateCompleted'], null);
+
+                        const dateCompletedConvert = isVersionInfo
+                            ? (dateCompleted ? moment(dateCompleted).format(DATE_FORMAT) : '-')
+                            : (dateCompleted ? dateCompleted : '-');
+
                         const rowClassName = this.getRowClassName(status, item, isVersionInfo);
                         return (
                             <TableRow className={classes[rowClassName]} key={key} onClick={() => onRowClick(item.id)}>
@@ -76,7 +82,7 @@ class TableBodyBlock extends Component {
                                      <StatusCell item={item} isVersionInfo={isVersionInfo} currentRow={currentRow} status={status} />
                                 </TableCell>
                                 <TableCell align="right">
-                                    <span>{dateCompleted}</span>
+                                    <span>{dateCompletedConvert}</span>
                                 </TableCell>
                             </TableRow>
                         )

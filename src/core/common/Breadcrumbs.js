@@ -84,4 +84,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(Breadcrumbs));
+export default withStyles(styles)(connect(null, mapDispatchToProps)(Breadcrumbs));

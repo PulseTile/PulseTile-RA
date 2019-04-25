@@ -70,6 +70,7 @@ class PublishButton extends Component {
 
         let versionData = {
             author: getAuthorName(),
+            author_id: localStorage.getItem('userId'),
             dateCreated: moment().format(DATE_FORMAT),
             status: STATUS_COMPLETED,
             summaryInformation: this.props.summaryInformation ? this.props.summaryInformation : getEmptyJson('summaryInformation'),

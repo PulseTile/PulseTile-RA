@@ -20,7 +20,6 @@ import { getFilledValues, getStateData, getDateUnix, getDateForDatepicker } from
 import formStyles from "../fragments/formStyles";
 
 const defaultValues = {
-    clinicalSignature: localStorage.getItem('username'),
     nhsNumber: localStorage.getItem('userId'),
     author: localStorage.getItem('username'),
 };
@@ -38,6 +37,7 @@ class Confirmation extends Component {
         reviewDate: null,
         rowsArray: getStateData(this.props, 'confirmation.confirmationsArray', []),
         dateCompleted: null,
+        clinicalSignature: localStorage.getItem('username'),
     };
 
     attachDispatch(dispatch) {
@@ -81,6 +81,8 @@ class Confirmation extends Component {
             reviewDate: null,
         });
         this.formDispatch(actions.reset('confirmationRow'));
+        this.formDispatch(actions.push('confirmationRow.clinicalSignature', localStorage.getItem('username')));
+
     };
 
     addSignature = (name, ref) => {
@@ -97,7 +99,7 @@ class Confirmation extends Component {
 
     render() {
         const { classes, sectionsInfo, latestVersionInfo, confirmation, title, onRowClick, isVersionInfo } = this.props;
-        const { isMainPanel, rowsArray, reviewDate, dateCompleted } = this.state;
+        const { isMainPanel, rowsArray, reviewDate, dateCompleted, clinicalSignature } = this.state;
         const filledValues = getFilledValues(sectionsInfo, latestVersionInfo, confirmation, 'confirmation', isVersionInfo, defaultValues);
 
         const dateFromStorage = get(filledValues, 'dateCompleted', null);
@@ -143,7 +145,8 @@ class Confirmation extends Component {
                                 <Control.text
                                     className={classes.formInput}
                                     model="confirmationRow.clinicalSignature"
-                                    defaultValue={filledValues.clinicalSignature}
+                                    defaultValue={clinicalSignature}
+                                    disabled={true}
                                 />
                             </FormGroup>
 

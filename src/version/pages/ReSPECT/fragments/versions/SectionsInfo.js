@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import get from "lodash/get";
+import moment from "moment";
 import { Route } from "react-router";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -7,7 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-import { STATUS_INCOMPLETE, STATUS_COMPLETED, STATUS_NONE } from "../../statuses";
+import { STATUS_INCOMPLETE, STATUS_COMPLETED, STATUS_NONE, DATE_FORMAT } from "../../statuses";
 import StatusCell from "../StatusCell";
 
 const styles = theme => ({
@@ -52,7 +53,10 @@ class SectionsInfo extends Component {
                 {
                     sections.map((item, key) => {
                         const status = this.getStatusLabel(versionInfo, item);
-                        const dateCompleted = get(versionInfo, [ item.name, 'dateCompleted'], '-');
+                        const dateCompleted = get(versionInfo, [ item.name, 'dateCompleted'], null);
+                        const dateCompletedConvert = dateCompleted
+                            ? moment(dateCompleted).format(DATE_FORMAT)
+                            : '-';
                         const rowClassName = this.getRowClassName(versionInfo, status, item);
                         return (
                             <TableRow className={classes[rowClassName]} key={key} onClick={() => toggleMode(currentVersion, item.id)}>
@@ -63,7 +67,7 @@ class SectionsInfo extends Component {
                                     <StatusCell item={item} currentRow={null} status={status} />
                                 </TableCell>
                                 <TableCell align="right">
-                                    <span>{dateCompleted}</span>
+                                    <span>{dateCompletedConvert}</span>
                                 </TableCell>
                             </TableRow>
                         );

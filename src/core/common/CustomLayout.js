@@ -9,7 +9,7 @@ import CustomSidebar from "./Sidebar";
 import CustomTopBar from "./Topbar";
 import CustomFooter from "./Footer";
 
-import { getCurrentTheme } from "../config/styles";
+import getCurrentTheme from "../config/styles";
 
 const styles = {
     root: {

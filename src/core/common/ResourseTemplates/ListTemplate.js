@@ -305,4 +305,4 @@ const mapStateToProps = (state, ownProps)  => {
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(listStyles)(ListTemplate));
+export default withStyles(listStyles)(connect(mapStateToProps, null)(ListTemplate));

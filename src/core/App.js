@@ -41,7 +41,6 @@ const App = () => {
                     return (
                         <Resource
                             name={item.name}
-                            options={{ label: item.label }}
                             list={item.list}
                         />
                     );
