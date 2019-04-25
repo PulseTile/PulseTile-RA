@@ -62,9 +62,9 @@ export function getInitialRangeLine(props, toSearch, leftValue, rightValue, defa
     }
     let focusValue = 50;
     if (result === leftValue) {
-        focusValue = 5;
+        focusValue = 0;
     } else if (result === rightValue) {
-        focusValue = 95;
+        focusValue = 100;
     }
     return [focusValue];
 }

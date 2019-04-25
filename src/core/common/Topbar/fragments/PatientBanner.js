@@ -22,6 +22,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
     ];
     const doctor = get(patientInfo, 'gpName', null);
     const dateOfBirth = get(patientInfo, 'birthDate', null);
+    const dateOfBirthConvert = moment(dateOfBirth).format('DD-MM-YYYY');
     return (
         <Grid className={classes.patientInfo} container spacing={24}>
             <Grid className={classes.gridBlock} item xs={12} lg={8}>
@@ -37,10 +38,10 @@ const PatientBanner = ({ classes, patientInfo }) => {
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
                 {
-                    dateOfBirth &&
+                    dateOfBirthConvert &&
                         <Typography variant="body2">
                             <span className={classes.keyName}>D.O.B.: </span>
-                            {dateOfBirth}
+                            {dateOfBirthConvert}
                         </Typography>
                 }
                 <Typography variant="body2">

@@ -334,12 +334,16 @@ export default (obj, patientInfo) => {
 
     const sectionFourCprX = get(form, 'sectionFourCprX', null);
     if (sectionFourCprX) {
-        let initialPositionOY = 750;
+        let initialPositionOY = 760;
         doc.fontSize(14)
             .text('X', sectionFourCprX, initialPositionOY, {
                 width: 10,
                 height: 23
             });
+        doc.ellipse(sectionFourCprX + 5, initialPositionOY + 5, 16, 10)
+            .lineWidth(2)
+            .strokeColor('#ff0000')
+            .stroke();
     }
 
     doc.addPage();
