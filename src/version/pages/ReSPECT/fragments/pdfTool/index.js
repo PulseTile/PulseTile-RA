@@ -88,6 +88,23 @@ function getWrappedText(text, rowLength) {
     return rows;
 }
 
+function getSectionFourCpr(obj) {
+    const cprValue = get(obj, 'clinicalRecommendations.cprValue', null);
+    let result = null;
+    switch (cprValue) {
+        case 'CPRRecommended':
+            result = 100;
+            break;
+        case 'ModifiedCPR':
+            result = 300;
+            break;
+        case 'NotforCPR':
+            result = 500;
+            break;
+    }
+    return result;
+}
+
 export default (obj, patientInfo) => {
 
     const personalDetails = {
@@ -141,6 +158,8 @@ export default (obj, patientInfo) => {
 
         sectionFourClinicalRecommendationsX: getClinicalRecommendations(obj),
         sectionFourClinicalRecommendations: get(obj, 'clinicalRecommendations.clinicalGuidance', null),
+
+        sectionFourCprX: getSectionFourCpr(obj),
 
         sectionFiveCapacity: get(obj, 'capacityAndRepresentation.capacityFirst', null),
         sectionFiveLegalProxy: get(obj, 'capacityAndRepresentation.legalProxyValue', null),
@@ -318,6 +337,16 @@ export default (obj, patientInfo) => {
         }
     }
 
+    const sectionFourCprX = get(form, 'sectionFourCprX', null);
+    if (sectionFourCprX) {
+        let initialPositionOY = 750;
+        doc.fontSize(14)
+            .text('X', sectionFourCprX, initialPositionOY, {
+                width: 10,
+                height: 23
+            });
+    }
+
     doc.addPage();
     doc.image(page2, 0, 0, {width: doc.page.width, height: doc.page.height});
 
@@ -429,6 +458,12 @@ export default (obj, patientInfo) => {
             height: 18
         });
     }
+    if (get(form, 'sectionSevenClinician1.name', null)) {
+        doc.text(form.sectionSevenClinician1.name, 410, 497, {
+            width: 154,
+            height: 18
+        });
+    }
     if (get(form, 'sectionSevenClinician1.dateTime', null)) {
         doc.text(form.sectionSevenClinician1.dateTime, 506, 497, {
             width: 78,
@@ -451,6 +486,12 @@ export default (obj, patientInfo) => {
     if (get(form, 'sectionSevenClinician2.number', null)) {
         doc.text(form.sectionSevenClinician2.number, 314, 497, {
             width: 85,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionSevenClinician2.name', null)) {
+        doc.text(form.sectionSevenClinician2.name, 410, 497, {
+            width: 154,
             height: 18
         });
     }
@@ -479,6 +520,13 @@ export default (obj, patientInfo) => {
     if (get(form, 'sectionSevenSeniorClinician.number', null)) {
         doc.text(form.sectionSevenSeniorClinician.number, 314, 537, {
             width: 85,
+            height: 18
+        });
+    }
+
+    if (get(form, 'sectionSevenSeniorClinician.name', null)) {
+        doc.text(form.sectionSevenSeniorClinician.name, 410, 537, {
+            width: 154,
             height: 18
         });
     }
