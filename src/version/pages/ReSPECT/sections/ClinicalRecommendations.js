@@ -65,9 +65,10 @@ class ClinicalRecommendations extends Component {
     };
 
     setRangeInput = values => {
+        const valueFromArray = get(values, [0], null);
         this.setState({
-            focusValue: values
-        })
+            focusValue: (valueFromArray > 50) ? [99] : [1]
+        });
     };
 
     handleChecking = e => {
@@ -147,7 +148,7 @@ class ClinicalRecommendations extends Component {
 
                         {/*<Signature name="secondSignature" onEnd={this.addSignature} />*/}
                         <FormGroup className={classes.formGroup}>
-                            <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
+                            <FormLabel className={classes.formLabel}>Clinician signature</FormLabel>
                             <Control.text
                                 className={classes.formInput}
                                 model="clinicalRecommendations.clinicalSignature"

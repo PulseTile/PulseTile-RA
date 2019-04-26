@@ -32,8 +32,9 @@ class PersonalPreferences extends Component {
 
     submitForm = data => {
         const { preferencesValue } = this.state;
+        const userPreferencesValue = get(preferencesValue, '[0]', 0);
         const additionalData = {
-            preferencesValue: get(preferencesValue, '[0]', 0),
+            preferencesValue: (userPreferencesValue > 0) ? userPreferencesValue : 1,
             dateCompleted: moment().format(DATE_FORMAT),
         };
         const formData = Object.assign({}, data, additionalData);

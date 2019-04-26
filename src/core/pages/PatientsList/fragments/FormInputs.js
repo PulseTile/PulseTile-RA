@@ -28,22 +28,22 @@ const FormInputs = ({ classes, ...rest }) => {
         <React.Fragment>
             <TextInput {...rest} source="prefix" label="Preferred Name" fullWidth />
             <div className={classes.halfWidthBlock}>
-                <TextInput {...rest} className={classes.halfWidth} source="firstName" label="Name" />
-                <TextInput {...rest} className={classes.halfWidth} source="lastName" label="Surname" />
+                <TextInput className={classes.halfWidth} source="firstName" label="Name" />
+                <TextInput className={classes.halfWidth} source="lastName" label="Surname" />
             </div>
-            <DateInput {...rest} source="birthDate" label="Born" options={{ format: 'DD-MM-YYYY' }} fullWidth />
-            <RadioButtonGroupInput {...rest} source="gender" label="Gender" choices={genderChoices} />
-            <TextInput {...rest} source="address" label="Address" fullWidth />
+            <DateInput source="birthDate" label="Born" options={{ format: 'DD-MM-YYYY' }} fullWidth />
+            <RadioButtonGroupInput source="gender" label="Gender" choices={genderChoices} />
+            <TextInput source="address" label="Address" fullWidth />
             <div className={classes.halfWidthBlock}>
-                <TextInput {...rest} className={classes.halfWidth} source="city" label="City" />
-                <TextInput {...rest} className={classes.halfWidth} source="district" label="District" />
+                <TextInput className={classes.halfWidth} source="city" label="City" />
+                <TextInput className={classes.halfWidth} source="district" label="District" />
             </div>
             <div className={classes.halfWidthBlock}>
-                <TextInput {...rest} className={classes.halfWidth} source="postCode" label="Post Code" />
-                <TextInput {...rest} className={classes.halfWidth} source="country" label="Country" />
+                <TextInput className={classes.halfWidth} source="postCode" label="Post Code" />
+                <TextInput className={classes.halfWidth} source="country" label="Country" />
             </div>
-            <TextInput {...rest} source="phone" label="Telephone Number" fullWidth />
-            <TextInput {...rest} source="nhsNumber" label="CHI Number" fullWidth />
+            <TextInput source="phone" label="Telephone Number" fullWidth />
+            <TextInput source="nhsNumber" label="CHI Number" fullWidth />
         </React.Fragment>
     );
 };

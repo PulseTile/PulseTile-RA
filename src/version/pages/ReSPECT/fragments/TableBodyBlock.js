@@ -81,9 +81,9 @@ class TableBodyBlock extends Component {
                                 <TableCell align="right">
                                      <StatusCell item={item} isVersionInfo={isVersionInfo} currentRow={currentRow} status={status} />
                                 </TableCell>
-                                <TableCell align="right">
-                                    <span>{dateCompletedConvert}</span>
-                                </TableCell>
+                                {/*<TableCell align="right">*/}
+                                    {/*<span>{dateCompletedConvert}</span>*/}
+                                {/*</TableCell>*/}
                             </TableRow>
                         )
                     })

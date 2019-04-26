@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 const rows = [
     { id: 'section', numeric: false, disablePadding: false, label: 'Section' },
     { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
-    { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
+    // { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
 ];
 
 class TableHeadBlock extends Component {

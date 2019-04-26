@@ -66,9 +66,9 @@ class SectionsInfo extends Component {
                                 <TableCell align="right">
                                     <StatusCell item={item} currentRow={null} status={status} />
                                 </TableCell>
-                                <TableCell align="right">
-                                    <span>{dateCompletedConvert}</span>
-                                </TableCell>
+                                {/*<TableCell align="right">*/}
+                                    {/*<span>{dateCompletedConvert}</span>*/}
+                                {/*</TableCell>*/}
                             </TableRow>
                         );
                     })

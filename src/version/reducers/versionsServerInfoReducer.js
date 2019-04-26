@@ -60,19 +60,21 @@ export default (state = initialState, action) => {
 
             let date = moment().format("MM/DD/YYYY HH:mm");
 
-            versionsArray.unshift({
-                author: localStorage.getItem('username'),
-                dateCreated: Math.round(new Date(date).getTime()),
+            const newItem = {
                 source: newVersion.host,
                 sourceId: newVersion.host + '-' + sourceId,
+                version: Number(versionId),
+                author: localStorage.getItem('username'),
+                dateCreated: Math.round(new Date(date).getTime()),
                 status: "Completed",
-                version: versionId,
-            });
+            };
+
+            const newArray = [...versionsArray, newItem].sort((prev, next) => next.version - prev.version);
 
             return {
                 ...state,
                 loading: false,
-                data: versionsArray,
+                data: newArray,
                 first: null,
                 version: null,
             };

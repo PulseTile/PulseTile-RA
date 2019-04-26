@@ -50,6 +50,17 @@ class PublishButton extends Component {
         this.props.removeFormData();
     }
 
+    getSectionForSaving = (sectionName) => {
+        const { latestVersionInfo } = this.props;
+        let result = get(this.props, sectionName, null);
+        if (!result && latestVersionInfo) {
+            result = get(latestVersionInfo, sectionName, null);
+        } else if (!result && !latestVersionInfo) {
+            result = getEmptyJson(sectionName);
+        }
+        return result;
+    };
+
     onClickHandler() {
         const { versionsList, firstVersionInfo } = this.props;
 
@@ -73,14 +84,14 @@ class PublishButton extends Component {
             author_id: localStorage.getItem('userId'),
             dateCreated: moment().format(DATE_FORMAT),
             status: STATUS_COMPLETED,
-            summaryInformation: this.props.summaryInformation ? this.props.summaryInformation : getEmptyJson('summaryInformation'),
-            personalPreferences: this.props.personalPreferences ? this.props.personalPreferences : getEmptyJson('personalPreferences'),
-            clinicalRecommendations: this.props.clinicalRecommendations ? this.props.clinicalRecommendations : getEmptyJson('personalPreferences'),
-            capacityAndRepresentation: this.props.capacityAndRepresentation ? this.props.capacityAndRepresentation : getEmptyJson('capacityAndRepresentation'),
-            involvement: this.props.involvement ? this.props.involvement : getEmptyJson('involvement'),
-            clinicalSignatures: this.props.clinicalSignatures ? this.props.clinicalSignatures : getEmptyJson('clinicalSignatures'),
-            emergencyContacts: this.props.emergencyContacts ? this.props.emergencyContacts : getEmptyJson('emergencyContacts'),
-            confirmation: this.props.confirmation ? this.props.confirmation : getEmptyJson('confirmation'),
+            summaryInformation: this.getSectionForSaving('summaryInformation'),
+            personalPreferences: this.getSectionForSaving('personalPreferences'),
+            clinicalRecommendations: this.getSectionForSaving('clinicalRecommendations'),
+            capacityAndRepresentation: this.getSectionForSaving('capacityAndRepresentation'),
+            involvement: this.getSectionForSaving('involvement'),
+            clinicalSignatures: this.getSectionForSaving('clinicalSignatures'),
+            emergencyContacts: this.getSectionForSaving('emergencyContacts'),
+            confirmation: this.getSectionForSaving('confirmation'),
         };
         if (sourceId && versionId) {
             this.props.updateVersion(sourceId, versionId, versionData);
@@ -114,6 +125,7 @@ const mapStateToProps = state => {
         clinicalSignatures: state.custom.clinicalSignatures.data,
         emergencyContacts: state.custom.emergencyContacts.data,
         confirmation: state.custom.confirmation.data,
+        latestVersionInfo: get(state, 'custom.versionsServerInfo.latest', null),
     }
 };
 

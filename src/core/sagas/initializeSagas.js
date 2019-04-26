@@ -7,12 +7,15 @@ import { INITIALIZE_ACTION, initializeAction } from "../actions/initializeAction
 export default takeEvery(INITIALIZE_ACTION.REQUEST, function*(action) {
     const url = domainName + '/api/initialise';
     let options = {};
+
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }
-    options.headers = {
-        'X-Requested-With': "XMLHttpRequest",
-    };
+
+    options = {
+       headers: { 'X-requested-With': 'XMLHttpRequest'}
+    }
+
     try {
         const result = yield fetch(url, options).then(res => res.json())
             .then(response => {

@@ -170,6 +170,7 @@ export default (obj, patientInfo) => {
         sectionSixC3: (get(obj, 'involvement.involvementValue', null) === 'valueSetC3'),
         sectionSixD: (get(obj, 'involvement.involvementValue', null)  === 'valueSetD'),
         sectionSixNotSelectingReason: get(obj, 'involvement.notSelectingReason', null),
+        sectionSixDocumentExplanation: get(obj, 'involvement.documentExplanation', null),
 
         sectionSevenClinician1: {
             designation: ( clinicians[0] ? clinicians[0].designation : '' ),
@@ -226,6 +227,9 @@ export default (obj, patientInfo) => {
             number: get(obj, 'confirmation.confirmationsArray[1].gmcNumber', null),
         }
     };
+
+    console.log('form',form );
+
 
     doc.image(page1, 0, 0, {width: doc.page.width, height: doc.page.height});
 
@@ -429,6 +433,15 @@ export default (obj, patientInfo) => {
     }
     if (get(form, 'sectionSixNotSelectingReason', null)) {
         const textRowsArray = getWrappedText(form.sectionSixNotSelectingReason, 125);
+        const initialPositionOY = 360;
+        doc.fontSize(10);
+        for (let i = 0, n = textRowsArray.length; i < n; i++) {
+            let row = textRowsArray[i];
+            doc.text(row, 31, initialPositionOY + i * 15);
+        }
+    }
+    if (get(form, 'sectionSixDocumentExplanation', null)) {
+        const textRowsArray = getWrappedText(form.sectionSixDocumentExplanation, 125);
         const initialPositionOY = 419;
         doc.fontSize(10);
         for (let i = 0, n = textRowsArray.length; i < n; i++) {
@@ -642,6 +655,12 @@ export default (obj, patientInfo) => {
             height: 18
         });
     }
+    if (get(form, 'sectionNineConfirmation1.name', null)) {
+        doc.text(form.sectionNineConfirmation1.name.toString(), 510, 740, {
+            width: 108,
+            height: 18
+        });
+    }
 
     if (get(form, 'sectionNineConfirmation2.reviewDate', null)) {
         doc.text(form.sectionNineConfirmation2.reviewDate, 31, 760, {
@@ -663,6 +682,12 @@ export default (obj, patientInfo) => {
     }
     if (get(form, 'sectionNineConfirmation2.number', null)) {
         doc.text(form.sectionNineConfirmation2.number.toString(), 395, 760, {
+            width: 108,
+            height: 18
+        });
+    }
+    if (get(form, 'sectionNineConfirmation2.name', null)) {
+        doc.text(form.sectionNineConfirmation2.name.toString(), 510, 740, {
             width: 108,
             height: 18
         });

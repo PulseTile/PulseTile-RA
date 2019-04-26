@@ -75,13 +75,18 @@ class CliniciansSignatures extends Component {
             dateSigned: null,
         });
         this.formDispatch(actions.reset('clinicalSignaturesRow'));
-        this.formDispatch(actions.push('clinicalSignaturesRow.clinicalSignature', localStorage.getItem('username')));
+        this.formDispatch(actions.change('clinicalSignaturesRow.gmcNumber', null));
+        this.formDispatch(actions.change('clinicalSignaturesRow.clinicalSignature', localStorage.getItem('username')));
     };
 
     addSignature = (name, ref) => {
         this.setState({
             [name]: ref,
         });
+    };
+
+    toNumber = value => {
+        return value ? Number(value) : null;
     };
 
     render() {
@@ -100,7 +105,7 @@ class CliniciansSignatures extends Component {
                             getDispatch={(dispatch) => this.attachDispatch(dispatch)}
                         >
                             <FormGroup className={classes.formGroup}>
-                                <FormLabel className={classes.mainFormLabel}>Clinical Signature</FormLabel>
+                                <FormLabel className={classes.mainFormLabel}>Clinician Signature</FormLabel>
                             </FormGroup>
                             <FormGroup className={classes.smallFormGroup}>
                                 <FormLabel className={classes.formLabel}>Designation (grade / speciality)</FormLabel>
@@ -111,7 +116,7 @@ class CliniciansSignatures extends Component {
                                 />
                             </FormGroup>
                             <FormGroup className={classes.smallFormGroup}>
-                                <FormLabel className={classes.formLabel}>Clinical name</FormLabel>
+                                <FormLabel className={classes.formLabel}>Clinician name</FormLabel>
                                 <Control.text
                                     className={classes.formInput}
                                     model="clinicalSignaturesRow.clinicialName"
@@ -122,6 +127,8 @@ class CliniciansSignatures extends Component {
                                 <FormLabel className={classes.formLabel}>GMC / NMC / HCPC number</FormLabel>
                                 <Control.text
                                     className={classes.formInput}
+                                    type="number"
+                                    parser={(value) => this.toNumber(value)}
                                     model="clinicalSignaturesRow.gmcNumber"
                                     required
                                 />
@@ -142,7 +149,7 @@ class CliniciansSignatures extends Component {
 
                             {/*<Signature name="signature" onEnd={this.addSignature} isSubTitle={true}/>*/}
                             <FormGroup className={classes.formGroup}>
-                                <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
+                                <FormLabel className={classes.formLabel}>Clinician signature</FormLabel>
                                 <Control.text
                                     className={classes.formInput}
                                     model="clinicalSignaturesRow.clinicalSignature"

@@ -16,7 +16,7 @@ export default [
     { id: 4, name: "clinicalRecommendations", section: '4. Clinical recommendations for emergency care and treatment', component: ClinicalRecommendations, date: false },
     { id: 5, name: "capacityAndRepresentation", section: '5. Capacity and representation at this time', component: CapacityAndRepresentation, date: false },
     { id: 6, name: "involvement", section: '6. Involvement in making this plan', component: Involvement, date: false },
-    { id: 7, name: "clinicalSignatures", section: '7. Clinical signatures', component: CliniciansSignatures, date: false },
+    { id: 7, name: "clinicalSignatures", section: '7. Clinician signatures', component: CliniciansSignatures, date: false },
     { id: 8, name: "emergencyContacts", section: '8. Emergency contacts', component: EmergencyContacts, date: false },
     { id: 9, name: "confirmation", section: '9. Confirmation of validity', component: Confirmation, date: false },
     { id: 10, name: "emergencyView", section: '10. Emergency view', component: EmergencyView, date: false },

@@ -81,8 +81,7 @@ class Confirmation extends Component {
             reviewDate: null,
         });
         this.formDispatch(actions.reset('confirmationRow'));
-        this.formDispatch(actions.push('confirmationRow.clinicalSignature', localStorage.getItem('username')));
-
+        this.formDispatch(actions.change('confirmationRow.clinicalSignature', localStorage.getItem('username')));
     };
 
     addSignature = (name, ref) => {

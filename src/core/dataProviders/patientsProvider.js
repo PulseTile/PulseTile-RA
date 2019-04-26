@@ -149,7 +149,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     prefix: prefix,
                     firstName: firstName,
                     lastName: lastName,
-                    name: [prefix, firstName, lastName].join(' '),
+                    name: [firstName, lastName].join(' '),
                     address: line,
                     city: city,
                     country: country,
@@ -168,7 +168,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             let newFirstName = get(params, 'data.firstName', null);
             let newLastName = get(params, 'data.lastName', null);
             let newData = params.data;
-            newData.name = [newPrefix, newFirstName, newLastName].join(' ');
+            newData.name = [newFirstName, newLastName].join(' ');
             return {
                 id: get(params, 'data.nhsNumber', null),
                 data: newData,
@@ -184,7 +184,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                 sourceID = compositionUidArray[0];
             }
             dataFromRequest.id = Number(get(params, 'data.nhsNumber', null));
-            dataFromRequest.name = get(params, 'data.prefix', null) + ' ' + get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
+            dataFromRequest.name = get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
             }
@@ -248,7 +248,7 @@ function getTotalName(item) {
     const namesArray = get(nameFromResponse, [[0], 'given'], null);
     const firstName = namesArray.join(' ');
     const surname = get(nameFromResponse, [[0], 'family'], null);
-    return [prefix, firstName, surname].join(' ');
+    return [firstName, surname].join(' ');
 }
 
 /**
