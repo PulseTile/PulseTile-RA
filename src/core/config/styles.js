@@ -1,4 +1,6 @@
+
 import get from "lodash/get";
+import memoize from "lodash/memoize";
 import DeepMerge from 'deepmerge';
 
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -62,7 +64,7 @@ function getCurrentPalette(isContrastMode) {
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
-export function getCurrentTheme(isContrastMode) {
+function getCurrentTheme(isContrastMode) {
     const backgroundImage = isContrastMode ? null : get(themeImages, 'backgroundImage', null);
     const palette = getCurrentPalette(isContrastMode);
     return createMuiTheme({
@@ -145,3 +147,5 @@ export function getCurrentTheme(isContrastMode) {
         }
     });
 }
+
+export default memoize(getCurrentTheme);
