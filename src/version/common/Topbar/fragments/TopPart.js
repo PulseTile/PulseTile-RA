@@ -9,7 +9,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import helmLogo from "../../../images/logo-big.png";
-import nhsLogo from "../../../images/nhs.png";
 import UserSearch from "../../../../core/common/Topbar/fragments/UserSearch";
 import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
@@ -129,14 +128,6 @@ class TopPart extends Component {
                 </div>
                 <div className={classes.emptyBlock}></div>
                 <UserSearch location={location} />
-                <CardMedia
-                    className={classes.nhsLogo}
-                    component="img"
-                    alt="Pulse Tile"
-                    height="29px"
-                    image={nhsLogo}
-                    title="Pulse Tile"
-                />
                 <ContrastMode classes={classes} />
                 <UserPanelButton classes={classes} />
             </Toolbar>

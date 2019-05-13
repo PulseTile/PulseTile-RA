@@ -3,8 +3,6 @@ import get from "lodash/get";
 import { connect } from 'react-redux';
 import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -24,14 +22,11 @@ class PersonalDetails extends Component {
 
     state = {
         isMainPanel: true,
-        birthDate: get(this.props, 'patientInfo.birthDate', null),
     };
 
     submitForm = data => {
         const { sectionsInfo, currentRow, onRowClick, addPersonalDetails } = this.props;
-        const { birthDate } = this.state;
         const additionalData = {
-            birthDate: birthDate,
             status: getSectionStatus(data, FORM_FIELDS_NUMBER),
             dateCompleted: moment().format(DATE_FORMAT),
         };
@@ -39,12 +34,6 @@ class PersonalDetails extends Component {
         addPersonalDetails(formData);
         const nextStep = (currentRow > TOTAL_ROWS_NUMBER) ? null : (currentRow + 1);
         onRowClick(nextStep);
-    };
-
-    changeBirthDate = value => {
-        this.setState({
-            birthDate: value,
-        })
     };
 
     togglePanel = () => {
@@ -74,12 +63,13 @@ class PersonalDetails extends Component {
             preferredName: userNameInfo ? userNameInfo.preferredName : null,
             firstName: userNameInfo ? userNameInfo.firstName : null,
             surname: userNameInfo ? userNameInfo.surname : null,
+            birthDate: patientInfo.birthDate ? moment(patientInfo.birthDate).format(DATE_FORMAT) : moment().format(DATE_FORMAT),
             streetAddress: patientInfo.address,
             city: patientInfo.city,
             county: patientInfo.district,
             country: patientInfo.country,
             postCode: patientInfo.postCode,
-            nhsNumber: localStorage.getItem('userId'),
+            nhsNumber: patientInfo.nhsNumber,
             author: localStorage.getItem('username'),
         };
 
@@ -117,13 +107,14 @@ class PersonalDetails extends Component {
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Date of Birth</FormLabel>
-                            <DatePicker
+
+                            <Control.text
                                 className={classes.formInput}
-                                selected={birthDate ? birthDate : new Date(filledValues.birthDate)}
-                                onChange={value => this.changeBirthDate(value)}
-                                dateFormat={DATE_PICKER_FORMAT}
+                                model="personalDetails.birthDate"
+                                defaultValue={filledValues.birthDate}
                                 disabled
                             />
+
                         </FormGroup>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>Address</FormLabel>
