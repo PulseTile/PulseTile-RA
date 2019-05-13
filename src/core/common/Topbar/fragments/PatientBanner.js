@@ -54,7 +54,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
                     { get(patientInfo, 'gender', null) }
                 </Typography>
                 <Typography variant="body2">
-                    <span className={classes.keyName}>CHI No.: </span>
+                    <span className={classes.keyName}>NHS No.: </span>
                     { get(patientInfo, 'nhsNumber', null) }</Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={12}>

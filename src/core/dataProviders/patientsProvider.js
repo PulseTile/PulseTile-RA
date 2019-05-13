@@ -262,9 +262,9 @@ function getTotalAddress(item) {
     const addressFromResponse = get(item, 'resource.address', null);
     const addressArray = [
         get(addressFromResponse, [[0], 'line', [0]], null),
-        get(addressFromResponse, [[0], 'district'], null),
         get(addressFromResponse, [[0], 'city'], null),
-        get(addressFromResponse, [[0], 'country'], null)
+        get(addressFromResponse, [[0], 'district'], null),
+        get(addressFromResponse, [[0], 'postalCode'], null)
     ];
     return addressArray.join(', ');
 }

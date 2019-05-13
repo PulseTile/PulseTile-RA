@@ -38,7 +38,7 @@ const FormInputs = ({ classes }) => {
                 <TextInput className={classes.halfWidth} source="postCode" label="Post Code" />
                 <TextInput className={classes.halfWidth} source="country" label="Country" />
             </div>
-            <TextInput source="nhsNumber" label="CHI Number" fullWidth />
+            <TextInput source="nhsNumber" label="NHS Number" fullWidth />
         </React.Fragment>
     );
 };
