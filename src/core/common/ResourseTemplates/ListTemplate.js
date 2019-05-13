@@ -202,6 +202,41 @@ class ListTemplate extends Component {
         });
     };
 
+    hasNewItem = (newListArray, prevListArray, nextProps) => {
+        let result = false;
+        const newDataArray = Object.values(get(nextProps, 'currentData', {}));
+        for (let i = 0, n = newDataArray.length; i < n; i++) {
+            let item = newDataArray[i];
+            if (get(item, 'isNew', false)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    };
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        const newListArray = Object.values(get(nextProps, 'currentList', {}));
+        const prevListArray = Object.values(get(nextContext, 'currentList', {}));
+        const hasNewItem = this.hasNewItem(newListArray, prevListArray, nextProps);
+        if (hasNewItem) {
+            this.setState({
+                key: this.state.key + 1
+            });
+        }
+    }
+
+    filterByUserSearch = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearch) {
+                return {
+                    filterText: props.userSearch,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
     render() {
         const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent, currentList } = this.props;
         const { isFilterOpened, key, isListOpened, filterText } = this.state;
@@ -302,6 +337,7 @@ const mapStateToProps = (state, ownProps)  => {
     return {
         userSearch: state.custom.userSearch.data,
         currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
+        currentData: get(state, 'admin.resources[' + ownProps.resource + '].data', []),
     }
 };
 

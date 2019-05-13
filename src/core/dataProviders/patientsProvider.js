@@ -167,8 +167,15 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             let newPrefix = get(params, 'data.prefix', null);
             let newFirstName = get(params, 'data.firstName', null);
             let newLastName = get(params, 'data.lastName', null);
+
+            let newAddressLine = get(params, 'data.address', null);
+            let newCity = get(params, 'data.city', null);
+            let newDistrict = get(params, 'data.district', null);
+            let newPostalCode = get(params, 'data.postCode', null);
+
             let newData = params.data;
-            newData.name = [newFirstName, newLastName].join(' ');
+            newData.name = [newPrefix, newFirstName, newLastName].join(' ');
+            newData.address = [newAddressLine, newCity, newDistrict, newPostalCode].join(' ');
             return {
                 id: get(params, 'data.nhsNumber', null),
                 data: newData,
@@ -184,7 +191,9 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                 sourceID = compositionUidArray[0];
             }
             dataFromRequest.id = Number(get(params, 'data.nhsNumber', null));
-            dataFromRequest.name = get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
+            dataFromRequest.name = get(params, 'data.prefix', null) + ' ' + get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
+            dataFromRequest.address = get(params, 'data.address', null) + ' ' + get(params, 'data.city', null) + ' ' + get(params, 'data.district', null) + ' ' + get(params, 'data.postCode', null);
+            dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
             }
@@ -262,9 +271,9 @@ function getTotalAddress(item) {
     const addressFromResponse = get(item, 'resource.address', null);
     const addressArray = [
         get(addressFromResponse, [[0], 'line', [0]], null),
-        get(addressFromResponse, [[0], 'district'], null),
         get(addressFromResponse, [[0], 'city'], null),
-        get(addressFromResponse, [[0], 'country'], null)
+        get(addressFromResponse, [[0], 'district'], null),
+        get(addressFromResponse, [[0], 'postalCode'], null)
     ];
     return addressArray.join(', ');
 }
@@ -295,9 +304,8 @@ export default (type, resource, params) => {
             if (responseInfo.status === 404 && search) {
                 responseInfo.errorMessage = 'No patient by that surname, please try again';
                 let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
-                throw new HttpError(errorString);
-            }
-            if (responseInfo.status !== 200) {
+                // throw new HttpError(errorString);
+            } else if (responseInfo.status !== 200) {
                 responseInfo.errorMessage = get(res, 'error', null);
                 let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
                 throw new HttpError(errorString);

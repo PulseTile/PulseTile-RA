@@ -115,4 +115,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PatientsList));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PatientsList));
