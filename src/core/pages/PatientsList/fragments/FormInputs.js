@@ -31,7 +31,7 @@ const FormInputs = ({ classes, ...rest }) => {
                 <TextInput className={classes.halfWidth} source="firstName" label="Name" />
                 <TextInput className={classes.halfWidth} source="lastName" label="Surname" />
             </div>
-            <DateInput source="birthDate" label="Born" options={{ format: 'DD-MM-YYYY' }} fullWidth />
+            <DateInput source="birthDate" label="Born" fullWidth />
             <RadioButtonGroupInput source="gender" label="Gender" choices={genderChoices} />
             <TextInput source="address" label="Address" fullWidth />
             <div className={classes.halfWidthBlock}>
