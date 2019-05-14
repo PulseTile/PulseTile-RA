@@ -1,9 +1,7 @@
 import get from "lodash/get";
 import {
-    fetchUtils,
     GET_LIST,
     GET_ONE,
-    GET_MANY,
     CREATE,
     UPDATE,
     HttpError
@@ -41,6 +39,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
 
         case UPDATE:
             let userName = get(params, 'data.firstName', null);
+            let userId = get(params, 'data.nhsNumber', null);
             let updateData = {
                 name: {
                     family: get(params, 'data.lastName', null),
@@ -57,7 +56,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
                     postalCode: get(params, 'data.postCode', null),
                     country: get(params, 'data.country', null)
                 },
-                id: String(params.id)
+                id: userId.toString(),
             };
             url = `${domainName}/mpi/Patient/${params.id}`;
             options.method = "PUT";
@@ -148,8 +147,8 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     prefix: prefix,
                     firstName: firstName,
                     lastName: lastName,
-                    name: [prefix, firstName, lastName].join(' '),
-                    address: line,
+                    name: [firstName, lastName].join(' '),
+                    address: [line, city, district, postCode].join(', '),
                     city: city,
                     country: country,
                     district: district,
@@ -166,10 +165,17 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             let newPrefix = get(params, 'data.prefix', null);
             let newFirstName = get(params, 'data.firstName', null);
             let newLastName = get(params, 'data.lastName', null);
+
+            let newAddressLine = get(params, 'data.address', null);
+            let newCity = get(params, 'data.city', null);
+            let newDistrict = get(params, 'data.district', null);
+            let newPostalCode = get(params, 'data.postCode', null);
+
             let newData = params.data;
             newData.name = [newPrefix, newFirstName, newLastName].join(' ');
+            newData.address = [newAddressLine, newCity, newDistrict, newPostalCode].join(' ');
             return {
-                id: get(params, 'id', null),
+                id: get(params, 'data.nhsNumber', null),
                 data: newData,
                 previousData: get(params, 'previousData', {})
             };
@@ -184,12 +190,11 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             }
             dataFromRequest.id = Number(get(params, 'data.nhsNumber', null));
             dataFromRequest.name = get(params, 'data.prefix', null) + ' ' + get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
+            dataFromRequest.address = get(params, 'data.address', null) + ' ' + get(params, 'data.city', null) + ' ' + get(params, 'data.district', null) + ' ' + get(params, 'data.postCode', null);
+            dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
             }
-
-            console.log('dataFromRequest', dataFromRequest );
-
             return {
                 data: dataFromRequest,
             };
@@ -198,15 +203,6 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             return { data: 'No results' };
     }
 };
-
-function getGivenNamesArray(namesArray) {
-    let nameArrayLength = namesArray.length;
-    let result = [];
-    for (let i = 0; i < nameArrayLength - 1; i++) {
-        result.push(namesArray[i]);
-    }
-    return result;
-}
 
 /**
  * This function filters patients list by department
@@ -250,7 +246,7 @@ function getTotalName(item) {
     const namesArray = get(nameFromResponse, [[0], 'given'], null);
     const firstName = namesArray.join(' ');
     const surname = get(nameFromResponse, [[0], 'family'], null);
-    return [prefix, firstName, surname].join(' ');
+    return [firstName, surname].join(' ');
 }
 
 /**
@@ -264,9 +260,9 @@ function getTotalAddress(item) {
     const addressFromResponse = get(item, 'resource.address', null);
     const addressArray = [
         get(addressFromResponse, [[0], 'line', [0]], null),
-        get(addressFromResponse, [[0], 'district'], null),
         get(addressFromResponse, [[0], 'city'], null),
-        get(addressFromResponse, [[0], 'country'], null)
+        get(addressFromResponse, [[0], 'district'], null),
+        get(addressFromResponse, [[0], 'postalCode'], null)
     ];
     return addressArray.join(', ');
 }
@@ -293,7 +289,12 @@ export default (type, resource, params) => {
         return response.json();
     })
         .then(res => {
-            if (responseInfo.status !== 200) {
+            const search = get(params, 'filter.filterText', null);
+            if (responseInfo.status === 404 && search) {
+                responseInfo.errorMessage = 'No patient by that surname, please try again';
+                let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
+                // throw new HttpError(errorString);
+            } else if (responseInfo.status !== 200) {
                 responseInfo.errorMessage = get(res, 'error', null);
                 let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
                 throw new HttpError(errorString);

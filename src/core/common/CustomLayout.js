@@ -9,7 +9,7 @@ import CustomSidebar from "./Sidebar";
 import CustomTopBar from "./Topbar";
 import CustomFooter from "./Footer";
 
-import { getCurrentTheme } from "../config/styles";
+import getCurrentTheme from "../config/styles";
 
 const styles = {
     root: {
@@ -19,7 +19,6 @@ const styles = {
         position: 'relative',
         '& > div': {
             minHeight: '100vh',
-            overflowX: 'hidden !important',
         },
         '& main > div': {
             padding: 0,

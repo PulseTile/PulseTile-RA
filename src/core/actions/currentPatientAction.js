@@ -1,7 +1,9 @@
 import { createRequestTypes } from "./functions";
 
-export const CURRENT_PATIENT_ACTION = createRequestTypes('CURRENT_PATIENT_ACTION', { UPDATE: 'UPDATE' });
+export const CURRENT_PATIENT_ACTION = createRequestTypes('CURRENT_PATIENT_ACTION');
 
 export const currentPatientAction = {
-    update: data => ({ type: CURRENT_PATIENT_ACTION.UPDATE, data }),
+    request: data => ({ type: CURRENT_PATIENT_ACTION.REQUEST, data }),
+    success: data => ({ type: CURRENT_PATIENT_ACTION.SUCCESS, data }),
+    error:   error => ({ type: CURRENT_PATIENT_ACTION.FAILURE, error }),
 };

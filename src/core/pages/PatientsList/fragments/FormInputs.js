@@ -23,10 +23,10 @@ const styles = {
     },
 };
 
-const FormInputs = ({ classes }) => {
+const FormInputs = ({ classes, ...rest }) => {
     return (
         <React.Fragment>
-            <TextInput source="prefix" label="Prefix" fullWidth />
+            <TextInput {...rest} source="prefix" label="Preferred Name" fullWidth />
             <div className={classes.halfWidthBlock}>
                 <TextInput className={classes.halfWidth} source="firstName" label="Name" />
                 <TextInput className={classes.halfWidth} source="lastName" label="Surname" />

@@ -96,6 +96,9 @@ const listStyles = theme => ({
         },
         '& tbody tr:hover td span': {
             color: "#fff"
+        },
+        '& tbody tr:hover td button span p': {
+            color: "#fff"
         }
     }
 });
@@ -188,71 +191,129 @@ class ListTemplate extends Component {
         })
     };
 
+    filterByUserSearch = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearch) {
+                return {
+                    filterText: props.userSearch,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
+    hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
+        let result = false;
+        const newDataArray = Object.values(get(nextProps, 'currentData', {}));
+        for (let i = 0, n = newDataArray.length; i < n; i++) {
+            let item = newDataArray[i];
+            if (get(item, 'isNew', false) && get(item, 'lastName', null) === prevListArray) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    };
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        const newListArray = Object.values(get(nextProps, 'currentList', {}));
+        const prevListArray = Object.values(get(nextContext, 'currentList', {}));
+        const userSearch = Object.values(get(nextProps, 'userSearch', null));
+        const hasNewItem = this.hasNewItem(newListArray, prevListArray, nextProps, userSearch);
+        if (newListArray.length === 1 && prevListArray.length === 0 && hasNewItem) {
+            this.setState({
+                key: this.state.key + 1
+            });
+        }
+    }
+
+    filterByUserSearch = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearch) {
+                return {
+                    filterText: props.userSearch,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
     render() {
-        const { create, resourceUrl, title, children, classes, history, currentList, userSearch } = this.props;
-        const { isFilterOpened, isListOpened, key, filterText } = this.state;
+        const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent, currentList } = this.props;
+        const { isFilterOpened, key, isListOpened, filterText } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
         ];
         const CreateBlock = create;
         const createUrl = this.getCreateUrl();
+
+        let titleTable = title;
+        if (userSearch && resourceUrl === 'patients') {
+            titleTable = `Patients matching '${userSearch}'`;
+            this.filterByUserSearch();
+        }
+
         const currentListArray = Object.values(currentList);
         const idsNumber = currentListArray.length > 0 ? currentListArray.length : 0;
+
         return (
             <React.Fragment>
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <TableHeader resource={resourceUrl} />
                 <Grid container spacing={16} className={classes.mainBlock}>
                     { isListOpened &&
-                        <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
-                            <React.Fragment>
-                                <div className={classes.blockTitle}>
-                                    <Typography className={classes.title}>{title}</Typography>
-                                    <div className={classes.emptyBlock}></div>
-                                    {!this.isListPage() &&
-                                        <Tooltip title="Expand">
-                                            <IconButton onClick={() => history.push("/" + resourceUrl)}  >
-                                                <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
-                                            </IconButton>
-                                        </Tooltip>
-                                    }
-                                    <Tooltip title="Search">
-                                        <IconButton onClick={() => this.toggleFilter()} >
-                                            <SearchIcon className={classes.filterIcon} />
+                    <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
+                        <React.Fragment>
+                            <div className={classes.blockTitle}>
+                                <Typography className={classes.title}>{titleTable}</Typography>
+                                <div className={classes.emptyBlock}></div>
+                                {!this.isListPage() &&
+                                <Tooltip title="Expand">
+                                    <IconButton onClick={() => history.push("/" + resourceUrl)}  >
+                                        <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
+                                    </IconButton>
+                                </Tooltip>
+                                }
+                                { !headerFilterAbsent &&
+                                <Tooltip title="Search">
+                                    <IconButton onClick={() => this.toggleFilter()}>
+                                        <SearchIcon className={classes.filterIcon}/>
+                                    </IconButton>
+                                </Tooltip>
+                                }
+                            </div>
+                            {
+                                isFilterOpened &&
+                                <Paper className={classes.filterInput} elevation={1}>
+                                    <Tooltip title="Menu">
+                                        <IconButton className={classes.iconButton}>
+                                            <FilterIcon />
                                         </IconButton>
                                     </Tooltip>
-                                </div>
-                                {
-                                    isFilterOpened &&
-                                    <Paper className={classes.filterInput} elevation={1}>
-                                        <Tooltip title="Menu">
-                                            <IconButton className={classes.iconButton}>
-                                                <FilterIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                        <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                    </Paper>
-                                }
-                            </React.Fragment>
-                            <List
-                                resource={resourceUrl}
-                                key={key}
-                                filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}                                title={title}
-                                perPage={ITEMS_PER_PAGE}
-                                actions={null}
-                                bulkActions={false}
-                                pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
-                                {...this.props}
-                            >
-                                { (idsNumber > 0) ?
-                                    <Datagrid className={classes.tableList} rowClick="edit">
-                                        {children}
-                                    </Datagrid>
-                                    :
-                                    <EmptyListBlock />
-                                }
-                            </List>
-                        </Grid>
+                                    <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                </Paper>
+                            }
+                        </React.Fragment>
+                        <List
+                            resource={resourceUrl}
+                            key={key}
+                            filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
+                            title={title}
+                            perPage={ITEMS_PER_PAGE}
+                            actions={null}
+                            bulkActions={false}
+                            pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
+                            {...this.props}
+                        >
+                            { (idsNumber > 0) ?
+                                <Datagrid className={classes.tableList} rowClick="edit">
+                                    {children}
+                                </Datagrid>
+                                :
+                                <EmptyListBlock />
+                            }
+                        </List>
+                    </Grid>
                     }
                     {
                         (!this.isCreatePage())
@@ -277,7 +338,8 @@ const mapStateToProps = (state, ownProps)  => {
     return {
         userSearch: state.custom.userSearch.data,
         currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
+        currentData: get(state, 'admin.resources[' + ownProps.resource + '].data', []),
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(listStyles)(ListTemplate));
+export default withStyles(listStyles)(connect(mapStateToProps, null)(ListTemplate));

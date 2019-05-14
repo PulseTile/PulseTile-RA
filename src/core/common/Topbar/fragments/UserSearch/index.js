@@ -49,6 +49,15 @@ class UserSearch extends Component {
         })
     };
 
+    componentWillReceiveProps(nextProps) {
+        const { userSearch } = nextProps;
+        if (!userSearch) {
+            this.setState({
+                searchText: '',
+            });
+        }
+    }
+
     onRemoveClick = () => {
         this.setState(() => {
             return {

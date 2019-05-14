@@ -8,7 +8,6 @@ import AppBar from '@material-ui/core/AppBar';
 import TopPart from "./fragments/TopPart";
 import LowPart from "./fragments/LowPart";
 
-import { demographicsAction } from "../../actions/demographicsAction";
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 /**
@@ -17,12 +16,6 @@ import { themeCommonElements } from "../../../version/config/theme.config";
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 class CustomTopbar extends Component {
-
-    componentDidMount() {
-        if (localStorage.getItem('userId') && localStorage.getItem('username')) {
-            this.props.getDemographicsAction();
-        }
-    }
 
     render() {
         const ThemeTopBar = get(themeCommonElements, 'topbar', false);
@@ -45,15 +38,12 @@ const mapStateToProps = state => {
         isLoading: get(state, 'admin.loading', false),
         location: get(state, 'router.location', null),
         isSidebarOpen: get(state, 'admin.ui.sidebarOpen', true),
-        patientInfo: get(state, 'custom.demographics.data', null),
+        patientInfo: get(state, 'custom.currentPatient.data', null),
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getDemographicsAction() {
-            dispatch(demographicsAction.request());
-        },
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
@@ -61,4 +51,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomTopbar);
-
