@@ -14,6 +14,9 @@ import Typography from '@material-ui/core/Typography';
  * @constructor
  */
 const PatientBanner = ({ classes, patientInfo }) => {
+
+    console.log('patientInfo', patientInfo);
+
     const addressArray = [
         get(patientInfo, 'address', null),
         get(patientInfo, 'city', null),
@@ -22,6 +25,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
     ];
     const doctor = get(patientInfo, 'gpName', null);
     const dateOfBirth = get(patientInfo, 'birthDate', null);
+    const dateOfBirthConvert = moment(dateOfBirth).format('DD-MM-YYYY');
     return (
         <Grid className={classes.patientInfo} container spacing={24}>
             <Grid className={classes.gridBlock} item xs={12} lg={8}>
@@ -29,18 +33,18 @@ const PatientBanner = ({ classes, patientInfo }) => {
                     {get(patientInfo, 'name', null)}
                 </Typography>
                 { doctor &&
-                <Typography variant="body2">
-                    <span className={classes.keyName}>Doctor: </span>
-                    {doctor}
-                </Typography>
+                    <Typography variant="body2">
+                        <span className={classes.keyName}>Doctor: </span>
+                        {doctor}
+                    </Typography>
                 }
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
                 {
-                    dateOfBirth &&
+                    dateOfBirthConvert &&
                     <Typography variant="body2">
                         <span className={classes.keyName}>D.O.B.: </span>
-                        {dateOfBirth}
+                        {dateOfBirthConvert}
                     </Typography>
                 }
                 <Typography variant="body2">
@@ -54,7 +58,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
                     { get(patientInfo, 'gender', null) }
                 </Typography>
                 <Typography variant="body2">
-                    <span className={classes.keyName}>NHS No.: </span>
+                    <span className={classes.keyName}>CHI No.: </span>
                     { get(patientInfo, 'nhsNumber', null) }</Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={12}>
