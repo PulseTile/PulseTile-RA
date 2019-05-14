@@ -202,12 +202,12 @@ class ListTemplate extends Component {
         });
     };
 
-    hasNewItem = (newListArray, prevListArray, nextProps) => {
+    hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
         for (let i = 0, n = newDataArray.length; i < n; i++) {
             let item = newDataArray[i];
-            if (get(item, 'isNew', false)) {
+            if (get(item, 'isNew', false) && get(item, 'lastName', null) === prevListArray) {
                 result = true;
                 break;
             }
@@ -218,13 +218,25 @@ class ListTemplate extends Component {
     componentWillReceiveProps(nextProps, nextContext) {
         const newListArray = Object.values(get(nextProps, 'currentList', {}));
         const prevListArray = Object.values(get(nextContext, 'currentList', {}));
-        const hasNewItem = this.hasNewItem(newListArray, prevListArray, nextProps);
-        if (hasNewItem) {
+        const userSearch = Object.values(get(nextProps, 'userSearch', null));
+        const hasNewItem = this.hasNewItem(newListArray, prevListArray, nextProps, userSearch);
+        if (newListArray.length === 1 && prevListArray.length === 0 && hasNewItem) {
             this.setState({
                 key: this.state.key + 1
             });
         }
     }
+
+    filterByUserSearch = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearch) {
+                return {
+                    filterText: props.userSearch,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
 
     render() {
         const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent, currentList } = this.props;
@@ -240,6 +252,7 @@ class ListTemplate extends Component {
             titleTable = `Patients matching '${userSearch}'`;
             this.filterByUserSearch();
         }
+
         const currentListArray = Object.values(currentList);
         const idsNumber = currentListArray.length > 0 ? currentListArray.length : 0;
 
@@ -255,30 +268,30 @@ class ListTemplate extends Component {
                                 <Typography className={classes.title}>{titleTable}</Typography>
                                 <div className={classes.emptyBlock}></div>
                                 {!this.isListPage() &&
-                                    <Tooltip title="Expand">
-                                        <IconButton onClick={() => history.push("/" + resourceUrl)}  >
-                                            <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
-                                        </IconButton>
-                                    </Tooltip>
+                                <Tooltip title="Expand">
+                                    <IconButton onClick={() => history.push("/" + resourceUrl)}  >
+                                        <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
+                                    </IconButton>
+                                </Tooltip>
                                 }
                                 { !headerFilterAbsent &&
-                                    <Tooltip title="Search">
-                                        <IconButton onClick={() => this.toggleFilter()}>
-                                            <SearchIcon className={classes.filterIcon}/>
-                                        </IconButton>
-                                    </Tooltip>
+                                <Tooltip title="Search">
+                                    <IconButton onClick={() => this.toggleFilter()}>
+                                        <SearchIcon className={classes.filterIcon}/>
+                                    </IconButton>
+                                </Tooltip>
                                 }
                             </div>
                             {
                                 isFilterOpened &&
-                                    <Paper className={classes.filterInput} elevation={1}>
-                                        <Tooltip title="Menu">
-                                            <IconButton className={classes.iconButton}>
-                                                <FilterIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                        <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                    </Paper>
+                                <Paper className={classes.filterInput} elevation={1}>
+                                    <Tooltip title="Menu">
+                                        <IconButton className={classes.iconButton}>
+                                            <FilterIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                </Paper>
                             }
                         </React.Fragment>
                         <List
@@ -329,4 +342,4 @@ const mapStateToProps = (state, ownProps)  => {
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(listStyles)(ListTemplate));
+export default withStyles(listStyles)(connect(mapStateToProps, null)(ListTemplate));

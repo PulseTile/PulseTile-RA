@@ -1,9 +1,7 @@
 import get from "lodash/get";
 import {
-    fetchUtils,
     GET_LIST,
     GET_ONE,
-    GET_MANY,
     CREATE,
     UPDATE,
     HttpError
@@ -149,8 +147,8 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     prefix: prefix,
                     firstName: firstName,
                     lastName: lastName,
-                    name: [prefix, firstName, lastName].join(' '),
-                    address: line,
+                    name: [firstName, lastName].join(' '),
+                    address: [line, city, district, postCode].join(', '),
                     city: city,
                     country: country,
                     district: district,
@@ -206,15 +204,6 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
     }
 };
 
-function getGivenNamesArray(namesArray) {
-    let nameArrayLength = namesArray.length;
-    let result = [];
-    for (let i = 0; i < nameArrayLength - 1; i++) {
-        result.push(namesArray[i]);
-    }
-    return result;
-}
-
 /**
  * This function filters patients list by department
  *
@@ -257,7 +246,7 @@ function getTotalName(item) {
     const namesArray = get(nameFromResponse, [[0], 'given'], null);
     const firstName = namesArray.join(' ');
     const surname = get(nameFromResponse, [[0], 'family'], null);
-    return [prefix, firstName, surname].join(' ');
+    return [firstName, surname].join(' ');
 }
 
 /**
