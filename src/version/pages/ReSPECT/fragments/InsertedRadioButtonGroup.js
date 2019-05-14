@@ -8,7 +8,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
-const styles = {
+const styles = theme => ({
     formGroup: {
         paddingLeft: 20,
         paddingRight: 20,
@@ -17,7 +17,13 @@ const styles = {
     },
     formLabel: {
         display: "block",
-        color: "#000",
+        color: theme.palette.fontColor,
+        fontSize: 14,
+        marginBottom: 5,
+    },
+    formLabelVersion: {
+        display: "block",
+        color: "#bebebe",
         fontSize: 14,
         marginBottom: 5,
     },
@@ -38,12 +44,12 @@ const styles = {
         marginLeft: 25,
         marginBottom: 25,
     },
-};
+});
 
 const InsertedRadioButtonGroup = ({ classes, isSelected, variant, handleChange, isVersionInfo }) => {
     return (
         <React.Fragment>
-            <FormLabel className={classes.formLabel}>
+            <FormLabel className={isVersionInfo ? classes.formLabelVersion : classes.formLabel}>
                 C - This person is less than 16 (Scotland) / 18 (UK)
             </FormLabel>
             { isSelected &&
