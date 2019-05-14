@@ -9,9 +9,11 @@ import { currentPatientAction } from "../../actions/currentPatientAction";
 import image from "../../../version/images/logo.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
+import LoadingSlider from "../../common/LoadingSlider";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
+import fetchInitialize from "./fetchInitialize";
 
 const styles = theme => ({
     content: {
@@ -41,6 +43,10 @@ const styles = theme => ({
  */
 class PatientsList extends Component {
 
+    state = {
+        loading: false,
+    };
+
     componentDidMount() {
         this.props.setSidebarVisibility(false);
     }
@@ -54,14 +60,24 @@ class PatientsList extends Component {
      */
     redirectToSummary = (e, record) => {
         e.stopPropagation();
-        this.props.updateCurrentPatient(record.nhsNumber);
         localStorage.setItem('patientId', record.nhsNumber);
-        this.props.history.push('/summary');
-        this.props.setSidebarVisibility(true);
+        this.setState({
+            loading: true
+        });
+        new Promise(fetchInitialize).then(() => {
+            this.props.updateCurrentPatient(record);
+            this.props.history.push('/summary');
+            this.props.setSidebarVisibility(true);
+            this.setState({
+                loading: false
+            })
+        });
     };
 
     render() {
         const { userSearch, classes } = this.props;
+        const { loading } = this.state;
+
         if (!userSearch) {
             return (
                 <div className={classes.content}>
@@ -77,6 +93,13 @@ class PatientsList extends Component {
                 </div>
             )
         }
+
+        if (loading) {
+            return (
+                <LoadingSlider />
+            )
+        }
+
         return (
             <ListTemplate
                 basePath="/patients"
@@ -88,13 +111,13 @@ class PatientsList extends Component {
                 headerFilterAbsent={true}
                 {...this.props}
             >
-                <TextField source="name" label="Name" />
-                <TextField source="address" label="Address" />
-                <DateField source="birthDate" label="Born" />
-                <TextField source="nhsNumber" label="NHS No." />
-                <ViewButton viewAction={this.redirectToSummary} />
+                <TextField source="name" label="Name"/>
+                <TextField source="address" label="Address"/>
+                <DateField source="birthDate" label="Born"/>
+                <TextField source="nhsNumber" label="NHS No."/>
+                <ViewButton viewAction={this.redirectToSummary}/>
             </ListTemplate>
-        )
+        );
     }
 }
 
