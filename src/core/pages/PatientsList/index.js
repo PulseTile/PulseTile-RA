@@ -65,7 +65,7 @@ class PatientsList extends Component {
             loading: true
         });
         new Promise(fetchInitialize).then(() => {
-            this.props.updateCurrentPatient(record);
+            this.props.updateCurrentPatient(record.nhsNumber);
             this.props.history.push('/summary');
             this.props.setSidebarVisibility(true);
             this.setState({
