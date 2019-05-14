@@ -1,9 +1,7 @@
 import get from "lodash/get";
 import {
-    fetchUtils,
     GET_LIST,
     GET_ONE,
-    GET_MANY,
     CREATE,
     UPDATE,
     HttpError
@@ -150,7 +148,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     firstName: firstName,
                     lastName: lastName,
                     name: [firstName, lastName].join(' '),
-                    address: line,
+                    address: [line, city, district, postCode].join(', '),
                     city: city,
                     country: country,
                     district: district,
@@ -205,15 +203,6 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             return { data: 'No results' };
     }
 };
-
-function getGivenNamesArray(namesArray) {
-    let nameArrayLength = namesArray.length;
-    let result = [];
-    for (let i = 0; i < nameArrayLength - 1; i++) {
-        result.push(namesArray[i]);
-    }
-    return result;
-}
 
 /**
  * This function filters patients list by department

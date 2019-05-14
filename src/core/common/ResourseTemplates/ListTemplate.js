@@ -202,12 +202,12 @@ class ListTemplate extends Component {
         });
     };
 
-    hasNewItem = (newListArray, prevListArray, nextProps) => {
+    hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
         for (let i = 0, n = newDataArray.length; i < n; i++) {
             let item = newDataArray[i];
-            if (get(item, 'isNew', false)) {
+            if (get(item, 'isNew', false) && get(item, 'lastName', null) === prevListArray) {
                 result = true;
                 break;
             }
@@ -218,8 +218,9 @@ class ListTemplate extends Component {
     componentWillReceiveProps(nextProps, nextContext) {
         const newListArray = Object.values(get(nextProps, 'currentList', {}));
         const prevListArray = Object.values(get(nextContext, 'currentList', {}));
-        const hasNewItem = this.hasNewItem(newListArray, prevListArray, nextProps);
-        if (hasNewItem) {
+        const userSearch = Object.values(get(nextProps, 'userSearch', null));
+        const hasNewItem = this.hasNewItem(newListArray, prevListArray, nextProps, userSearch);
+        if (newListArray.length === 1 && prevListArray.length === 0 && hasNewItem) {
             this.setState({
                 key: this.state.key + 1
             });
