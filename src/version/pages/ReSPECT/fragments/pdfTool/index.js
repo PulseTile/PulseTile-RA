@@ -63,7 +63,7 @@ function getClinicalRecommendations(obj){
 }
 
 function getWrappedText(text, rowLength) {
-    if (!text) {
+    if (!text || text === "") {
         return null;
     }
     const textArray = text.split(' ');
@@ -431,8 +431,10 @@ export default (obj, patientInfo) => {
                 height: 23
             });
     }
-    if (get(form, 'sectionSixNotSelectingReason', null)) {
-        const textRowsArray = getWrappedText(form.sectionSixNotSelectingReason, 125);
+
+    const sectionSixNotSelectingReason = get(form, 'sectionSixNotSelectingReason', null);
+    if (sectionSixNotSelectingReason && sectionSixNotSelectingReason !== "") {
+        const textRowsArray = getWrappedText(sectionSixNotSelectingReason, 125);
         const initialPositionOY = 360;
         doc.fontSize(10);
         for (let i = 0, n = textRowsArray.length; i < n; i++) {
@@ -440,8 +442,10 @@ export default (obj, patientInfo) => {
             doc.text(row, 31, initialPositionOY + i * 15);
         }
     }
-    if (get(form, 'sectionSixDocumentExplanation', null)) {
-        const textRowsArray = getWrappedText(form.sectionSixDocumentExplanation, 125);
+
+    const sectionSixDocumentExplanation = get(form, 'sectionSixDocumentExplanation', null);
+    if (sectionSixDocumentExplanation && sectionSixDocumentExplanation !== "") {
+        const textRowsArray = getWrappedText(sectionSixDocumentExplanation, 125);
         const initialPositionOY = 419;
         doc.fontSize(10);
         for (let i = 0, n = textRowsArray.length; i < n; i++) {
