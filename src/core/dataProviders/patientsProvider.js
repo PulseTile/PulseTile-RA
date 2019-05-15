@@ -41,11 +41,21 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             let userName = get(params, 'data.firstName', null);
             let userId = get(params, 'data.nhsNumber', null);
             let updateData = {
-                name: {
-                    family: get(params, 'data.lastName', null),
-                    given: userName.split(' '),
-                    prefix: get(params, 'data.prefix', null),
-                },
+                resourceType: "Patient",
+                name: [
+                    {
+                        family: get(params, 'data.lastName', null),
+                        use: "official",
+                        given: userName.split(' '),
+                        prefix: get(params, 'data.prefix', null),
+                    },
+                    {
+                        use: "usual",
+                        given: [
+                            get(params, 'data.prefix', null)
+                        ]
+                    }
+                ],
                 telecom: String(get(params, 'data.phone', null)),
                 gender: get(params, 'data.gender', null),
                 birthDate: get(params, 'data.birthDate', null),
@@ -75,11 +85,21 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             let patientId = get(params, 'data.nhsNumber', null);
             let name = get(params, 'data.firstName', null);
             let data = {
-                name: {
-                    family: get(params, 'data.lastName', null),
-                    given: name.split(' '),
-                    prefix: get(params, 'data.prefix', null),
-                },
+                resourceType: "Patient",
+                name: [
+                    {
+                        family: get(params, 'data.lastName', null),
+                        use: "official",
+                        given: name.split(' '),
+                        prefix: get(params, 'data.prefix', null),
+                    },
+                    {
+                        use: "usual",
+                        given: [
+                            get(params, 'data.prefix', null)
+                        ]
+                    }
+                ],
                 telecom: String(get(params, 'data.phone', null)),
                 gender: get(params, 'data.gender', null),
                 birthDate: get(params, 'data.birthDate', null),
@@ -162,7 +182,6 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             };
 
         case UPDATE:
-            let newPrefix = get(params, 'data.prefix', null);
             let newFirstName = get(params, 'data.firstName', null);
             let newLastName = get(params, 'data.lastName', null);
 
@@ -172,7 +191,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             let newPostalCode = get(params, 'data.postCode', null);
 
             let newData = params.data;
-            newData.name = [newPrefix, newFirstName, newLastName].join(' ');
+            newData.name = [newFirstName, newLastName].join(' ');
             newData.address = [newAddressLine, newCity, newDistrict, newPostalCode].join(' ');
             return {
                 id: get(params, 'data.nhsNumber', null),
@@ -189,7 +208,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                 sourceID = compositionUidArray[0];
             }
             dataFromRequest.id = Number(get(params, 'data.nhsNumber', null));
-            dataFromRequest.name = get(params, 'data.prefix', null) + ' ' + get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
+            dataFromRequest.name = get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
             dataFromRequest.address = get(params, 'data.address', null) + ' ' + get(params, 'data.city', null) + ' ' + get(params, 'data.district', null) + ' ' + get(params, 'data.postCode', null);
             dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
@@ -242,7 +261,6 @@ function getPatientsList(patientsArray) {
  */
 function getTotalName(item) {
     const nameFromResponse = get(item, 'resource.name', null);
-    const prefix = get(nameFromResponse, [[0], 'prefix'], null);
     const namesArray = get(nameFromResponse, [[0], 'given'], null);
     const firstName = namesArray.join(' ');
     const surname = get(nameFromResponse, [[0], 'family'], null);
