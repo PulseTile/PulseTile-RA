@@ -227,17 +227,6 @@ class ListTemplate extends Component {
         }
     }
 
-    filterByUserSearch = () => {
-        this.setState((state, props) => {
-            if (state.filterText !== props.userSearch) {
-                return {
-                    filterText: props.userSearch,
-                    key: this.state.key + 1,
-                }
-            }
-        });
-    };
-
     render() {
         const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent, currentList } = this.props;
         const { isFilterOpened, key, isListOpened, filterText } = this.state;
