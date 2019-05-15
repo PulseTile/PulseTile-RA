@@ -1,16 +1,9 @@
 import get from "lodash/get";
-import moment from "moment";
 import {
-    fetchUtils,
     GET_LIST,
     GET_ONE,
-    GET_MANY,
-    GET_MANY_REFERENCE,
     CREATE,
     UPDATE,
-    UPDATE_MANY,
-    DELETE,
-    DELETE_MANY,
     HttpError,
 } from "react-admin";
 import sort, { ASC, DESC } from 'sort-array-objects';
@@ -185,7 +178,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
             const paginationResults = resultsSorting.slice(startItem, endItem);
             return {
                 data: paginationResults,
-                total: resultsSorting.length,
+                total: results.length,
             };
 
         case GET_ONE:
