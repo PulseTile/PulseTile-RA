@@ -1,16 +1,9 @@
 import get from "lodash/get";
-import moment from "moment";
 import {
-    fetchUtils,
     GET_LIST,
     GET_ONE,
-    GET_MANY,
-    GET_MANY_REFERENCE,
     CREATE,
     UPDATE,
-    UPDATE_MANY,
-    DELETE,
-    DELETE_MANY,
     HttpError,
 } from "react-admin";
 import sort, { ASC, DESC } from 'sort-array-objects';
@@ -22,7 +15,6 @@ import newPatientsProvider from "./patientsProvider";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
 const apiPatientsUser = 'api/patients';
-const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
 
 /**
  * This constant prepare data for requests (URL and options)
@@ -37,7 +29,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
     const options = {};
     switch (type) {
         case GET_LIST: {
-            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}`;
+            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -49,7 +41,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
         }
 
         case GET_ONE:
-            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}/${params.id}`;
+            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -60,8 +52,8 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
-            let data = Object.assign({userId: patientID}, params.data);
-            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}/${params.id}`;
+            let updateData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
+            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
             options.method = "PUT";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -71,12 +63,12 @@ const convertDataRequestToHTTP = (type, resource, params) => {
                 'Content-Type': 'application/json',
                 'X-Requested-With': "XMLHttpRequest",
             };
-            options.body = JSON.stringify(data);
+            options.body = JSON.stringify(updateData);
             break;
 
         case CREATE:
-            data = Object.assign({userId: patientID}, params.data);
-            url = `${domainName}/${apiPatientsUser}/${patientID}/${resource}`;
+            let newData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
+            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
             options.method = "POST";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -86,7 +78,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
                 'Content-Type': 'application/json',
                 'X-Requested-With': "XMLHttpRequest",
             };
-            options.body = JSON.stringify(params.data);
+            options.body = JSON.stringify(newData);
             break;
 
         default:
@@ -186,7 +178,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
             const paginationResults = resultsSorting.slice(startItem, endItem);
             return {
                 data: paginationResults,
-                total: resultsSorting.length,
+                total: results.length,
             };
 
         case GET_ONE:

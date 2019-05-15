@@ -9,9 +9,11 @@ import { currentPatientAction } from "../../actions/currentPatientAction";
 import image from "../../../version/images/logo-landing.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
+import LoadingSlider from "../../common/LoadingSlider";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
+import fetchInitialize from "./fetchInitialize";
 
 const styles = theme => ({
     content: {
@@ -41,9 +43,36 @@ const styles = theme => ({
  */
 class PatientsList extends Component {
 
+    state = {
+        loading: false,
+    };
+
     componentDidMount() {
         this.props.setSidebarVisibility(false);
     }
+
+    /**
+     * This function redirects to Patient Summary page
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {shape} e
+     * @param {shape} record
+     */
+    redirectToSummary = (e, record) => {
+        e.stopPropagation();
+        localStorage.setItem('patientId', record.nhsNumber);
+        this.setState({
+            loading: true
+        });
+        new Promise(fetchInitialize).then(() => {
+            this.props.updateCurrentPatient(record.nhsNumber);
+            this.props.history.push('/summary');
+            this.props.setSidebarVisibility(true);
+            this.setState({
+                loading: false
+            })
+        });
+    };
 
     /**
      * This function redirects to Patient Summary page
@@ -62,6 +91,8 @@ class PatientsList extends Component {
 
     render() {
         const { userSearch, classes } = this.props;
+        const { loading } = this.state;
+
         if (!userSearch) {
             return (
                 <div className={classes.content}>
@@ -71,12 +102,18 @@ class PatientsList extends Component {
                             component="img"
                             alt="NHS Scotland"
                             image={image}
-                            title="ReSPECT"
                         />
                     </div>
                 </div>
             )
         }
+
+        if (loading) {
+            return (
+                <LoadingSlider />
+            )
+        }
+
         return (
             <ListTemplate
                 basePath="/patients"
@@ -94,7 +131,7 @@ class PatientsList extends Component {
                 <TextField source="nhsNumber" label="CHI No." />
                 <ViewButton viewAction={this.redirectToSummary} />
             </ListTemplate>
-        )
+        );
     }
 }
 
