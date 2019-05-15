@@ -191,17 +191,6 @@ class ListTemplate extends Component {
         })
     };
 
-    filterByUserSearch = () => {
-        this.setState((state, props) => {
-            if (state.filterText !== props.userSearch) {
-                return {
-                    filterText: props.userSearch,
-                    key: this.state.key + 1,
-                }
-            }
-        });
-    };
-
     hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
