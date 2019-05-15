@@ -685,7 +685,7 @@ export default (obj, patientInfo) => {
         });
     }
     if (get(form, 'sectionNineConfirmation2.name', null)) {
-        doc.text(form.sectionNineConfirmation2.name.toString(), 510, 740, {
+        doc.text(form.sectionNineConfirmation2.name.toString(), 510, 760, {
             width: 108,
             height: 18
         });
