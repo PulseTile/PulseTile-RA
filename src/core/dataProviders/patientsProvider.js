@@ -124,7 +124,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             const paginationResults = resultsSorting.slice(startItem, endItem);
             return {
                 data: paginationResults,
-                total: paginationResults.length,
+                total: patientsArray.length,
             };
 
         case GET_ONE:
