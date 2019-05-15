@@ -488,36 +488,35 @@ export default (obj, patientInfo) => {
     }
 
     if (get(form, 'sectionSevenClinician2.designation', null)) {
-        doc.text(form.sectionSevenClinician2.designation, 31, 497, {
+        doc.text(form.sectionSevenClinician2.designation, 31, 517, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionSevenClinician2.name', null)) {
-        doc.text(form.sectionSevenClinician2.name, 151, 497, {
+        doc.text(form.sectionSevenClinician2.name, 151, 517, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionSevenClinician2.number', null)) {
-        doc.text(form.sectionSevenClinician2.number, 314, 497, {
+        doc.text(form.sectionSevenClinician2.number.toString(), 314, 517, {
             width: 85,
             height: 18
         });
     }
     if (get(form, 'sectionSevenClinician2.name', null)) {
-        doc.text(form.sectionSevenClinician2.name, 410, 497, {
+        doc.text(form.sectionSevenClinician2.name, 410, 517, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionSevenClinician2.dateTime', null)) {
-        doc.text(form.sectionSevenClinician2.dateTime, 506, 497, {
+        doc.text(form.sectionSevenClinician2.dateTime, 506, 517, {
             width: 78,
             height: 18
         });
     }
-
 
     if (get(form, 'sectionSevenSeniorClinician.designation', null)) {
         doc.text(form.sectionSevenSeniorClinician.designation, 31, 537, {
@@ -525,34 +524,29 @@ export default (obj, patientInfo) => {
             height: 18
         });
     }
-
     if (get(form, 'sectionSevenSeniorClinician.name', null)) {
         doc.text(form.sectionSevenSeniorClinician.name, 151, 537, {
             width: 154,
             height: 18
         });
     }
-
     if (get(form, 'sectionSevenSeniorClinician.number', null)) {
-        doc.text(form.sectionSevenSeniorClinician.number, 314, 537, {
+        doc.text(form.sectionSevenSeniorClinician.number.toString(), 314, 537, {
             width: 85,
             height: 18
         });
     }
-
     if (get(form, 'sectionSevenSeniorClinician.name', null)) {
         doc.text(form.sectionSevenSeniorClinician.name, 410, 537, {
             width: 154,
             height: 18
         });
     }
-
     if (get(form, 'sectionSevenSeniorClinician.dateTime', null)) {
         doc.text(form.sectionSevenSeniorClinician.dateTime, 506, 537, {
             width: 78,
             height: 18
         });
-
     }
 
     // SECTION 8
@@ -589,7 +583,7 @@ export default (obj, patientInfo) => {
         });
     }
     if (get(form, 'sectionEightContact2.telephone', null)) {
-        doc.text(form.sectionEightContact2.telephone, 314, 625, {
+        doc.text(form.sectionEightContact2.telephone.toString(), 314, 625, {
             width: 117,
             height: 18
         });
@@ -608,7 +602,7 @@ export default (obj, patientInfo) => {
         });
     }
     if (get(form, 'sectionEightContact3.telephone', null)) {
-        doc.text(form.sectionEightContact3.telephone, 314, 644, {
+        doc.text(form.sectionEightContact3.telephone.toString(), 314, 644, {
             width: 117,
             height: 18
         });
@@ -627,7 +621,7 @@ export default (obj, patientInfo) => {
         });
     }
     if (get(form, 'sectionEightContact4.telephone', null)) {
-        doc.text(form.sectionEightContact4.telephone, 314, 663, {
+        doc.text(form.sectionEightContact4.telephone.toString(), 314, 663, {
             width: 117,
             height: 18
         });
