@@ -60,29 +60,6 @@ class PatientsList extends Component {
      */
     redirectToSummary = (e, record) => {
         e.stopPropagation();
-        localStorage.setItem('patientId', record.nhsNumber);
-        this.setState({
-            loading: true
-        });
-        new Promise(fetchInitialize).then(() => {
-            this.props.updateCurrentPatient(record.nhsNumber);
-            this.props.history.push('/summary');
-            this.props.setSidebarVisibility(true);
-            this.setState({
-                loading: false
-            })
-        });
-    };
-
-    /**
-     * This function redirects to Patient Summary page
-     *
-     * @author Bogdan Shcherban <bsc@piogroup.net>
-     * @param {shape} e
-     * @param {shape} record
-     */
-    redirectToSummary = (e, record) => {
-        e.stopPropagation();
         this.props.updateCurrentPatient(record.nhsNumber);
         localStorage.setItem('patientId', record.nhsNumber);
         this.props.history.push('/summary');
