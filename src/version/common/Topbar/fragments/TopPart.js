@@ -10,7 +10,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import headerLogo from "../../../images/logo-header.png";
 import nhsLogo from "../../../images/nhs.png";
-import UserTour from "../../../features/UserTour";
 import UserSearch from "../../../../core/common/Topbar/fragments/UserSearch";
 import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
@@ -137,7 +136,6 @@ class TopPart extends Component {
                     image={nhsLogo}
                     title="Pulse Tile"
                 />
-                <UserTour classes={classes} location={location} />
                 <ContrastMode classes={classes} />
                 <UserPanelButton classes={classes} />
             </Toolbar>
