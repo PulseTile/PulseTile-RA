@@ -75,6 +75,7 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: false,
                 data: newArray,
+                latest: null,
                 first: null,
                 version: null,
             };
