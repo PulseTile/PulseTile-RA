@@ -178,7 +178,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
             const paginationResults = resultsSorting.slice(startItem, endItem);
             return {
                 data: paginationResults,
-                total: resultsSorting.length,
+                total: results.length,
             };
 
         case GET_ONE:
