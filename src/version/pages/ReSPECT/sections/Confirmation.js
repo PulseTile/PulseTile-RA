@@ -140,7 +140,7 @@ class Confirmation extends Component {
 
                             {/*<Signature name="signature" onEnd={this.addSignature} isSubTitle={true}/>*/}
                             <FormGroup className={classes.formGroup}>
-                                <FormLabel className={classes.formLabel}>Clinical signature</FormLabel>
+                                <FormLabel className={classes.formLabel}>Clinician signature</FormLabel>
                                 <Control.text
                                     className={classes.formInput}
                                     model="confirmationRow.clinicalSignature"
