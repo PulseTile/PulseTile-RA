@@ -87,7 +87,6 @@ class PatientsList extends Component {
                             component="img"
                             alt="NHS Scotland"
                             image={image}
-                            title="ReSPECT"
                         />
                     </div>
                 </div>
