@@ -130,7 +130,7 @@ class Confirmation extends Component {
                                 <Control.text className={classes.formInput} model="confirmationRow.designation" required/>
                             </FormGroup>
                             <FormGroup className={classes.smallFormGroup}>
-                                <FormLabel className={classes.formLabel}>Clinicial name</FormLabel>
+                                <FormLabel className={classes.formLabel}>Clinician name</FormLabel>
                                 <Control.text className={classes.formInput} model="confirmationRow.clinicialName" required/>
                             </FormGroup>
                             <FormGroup className={classes.smallFormGroup}>
