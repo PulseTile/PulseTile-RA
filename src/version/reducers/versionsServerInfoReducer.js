@@ -46,6 +46,7 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: false,
                 first: get(action, "data", null),
+                latest: null,
             };
         case VERSIONS_SERVER_ACTION.SUCCESS_PUT:
 
