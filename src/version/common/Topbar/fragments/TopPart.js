@@ -10,7 +10,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import helmLogo from "../../../images/helm-logo.png";
 import nhsLogo from "../../../images/nhs.png";
-import UserSearch from "../../../../core/common/Topbar/fragments/UserSearch";
 import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
 import { userSearchAction } from "../../../../core/actions/userSearchAction";
@@ -128,7 +127,6 @@ class TopPart extends Component {
                     />
                 </div>
                 <div className={classes.emptyBlock}></div>
-                <UserSearch location={location} />
                 <CardMedia
                     className={classes.nhsLogo}
                     component="img"

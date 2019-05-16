@@ -25,6 +25,7 @@ const FetchLogin = (resolve, reject) => {
                 const userName = get(decodeToken, 'openid.firstName', null) + ' ' + get(decodeToken, 'openid.lastName', null);
                 const role = ('phrUser' === get(decodeToken, 'openid.role', null)) ? 'PHR' : 'IDCR';
                 localStorage.setItem('userId', decodeToken.nhsNumber);
+                localStorage.setItem('patientId', decodeToken.nhsNumber);
                 localStorage.setItem('username', userName);
                 localStorage.setItem('role', role);
                 return resolve(true);

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import get from "lodash/get";
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,10 +8,11 @@ import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { pageHasTitle } from "../../../../core/common/Topbar/functions";
 import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
 import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
 import MobileMenu from "./MobileMenu";
+
+import { currentPatientAction } from "../../../../core/actions/currentPatientAction";
 
 const styles = theme => ({
     lowPart: {
@@ -98,12 +101,47 @@ const MenuButton = ({ classes, setSidebarVisibility, isSidebarOpen }) => {
 };
 
 /**
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} location
+ * @return {boolean}
+ */
+export function pageHasTitle(location) {
+    const pathName = location.pathname;
+    const pagesWithTitle = [
+        '/charts',
+    ];
+    return pagesWithTitle.indexOf(pathName) !== -1;
+}
+
+/**
+ * @author Bogdan Shcherban <bsc@piogroup.net>
+ * @param {shape} location
+ * @return {boolean}
+ */
+export function pageHasPatientBanner(location) {
+    const pathName = location.pathname;
+    const pathArray = pathName.split('/');
+    const currentResource = get(pathArray, [1], null);
+    const pagesWithTitle = [
+        'charts',
+        'patients'
+    ];
+    return pagesWithTitle.indexOf(currentResource) !== -1;
+}
+
+/**
  * This component returns low part of Showcase TopBar
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @constructor
  */
 class LowPart extends Component {
+
+    componentDidMount() {
+        if (localStorage.getItem('patientId')) {
+            this.props.getCurrentPatientAction();
+        }
+    }
 
     componentWillMount() {
         this.props.setSidebarVisibility(true);
@@ -112,24 +150,45 @@ class LowPart extends Component {
     render() {
         const { classes, isSidebarOpen, setSidebarVisibility, location, patientInfo } = this.props;
         const isPageHasTitle = pageHasTitle(location);
+        const isPageHasPatientBanner = pageHasPatientBanner(location);
         return (
             <Toolbar className={classes.lowPart}>
                 {
                     isPageHasTitle &&
-                        <PageTitle classes={classes} location={location} />
+                    <PageTitle classes={classes} location={location} />
                 }
                 <div className={classes.menuAndBanner}>
                     <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
                     {
-                        !isPageHasTitle &&
-                            <PatientBanner location={location} classes={classes} patientInfo={patientInfo} />
+                        !isPageHasPatientBanner &&
+                        <PatientBanner location={location} classes={classes} patientInfo={patientInfo} />
                     }
                 </div>
-                <MobileMenu setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} patientInfo={patientInfo} />
+                <MobileMenu
+                    isPageHasPatientBanner={isPageHasPatientBanner}
+                    setSidebarVisibility={setSidebarVisibility}
+                    isSidebarOpen={isSidebarOpen}
+                    patientInfo={patientInfo}
+                />
             </Toolbar>
         );
     }
 
 };
 
-export default withStyles(styles)(LowPart);
+const mapStateToProps = state => {
+    return {
+        patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getCurrentPatientAction() {
+            dispatch(currentPatientAction.request());
+        },
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LowPart));
