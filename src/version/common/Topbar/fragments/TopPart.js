@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
@@ -7,12 +7,14 @@ import HomeIcon from "@material-ui/icons/Home";
 import Toolbar from '@material-ui/core/Toolbar';
 import BackIcon from "@material-ui/icons/KeyboardBackspace";
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import helmLogo from "../../../images/pulsetile-logo.png";
 import nhsLogo from "../../../images/nhs.png";
-import UserTour from "../../../features/UserTour";
+import UserSearch from "../../../../core/common/Topbar/fragments/UserSearch";
 import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
+import { userSearchAction } from "../../../../core/actions/userSearchAction";
 
 const styles = theme => ({
     topPart: {
@@ -40,6 +42,10 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         paddingLeft: 9,
+    },
+    image: {
+        width: "auto",
+        cursor: "pointer",
     },
     nhsLogo: {
         [theme.breakpoints.only('xs')]: {
@@ -115,23 +121,32 @@ const TopPart = ({ classes, logout, location, history }) => {
                         height="38px"
                         image={helmLogo}
                         title="Pulse Tile"
+                        onClick={() => this.goHomePage()}
                     />
-                </Link>
-            </div>
-            <div className={classes.emptyBlock}></div>
-            <CardMedia
-                className={classes.nhsLogo}
-                component="img"
-                alt="Pulse Tile"
-                height="29px"
-                image={nhsLogo}
-                title="Pulse Tile"
-            />
-            <UserTour classes={classes} location={location} />
-            <ContrastMode classes={classes} />
-            <UserPanelButton classes={classes} />
-        </Toolbar>
-    );
-}
+                </div>
+                <div className={classes.emptyBlock}></div>
+                <UserSearch location={location} />
+                <CardMedia
+                    className={classes.nhsLogo}
+                    component="img"
+                    alt="Pulse Tile"
+                    height="29px"
+                    image={nhsLogo}
+                    title="Pulse Tile"
+                />
+                <ContrastMode classes={classes} />
+                <UserPanelButton classes={classes} />
+            </Toolbar>
+        );
+    }
+};
 
-export default withStyles(styles)(TopPart);
+const mapDispatchToProps = dispatch => {
+    return {
+        removeUserSearch() {
+            dispatch(userSearchAction.remove());
+        },
+    }
+};
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(TopPart));
