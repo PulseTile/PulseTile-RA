@@ -1,8 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+
+import { userSearchAction } from "../actions/userSearchAction";
 
 const styles = theme => ({
     breadcrumbsBlock: {
@@ -36,30 +39,49 @@ const styles = theme => ({
  * This component returns breadcrumbs block
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {shape} resource
  */
-const Breadcrumbs = ({ classes, resource }) => {
-    return (
-        <div className={classes.breadcrumbsBlock}>
-            <Typography>
-                <Link to="/" className={classes.link} color="inherit" aria-label="Home">Home</Link>
-            </Typography>
-            {
-                resource.map((item, key) => {
-                    return (
-                        <div key={key} className={classes.breadcrumbsItem}>
-                            <div className={classes.separator}></div>
-                            {item.isActive
-                                ? <Link to={item.url} className={classes.link} color="inherit" aria-label={item.title}>{item.title}</Link>
-                                : <Typography>{item.title}</Typography>
-                            }
-                        </div>
-                    );
-                })
-            }
-        </div>
-    );
+class Breadcrumbs extends Component {
+
+    goHomePage = () => {
+        this.props.removeUserSearch();
+        window.location.replace('/#/');
+    };
+
+    render() {
+        const { classes, resource } = this.props;
+        return (
+            <div className={classes.breadcrumbsBlock}>
+                <Typography className={classes.link} onClick={() => this.goHomePage()}>Home</Typography>
+                {
+                    resource.map((item, key) => {
+                        return (
+                            <div key={key} className={classes.breadcrumbsItem}>
+                                <div className={classes.separator}></div>
+                                {item.isActive
+                                    ?
+                                    <Typography>
+                                        <Link to={item.url} className={classes.link} aria-label={item.title} color="inherit">{item.title}</Link>
+                                    </Typography>
+                                    : (item.onClickAction
+                                            ? <Typography className={classes.link} onClick={() => item.onClickAction()}>{item.title}</Typography>
+                                            : <Typography>{item.title}</Typography>
+                                    )
+                                }
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        );
+    }
 };
 
-export default withStyles(styles)(Breadcrumbs);
+const mapDispatchToProps = dispatch => {
+    return {
+        removeUserSearch() {
+            dispatch(userSearchAction.remove());
+        },
+    }
+};
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(Breadcrumbs));

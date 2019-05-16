@@ -14,21 +14,35 @@ import Typography from '@material-ui/core/Typography';
  * @constructor
  */
 const PatientBanner = ({ classes, patientInfo }) => {
+    const addressArray = [
+        get(patientInfo, 'address', null),
+        get(patientInfo, 'city', null),
+        get(patientInfo, 'country', null),
+        get(patientInfo, 'postCode', null)
+    ];
+    const doctor = get(patientInfo, 'gpName', null);
+    const dateOfBirth = get(patientInfo, 'birthDate', null);
     return (
         <Grid className={classes.patientInfo} container spacing={24}>
             <Grid className={classes.gridBlock} item xs={12} lg={8}>
                 <Typography variant="h6">
                     {get(patientInfo, 'name', null)}
                 </Typography>
+                { doctor &&
                 <Typography variant="body2">
                     <span className={classes.keyName}>Doctor: </span>
-                    {get(patientInfo, 'gpName', null)}
+                    {doctor}
                 </Typography>
+                }
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
-                <Typography variant="body2">
-                    <span className={classes.keyName}>D.O.B.: </span>
-                    { moment(get(patientInfo, 'dateOfBirth', null)).format('DD-MMM-YYYY') }</Typography>
+                {
+                    dateOfBirth &&
+                    <Typography variant="body2">
+                        <span className={classes.keyName}>D.O.B.: </span>
+                        {dateOfBirth}
+                    </Typography>
+                }
                 <Typography variant="body2">
                     <span className={classes.keyName}>Phone: </span>
                     {get(patientInfo, 'phone', null)}
@@ -46,7 +60,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
             <Grid className={classes.gridBlock} item xs={12}>
                 <Typography variant="body2">
                     <span className={classes.keyName}>Address: </span>
-                    {get(patientInfo, 'address', null)}
+                    {addressArray.join(', ')}
                 </Typography>
             </Grid>
         </Grid>
