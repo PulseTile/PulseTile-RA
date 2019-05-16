@@ -110,6 +110,21 @@ class TransferOfCareInputs extends Component {
         });
     };
 
+    removeItem = sourceId => {
+        const { recordsArray } = this.state;
+        let newRecordsArray = [];
+        for (let i = 0, n = recordsArray.length; i < n; i++) {
+            let item = recordsArray[i];
+            if (item.sourceId !== sourceId) {
+                newRecordsArray.push(item);
+            }
+        }
+
+        this.setState({
+            recordsArray: newRecordsArray,
+        });
+    };
+
     getSelectorValue = (item, recordType) => {
         let result = '';
         if (recordType === 'problems') {
@@ -203,6 +218,7 @@ class TransferOfCareInputs extends Component {
                             classes={classes}
                             recordType={recordType}
                             selectItem={this.selectItem}
+                            removeItem={this.removeItem}
                             recordsArray={recordsArray}
                             recordsList={recordsList}
                         />

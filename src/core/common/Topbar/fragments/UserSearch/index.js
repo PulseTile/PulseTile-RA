@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import { get } from "lodash/get";
 import { connect } from 'react-redux';

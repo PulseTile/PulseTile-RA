@@ -12,14 +12,13 @@ import TableBodyBlock from "./TableBodyBlock";
 
 const styles = theme => ({
     tableWrapper: {
-        padding: 20,
-        overflowX: 'auto',
+        margin: 20,
     },
     tableList: {
         '& thead': {
-            backgroundColor: "#e5e5e5",
+            backgroundColor: theme.palette.borderColor,
             '& tr th span span': {
-                color: "#000",
+                color: theme.palette.fontColor,
             },
             '& tr th': {
                 paddingLeft: 10,
@@ -34,8 +33,8 @@ const styles = theme => ({
         '& tbody tr:hover': {
             backgroundColor: theme.palette.mainColor,
         },
-        '& tbody tr:hover td span': {
-            color: "#fff"
+        '& tbody tr:hover td  p': {
+            color: theme.palette.paperColor,
         }
     },
 });
@@ -55,7 +54,7 @@ class RecordsSelector extends Component {
     };
 
     render() {
-        const { classes, recordType, recordsList, selectItem, recordsArray } = this.props;
+        const { classes, recordType, recordsList, selectItem, recordsArray, removeItem } = this.props;
         return (
             <React.Fragment>
                 <FormGroup className={classes.formGroup}>
@@ -74,7 +73,7 @@ class RecordsSelector extends Component {
                     <div className={classes.tableWrapper}>
                         <Table className={classes.tableList} aria-labelledby="tableTitle">
                             <TableHeadBlock />
-                            <TableBodyBlock list={recordsArray} />
+                            <TableBodyBlock list={recordsArray} removeItem={removeItem} />
                         </Table>
                     </div>
                 }
@@ -84,4 +83,4 @@ class RecordsSelector extends Component {
     }
 };
 
-export default RecordsSelector;
+export default withStyles(styles)(RecordsSelector);

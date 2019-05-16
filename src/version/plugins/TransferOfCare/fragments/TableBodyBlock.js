@@ -1,15 +1,24 @@
 import React, { Component } from "react";
-import { Route } from "react-router";
 
+import { withStyles } from '@material-ui/core/styles';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import IconButton from "@material-ui/core/IconButton";
+import CleanIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import Tooltip from "@material-ui/core/Tooltip";
+
+const styles = theme => ({
+    icon: {
+        color: theme.palette.dangerColor,
+    }
+});
 
 class TableBodyBlock extends Component {
 
     render() {
-        const { list } = this.props;
+        const { classes, removeItem, list } = this.props;
         return (
             <TableBody>
                 {
@@ -29,7 +38,16 @@ class TableBodyBlock extends Component {
                                     <Typography>{item.source}</Typography>
                                 </TableCell>
                                 <TableCell align="right">
-                                    removeButton
+                                    <Tooltip title="Clean Search" disableHoverListener={true}>
+                                        <IconButton
+                                            className={classes.icon}
+                                            aria-haspopup="true"
+                                            color="inherit"
+                                            onClick={() => removeItem(item.sourceId)}
+                                        >
+                                            <CleanIcon />
+                                        </IconButton>
+                                    </Tooltip>
                                 </TableCell>
                             </TableRow>
                         )
@@ -40,4 +58,4 @@ class TableBodyBlock extends Component {
     }
 };
 
-export default TableBodyBlock;
+export default withStyles(styles)(TableBodyBlock);

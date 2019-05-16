@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 
 import { currentPatientAction } from "../../actions/currentPatientAction";
-import image from "../../../version/images/helm-logo.png";
+import image from "../../../version/images/pulsetile-logo.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import LoadingSlider from "../../common/LoadingSlider";
