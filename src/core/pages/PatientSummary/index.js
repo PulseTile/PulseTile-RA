@@ -100,7 +100,7 @@ class PatientSummaryInfo extends Component {
         ];
         const FeedsPanels = get(themeCommonElements, 'feedsPanels', false);
         return (
-            <Grid className={classes.container} >
+            <Grid id="patientSummary" className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <SettingsDialog className={classes.settingsIcon} />
                 <Grid className={classes.summaryContainer} spacing={16} container>

@@ -23,7 +23,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
     const doctor = get(patientInfo, 'gpName', null);
     const dateOfBirth = get(patientInfo, 'birthDate', null);
     return (
-        <Grid className={classes.patientInfo} container spacing={24}>
+        <Grid id="patientBanner" className={classes.patientInfo} container spacing={24}>
             <Grid className={classes.gridBlock} item xs={12} lg={8}>
                 <Typography variant="h6">
                     {get(patientInfo, 'name', null)}

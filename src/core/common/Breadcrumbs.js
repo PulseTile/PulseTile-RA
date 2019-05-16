@@ -50,7 +50,7 @@ class Breadcrumbs extends Component {
     render() {
         const { classes, resource } = this.props;
         return (
-            <div className={classes.breadcrumbsBlock}>
+            <div id="breadcrumbs" className={classes.breadcrumbsBlock}>
                 <Typography className={classes.link} onClick={() => this.goHomePage()}>Home</Typography>
                 {
                     resource.map((item, key) => {
