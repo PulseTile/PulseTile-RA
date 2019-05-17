@@ -14,9 +14,6 @@ import Typography from '@material-ui/core/Typography';
  * @constructor
  */
 const PatientBanner = ({ classes, patientInfo }) => {
-
-    console.log('patientInfo', patientInfo);
-
     const addressArray = [
         get(patientInfo, 'address', null),
         get(patientInfo, 'city', null),
