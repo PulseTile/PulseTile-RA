@@ -3,6 +3,7 @@ import { DisabledInput, TextInput, DateInput, LongTextInput } from "react-admin"
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
+import EditTemplate from "../../../../core/common/ResourseTemplates/EditTemplate";
 
 const styles = {
     labelBlock: {
@@ -21,12 +22,12 @@ const styles = {
  */
 const TopThreeThingsInputs = ({ classes, ...rest }) => (
     <React.Fragment>
-        <TextInput className={classes.labelBlock}  source="name1" label="Issue #1" />
-        <LongTextInput className={classes.labelBlock} source="description1" label="Description #1" fullWidth />
-        <TextInput className={classes.labelBlock}  source="name2" label="Issue #2" />
-        <LongTextInput className={classes.labelBlock} source="description2" label="Description #2" fullWidth />
-        <TextInput className={classes.labelBlock}  source="name3" label="Issue #3" />
-        <LongTextInput className={classes.labelBlock} source="description3" label="Description #3" fullWidth />
+        <TextInput id="name1" className={classes.labelBlock}  source="name1" label="Issue #1" />
+        <LongTextInput id="description1" className={classes.labelBlock} source="description1" label="Description #1" fullWidth />
+        <TextInput id="name2" className={classes.labelBlock}  source="name2" label="Issue #2" />
+        <LongTextInput id="description2" className={classes.labelBlock} source="description2" label="Description #2" fullWidth />
+        <TextInput id="name3" className={classes.labelBlock}  source="name3" label="Issue #3" />
+        <LongTextInput id="description3" className={classes.labelBlock} source="description3" label="Description #3" fullWidth />
         <TextInput className={classes.labelBlock} source="author" label="Author" defaultValue={localStorage.getItem('username')} disabled={true} fullWidth />
         <DateInput className={classes.labelBlock} source="dateCreated" label="Date" defaultValue={moment().format('MM/DD/YYYY')} disabled={true} fullWidth />
     </React.Fragment>

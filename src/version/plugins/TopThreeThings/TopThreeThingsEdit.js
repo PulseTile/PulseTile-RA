@@ -11,7 +11,7 @@ import Inputs from "./fragments/Inputs";
  * @param {shape} rest
  */
 const TopThreeThingsEdit = ({ classes, ...rest }) => (
-    <EditTemplate id="edit-top3Things" blockTitle="Top Three Things" {...rest}>
+    <EditTemplate blockTitle="Top Three Things" {...rest}>
         <Inputs />
     </EditTemplate>
 );

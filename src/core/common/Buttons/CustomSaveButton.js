@@ -37,7 +37,7 @@ const styles = theme => ({
  * @param {shape} classes
  */
 const CustomSaveButton = ({ classes, ...rest }) => (
-    <SaveButton aria-label="Complete" label="Complete" icon={<DoneIcon />} className={classes.saveButton} {...rest} />
+    <SaveButton id="saveButton" aria-label="Complete" label="Complete" icon={<DoneIcon />} className={classes.saveButton} {...rest} />
 );
 
 export default withStyles(styles)(CustomSaveButton);
