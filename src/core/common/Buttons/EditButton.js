@@ -34,7 +34,7 @@ const styles = theme => ({
  */
 const EditButton = ({ classes, redirectTo }) => (
     <Tooltip title="Edit">
-        <IconButton aria-label="Edit" className={classes.editButton} onClick={() => redirectTo('edit')}>
+        <IconButton id="editButton" aria-label="Edit" className={classes.editButton} onClick={() => redirectTo('edit')}>
             <EditIcon /> Edit
         </IconButton>
     </Tooltip>

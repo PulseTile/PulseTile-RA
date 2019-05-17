@@ -17,6 +17,7 @@ import TopThreeThingsShow from "./TopThreeThingsShow";
  */
 const TopThreeThingsList = ({ classes, ...rest }) => (
     <ListTemplate
+      id="list-top3Things"
       create={TopThreeThingsCreate}
       edit={TopThreeThingsEdit}
       show={TopThreeThingsShow}

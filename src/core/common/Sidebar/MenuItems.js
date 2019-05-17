@@ -16,6 +16,7 @@ const MenuItems = ({ classes, menuItems, currentList, onMenuClick }) => {
         <div className={classes.menuBlock} role="menubar">
             {menuItems.map((item, key) => (
                     <MenuItemLink
+                        id={item.id}
                         key={key}
                         className={(currentList === item.url) ? classes.menuItemSelected : classes.menuItem}
                         to={item.url}

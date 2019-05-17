@@ -42,9 +42,9 @@ const TableHeader = ({ classes, resource, translate }) => {
         return null;
     }
     return (
-        <div className={classes.tableHeaderBlock} >
+        <div id="tableHeader" className={classes.tableHeaderBlock} >
             <h1 className={classes.mainHeader}>
-                <Typography className={classes.title}>{title}</Typography>
+                <Typography id="tableHeader-title" className={classes.title}>{title}</Typography>
             </h1>
             <Typography className={classes.description}>{description}</Typography>
         </div>

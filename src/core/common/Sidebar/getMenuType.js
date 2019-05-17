@@ -3,18 +3,18 @@ import get from "lodash/get";
 import { themeShortMenu, themeFullMenu } from "../../../version/config/theme.config";
 
 const defaultShortMenu = [
-    { url: '/', label: 'Charts' },
-    { url: '/patients', label: 'Patients' }
+    { id: 'menu-home', url: '/', label: 'Charts' },
+    { id: 'menu-patients', url: '/patients', label: 'Patients' }
 ];
 
 const defaultFullMenu = [
-    { url: '/summary', label: 'Patient Summary' },
-    { url: '/problems', label: 'Problems / Issues' },
-    { url: '/medications', label: 'Medications' },
-    { url: '/vaccinations', label: 'Vaccinations' },
-    { url: '/allergies', label: 'Allergies' },
-    { url: '/contacts', label: 'Contacts' },
-    { url: '/top3Things', label: 'TopThreeThings' },
+    { id: 'menu-summary', url: '/summary', label: 'Patient Summary' },
+    { id: 'menu-problems', url: '/problems', label: 'Problems / Issues' },
+    { id: 'menu-medications', url: '/medications', label: 'Medications' },
+    { id: 'menu-vaccinations', url: '/vaccinations', label: 'Vaccinations' },
+    { id: 'menu-allergies', url: '/allergies', label: 'Allergies' },
+    { id: 'menu-contacts', url: '/contacts', label: 'Contacts' },
+    { id: 'menu-top3Things', url: '/top3Things', label: 'TopThreeThings' },
 ];
 
 function isResourcePresentedInMenu(currentResource, menuItemsArray) {
