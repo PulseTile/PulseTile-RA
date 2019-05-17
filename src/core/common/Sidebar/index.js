@@ -66,7 +66,7 @@ const CustomSidebar = ({ classes, isSidebarOpen, onMenuClick, location }) => {
             }
             medium={
                 isSidebarOpen ?
-                    <Sidebar className={classes.sidebarBlock}>
+                    <Sidebar id="sidebarMenu" className={classes.sidebarBlock}>
                         <MenuItems classes={classes} menuItems={menuItems} currentList={currentList} onMenuClick={onMenuClick} />
                     </Sidebar>
                     : null

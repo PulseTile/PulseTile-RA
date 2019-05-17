@@ -12,7 +12,7 @@ import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
 import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
 import MobileMenu from "./MobileMenu";
 
-import { currentPatientAction } from "../../../../core/actions/currentPatientAction";
+import { demographicsAction } from "../../../../core/actions/demographicsAction";
 
 const styles = theme => ({
     lowPart: {
@@ -178,14 +178,14 @@ class LowPart extends Component {
 
 const mapStateToProps = state => {
     return {
-        patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
+        patientInfo: get(state, 'custom.demographics.data', null),
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getCurrentPatientAction() {
-            dispatch(currentPatientAction.request());
+            dispatch(demographicsAction.request());
         },
     }
 };

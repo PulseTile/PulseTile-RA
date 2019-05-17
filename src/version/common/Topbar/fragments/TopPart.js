@@ -106,7 +106,7 @@ class TopPart extends Component {
     render() {
         const { classes, location } = this.props;
         return (
-            <Toolbar className={classes.topPart}>
+            <Toolbar id="topbarTopPart" className={classes.topPart}>
                 <div className={classes.homeButtonItem}>
                     <Tooltip title="Home">
                         <IconButton id="icon-home" aria-label="Home" className={classes.homeButton} onClick={() => this.goHomePage()}>

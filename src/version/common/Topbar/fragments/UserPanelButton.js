@@ -82,7 +82,7 @@ class UserPanelButton extends Component {
                     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                     open={isOpen}
                     onClose={this.handleClose} >
-                    <Card className={classes.userPanel}>
+                    <Card id="userPanel" className={classes.userPanel}>
                         <Typography variant="h1" className={classes.userName}>
                             {localStorage.getItem('username')}
                         </Typography>

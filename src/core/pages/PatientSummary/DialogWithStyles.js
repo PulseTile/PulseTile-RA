@@ -133,9 +133,9 @@ class DialogContent extends Component {
         const FeedSelector = get(themeCommonElements, 'feedsSelectors', false);
         return (
             <Dialog onBackdropClick={() => onClose()} {...rest}>
-                <div className={classes.dialogBlock} >
+                <div id="settingsModalWindow" className={classes.dialogBlock} >
                     <Tooltip title="Settings">
-                        <IconButton className={classes.closeIcon} color="inherit" onClick={() => onClose()}>
+                        <IconButton id="closeIcon" className={classes.closeIcon} color="inherit" onClick={() => onClose()}>
                             <CloseIcon />
                         </IconButton>
                     </Tooltip>
