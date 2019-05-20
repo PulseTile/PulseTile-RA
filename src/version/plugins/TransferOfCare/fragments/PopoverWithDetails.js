@@ -41,21 +41,34 @@ const styles = theme => ({
     }
 });
 
-const ProblemsDetails = ({ classes, details }) => {
-    const dateOfOnset = get(details, 'dateOfOnset', null);
+function getRecordInfo(details, sourceId) {
+    let result = null;
+    for (let i = 0, n = details.length; i < n; i++) {
+        let item = details[i];
+        if (item.sourceId === sourceId) {
+            result = item;
+            break;
+        }
+    }
+    return result;
+}
+
+const ProblemsDetails = ({ classes, details, sourceId }) => {
+    const recordInfo = getRecordInfo(details, sourceId);
+    const dateOfOnset = get(recordInfo, 'dateOfOnset', null);
     const dateOfOnsetConvert = dateOfOnset ? moment(dateOfOnset).format('DD-MM-YYYY') : moment().format('DD-MM-YYYY');
     return (
         <div className={classes.detailsPopover}>
             <div className={classes.blockTitle}>
                 <Typography className={classes.title}>Problems / Issue</Typography>
             </div>
-            { details ?
+            { recordInfo ?
                 <React.Fragment>
                     <div>
                         <div className={classes.blockDouble}>
                             <div className={classes.infoItem}>
                                 <Typography variant="h1">Problem / Issue</Typography>
-                                <Typography variant="body1">{get(details, 'problem', null)}</Typography>
+                                <Typography variant="body1">{get(recordInfo, 'problem', null)}</Typography>
                             </div>
                             <div className={classes.infoItem}>
                                 <Typography variant="h1">Date of Onset</Typography>
@@ -65,17 +78,17 @@ const ProblemsDetails = ({ classes, details }) => {
                     </div>
                     <div className={classes.infoItem}>
                         <Typography variant="h1">Description</Typography>
-                        <Typography variant="body1">{get(details, 'description', null)}</Typography>
+                        <Typography variant="body1">{get(recordInfo, 'description', null)}</Typography>
                     </div>
                     <div>
                         <div className={classes.blockDouble}>
                             <div className={classes.infoItem}>
                                 <Typography variant="h1">Terminology</Typography>
-                                <Typography variant="body1">{get(details, 'terminology', null)}</Typography>
+                                <Typography variant="body1">{get(recordInfo, 'terminology', null)}</Typography>
                             </div>
                             <div className={classes.infoItem}>
                                 <Typography variant="h1">Code</Typography>
-                                <Typography variant="body1">{get(details, 'code', null)}</Typography>
+                                <Typography variant="body1">{get(recordInfo, 'code', null)}</Typography>
                             </div>
                         </div>
                     </div>
@@ -89,30 +102,83 @@ const ProblemsDetails = ({ classes, details }) => {
     );
 };
 
-const MedicationsDetails = ({ classes, details }) => {
+const MedicationsDetails = ({ classes, details, sourceId }) => {
+    const recordInfo = getRecordInfo(details, sourceId);
+    const startDate = get(recordInfo, 'startDate', null);
+    const startDateConvert = startDate ? moment(startDate).format('DD-MM-YYYY') : moment().format('DD-MM-YYYY');
     return (
-        <div>
+        <div className={classes.detailsPopover}>
             <div className={classes.blockTitle}>
                 <Typography className={classes.title}>Medications</Typography>
             </div>
+            { recordInfo ?
+                <React.Fragment>
+                    <div>
+                        <div className={classes.blockDouble}>
+                            <div className={classes.infoItem}>
+                                <Typography variant="h1">Name</Typography>
+                                <Typography variant="body1">{get(recordInfo, 'name', null)}</Typography>
+                            </div>
+                            <div className={classes.infoItem}>
+                                <Typography variant="h1">Date start</Typography>
+                                <Typography variant="body1">{startDateConvert}</Typography>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classes.infoItem}>
+                        <Typography variant="h1">Dose amount</Typography>
+                        <Typography variant="body1">{get(recordInfo, 'doseAmount', null)}</Typography>
+                    </div>
+                    <div className={classes.infoItem}>
+                        <Typography variant="h1">Dose directions</Typography>
+                        <Typography variant="body1">{get(recordInfo, 'doseDirections', null)}</Typography>
+                    </div>
+                    <div>
+                        <div className={classes.blockDouble}>
+                            <div className={classes.infoItem}>
+                                <Typography variant="h1">Terminology</Typography>
+                                <Typography variant="body1">{get(recordInfo, 'medicationTerminology', null)}</Typography>
+                            </div>
+                            <div className={classes.infoItem}>
+                                <Typography variant="h1">Code</Typography>
+                                <Typography variant="body1">{get(recordInfo, 'medicationCode', null)}</Typography>
+                            </div>
+                        </div>
+                    </div>
+                </React.Fragment>
+                :
+                <div className={classes.infoItem}>
+                    <Typography variant="body1">No data</Typography>
+                </div>
+            }
         </div>
     );
 };
 
-const ReferralsDetails = ({ classes, details }) => {
+const ReferralsDetails = ({ classes, details, sourceId }) => {
+    const recordInfo = getRecordInfo(details, sourceId);
     return (
-        <div>
+        <div className={classes.detailsPopover}>
             <div className={classes.blockTitle}>
                 <Typography className={classes.title}>Referrals</Typography>
             </div>
+            { recordInfo ?
+                <React.Fragment>
+                    <div>
+                        No data...
+                    </div>
+                </React.Fragment>
+                :
+                <div className={classes.infoItem}>
+                    <Typography variant="body1">No data</Typography>
+                </div>
+            }
         </div>
     );
 };
 
 const PopoverWithDetails = ({ classes, anchorEl, handlePopoverClose, popoverItem, loadingDetails, details }) => {
     const open = Boolean(anchorEl);
-
-    console.log(popoverItem);
 
     if (!popoverItem) {
         return null;
@@ -136,9 +202,9 @@ const PopoverWithDetails = ({ classes, anchorEl, handlePopoverClose, popoverItem
                 </div>
             }
 
-            { popoverItem.type === 'problems' && <ProblemsDetails details={details} classes={classes} /> }
-            { popoverItem.type === 'medications' && <MedicationsDetails details={details} classes={classes} /> }
-            { popoverItem.type === 'referrals' && <ReferralsDetails details={details} classes={classes} /> }
+            { popoverItem.type === 'problems' && <ProblemsDetails details={details} classes={classes} sourceId={popoverItem.sourceId} /> }
+            { popoverItem.type === 'medications' && <MedicationsDetails details={details} classes={classes} sourceId={popoverItem.sourceId} /> }
+            { popoverItem.type === 'referrals' && <ReferralsDetails details={details} classes={classes} sourceId={popoverItem.sourceId} /> }
 
         </Popover>
     );

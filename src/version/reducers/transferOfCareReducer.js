@@ -35,10 +35,13 @@ export default (state = initialState, action) => {
                 list: get(action, 'data', []),
             };
         case TRANSFER_OF_CARE_ACTION.DETAILS:
+            const currentDetails = get(state, 'details', []);
+            const newDetails = get(action, 'data', null);
+            currentDetails.push(newDetails);
             return {
                 ...state,
                 loadingDetails: false,
-                details: get(action, 'data', []),
+                details: currentDetails
             };
         case TRANSFER_OF_CARE_ACTION.FAILURE:
             return {

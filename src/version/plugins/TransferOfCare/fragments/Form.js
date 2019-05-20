@@ -154,9 +154,8 @@ class TransferOfCareInputs extends Component {
         const { createNewItem } = this.props;
         const { transferDateTime, recordsArray } = this.state;
         const additionalData = {
-            transferDateTime: moment(transferDateTime).format('DD-MMM-YYYY'),
+            transferDateTime: moment(transferDateTime).unix(),
             records: recordsArray,
-            dateCreated: moment().format('DD-MMM-YYYY'),
             userId: patientID,
         };
         const formData = Object.assign({}, data, additionalData);
