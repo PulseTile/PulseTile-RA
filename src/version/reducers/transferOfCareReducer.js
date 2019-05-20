@@ -14,8 +14,13 @@ export default (state = initialState, action) => {
         case TRANSFER_OF_CARE_ACTION.REQUEST:
             return {
                 ...state,
-                loading: false,
+                loading: true,
                 data: state,
+            };
+        case TRANSFER_OF_CARE_ACTION.REQUEST_ONE:
+            return {
+                ...state,
+                loadingDetails: true,
             };
         case TRANSFER_OF_CARE_ACTION.SUCCESS:
             return {
@@ -28,6 +33,12 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: false,
                 list: get(action, 'data', []),
+            };
+        case TRANSFER_OF_CARE_ACTION.DETAILS:
+            return {
+                ...state,
+                loadingDetails: false,
+                details: get(action, 'data', []),
             };
         case TRANSFER_OF_CARE_ACTION.FAILURE:
             return {

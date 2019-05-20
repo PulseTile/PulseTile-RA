@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import get from "lodash/get";
-import { DisabledInput, TextInput, DateInput, LongTextInput } from "react-admin";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -103,6 +102,8 @@ class TransferOfCareInputs extends Component {
                 source: get(currentItem, 'source', null),
                 sourceId: value,
             });
+
+            this.props.getDetails(recordType, value);
         }
 
         this.setState({
@@ -256,6 +257,9 @@ const mapDispatchToProps = dispatch => {
         },
         getSelectorItems(data) {
             dispatch(transferOfCareAction.request(data));
+        },
+        getDetails(type, sourceId) {
+            dispatch(transferOfCareAction.requestOne(type, sourceId));
         }
     }
 };

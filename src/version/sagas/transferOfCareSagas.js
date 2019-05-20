@@ -43,7 +43,26 @@ const getSelectorsItem = takeEvery(TRANSFER_OF_CARE_ACTION.REQUEST, function*(ac
     }
 });
 
+const getDetails = takeEvery(TRANSFER_OF_CARE_ACTION.REQUEST_ONE, function*(action) {
+    const url = domainName + '/api/patients/' + patientID + '/' + action.heading + '/' + action.sourceId;
+    let options = {};
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    options.headers = {
+        Authorization: "Bearer " + token,
+        'X-Requested-With': "XMLHttpRequest",
+    };
+    try {
+        const result = yield fetch(url, options).then(res => res.json());
+        yield put(transferOfCareAction.details(result))
+    } catch(e) {
+        yield put(transferOfCareAction.error(e))
+    }
+});
+
 export default [
     createNewItem,
     getSelectorsItem,
+    getDetails,
 ];
