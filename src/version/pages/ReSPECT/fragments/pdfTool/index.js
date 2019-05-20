@@ -66,7 +66,8 @@ function getWrappedText(text, rowLength) {
     if (!text || text === "") {
         return null;
     }
-    const textArray = text.split(' ');
+    const stringText = text.toString();
+    const textArray = stringText.split(' ');
     let rows = [];
     let currentRow = '';
     let currentRowArray = [];
@@ -457,13 +458,13 @@ export default (obj, patientInfo) => {
     // SECTION 7
     doc.fontSize(10);
     if (get(form, 'sectionSevenClinician1.designation', null)) {
-        doc.text(form.sectionSevenClinician1.designation, 31, 497, {
+        doc.text(form.sectionSevenClinician1.designation.toString(), 31, 497, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionSevenClinician1.name', null)) {
-        doc.text(form.sectionSevenClinician1.name, 151, 497, {
+        doc.text(form.sectionSevenClinician1.name.toString(), 151, 497, {
             width: 154,
             height: 18
         });
@@ -475,26 +476,26 @@ export default (obj, patientInfo) => {
         });
     }
     if (get(form, 'sectionSevenClinician1.name', null)) {
-        doc.text(form.sectionSevenClinician1.name, 410, 497, {
+        doc.text(form.sectionSevenClinician1.name.toString(), 410, 497, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionSevenClinician1.dateTime', null)) {
-        doc.text(form.sectionSevenClinician1.dateTime, 506, 497, {
+        doc.text(form.sectionSevenClinician1.dateTime.toString(), 506, 497, {
             width: 78,
             height: 18
         });
     }
 
     if (get(form, 'sectionSevenClinician2.designation', null)) {
-        doc.text(form.sectionSevenClinician2.designation, 31, 517, {
+        doc.text(form.sectionSevenClinician2.designation.toString(), 31, 517, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionSevenClinician2.name', null)) {
-        doc.text(form.sectionSevenClinician2.name, 151, 517, {
+        doc.text(form.sectionSevenClinician2.name.toString(), 151, 517, {
             width: 154,
             height: 18
         });
@@ -506,26 +507,26 @@ export default (obj, patientInfo) => {
         });
     }
     if (get(form, 'sectionSevenClinician2.name', null)) {
-        doc.text(form.sectionSevenClinician2.name, 410, 517, {
+        doc.text(form.sectionSevenClinician2.name.toString(), 410, 517, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionSevenClinician2.dateTime', null)) {
-        doc.text(form.sectionSevenClinician2.dateTime, 506, 517, {
+        doc.text(form.sectionSevenClinician2.dateTime.toString(), 506, 517, {
             width: 78,
             height: 18
         });
     }
 
     if (get(form, 'sectionSevenSeniorClinician.designation', null)) {
-        doc.text(form.sectionSevenSeniorClinician.designation, 31, 537, {
+        doc.text(form.sectionSevenSeniorClinician.designation.toString(), 31, 537, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionSevenSeniorClinician.name', null)) {
-        doc.text(form.sectionSevenSeniorClinician.name, 151, 537, {
+        doc.text(form.sectionSevenSeniorClinician.name.toString(), 151, 537, {
             width: 154,
             height: 18
         });
@@ -537,13 +538,13 @@ export default (obj, patientInfo) => {
         });
     }
     if (get(form, 'sectionSevenSeniorClinician.name', null)) {
-        doc.text(form.sectionSevenSeniorClinician.name, 410, 537, {
+        doc.text(form.sectionSevenSeniorClinician.name.toString(), 410, 537, {
             width: 154,
             height: 18
         });
     }
     if (get(form, 'sectionSevenSeniorClinician.dateTime', null)) {
-        doc.text(form.sectionSevenSeniorClinician.dateTime, 506, 537, {
+        doc.text(form.sectionSevenSeniorClinician.dateTime.toString(), 506, 537, {
             width: 78,
             height: 18
         });
@@ -552,13 +553,13 @@ export default (obj, patientInfo) => {
     // SECTION 8
     doc.fontSize(10);
     if (get(form, 'sectionEightContact1.role', null)) {
-        doc.text(form.sectionEightContact1.role, 31, 605, {
+        doc.text(form.sectionEightContact1.role.toString(), 31, 605, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact1.name', null)) {
-        doc.text(form.sectionEightContact1.name, 151, 605, {
+        doc.text(form.sectionEightContact1.name.toString(), 151, 605, {
             width: 154,
             height: 18
         });
@@ -571,13 +572,13 @@ export default (obj, patientInfo) => {
     }
 
     if (get(form, 'sectionEightContact2.role', null)) {
-        doc.text(form.sectionEightContact2.role, 31, 625, {
+        doc.text(form.sectionEightContact2.role.toString(), 31, 625, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact2.name', null)) {
-        doc.text(form.sectionEightContact2.name, 151, 625, {
+        doc.text(form.sectionEightContact2.name.toString(), 151, 625, {
             width: 154,
             height: 18
         });
@@ -590,13 +591,13 @@ export default (obj, patientInfo) => {
     }
 
     if (get(form, 'sectionEightContact3.role', null)) {
-        doc.text(form.sectionEightContact3.role, 31, 644, {
+        doc.text(form.sectionEightContact3.role.toString(), 31, 644, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact3.name', null)) {
-        doc.text(form.sectionEightContact3.name, 151, 644, {
+        doc.text(form.sectionEightContact3.name.toString(), 151, 644, {
             width: 154,
             height: 18
         });
@@ -609,13 +610,13 @@ export default (obj, patientInfo) => {
     }
 
     if (get(form, 'sectionEightContact4.role', null)) {
-        doc.text(form.sectionEightContact4.role, 31, 663, {
+        doc.text(form.sectionEightContact4.role.toString(), 31, 663, {
             width: 111,
             height: 18
         });
     }
     if (get(form, 'sectionEightContact4.name', null)) {
-        doc.text(form.sectionEightContact4.name, 151, 663, {
+        doc.text(form.sectionEightContact4.name.toString(), 151, 663, {
             width: 154,
             height: 18
         });
@@ -630,19 +631,19 @@ export default (obj, patientInfo) => {
     // SECTION 9
     doc.fontSize(10);
     if (get(form, 'sectionNineConfirmation1.reviewDate', null)) {
-        doc.text(form.sectionNineConfirmation1.reviewDate, 31, 740, {
+        doc.text(form.sectionNineConfirmation1.reviewDate.toString(), 31, 740, {
             width: 78,
             height: 18
         });
     }
     if (get(form, 'sectionNineConfirmation1.designation', null)) {
-        doc.text(form.sectionNineConfirmation1.designation, 120, 740, {
+        doc.text(form.sectionNineConfirmation1.designation.toString(), 120, 740, {
             width: 108,
             height: 18
         });
     }
     if (get(form, 'sectionNineConfirmation1.name', null)) {
-        doc.text(form.sectionNineConfirmation1.name, 234, 740, {
+        doc.text(form.sectionNineConfirmation1.name.toString(), 234, 740, {
             width: 154,
             height: 18
         });
@@ -661,19 +662,19 @@ export default (obj, patientInfo) => {
     }
 
     if (get(form, 'sectionNineConfirmation2.reviewDate', null)) {
-        doc.text(form.sectionNineConfirmation2.reviewDate, 31, 760, {
+        doc.text(form.sectionNineConfirmation2.reviewDate.toString(), 31, 760, {
             width: 78,
             height: 18
         });
     }
     if (get(form, 'sectionNineConfirmation2.designation', null)) {
-        doc.text(form.sectionNineConfirmation2.designation, 120, 760, {
+        doc.text(form.sectionNineConfirmation2.designation.toString(), 120, 760, {
             width: 108,
             height: 18
         });
     }
     if (get(form, 'sectionNineConfirmation2.name', null)) {
-        doc.text(form.sectionNineConfirmation2.name, 234, 760, {
+        doc.text(form.sectionNineConfirmation2.name.toString(), 234, 760, {
             width: 154,
             height: 18
         });
