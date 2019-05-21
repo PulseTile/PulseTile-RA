@@ -6,6 +6,7 @@ import ProceduresList from "../plugins/Procedures/ProceduresList";
 import PersonalNotesList from "../plugins/PersonalNotes/PersonalNotesList";
 import ReferralsList from "../plugins/Referrals/ReferralsList";
 import TransferOfCareList from "../plugins/TransferOfCare/TransferOfCareList";
+import VitalsList from "../plugins/Vitals/VitalsList";
 
 export default [
     {
@@ -47,5 +48,10 @@ export default [
         name: "toc",
         label: "Transfers of Care",
         list: TransferOfCareList,
+    },
+    {
+        name: "vitalsigns",
+        label: "Vitals",
+        list: VitalsList,
     }
 ];

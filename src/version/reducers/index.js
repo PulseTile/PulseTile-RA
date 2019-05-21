@@ -10,6 +10,7 @@ import {
 import { FEEDS_LIST_ACTION } from "../actions/feedsListAction";
 
 import createCustomReducer from "../../core/reducers/createCustomReducer";
+import vitalsReducer from "./vitalsReducer";
 
 /**
  * This component returns version reducers
@@ -25,4 +26,5 @@ export default {
     selectedFeedsList,
     feedsRss,
     transferOfCare: transferOfCareReducer,
+    vitals: vitalsReducer
 };

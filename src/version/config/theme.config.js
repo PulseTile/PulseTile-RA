@@ -23,6 +23,7 @@ export const themeFullMenu = [
     { url: '/procedures', label: 'Procedures' },
     { url: '/referrals', label: 'Referrals' },
     { url: '/toc', label: 'Transfers Of Care' },
+    { url: '/vitalsigns', label: 'Vitals' },
 ];
 
 export const themeCommonElements = {
