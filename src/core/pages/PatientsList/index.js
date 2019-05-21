@@ -78,26 +78,26 @@ class PatientsList extends Component {
         const { userSearch, classes } = this.props;
         const { loading } = this.state;
 
-        if (!userSearch) {
-            return (
-                <div className={classes.content}>
-                    <div className={classes.imageBlock} >
-                        <CardMedia
-                            className={classes.image}
-                            component="img"
-                            alt="NHS Scotland"
-                            image={image}
-                        />
-                    </div>
-                </div>
-            )
-        }
+        // if (!userSearch) {
+        //     return (
+        //         <div className={classes.content}>
+        //             <div className={classes.imageBlock} >
+        //                 <CardMedia
+        //                     className={classes.image}
+        //                     component="img"
+        //                     alt="NHS Scotland"
+        //                     image={image}
+        //                 />
+        //             </div>
+        //         </div>
+        //     )
+        // }
 
-        if (loading) {
-            return (
-                <LoadingSlider />
-            )
-        }
+        // if (loading) {
+        //     return (
+        //         <LoadingSlider />
+        //     )
+        // }
 
         return (
             <ListTemplate
