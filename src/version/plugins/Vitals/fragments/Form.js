@@ -186,7 +186,7 @@ class VitalsInputs extends Component {
         const { anySupplementalOxygenValue, levelOfConsciousnessValue, respirationRate, oxygenSaturation, heartRate, systolicBP, temperature } = this.state;
 
         let newsScoreValue = 0;
-        if (levelOfConsciousnessValue !== 'A') {
+        if (levelOfConsciousnessValue !== 'A' && levelOfConsciousnessValue) {
             newsScoreValue += 3;
         }
         if (anySupplementalOxygenValue === 'Yes') {
