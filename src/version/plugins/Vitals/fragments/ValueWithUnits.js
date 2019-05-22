@@ -6,11 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import Typography from '@material-ui/core/Typography';
-import Popover from '@material-ui/core/Popover';
 
-import rangeLine from "../../../images/range-line.jpeg";
-import helmLogo from "../../../images/pulsetile-logo.png";
-import CardMedia from "@material-ui/core/CardMedia";
+import RangeLinePopover from "./RangeLinePopover";
 
 const styles = theme => ({
     formGroup: {
@@ -38,6 +35,24 @@ const styles = theme => ({
         height: 25,
         paddingLeft: 10,
     },
+    formInputUnitsDanger: {
+        width: '20%',
+        height: 25,
+        paddingLeft: 10,
+        backgroundColor: '#CA9193',
+    },
+    formInputUnitsWarning: {
+        width: '20%',
+        height: 25,
+        paddingLeft: 10,
+        backgroundColor: '#E4D19D',
+    },
+    formInputUnitsSuccess: {
+        width: '20%',
+        height: 25,
+        paddingLeft: 10,
+        backgroundColor: '#94CFAA',
+    },
     units: {
         width: '30%',
         height: 25,
@@ -47,15 +62,22 @@ const styles = theme => ({
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
     },
-    rangeLineImage: {
-
-    },
 });
+
+const rangeLineSettings = {
+    respirationRate: {
+        greenMin: 9,
+        greenMax: 21,
+        redMin: 8,
+        redMax: 25
+    }
+};
 
 class ValueWithUnits extends Component {
 
     state = {
         anchorEl: null,
+        formInputClassName: 'formInputUnits',
     };
 
     handleClick = event => {
@@ -70,8 +92,29 @@ class ValueWithUnits extends Component {
         });
     };
 
+    changeColor = (e, model) => {
+        const value = e.target.value;
+        const limits = get(rangeLineSettings, model, null);
+
+        let result = 'formInputUnits';
+        if (limits) {
+            if (value <= limits.redMin || value >= limits.redMax) {
+                result = 'formInputUnitsDanger';
+            } else if (value >= limits.greenMin && value <= limits.greenMax) {
+                result = 'formInputUnitsSuccess';
+            } else {
+                result = 'formInputUnitsWarning';
+            }
+        }
+
+        this.setState({
+            formInputClassName: result
+        })
+    };
+
     render() {
-        const { classes, label, units, model, hasLimits } = this.props;
+        const { classes, label, units, model } = this.props;
+        const { formInputClassName } = this.state;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
         const modelName = "vitals." + model;
@@ -80,9 +123,10 @@ class ValueWithUnits extends Component {
                 <FormLabel className={classes.formLabel}>{label}</FormLabel>
                 <div className={classes.valueAndUnits}>
                     <Control.text
-                        className={classes.formInputUnits}
+                        className={classes[formInputClassName]}
                         type="number"
                         model={modelName}
+                        onBlur={e => this.changeColor(e, model)}
                         required
                     />
                     { units &&
@@ -90,28 +134,15 @@ class ValueWithUnits extends Component {
                             <Typography>{units}</Typography>
                         </div>
                     }
-                </div>
-                { hasLimits &&
-                    <Popover
-                        open={open}
+                    <RangeLinePopover
                         anchorEl={anchorEl}
-                        onClose={this.handleClose}
-                        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-                    >
-                        <Typography>The content of the Popover.</Typography>
+                        open={open}
+                        handleClose={this.handleClose}
+                        label={label}
+                        model={model}
+                    />
+                </div>
 
-                        <CardMedia
-                            id="rangeLine-image"
-                            className={classes.rangeLineImage}
-                            component="img"
-                            alt="Range line"
-                            image={rangeLine}
-                            title="Range line"
-                        />
-
-                    </Popover>
-                }
             </FormGroup>
         );
     }

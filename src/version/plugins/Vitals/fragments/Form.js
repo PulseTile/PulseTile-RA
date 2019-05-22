@@ -110,50 +110,43 @@ class VitalsInputs extends Component {
                         label="Respiration Rate"
                         units="resps/min"
                         model="respirationRate"
-                        hasLimits={true}
                     />
 
                     <ValueWithUnits
                         label="Oxygen Saturation"
                         units="%"
                         model="oxygenSaturation"
-                        hasLimits={false}
                     />
 
                     <ValueWithUnits
                         label="Heart Rate"
                         units="bpm"
                         model="heartRate"
-                        hasLimits={true}
                     />
 
                     <ValueWithUnits
                         label="Systolic BP"
                         units="mmHg"
                         model="systolicBP"
-                        hasLimits={true}
                     />
 
                     <ValueWithUnits
                         label="Diastolic BP"
                         units="mmHg"
                         model="diastolicBP"
-                        hasLimits={false}
                     />
 
                     <ValueWithUnits
                         label="Temperature"
                         units="C"
                         model="temperature"
-                        hasLimits={true}
                     />
 
-                    <ValueWithUnits
-                        label="NEWS Score"
-                        units={false}
-                        model="newsScore"
-                        hasLimits={true}
-                    />
+                    {/*<ValueWithUnits*/}
+                    {/*    label="NEWS Score"*/}
+                    {/*    units={false}*/}
+                    {/*    model="newsScore"*/}
+                    {/*/>*/}
 
                     <SectionToolbar {...this.props} />
 
