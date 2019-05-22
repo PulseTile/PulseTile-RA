@@ -68,7 +68,7 @@ class TableBodyBlock extends Component {
                                         {/*<span>{status}</span>*/}
                                     {/*</TableCell>*/}
                                     <TableCell align="right">
-                                        <span>{author}</span>
+                                        <span>{(version === 1) ? 'System' : author}</span>
                                     </TableCell>
                                 </TableRow>
                             )
