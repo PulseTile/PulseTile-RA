@@ -10,7 +10,7 @@ import Form from "./fragments/Form";
  */
 const VitalsCreate = props => (
     <CreateTemplate isCustom={true} blockTitle="Vitals" {...props}>
-        <Form {...props} />
+        <Form isCreate={true} {...props} />
     </CreateTemplate>
 );
 

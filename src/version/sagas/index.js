@@ -21,5 +21,5 @@ export default [
     createSynopsisSagas(SYNOPSIS_VACCINATIONS_ACTION, synopsisVaccinationsAction, 'vaccinations'),
     createSynopsisSagas(SYNOPSIS_TOP_THREE_THINGS_ACTION, synopsisTopThreeThingsAction, 'top3Things'),
     transferOfCareSagas,
-    vitalsSagas,
+    // vitalsSagas,
 ];

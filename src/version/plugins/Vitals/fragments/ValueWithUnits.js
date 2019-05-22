@@ -93,28 +93,16 @@ class ValueWithUnits extends Component {
         formInputClassName: 'formInputUnits',
     };
 
-    handleClick = event => {
-        this.setState({
-            anchorEl: event.currentTarget,
-        });
-    };
+    componentDidMount() {
+        const { model, value } = this.props;
+        this.defineColors(model, value);
+    }
 
-    handleClose = () => {
-        this.setState({
-            anchorEl: false,
-        });
-    };
-
-    changeColor = (e, model) => {
-        const name = e.target.name;
-        const value = e.target.value;
-
+    defineColors = (model, value) => {
         const limits = get(rangeLineLimits, model, null);
-
         let formInput = 'formInputUnits';
         let formGroup = 'formGroupInside';
         let nonScoreValue = 0;
-
         if (value && limits) {
             if (value <= limits.redMin || value >= limits.redMax) {
                 formInput = 'formInputUnitsDanger';
@@ -130,17 +118,33 @@ class ValueWithUnits extends Component {
                 nonScoreValue = 2;
             }
         }
-
-        let nameStr = name.replace('vitals.', '');
-
         this.setState({
             formInputClassName: formInput,
             formGroupClassName: formGroup,
-        }, () => this.props.updateInput(nameStr, nonScoreValue))
+        }, () => this.props.updateInput(model, nonScoreValue))
+    };
+
+    handleClick = event => {
+        this.setState({
+            anchorEl: event.currentTarget,
+        });
+    };
+
+    handleClose = () => {
+        this.setState({
+            anchorEl: false,
+        });
+    };
+
+    changeColor = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        const nameStr = name.replace('vitals.', '');
+        this.defineColors(nameStr, value);
     };
 
     render() {
-        const { classes, label, units, model, hasPopup } = this.props;
+        const { classes, label, units, model, hasPopup, value } = this.props;
         const { formGroupClassName, formInputClassName } = this.state;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
@@ -154,8 +158,9 @@ class ValueWithUnits extends Component {
                             className={classes[formInputClassName]}
                             type="number"
                             model={modelName}
-                            onBlur={e => this.changeColor(e, model)}
+                            onBlur={e => this.changeColor(e)}
                             required
+                            value={value}
                         />
                         { units &&
                             <div className={classes.units} onClick={e => this.handleClick(e)}>

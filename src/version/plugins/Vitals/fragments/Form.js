@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { LocalForm, Control } from 'react-redux-form';
@@ -135,7 +136,7 @@ class VitalsInputs extends Component {
 
     state = {
         levelConsciousnessClassName: 'levelConsciousnessBlock',
-        levelOfConsciousnessValue: 'A',
+        levelOfConsciousnessValue: null,
         anySupplementalOxygenClassName: 'anySupplementalOxygenBlock',
         anySupplementalOxygenValue: 'No',
         newsScoreClassName: 'newsScoreBlock',
@@ -220,9 +221,29 @@ class VitalsInputs extends Component {
         }, () => this.updateNewsScore())
     };
 
+    getCurrentItem = () => {
+        const { vitalsList, location } = this.props;
+        const pathname = get(location, 'pathname', null);
+        const pathnameArray = pathname.split('/');
+        const sourceId = get(pathnameArray, [2], null);
+        const vitalsListArray = Object.values(vitalsList);
+        let result = null;
+        for (let i = 0, n = vitalsListArray.length; i < n; i++) {
+            let item = vitalsListArray[i];
+            if (item.sourceId === sourceId) {
+                result = item;
+                break;
+            }
+        }
+        return result;
+    };
+
     render() {
-        const { classes } = this.props;
+        const { classes, isCreate } = this.props;
         const { levelConsciousnessClassName, levelOfConsciousnessValue, anySupplementalOxygenClassName, anySupplementalOxygenValue, newsScoreClassName, newsScoreValue, formInputNewsScore } = this.state;
+
+        let filledValues = isCreate ? null : this.getCurrentItem();
+
         return (
             <React.Fragment>
                 <LocalForm model="vitals" onSubmit={values => this.submitForm(values)}>
@@ -234,6 +255,7 @@ class VitalsInputs extends Component {
                             model="respirationRate"
                             updateInput={this.updateInput}
                             hasPopup={true}
+                            value={get(filledValues, 'respirationRate', null)}
                         />
                         <ValueWithUnits
                             label="Oxygen Saturation"
@@ -241,6 +263,7 @@ class VitalsInputs extends Component {
                             model="oxygenSaturation"
                             updateInput={this.updateInput}
                             hasPopup={true}
+                            value={get(filledValues, 'oxygenSaturation', null)}
                         />
                     </div>
 
@@ -250,7 +273,7 @@ class VitalsInputs extends Component {
                             <FormControlLabel
                                 control={
                                     <CustomSwitch
-                                        checked={anySupplementalOxygenValue === 'Yes'}
+                                        checked={(anySupplementalOxygenValue === 'Yes') || get(filledValues, 'oxygenSupplemental', false)}
                                         value={anySupplementalOxygenValue}
                                         onChange={() => this.changeAnySupplementalOxygen()}
                                     />
@@ -267,6 +290,7 @@ class VitalsInputs extends Component {
                             model="heartRate"
                             updateInput={this.updateInput}
                             hasPopup={true}
+                            value={get(filledValues, 'heartRate', null)}
                         />
                         <ValueWithUnits
                             label="Systolic BP"
@@ -274,6 +298,7 @@ class VitalsInputs extends Component {
                             model="systolicBP"
                             updateInput={this.updateInput}
                             hasPopup={true}
+                            value={get(filledValues, 'systolicBP', null)}
                         />
                     </div>
 
@@ -283,6 +308,7 @@ class VitalsInputs extends Component {
                         model="diastolicBP"
                         updateInput={this.updateInput}
                         hasPopup={false}
+                        value={get(filledValues, 'diastolicBP', null)}
                     />
 
                     <ValueWithUnits
@@ -291,6 +317,7 @@ class VitalsInputs extends Component {
                         model="temperature"
                         updateInput={this.updateInput}
                         hasPopup={true}
+                        value={get(filledValues, 'temperature', null)}
                     />
 
                     <FormControl className={classes.formControl}>
@@ -302,28 +329,28 @@ class VitalsInputs extends Component {
                                     control={<CustomSwitch />}
                                     label="A"
                                     labelPlacement="end"
-                                    checked={levelOfConsciousnessValue === 'A'}
+                                    checked={levelOfConsciousnessValue === 'A' || get(filledValues, 'levelOfConsciousness', false) === 'A'}
                                 />
                                 <FormControlLabel
                                     value="V"
                                     control={<CustomSwitch />}
                                     label="V"
                                     labelPlacement="end"
-                                    checked={levelOfConsciousnessValue === 'V'}
+                                    checked={levelOfConsciousnessValue === 'V' || get(filledValues, 'levelOfConsciousness', false) === 'V'}
                                 />
                                 <FormControlLabel
                                     value="P"
                                     control={<CustomSwitch />}
                                     label="P"
                                     labelPlacement="end"
-                                    checked={levelOfConsciousnessValue === 'P'}
+                                    checked={levelOfConsciousnessValue === 'P' || get(filledValues, 'levelOfConsciousness', false) === 'P'}
                                 />
                                 <FormControlLabel
                                     value="U"
                                     control={<CustomSwitch />}
                                     label="U"
                                     labelPlacement="end"
-                                    checked={levelOfConsciousnessValue === 'U'}
+                                    checked={levelOfConsciousnessValue === 'U' || get(filledValues, 'levelOfConsciousness', false) === 'U'}
                                 />
                             </FormGroup>
                         </div>
@@ -349,6 +376,12 @@ class VitalsInputs extends Component {
     }
 };
 
+const mapStateToProps = state => {
+    return {
+        vitalsList: get(state, 'admin.resources.vitalsigns.data', []),
+    }
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         createNewItem(data) {
@@ -357,4 +390,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(VitalsInputs));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(VitalsInputs));
