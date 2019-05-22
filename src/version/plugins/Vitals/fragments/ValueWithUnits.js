@@ -8,6 +8,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Typography from '@material-ui/core/Typography';
 
 import RangeLinePopover from "./RangeLinePopover";
+import { rangeLineLimits, DANGER_COLOR, WARNING_COLOR, SUCCESS_COLOR } from "./settings";
 
 const styles = theme => ({
     formGroup: {
@@ -17,6 +18,26 @@ const styles = theme => ({
         paddingRight: 20,
         paddingTop: 15,
         boxSizing: "border-box",
+    },
+    formGroupInside: {
+        width: '100%',
+        paddingLeft: 10,
+        borderLeft: `2px solid ${theme.palette.borderColor}`
+    },
+    formGroupInsideDanger: {
+        width: '100%',
+        paddingLeft: 10,
+        borderLeft: `5px solid ${DANGER_COLOR}`
+    },
+    formGroupInsideWarning: {
+        width: '100%',
+        paddingLeft: 10,
+        borderLeft: `5px solid ${WARNING_COLOR}`
+    },
+    formGroupInsideSuccess: {
+        width: '100%',
+        paddingLeft: 10,
+        borderLeft: `5px solid ${SUCCESS_COLOR}`
     },
     formLabel: {
         display: "block",
@@ -39,19 +60,19 @@ const styles = theme => ({
         width: '20%',
         height: 25,
         paddingLeft: 10,
-        backgroundColor: '#CA9193',
+        backgroundColor: DANGER_COLOR,
     },
     formInputUnitsWarning: {
         width: '20%',
         height: 25,
         paddingLeft: 10,
-        backgroundColor: '#E4D19D',
+        backgroundColor: WARNING_COLOR,
     },
     formInputUnitsSuccess: {
         width: '20%',
         height: 25,
         paddingLeft: 10,
-        backgroundColor: '#94CFAA',
+        backgroundColor: SUCCESS_COLOR,
     },
     units: {
         width: '30%',
@@ -64,19 +85,11 @@ const styles = theme => ({
     },
 });
 
-const rangeLineSettings = {
-    respirationRate: {
-        greenMin: 9,
-        greenMax: 21,
-        redMin: 8,
-        redMax: 25
-    }
-};
-
 class ValueWithUnits extends Component {
 
     state = {
         anchorEl: null,
+        formGroupClassName: 'formGroupInside',
         formInputClassName: 'formInputUnits',
     };
 
@@ -93,56 +106,73 @@ class ValueWithUnits extends Component {
     };
 
     changeColor = (e, model) => {
+        const name = e.target.name;
         const value = e.target.value;
-        const limits = get(rangeLineSettings, model, null);
 
-        let result = 'formInputUnits';
-        if (limits) {
+        const limits = get(rangeLineLimits, model, null);
+
+        let formInput = 'formInputUnits';
+        let formGroup = 'formGroupInside';
+        let nonScoreValue = 0;
+
+        if (value && limits) {
             if (value <= limits.redMin || value >= limits.redMax) {
-                result = 'formInputUnitsDanger';
+                formInput = 'formInputUnitsDanger';
+                formGroup = 'formGroupInsideDanger';
+                nonScoreValue = 3;
             } else if (value >= limits.greenMin && value <= limits.greenMax) {
-                result = 'formInputUnitsSuccess';
+                formInput = 'formInputUnitsSuccess';
+                formGroup = 'formGroupInsideSuccess';
+                nonScoreValue = 1;
             } else {
-                result = 'formInputUnitsWarning';
+                formInput = 'formInputUnitsWarning';
+                formGroup = 'formGroupInsideWarning';
+                nonScoreValue = 2;
             }
         }
 
+        let nameStr = name.replace('vitals.', '');
+
         this.setState({
-            formInputClassName: result
-        })
+            formInputClassName: formInput,
+            formGroupClassName: formGroup,
+        }, () => this.props.updateInput(nameStr, nonScoreValue))
     };
 
     render() {
-        const { classes, label, units, model } = this.props;
-        const { formInputClassName } = this.state;
+        const { classes, label, units, model, hasPopup } = this.props;
+        const { formGroupClassName, formInputClassName } = this.state;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
         const modelName = "vitals." + model;
         return (
             <FormGroup className={classes.formGroup}>
-                <FormLabel className={classes.formLabel}>{label}</FormLabel>
-                <div className={classes.valueAndUnits}>
-                    <Control.text
-                        className={classes[formInputClassName]}
-                        type="number"
-                        model={modelName}
-                        onBlur={e => this.changeColor(e, model)}
-                        required
-                    />
-                    { units &&
-                        <div className={classes.units} onClick={e => this.handleClick(e)}>
-                            <Typography>{units}</Typography>
-                        </div>
-                    }
-                    <RangeLinePopover
-                        anchorEl={anchorEl}
-                        open={open}
-                        handleClose={this.handleClose}
-                        label={label}
-                        model={model}
-                    />
+                <div className={classes[formGroupClassName]}>
+                    <FormLabel className={classes.formLabel}>{label}</FormLabel>
+                    <div className={classes.valueAndUnits}>
+                        <Control.text
+                            className={classes[formInputClassName]}
+                            type="number"
+                            model={modelName}
+                            onBlur={e => this.changeColor(e, model)}
+                            required
+                        />
+                        { units &&
+                            <div className={classes.units} onClick={e => this.handleClick(e)}>
+                                <Typography>{units}</Typography>
+                            </div>
+                        }
+                        { hasPopup &&
+                            <RangeLinePopover
+                                anchorEl={anchorEl}
+                                open={open}
+                                handleClose={this.handleClose}
+                                label={label}
+                                model={model}
+                            />
+                        }
+                    </div>
                 </div>
-
             </FormGroup>
         );
     }

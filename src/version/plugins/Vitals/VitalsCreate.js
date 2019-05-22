@@ -1,18 +1,16 @@
 import React from "react";
 
 import CreateTemplate from "../../../core/common/ResourseTemplates/CreateTemplate";
-import Inputs from "./fragments/Form";
+import Form from "./fragments/Form";
 
 /**
  * This component returns Vitals creation form
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {shape} rest
  */
-const VitalsCreate = ({ classes, ...rest }) => (
-    <CreateTemplate isCustom={true} blockTitle="Vitals" {...rest}>
-        <Inputs />
+const VitalsCreate = props => (
+    <CreateTemplate isCustom={true} blockTitle="Vitals" {...props}>
+        <Form {...props} />
     </CreateTemplate>
 );
 

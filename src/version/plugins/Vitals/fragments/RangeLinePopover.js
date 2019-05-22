@@ -6,6 +6,7 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 
 import rangeLine from "../../../images/range-line.jpeg";
+import { rangeLineSettings } from "./settings";
 
 const styles = theme => ({
     paper: {
@@ -56,56 +57,8 @@ const styles = theme => ({
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: '490px 10px',
-    }
+    },
 });
-
-const rangeLineSettings = {
-    respirationRate: [
-        { label: '≤ 8', position: 'rangeAxisItemTop' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: '9-11', position: 'rangeAxisItemTop' },
-        { label: '12-20', position: 'rangeAxisItemBottom' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: '21-24', position: 'rangeAxisItemBottom' },
-        { label: '≥ 25', position: 'rangeAxisItemTop' },
-    ],
-    heartRate: [
-        { label: '≤ 40', position: 'rangeAxisItemTop' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: '41-50', position: 'rangeAxisItemTop' },
-        { label: '51-90', position: 'rangeAxisItemBottom' },
-        { label: '91-110', position: 'rangeAxisItemTop' },
-        { label: '111-130', position: 'rangeAxisItemBottom' },
-        { label: '≥ 131', position: 'rangeAxisItemTop' },
-    ],
-    temperature: [
-        { label: '≤ 35.0', position: 'rangeAxisItemTop' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: '35.1-36.0', position: 'rangeAxisItemTop' },
-        { label: '36.1-38.0', position: 'rangeAxisItemBottom' },
-        { label: '38.1-39.0', position: 'rangeAxisItemTop' },
-        { label: '≥ 39.1', position: 'rangeAxisItemBottom' },
-        { label: null, position: 'rangeAxisItemTop' },
-    ],
-    systolicBP: [
-        { label: '≤ 90', position: 'rangeAxisItemTop' },
-        { label: '91-100', position: 'rangeAxisItemBottom' },
-        { label: '101-110', position: 'rangeAxisItemTop' },
-        { label: '111-219', position: 'rangeAxisItemBottom' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: '≥ 220', position: 'rangeAxisItemTop' },
-    ],
-    oxygenSaturation: [
-        { label: '≤ 91', position: 'rangeAxisItemTop' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: '92-93', position: 'rangeAxisItemBottom' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: '94-95', position: 'rangeAxisItemBottom' },
-        { label: null, position: 'rangeAxisItemTop' },
-        { label: '≥ 96', position: 'rangeAxisItemTop' }
-    ]
-};
 
 const RangeLinePopover = ({ classes, anchorEl, open, handleClose, label, model }) => {
     const rangeLineValues = get(rangeLineSettings, model, null);
