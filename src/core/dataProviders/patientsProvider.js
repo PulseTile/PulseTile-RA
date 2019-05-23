@@ -9,6 +9,14 @@ import {
 import sort, { ASC, DESC } from 'sort-array-objects';
 import { token, domainName } from "../token";
 
+function checkFormData(params) {
+    const birthDate = get(params, 'data.birthDate', null);
+    if (!birthDate) {
+        throw new HttpError('777|Parameter "Born" should be presented');
+    }
+    return true;
+}
+
 const convertPatientsDataRequestToHTTP = (type, resource, params) => {
     let url = "";
     const options = {};
@@ -38,6 +46,9 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
+
+            checkFormData(params);
+
             let userName = get(params, 'data.firstName', null);
             let userId = get(params, 'data.nhsNumber', null);
             let updateData = {
@@ -82,6 +93,9 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
+
+            checkFormData(params);
+
             let patientId = get(params, 'data.nhsNumber', null);
             let name = get(params, 'data.firstName', null);
             let data = {
