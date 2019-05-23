@@ -2,7 +2,7 @@ import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
 import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
 import FeedsPanels from "../plugins/Feeds/FeedsPanels";
-import Charts from "../../core/pages/Charts";
+import PatientsList from "../../core/pages/PatientsList";
 
 export const themeShortMenu = [
     { url: '/', label: 'Charts' },
@@ -31,7 +31,7 @@ export const themeCommonElements = {
     footer: ThemeFooter,
     feedsSelectors: FeedsSelectors,
     feedsPanels: FeedsPanels,
-    homePage: Charts,
+    homePage: PatientsList,
 };
 
 export const themeImages = {};

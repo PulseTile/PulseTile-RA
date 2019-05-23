@@ -5,6 +5,7 @@ import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
 import VitalsCreate from "./VitalsCreate";
 import VitalsEdit from "./VitalsEdit";
 import VitalsShow from "./VitalsShow";
+import VitalsChart from "./VitalsChart";
 
 /**
  * This component returns block with Vitals list
@@ -19,8 +20,10 @@ const VitalsList = ({ classes, ...rest }) => (
         create={VitalsCreate}
         edit={VitalsEdit}
         show={VitalsShow}
+        chartBlock={VitalsChart}
         resourceUrl="vitalsigns"
         title="Vitals"
+        hasChart={true}
         {...rest}
     >
         <DateField label="Date" source="dateCreate" />
