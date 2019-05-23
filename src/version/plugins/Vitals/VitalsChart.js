@@ -2,22 +2,45 @@ import React from "react";
 import get from "lodash/get";
 import moment from "moment";
 import {
+    ResponsiveContainer,
     LineChart,
     XAxis,
     YAxis,
     CartesianGrid,
+    Tooltip,
+    Legend,
     Line,
 } from "recharts";
 import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
-
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
-
+    chartBlock: {
+        width: '100%',
+        height: 500,
+    }
 };
 
-const VitalsChart = ({ vitalsList }) => {
+function getTooltipFormatter(value, name) {
+    const row = get(name, 'props.children', null);
+    if (!row) {
+        return null;
+    }
+    const nameArray = row.split(', ');
+    const parameter = nameArray[0];
+    const units = nameArray[1];
+    return (
+        <span>
+            <Typography variant="h1">{parameter}:</Typography>
+            <Typography> {value}, {units}</Typography>
+        </span>
+
+    );
+}
+
+const VitalsChart = ({ classes, vitalsList }) => {
     const vitalsListArray = Object.values(vitalsList);
     let chartData = [];
     for (let i = 0, n = vitalsListArray.length; i < n; i++) {
@@ -33,18 +56,53 @@ const VitalsChart = ({ vitalsList }) => {
             temperature: item.temperature
         });
     }
+
+    const DOT_RADIUS = 8;
+    const STROKE_WIDTH = 4;
+
+    const linesArray = [
+        { dataKey: "respirationRate", color: "#99C78C", label: <Typography>Respiration Rate, resps/min</Typography> },
+        { dataKey: "oxygenSaturation", color: "#E18FC0", label: <Typography>Oxygen Saturation, %</Typography> },
+        { dataKey: "heartRate", color: "#ACC2D7", label: <Typography>Heart Rate, bpm</Typography> },
+        { dataKey: "systolicBP", color: "#EABA97", label: <Typography>Systolic BP, mmHg</Typography> },
+        { dataKey: "diastolicBP", color: "#99D9DE", label: <Typography>Diastolic BP, mmHg</Typography> },
+        { dataKey: "temperature", color: "#E3A08F", label: <Typography>Temperature, C</Typography> },
+    ];
+
     return (
-        <LineChart width={500} height={300} data={chartData}>
-            <XAxis dataKey="name"/>
-            <YAxis/>
-            <CartesianGrid stroke="#e5e5e5" strokeDasharray="5 5"/>
-            <Line type="monotone" dataKey="respirationRate" stroke="#99C78C" />
-            <Line type="monotone" dataKey="oxygenSaturation" stroke="#E18FC0" />
-            <Line type="monotone" dataKey="heartRate" stroke="#ACC2D7" />
-            <Line type="monotone" dataKey="systolicBP" stroke="#EABA97" />
-            <Line type="monotone" dataKey="diastolicBP" stroke="#99D9DE" />
-            <Line type="monotone" dataKey="temperature" stroke="#E3A08F" />
-        </LineChart>
+        <div className={classes.chartBlock}>
+            <ResponsiveContainer width={'99%'}>
+                <LineChart data={chartData} margin={{ top: 25, left: 0 }}>
+                    <XAxis dataKey="name"/>
+                    <YAxis/>
+                    <Tooltip
+                        formatter={(value, name) => getTooltipFormatter(value, name)}
+                        labelFormatter={function(value) {
+                            return (
+                                <Typography>Date: {value}</Typography>
+                            );
+                        }}
+                    />
+                    <Legend />
+                    <CartesianGrid stroke="#e5e5e5" strokeDasharray="5 5"/>
+                    {
+                        linesArray.map((item, key) => {
+                            return (
+                                <Line
+                                    key={key}
+                                    type="monotone"
+                                    name={item.label}
+                                    dataKey={item.dataKey}
+                                    stroke={item.color}
+                                    activeDot={{ r: DOT_RADIUS }}
+                                    strokeWidth={STROKE_WIDTH}
+                                />
+                            )
+                        })
+                    }
+                </LineChart>
+            </ResponsiveContainer>
+        </div>
     );
 };
 
