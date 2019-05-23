@@ -10,10 +10,28 @@ import sort, { ASC, DESC } from 'sort-array-objects';
 import { token, domainName } from "../token";
 
 function checkFormData(params) {
-    const birthDate = get(params, 'data.birthDate', null);
-    if (!birthDate) {
-        throw new HttpError('777|Parameter "Born" should be presented');
+
+    const paramsArray = [
+        { param: 'data.firstName', label: 'Name' },
+        { param: 'data.lastName', label: 'Surname' },
+        { param: 'data.birthDate', label: 'Born' },
+        { param: 'data.address', label: 'Address' },
+        { param: 'data.city', label: 'City' },
+        { param: 'data.district', label: 'District' },
+        { param: 'data.postCode', label: 'Post Code' },
+        { param: 'data.country', label: 'Country' },
+        { param: 'data.phone', label: 'Telephone Number' },
+        { param: 'data.nhsNumber', label: 'CHI Number' },
+    ];
+
+    for (let i = 0, n = paramsArray.length; i < n; i++) {
+        let item = paramsArray[i];
+        let value = get(params, item.param, null);
+        if (!value) {
+            throw new HttpError('777|Parameter "' + item.label + '" should be presented');
+        }
     }
+
     return true;
 }
 
