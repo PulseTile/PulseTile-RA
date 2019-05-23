@@ -40,6 +40,21 @@ function getTooltipFormatter(value, name) {
     );
 }
 
+const CustomizedTick = props => {
+
+    const {
+        x, y, stroke, payload,
+    } = props;
+
+    return (
+        <g transform={`translate(${x},${y})`}>
+            <text x={0} y={0} dy={16}>
+                <Typography>{payload.value}</Typography>
+            </text>
+        </g>
+    );
+}
+
 const VitalsChart = ({ classes, vitalsList }) => {
     const vitalsListArray = Object.values(vitalsList);
     let chartData = [];
@@ -73,8 +88,8 @@ const VitalsChart = ({ classes, vitalsList }) => {
         <div className={classes.chartBlock}>
             <ResponsiveContainer width={'99%'}>
                 <LineChart data={chartData} margin={{ top: 25, left: 0 }}>
-                    <XAxis dataKey="name"/>
-                    <YAxis/>
+                    <XAxis dataKey="name" tick={{ fontFamily: '"HK Grotesk Regular", Arial, sans-serif', fontSize: 14 }} />
+                    <YAxis tick={{ fontFamily: '"HK Grotesk Regular", Arial, sans-serif', fontSize: 14 }} />
                     <Tooltip
                         formatter={(value, name) => getTooltipFormatter(value, name)}
                         labelFormatter={function(value) {
