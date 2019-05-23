@@ -14,7 +14,7 @@ function checkFormData(params) {
     const paramsArray = [
         { param: 'data.firstName', label: 'Name' },
         { param: 'data.lastName', label: 'Surname' },
-        { param: 'data.birthDate', label: 'Born' },
+        { param: 'data.birthDate', label: 'Date of Birth' },
         { param: 'data.address', label: 'Address' },
         { param: 'data.city', label: 'City' },
         { param: 'data.district', label: 'District' },
@@ -24,12 +24,18 @@ function checkFormData(params) {
         { param: 'data.nhsNumber', label: 'CHI Number' },
     ];
 
+    let missedParamsArray = [];
     for (let i = 0, n = paramsArray.length; i < n; i++) {
         let item = paramsArray[i];
         let value = get(params, item.param, null);
         if (!value) {
-            throw new HttpError('777|Parameter "' + item.label + '" should be presented');
+            missedParamsArray.push(item.label);
         }
+    }
+
+    if (missedParamsArray.length > 0) {
+        const string = missedParamsArray.join(', ');
+        throw new HttpError('777|Please add ' + string);
     }
 
     return true;
