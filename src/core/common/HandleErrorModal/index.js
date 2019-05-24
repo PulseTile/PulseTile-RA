@@ -73,12 +73,14 @@ class HandleErrorModal extends Component {
     };
 
     isSessionExpired = (status, message) => {
-        return (Number(status) === 400 && message.includes('JWT')) || Number(status) === 403;
+        return (Number(status) === 400 && (message.includes('JWT') || message.includes('secretSessionId')) || Number(status) === 403);
     };
 
-    getErrorDescription = (status, isJwtOld) => {
+    getErrorDescription = (status, isJwtOld, errorMessage) => {
         let result = 'Something is wrong';
-        if (Number(status) === 404) {
+        if (Number(status) === 777) {
+            result = errorMessage;
+        } else if (Number(status) === 404) {
             result = 'API is currently unavailable';
         } else if (Number(status) > 499) {
             result = 'Something is wrong with the server. Please try again later.';
@@ -102,10 +104,14 @@ class HandleErrorModal extends Component {
         const errorStatus = get(httpErrors, 'status', null);
         const errorMessage = get(httpErrors, 'message', null);
 
+        let isWrongPatient = false;
+        if (errorMessage) {
+            isWrongPatient = errorMessage.includes('patient');
+        }
         const isOpen = isErrorModalOpen || (errorStatus && errorMessage);
 
         const isJwtOld = this.isSessionExpired(errorStatus, errorMessage);
-        const errorDescription = this.getErrorDescription(errorStatus, isJwtOld);
+        const errorDescription = this.getErrorDescription(errorStatus, isJwtOld, errorMessage);
         return (
             <React.Fragment>
                 <Dialog open={isOpen} {...rest}>
@@ -113,12 +119,23 @@ class HandleErrorModal extends Component {
                         <Typography className={classes.titleBlock}>
                             Connection Error
                         </Typography>
-                        <Typography className={classes.description}>{errorDescription}</Typography>
+                        <Typography className={classes.description}>
+                            {
+                                isWrongPatient ? errorMessage : errorDescription
+                            }
+                        </Typography>
                         <div className={classes.toolbar}>
-                            <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
+                            {
+                                !isWrongPatient &&
+                                    <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
+                            }
                             { isJwtOld
-                                ? <CustomLogoutButton title="Login again" hideIcon={true} />
-                                : <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
+                                ?
+                                    <CustomLogoutButton title="Login again" hideIcon={true} />
+                                :
+                                    <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>
+                                        { isWrongPatient ? 'Close' : 'Reload page' }
+                                    </Button>
                             }
                         </div>
                     </div>
