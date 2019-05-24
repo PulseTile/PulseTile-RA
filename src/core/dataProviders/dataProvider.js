@@ -12,7 +12,6 @@ import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
 import fakePatientsProvider from "./fakePatientsProvider";
-import fakeVitalsProvider from "./fakeVitalsProvider";
 
 import newPatientsProvider from "./patientsProvider";
 import { httpErrorAction } from '../actions/httpErrorAction';
@@ -248,9 +247,6 @@ export default (type, resource, params) => {
     // if (resource === `patients`) {
     //     return fakePatientsProvider(type, resource, params);
     // }
-    if (resource === `vitalsigns`) {
-        return fakeVitalsProvider(type, resource, params);
-    }
     if (resource === `patients`) {
         return newPatientsProvider(type, resource, params);
     }

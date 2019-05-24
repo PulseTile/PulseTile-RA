@@ -144,7 +144,8 @@ class ValueWithUnits extends Component {
     };
 
     render() {
-        const { classes, label, units, model, hasPopup, value } = this.props;
+        const { classes, label, units, model, hasPopup, value, isDetailsPage } = this.props;
+
         const { formGroupClassName, formInputClassName } = this.state;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
@@ -159,8 +160,8 @@ class ValueWithUnits extends Component {
                             type="number"
                             model={modelName}
                             onBlur={e => this.changeColor(e)}
-                            required
-                            value={value}
+                            defaultValue={value}
+                            disabled={isDetailsPage}
                         />
                         { units &&
                             <div className={classes.units} onClick={e => this.handleClick(e)}>
