@@ -242,9 +242,6 @@ const dataProvider = (type, resource, params) => {
  */
 export default (type, resource, params) => {
     // if (resource === `patients`) {
-    //     return newPatientsProvider(type, resource, params);
-    // }
-    // if (resource === `patients`) {
     //     return fakePatientsProvider(type, resource, params);
     // }
     if (resource === `patients`) {

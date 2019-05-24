@@ -248,9 +248,13 @@ class VitalsInputs extends Component {
 
     componentDidMount() {
         const filledValues = this.getCurrentItem();
+        const levelOfConsciousness = get(filledValues, 'levelOfConsciousness', 'Alert' );
+        const oxygenSupplemental = get(filledValues, 'oxygenSupplemental', false);
         this.setState({
-            levelOfConsciousnessValue: get(filledValues, 'levelOfConsciousness', 'Alert' ),
-            anySupplementalOxygenValue: get(filledValues, 'oxygenSupplemental', false) ? 'Yes' : 'No',
+            levelOfConsciousnessValue: levelOfConsciousness,
+            anySupplementalOxygenValue: oxygenSupplemental ? 'Yes' : 'No',
+            levelConsciousnessClassName: (levelOfConsciousness !== 'Alert') ? 'levelConsciousnessBlockDanger' : 'levelConsciousnessBlock',
+            anySupplementalOxygenClassName: oxygenSupplemental ? 'anySupplementalOxygenBlockWarning' : 'anySupplementalOxygenBlock'
         })
     }
 
@@ -270,7 +274,6 @@ class VitalsInputs extends Component {
         const { classes, isCreate, isDetailsPage } = this.props;
         const { levelConsciousnessClassName, levelOfConsciousnessValue, anySupplementalOxygenClassName, anySupplementalOxygenValue, newsScoreClassName, newsScoreValue, formInputNewsScore } = this.state;
         let filledValues = isCreate ? null : this.getCurrentItem();
-
         return (
             <React.Fragment>
                 <LocalForm model="vitals" onSubmit={values => this.submitForm(values)}>
