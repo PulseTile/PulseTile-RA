@@ -83,6 +83,45 @@ const styles = theme => ({
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
     },
+    parameterBlock: {
+        display: 'flex',
+        textAlign: 'center',
+        width: '20%',
+        height: 25,
+        paddingTop: 5,
+        paddingLeft: 10,
+        border: `1px solid ${theme.palette.borderColor}`,
+    },
+    parameterBlockDanger: {
+        display: 'flex',
+        textAlign: 'center',
+        width: '20%',
+        height: 25,
+        paddingTop: 5,
+        paddingLeft: 10,
+        backgroundColor: DANGER_COLOR,
+        border: `1px solid ${theme.palette.borderColor}`,
+    },
+    parameterBlockWarning: {
+        display: 'flex',
+        textAlign: 'center',
+        width: '20%',
+        height: 25,
+        paddingTop: 5,
+        paddingLeft: 10,
+        backgroundColor: WARNING_COLOR,
+        border: `1px solid ${theme.palette.borderColor}`,
+    },
+    parameterBlockSuccess: {
+        display: 'flex',
+        textAlign: 'center',
+        width: '20%',
+        height: 25,
+        paddingTop: 5,
+        paddingLeft: 10,
+        backgroundColor: SUCCESS_COLOR,
+        border: `1px solid ${theme.palette.borderColor}`,
+    },
 });
 
 class ValueWithUnits extends Component {
@@ -91,6 +130,7 @@ class ValueWithUnits extends Component {
         anchorEl: null,
         formGroupClassName: 'formGroupInside',
         formInputClassName: 'formInputUnits',
+        parameterClassName: 'parameterBlock'
     };
 
     componentDidMount() {
@@ -102,25 +142,30 @@ class ValueWithUnits extends Component {
         const limits = get(rangeLineLimits, model, null);
         let formInput = 'formInputUnits';
         let formGroup = 'formGroupInside';
+        let parameterBlock = 'parameterBlock';
         let nonScoreValue = 0;
         if (value && limits) {
             if (value <= limits.redMin || value >= limits.redMax) {
                 formInput = 'formInputUnitsDanger';
                 formGroup = 'formGroupInsideDanger';
+                parameterBlock = 'parameterBlockDanger';
                 nonScoreValue = 3;
             } else if (value >= limits.greenMin && value <= limits.greenMax) {
                 formInput = 'formInputUnitsSuccess';
                 formGroup = 'formGroupInsideSuccess';
+                parameterBlock = 'parameterBlockSuccess';
                 nonScoreValue = 1;
             } else {
                 formInput = 'formInputUnitsWarning';
                 formGroup = 'formGroupInsideWarning';
+                parameterBlock = 'parameterBlockWarning';
                 nonScoreValue = 2;
             }
         }
         this.setState({
             formInputClassName: formInput,
             formGroupClassName: formGroup,
+            parameterClassName: parameterBlock,
         }, () => this.props.updateInput(model, nonScoreValue))
     };
 
@@ -146,7 +191,10 @@ class ValueWithUnits extends Component {
     render() {
         const { classes, label, units, model, hasPopup, value, isDetailsPage } = this.props;
 
-        const { formGroupClassName, formInputClassName } = this.state;
+        console.log('model', model);
+        console.log('value', value);
+
+        const { formGroupClassName, formInputClassName, parameterClassName } = this.state;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
         const modelName = "vitals." + model;
@@ -155,14 +203,22 @@ class ValueWithUnits extends Component {
                 <div className={classes[formGroupClassName]}>
                     <FormLabel className={classes.formLabel}>{label}</FormLabel>
                     <div className={classes.valueAndUnits}>
-                        <Control.text
-                            className={classes[formInputClassName]}
-                            type="number"
-                            model={modelName}
-                            onBlur={e => this.changeColor(e)}
-                            defaultValue={value}
-                            disabled={isDetailsPage}
-                        />
+                        {
+                            isDetailsPage
+                                ?
+                                <div className={classes[parameterClassName]}>
+                                    <Typography>{value}</Typography>
+                                </div>
+                                :
+                                <Control.text
+                                    className={classes[formInputClassName]}
+                                    type="number"
+                                    model={modelName}
+                                    onBlur={e => this.changeColor(e)}
+                                    defaultValue={value}
+                                    disabled={isDetailsPage}
+                                />
+                        }
                         { units &&
                             <div className={classes.units} onClick={e => this.handleClick(e)}>
                                 <Typography>{units}</Typography>
