@@ -259,7 +259,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, classes, history, userSearch, headerFilterAbsent, currentList, hasChart, hasTimetable } = this.props;
+        const { create, resourceUrl, title, classes, history, userSearch, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
         const { isFilterOpened, isListOpened, anchorEl, listMode } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -338,7 +338,7 @@ class ListTemplate extends Component {
                                 </Paper>
                             }
                         </React.Fragment>
-                        <ContentBlock createUrl={createUrl} idsNumber={idsNumber} {...this.props} />
+                        <ContentBlock createUrl={createUrl} idsNumber={idsNumber} isCustomDatagrid={isCustomDatagrid} history={history} {...this.props} />
                     </Grid>
                     }
                     {

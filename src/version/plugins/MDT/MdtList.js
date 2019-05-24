@@ -20,7 +20,7 @@ const MdtList = ({ classes, ...rest }) => (
         create={MdtCreate}
         edit={MdtEdit}
         show={MdtShow}
-        resourceUrl="mdt"
+        resourceUrl="mdtreports"
         title="Generic MDT"
         {...rest}
     >

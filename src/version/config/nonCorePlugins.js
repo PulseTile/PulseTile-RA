@@ -25,7 +25,7 @@ export default [
         list: ClinicalNotesList,
     },
     {
-        name: "mdt",
+        name: "mdtreports",
         label: "MDT",
         list: MdtList,
     },

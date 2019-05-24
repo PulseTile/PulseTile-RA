@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Datagrid } from "react-admin";
+import {List, Datagrid, DatagridBody} from "react-admin";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -26,6 +26,25 @@ const styles = theme => ({
     }
 });
 
+const CustomDatagridBody = ({ CustomRow, history, ...rest }) => <DatagridBody {...rest} row={<CustomRow history={history} rowClick="edit" />} />
+const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody history={history} CustomRow={CustomRow} />} />
+
+const DatagridBlock = ({ classes, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
+    if (isCustomDatagrid) {
+        return (
+            <CustomDatagrid CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
+                {children}
+            </CustomDatagrid>
+        );
+    }
+    return (
+        <Datagrid className={classes.tableList} rowClick="edit" {...rest}>
+            {children}
+        </Datagrid>
+    );
+};
+
+
 const TableContent = props => {
     const { classes, title, idsNumber, resourceUrl, key, userSearch, filterText, history, isCreatePage, createUrl, children } = props;
     return (
@@ -41,9 +60,7 @@ const TableContent = props => {
             {...props}
         >
             { (idsNumber > 0) ?
-                <Datagrid className={classes.tableList} rowClick="edit">
-                    {children}
-                </Datagrid>
+                <DatagridBlock classes={classes} children={children} history={history} {...props} />
                 :
                 <EmptyListBlock />
             }

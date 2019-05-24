@@ -6,6 +6,7 @@ import VitalsCreate from "./VitalsCreate";
 import VitalsEdit from "./VitalsEdit";
 import VitalsShow from "./VitalsShow";
 import VitalsChart from "./VitalsChart";
+import VitalsDatagridRow from "./fragments/VitalsDatagridRow";
 
 /**
  * This component returns block with Vitals list
@@ -21,11 +22,14 @@ const VitalsList = ({ classes, ...rest }) => (
         edit={VitalsEdit}
         show={VitalsShow}
         chartBlock={VitalsChart}
+        CustomRow={VitalsDatagridRow}
         resourceUrl="vitalsigns"
         title="Vitals"
         hasChart={true}
+        isCustomDatagrid={true}
         {...rest}
     >
+        <DateField label="#" source="number" />
         <DateField label="Date" source="dateCreate" />
         <TextField label="NEWS Score" source="newsScore" />
         <TextField label="Source" source="source" />

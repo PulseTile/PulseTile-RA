@@ -166,7 +166,7 @@ class VitalsInputs extends Component {
 
     changeLevelOfConsciousness = e => {
         const value = e.target.value;
-        const className = (value !== 'A') ? 'levelConsciousnessBlockDanger' : 'levelConsciousnessBlock';
+        const className = (value !== 'Alert') ? 'levelConsciousnessBlockDanger' : 'levelConsciousnessBlock';
         this.setState({
             levelOfConsciousnessValue: value,
             levelConsciousnessClassName: className,
@@ -186,7 +186,7 @@ class VitalsInputs extends Component {
         const { anySupplementalOxygenValue, levelOfConsciousnessValue, respirationRate, oxygenSaturation, heartRate, systolicBP, temperature } = this.state;
 
         let newsScoreValue = 0;
-        if (levelOfConsciousnessValue !== 'A' && levelOfConsciousnessValue) {
+        if (levelOfConsciousnessValue !== 'Alert' && levelOfConsciousnessValue) {
             newsScoreValue += 3;
         }
         if (anySupplementalOxygenValue === 'Yes') {
@@ -325,32 +325,32 @@ class VitalsInputs extends Component {
                             <FormLabel className={classes.formLabel}>Level of Consciousness</FormLabel>
                             <FormGroup aria-label="position" name="levelOfConsciousness" value={levelOfConsciousnessValue} onChange={e => this.changeLevelOfConsciousness(e)} row>
                                 <FormControlLabel
-                                    value="A"
+                                    value="Alert"
                                     control={<CustomSwitch />}
-                                    label="A"
+                                    label="Alert"
                                     labelPlacement="end"
-                                    checked={levelOfConsciousnessValue === 'A' || get(filledValues, 'levelOfConsciousness', false) === 'A'}
+                                    checked={levelOfConsciousnessValue === 'Alert' || get(filledValues, 'levelOfConsciousness', false) === 'Alert'}
                                 />
                                 <FormControlLabel
-                                    value="V"
+                                    value="Voice"
                                     control={<CustomSwitch />}
-                                    label="V"
+                                    label="Voice"
                                     labelPlacement="end"
-                                    checked={levelOfConsciousnessValue === 'V' || get(filledValues, 'levelOfConsciousness', false) === 'V'}
+                                    checked={levelOfConsciousnessValue === 'Voice' || get(filledValues, 'levelOfConsciousness', false) === 'Voice'}
                                 />
                                 <FormControlLabel
-                                    value="P"
+                                    value="Pain"
                                     control={<CustomSwitch />}
-                                    label="P"
+                                    label="Pain"
                                     labelPlacement="end"
-                                    checked={levelOfConsciousnessValue === 'P' || get(filledValues, 'levelOfConsciousness', false) === 'P'}
+                                    checked={levelOfConsciousnessValue === 'Pain' || get(filledValues, 'levelOfConsciousness', false) === 'Pain'}
                                 />
                                 <FormControlLabel
-                                    value="U"
+                                    value="Unresponsive"
                                     control={<CustomSwitch />}
-                                    label="U"
+                                    label="Unresponsive"
                                     labelPlacement="end"
-                                    checked={levelOfConsciousnessValue === 'U' || get(filledValues, 'levelOfConsciousness', false) === 'U'}
+                                    checked={levelOfConsciousnessValue === 'Unresponsive' || get(filledValues, 'levelOfConsciousness', false) === 'Unresponsive'}
                                 />
                             </FormGroup>
                         </div>

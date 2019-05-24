@@ -15,6 +15,7 @@ const createNewItem = takeEvery(TRANSFER_OF_CARE_ACTION.CREATE, function*(action
     options.headers = {
         Authorization: "Bearer " + token,
         'X-Requested-With': "XMLHttpRequest",
+        'Content-Type': 'application/json'
     };
     options.body = JSON.stringify(action.data);
     try {
