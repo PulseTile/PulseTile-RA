@@ -188,12 +188,17 @@ class ValueWithUnits extends Component {
         this.defineColors(nameStr, value);
     };
 
+    componentWillReceiveProps(nextProps, props) {
+        const newItemId = get(nextProps, 'sourceId', null);
+        const prevItemId = get(this.props, 'sourceId', null);
+        if (newItemId !== prevItemId) {
+            const { model, value } = nextProps;
+            this.defineColors(model, value);
+        }
+    }
+
     render() {
         const { classes, label, units, model, hasPopup, value, isDetailsPage } = this.props;
-
-        console.log('model', model);
-        console.log('value', value);
-
         const { formGroupClassName, formInputClassName, parameterClassName } = this.state;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);

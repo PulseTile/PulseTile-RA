@@ -189,9 +189,6 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case UPDATE:
-
-            console.log('UPDATE', params);
-
             return params;
 
         case CREATE:

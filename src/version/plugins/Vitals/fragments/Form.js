@@ -4,7 +4,7 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { LocalForm, Control } from 'react-redux-form';
 import { connect } from 'react-redux';
-import { CREATE, UPDATE } from 'react-admin';
+import { CREATE, UPDATE, GET_LIST } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -17,6 +17,7 @@ import ValueWithUnits from "./ValueWithUnits";
 import CustomSwitch from "./CustomSwitch";
 import { DANGER_COLOR, SUCCESS_COLOR, WARNING_COLOR } from "./settings";
 import customDataProvider from "../../../../core/dataProviders/dataProvider";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
     formGroup: {
@@ -62,6 +63,33 @@ const styles = theme => ({
     formInputNewsScoreDanger: {
         width: '100%',
         height: 25,
+        paddingLeft: 10,
+        backgroundColor: DANGER_COLOR,
+    },
+    parameterNewsScore: {
+        width: '100%',
+        height: 25,
+        paddingTop: 5,
+        paddingLeft: 10,
+    },
+    parameterNewsScoreSuccess: {
+        width: '100%',
+        height: 25,
+        paddingTop: 5,
+        paddingLeft: 10,
+        backgroundColor: SUCCESS_COLOR,
+    },
+    parameterNewsScoreWarning: {
+        width: '100%',
+        height: 25,
+        paddingTop: 5,
+        paddingLeft: 10,
+        backgroundColor: WARNING_COLOR,
+    },
+    parameterNewsScoreDanger: {
+        width: '100%',
+        height: 25,
+        paddingTop: 5,
         paddingLeft: 10,
         backgroundColor: DANGER_COLOR,
     },
@@ -143,6 +171,7 @@ class VitalsInputs extends Component {
         newsScoreClassName: 'newsScoreBlock',
         newsScoreValue: null,
         formInputNewsScore: 'formInput',
+        parameterNewsScore: 'parameterNewsScore',
         respirationRate: null,
         oxygenSaturation: null,
         heartRate: null,
@@ -191,6 +220,7 @@ class VitalsInputs extends Component {
     };
 
     updateNewsScore = () => {
+        const { isCreate, isDetailsPage } = this.props;
         const { anySupplementalOxygenValue, levelOfConsciousnessValue, respirationRate, oxygenSaturation, heartRate, systolicBP, temperature } = this.state;
 
         let newsScoreValue = 0;
@@ -203,15 +233,18 @@ class VitalsInputs extends Component {
 
         newsScoreValue = newsScoreValue + respirationRate + oxygenSaturation + heartRate + systolicBP + temperature;
 
+        let filledValues = isCreate ? null : this.getCurrentItem();
+        const value = isDetailsPage ? get(filledValues, 'newsScore', null) : newsScoreValue;
+
         let newsScoreClassName = 'newsScoreBlock';
         let formInputNewsScore = 'formInputNewsScore';
-        if (newsScoreValue > 6) {
+        if (value > 6) {
             newsScoreClassName = 'newsScoreBlockDanger';
             formInputNewsScore = 'formInputNewsScoreDanger';
-        } else if (newsScoreValue > 4) {
+        } else if (value > 4) {
             newsScoreClassName = 'newsScoreBlockWarning';
             formInputNewsScore = 'formInputNewsScoreWarning';
-        } else if (newsScoreValue > 0) {
+        } else if (value > 0) {
             newsScoreClassName = 'newsScoreBlockSuccess';
             formInputNewsScore = 'formInputNewsScoreSuccess';
         }
@@ -219,7 +252,7 @@ class VitalsInputs extends Component {
         this.setState({
             newsScoreValue: newsScoreValue,
             newsScoreClassName: newsScoreClassName,
-            formInputNewsScore: formInputNewsScore
+            formInputNewsScore: formInputNewsScore,
         });
     };
 
@@ -266,14 +299,33 @@ class VitalsInputs extends Component {
             this.setState({
                 levelOfConsciousnessValue: get(filledValues, 'levelOfConsciousness', 'Alert' ),
                 anySupplementalOxygenValue: get(filledValues, 'oxygenSupplemental', false) ? 'Yes' : 'No',
+
             })
         }
     }
+
+    getNewScoreDetailsColor = (filledValues) => {
+        const newsScore = get(filledValues, 'newsScore', null);
+        let result = '';
+        if (newsScore > 6) {
+            result = 'parameterNewsScoreDanger';
+        } else if (newsScore > 4) {
+            result = 'parameterNewsScoreWarning';
+        } else if (newsScore > 0) {
+            result = 'parameterNewsScoreSuccess';
+        }
+        return result;
+    };
 
     render() {
         const { classes, isCreate, isDetailsPage } = this.props;
         const { levelConsciousnessClassName, levelOfConsciousnessValue, anySupplementalOxygenClassName, anySupplementalOxygenValue, newsScoreClassName, newsScoreValue, formInputNewsScore } = this.state;
         let filledValues = isCreate ? null : this.getCurrentItem();
+        const sourceId = get(this.props, 'id', null);
+        const parameterNewsScore = this.getNewScoreDetailsColor(filledValues);
+
+        console.log('this.props', this.props);
+
         return (
             <React.Fragment>
                 <LocalForm model="vitals" onSubmit={values => this.submitForm(values)}>
@@ -287,6 +339,7 @@ class VitalsInputs extends Component {
                             hasPopup={true}
                             value={get(filledValues, 'respirationRate', null)}
                             isDetailsPage={isDetailsPage}
+                            sourceId={sourceId}
                         />
                         <ValueWithUnits
                             label="Oxygen Saturation"
@@ -296,6 +349,7 @@ class VitalsInputs extends Component {
                             hasPopup={true}
                             value={get(filledValues, 'oxygenSaturation', null)}
                             isDetailsPage={isDetailsPage}
+                            sourceId={sourceId}
                         />
                     </div>
 
@@ -325,6 +379,7 @@ class VitalsInputs extends Component {
                             hasPopup={true}
                             value={get(filledValues, 'heartRate', null)}
                             isDetailsPage={isDetailsPage}
+                            sourceId={sourceId}
                         />
                         <ValueWithUnits
                             label="Systolic BP"
@@ -334,6 +389,7 @@ class VitalsInputs extends Component {
                             hasPopup={true}
                             value={get(filledValues, 'systolicBP', null)}
                             isDetailsPage={isDetailsPage}
+                            sourceId={sourceId}
                         />
                     </div>
 
@@ -345,6 +401,7 @@ class VitalsInputs extends Component {
                         hasPopup={false}
                         value={get(filledValues, 'diastolicBP', null)}
                         isDetailsPage={isDetailsPage}
+                        sourceId={sourceId}
                     />
 
                     <ValueWithUnits
@@ -355,6 +412,7 @@ class VitalsInputs extends Component {
                         hasPopup={true}
                         value={get(filledValues, 'temperature', null)}
                         isDetailsPage={isDetailsPage}
+                        sourceId={sourceId}
                     />
 
                     <FormControl className={classes.formControl}>
@@ -400,12 +458,20 @@ class VitalsInputs extends Component {
                     <FormGroup className={classes.formGroup}>
                         <div className={classes[newsScoreClassName]}>
                             <FormLabel className={classes.formLabel}>NEWS Score</FormLabel>
-                            <Control.text
-                                className={classes[formInputNewsScore]}
-                                model='vitals.newsScore'
-                                value={newsScoreValue}
-                                disabled
-                            />
+                            {
+                                isDetailsPage ?
+                                    <div className={classes[parameterNewsScore]}>
+                                        <Typography>{get(filledValues, 'newsScore', null)}</Typography>
+                                    </div>
+                                    :
+                                    <Control.text
+                                        className={classes[formInputNewsScore]}
+                                        model='vitals.newsScore'
+                                        value={newsScoreValue}
+                                        disabled
+                                    />
+                            }
+
                         </div>
                     </FormGroup>
 
