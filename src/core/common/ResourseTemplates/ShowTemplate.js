@@ -42,17 +42,17 @@ const styles = theme => ({
         flexGrow: 1,
     },
     expandIcon: {
-        color: theme.palette.paperColor,
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
     },
     expandBlockIcon: {
         height: 20,
         paddingTop: 5,
         paddingRight: 7,
-        color: theme.palette.paperColor,
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
     },
     expansionTypography: {
         paddingTop: 10,
-        color: theme.palette.paperColor,
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 700,
     },

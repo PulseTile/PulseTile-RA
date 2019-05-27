@@ -24,12 +24,12 @@ const styles = theme => ({
         display: "flex",
         alignItems: "center",
         height: 49,
-        color: theme.palette.paperColor,
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         paddingLeft: 15,
     },
     title: {
-        color: theme.palette.paperColor,
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 700,
     },
@@ -39,7 +39,7 @@ const styles = theme => ({
     expandBlockIcon: {
         height: 20,
         paddingRight: 20,
-        color: theme.palette.paperColor,
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
     },
     editForm: {
         '& > div': {

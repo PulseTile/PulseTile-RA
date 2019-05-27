@@ -11,7 +11,7 @@ import { DANGER_COLOR, WARNING_COLOR, SUCCESS_COLOR } from "./settings";
 const styles = theme => ({
     tableRow: {
         '&:hover': {
-            backgroundColor: theme.palette.mainColor + '!important',
+            backgroundColor: theme.palette.secondaryMainColor + '!important',
             cursor: "pointer"
         },
         '&:hover td': {

@@ -12,7 +12,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Typography from '@material-ui/core/Typography';
 
 import { transferOfCareAction } from "../../../actions/transferOfCareAction";
-import SectionToolbar from "./SectionToolbar";
+import SectionToolbar from "../../../../core/common/Toolbars/CustomFormToolbar";
 import RecordsSelector from "./RecordsSelector";
 import { selectors, recordsTypes } from "./selectors";
 

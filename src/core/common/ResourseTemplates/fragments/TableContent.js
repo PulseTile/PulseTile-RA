@@ -11,17 +11,18 @@ const styles = theme => ({
     tableList: {
         '& thead': {
             '& tr th': {
+                backgroundColor: theme.palette.tableHeadColor + '!important',
                 paddingLeft: 10,
             },
         },
         '& tbody tr:hover': {
-            backgroundColor: theme.palette.mainColor + '!important',
+            backgroundColor: theme.palette.secondaryMainColor + '!important',
         },
         '& tbody tr:hover td span': {
-            color: "#fff"
+            color: theme.palette.paperColor
         },
         '& tbody tr:hover td button span p': {
-            color: "#fff"
+            color: theme.palette.paperColor
         }
     }
 });
@@ -32,7 +33,7 @@ const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, ...rest 
 const DatagridBlock = ({ classes, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
     if (isCustomDatagrid) {
         return (
-            <CustomDatagrid CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
+            <CustomDatagrid className={classes.tableList} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
                 {children}
             </CustomDatagrid>
         );

@@ -12,7 +12,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-import SectionToolbar from "./SectionToolbar";
+import SectionToolbar from "../../../../core/common/Toolbars/CustomFormToolbar";
 import ValueWithUnits from "./ValueWithUnits";
 import CustomSwitch from "./CustomSwitch";
 import { DANGER_COLOR, SUCCESS_COLOR, WARNING_COLOR } from "./settings";

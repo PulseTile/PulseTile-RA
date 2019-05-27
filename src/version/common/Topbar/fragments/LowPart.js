@@ -30,7 +30,7 @@ const styles = theme => ({
         minHeight: "auto",
         border: `1px solid ${theme.palette.borderColor}`,
         padding: 0,
-        backgroundColor: "white",
+        backgroundColor: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
         justifyContent: "space-between",
     },
     menuButtonBlock: {
@@ -38,30 +38,30 @@ const styles = theme => ({
         position: "relative",
         minWidth: 238,
         minHeight: 90,
-        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderRight: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : `1px solid ${theme.palette.borderColor}`,
         justifyContent: "center",
         alignItems: "center",
     },
     menuButton: {
-        borderRadius: 15,
+        borderRadius: theme.isShowcase ? 0 : 15,
         minWidth: 64,
-        color: theme.palette.mainColor,
+        color: theme.palette.secondaryMainColor,
         textTransform: "none",
-        backgroundColor: "white",
+        backgroundColor: theme.palette.paperColor,
         '&:hover': {
-            backgroundColor: theme.palette.mainColor,
-            color: "white",
+            backgroundColor: theme.isShowcase ? theme.palette.paperColor : theme.palette.secondaryMainColor,
+            color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
         },
         '&:active': {
-            backgroundColor: theme.palette.mainColor,
-            color: "white",
+            backgroundColor: theme.isShowcase ? theme.palette.paperColor : theme.palette.secondaryMainColor,
+            color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
         },
     },
     title: {
         display: "block",
         width: "100%",
         flexGrow: 1,
-        color: "white",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         textAlign: "center",
         paddingTop: 5,
@@ -69,7 +69,7 @@ const styles = theme => ({
         fontWeight: 800,
     },
     patientInfo: {
-        color: "black",
+        color: theme.isShowcase ?  theme.palette.paperColor :  theme.palette.fontColor,
         padding: "11px 14px",
         marginLeft: 5,
     },
@@ -78,6 +78,9 @@ const styles = theme => ({
         marginTop: 5,
         marginBottom: 5,
     },
+    keyName: {
+        color: theme.isShowcase ?  theme.palette.paperColor :  theme.palette.fontColor,
+    }
 });
 
 /**

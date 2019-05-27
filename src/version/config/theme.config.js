@@ -2,7 +2,7 @@ import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
 import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
 import FeedsPanels from "../plugins/Feeds/FeedsPanels";
-import PatientsList from "../../core/pages/PatientsList";
+import Charts from "../../core/pages/Charts";
 
 export const themeShortMenu = [
     { url: '/', label: 'Charts' },
@@ -27,11 +27,12 @@ export const themeFullMenu = [
 ];
 
 export const themeCommonElements = {
+    isShowcase: true,
     topbar: ThemeTopbar,
     footer: ThemeFooter,
     feedsSelectors: FeedsSelectors,
     feedsPanels: FeedsPanels,
-    homePage: PatientsList,
+    homePage: Charts,
 };
 
 export const themeImages = {};

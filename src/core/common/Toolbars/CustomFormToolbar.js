@@ -1,5 +1,5 @@
 import React from "react";
-import { Toolbar, SaveButton, ListButton } from "react-admin";
+import { Toolbar } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import DoneIcon from '@material-ui/icons/Done';
@@ -19,10 +19,10 @@ const styles = theme => ({
         height: 40,
         paddingTop: "6px !important",
         paddingLeft: "8px !important",
-        backgroundColor: "#fff",
-        border: `1px solid ${theme.palette.mainColor}`,
-        color: theme.palette.mainColor,
-        borderRadius: 20,
+        color: "#fff",
+        border: `1px solid ${theme.palette.secondaryMainColor}`,
+        backgroundColor: theme.palette.secondaryMainColor,
+        borderRadius: theme.isShowcase ? 0 : 20,
         fontSize: 16,
         fontWeight: 800,
         "& svg": {
@@ -32,8 +32,8 @@ const styles = theme => ({
             textTransform: "capitalize",
         },
         "&:hover": {
-            backgroundColor: theme.palette.mainColor,
-            color: "#fff",
+            color: theme.palette.secondaryMainColor,
+            backgroundColor: "#fff",
         }
     },
     cancelButton: {
@@ -44,7 +44,7 @@ const styles = theme => ({
         paddingLeft: "8px !important",
         backgroundColor: theme.palette.dangerColor,
         color: theme.palette.paperColor,
-        borderRadius: 20,
+        borderRadius: theme.isShowcase ? 0 : 20,
         fontSize: 16,
         fontWeight: 800,
         "& svg": {

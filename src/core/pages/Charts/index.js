@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { GET_LIST } from 'react-admin';
 import moment from "moment";
+import { connect } from 'react-redux';
 import get from "lodash/get";
 import {
     BarChart,
@@ -15,6 +16,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
 
 import customDataProvider from "../../dataProviders/dataProvider";
+import CardMedia from "@material-ui/core/CardMedia";
+import image from "../../../version/images/pulsetile-logo.png";
 
 const styles = {
     chartsContainer: {
@@ -142,9 +145,10 @@ class Charts extends Component {
     }
 
     render() {
-        const { classes, history } = this.props;
+        const { classes, userSearch, history } = this.props;
 
-        const patientsInfo = customDataProvider(GET_LIST, 'patients', {});
+        // const patientsInfo = customDataProvider(GET_LIST, 'patients', {});
+        const patientsInfo = [];
         const patientsData = get(patientsInfo, 'data', []);
 
         const DepartmentPercentage = this.getDepartmentPercentage(patientsData);
@@ -212,4 +216,10 @@ class Charts extends Component {
     }
 }
 
-export default withStyles(styles)(Charts);
+const mapStateToProps = state => {
+    return {
+        userSearch: state.custom.userSearch.data,
+    }
+};
+
+export default connect(mapStateToProps, null)(withStyles(styles)(Charts));
