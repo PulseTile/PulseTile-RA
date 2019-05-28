@@ -4,20 +4,20 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { LocalForm, Control } from 'react-redux-form';
 import { connect } from 'react-redux';
-import { CREATE, UPDATE, GET_LIST } from 'react-admin';
+import { CREATE, UPDATE } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Typography from "@material-ui/core/Typography";
 
 import SectionToolbar from "../../../../core/common/Toolbars/CustomFormToolbar";
 import ValueWithUnits from "./ValueWithUnits";
 import CustomSwitch from "./CustomSwitch";
 import { DANGER_COLOR, SUCCESS_COLOR, WARNING_COLOR } from "./settings";
 import customDataProvider from "../../../../core/dataProviders/dataProvider";
-import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
     formGroup: {
@@ -323,9 +323,6 @@ class VitalsInputs extends Component {
         let filledValues = isCreate ? null : this.getCurrentItem();
         const sourceId = get(this.props, 'id', null);
         const parameterNewsScore = this.getNewScoreDetailsColor(filledValues);
-
-        console.log('this.props', this.props);
-
         return (
             <React.Fragment>
                 <LocalForm model="vitals" onSubmit={values => this.submitForm(values)}>

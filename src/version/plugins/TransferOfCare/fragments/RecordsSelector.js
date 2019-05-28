@@ -31,7 +31,7 @@ const styles = theme => ({
             paddingLeft: 10,
         },
         '& tbody tr:hover': {
-            backgroundColor: theme.palette.mainColor,
+            backgroundColor: theme.palette.secondaryMainColor,
         },
         '& tbody tr:hover td  p': {
             color: theme.palette.paperColor,

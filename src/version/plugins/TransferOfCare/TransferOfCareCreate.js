@@ -11,7 +11,7 @@ import Form from "./fragments/Form";
  */
 const TransferOfCareCreate = props => (
     <CreateTemplate isCustom={true} blockTitle="Transfer Of Care" {...props}>
-        <Form {...props} />
+        <Form isCreate={true} {...props} />
     </CreateTemplate>
 );
 

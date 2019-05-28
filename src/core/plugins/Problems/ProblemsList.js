@@ -22,6 +22,7 @@ const DiagnosisList = ({ classes, ...rest }) => (
       show={ProblemsShow}
       resourceUrl="problems"
       title="Problems / Issues"
+      defaultSort="dateOfOnset"
       {...rest}
     >
         <TextField source="problem" label="Problem / Issue" />

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { LocalForm, Control } from 'react-redux-form';
 import { connect } from 'react-redux';
+import { CREATE, UPDATE } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -15,6 +16,7 @@ import { transferOfCareAction } from "../../../actions/transferOfCareAction";
 import SectionToolbar from "../../../../core/common/Toolbars/CustomFormToolbar";
 import RecordsSelector from "./RecordsSelector";
 import { selectors, recordsTypes } from "./selectors";
+import customDataProvider from "../../../../core/dataProviders/dataProvider";
 
 const styles = {
     formGroup: {
@@ -151,7 +153,7 @@ class TransferOfCareInputs extends Component {
     };
 
     submitForm = data => {
-        const { createNewItem } = this.props;
+        const { history, isCreate } = this.props;
         const { transferDateTime, recordsArray } = this.state;
         const additionalData = {
             transferDateTime: moment(transferDateTime).unix(),
@@ -159,7 +161,31 @@ class TransferOfCareInputs extends Component {
             userId: patientID,
         };
         const formData = Object.assign({}, data, additionalData);
-        createNewItem(formData);
+        if (isCreate) {
+            customDataProvider(CREATE, 'toc', { data: formData });
+        } else {
+            const filledValues = this.getCurrentItem();
+            const id = get(filledValues, 'sourceId', null);
+            customDataProvider(UPDATE, 'toc', { id: id, data: formData });
+        }
+        history.push('/toc');
+    };
+
+    getCurrentItem = () => {
+        const { transfersOfCareList, location } = this.props;
+        const pathname = get(location, 'pathname', null);
+        const pathnameArray = pathname.split('/');
+        const sourceId = get(pathnameArray, [2], null);
+        const transfersOfCareListArray = Object.values(transfersOfCareList);
+        let result = null;
+        for (let i = 0, n = transfersOfCareListArray.length; i < n; i++) {
+            let item = transfersOfCareListArray[i];
+            if (item.sourceId === sourceId) {
+                result = item;
+                break;
+            }
+        }
+        return result;
     };
 
     render() {
@@ -245,15 +271,13 @@ class TransferOfCareInputs extends Component {
 
 const mapStateToProps = state => {
     return {
+        transfersOfCareList: get(state, 'admin.resources.toc.data', []),
         recordsList: get(state, 'custom.transferOfCare.list', [])
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        createNewItem(data) {
-            dispatch(transferOfCareAction.create(data));
-        },
         getSelectorItems(data) {
             dispatch(transferOfCareAction.request(data));
         },

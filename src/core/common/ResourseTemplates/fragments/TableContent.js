@@ -60,11 +60,13 @@ const DatagridBlock = ({ classes, isCustomDatagrid, children, history, CustomRow
 
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, key, userSearch, filterText, history, isCreatePage, createUrl, children } = props;
+    const { classes, title, idsNumber, resourceUrl, key, userSearch, filterText, history, isCreatePage, createUrl, children, defaultSort } = props;
+    const sortField = defaultSort ? defaultSort : 'dateCreated';
     return (
         <List
             resource={resourceUrl}
             key={key}
+            sort={{ field: sortField, order: 'DESC' }}
             filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
             title={title}
             perPage={ITEMS_PER_PAGE}

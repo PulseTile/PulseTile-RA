@@ -22,7 +22,7 @@ const styles = theme => ({
         alignItems: "center",
         height: 49,
         color: theme.palette.paperColor,
-        backgroundColor: theme.palette.mainColor,
+        backgroundColor: theme.palette.secondaryMainColor,
         paddingLeft: 15,
     },
     title: {
