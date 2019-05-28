@@ -13,10 +13,16 @@ const styles = theme => ({
             '& tr th': {
                 backgroundColor: theme.palette.tableHeadColor + '!important',
                 paddingLeft: 10,
+                borderLeft: theme.isShowcase ? `0.5px solid ${theme.palette.borderColor}` : null,
+                borderRight: theme.isShowcase ? `0.5px solid ${theme.palette.borderColor}` : null,
             },
         },
         '& tbody tr:hover': {
             backgroundColor: theme.palette.secondaryMainColor + '!important',
+        },
+        '& tbody tr td': {
+            borderLeft: theme.isShowcase ? `0.5px solid ${theme.palette.borderColor}` : null,
+            borderRight: theme.isShowcase ? `0.5px solid ${theme.palette.borderColor}` : null,
         },
         '& tbody tr:hover td span': {
             color: theme.palette.paperColor
@@ -24,11 +30,18 @@ const styles = theme => ({
         '& tbody tr:hover td button span p': {
             color: theme.palette.paperColor
         }
+    },
+    rowEven: {
+        backgroundColor: theme.isShowcase ? theme.palette.toolbarColor : theme.palette.paperColor
+    },
+    rowOdd: {
+        backgroundColor: theme.palette.paperColor
     }
 });
 
 const CustomDatagridBody = ({ CustomRow, history, ...rest }) => <DatagridBody {...rest} row={<CustomRow history={history} rowClick="edit" />} />
-const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody history={history} CustomRow={CustomRow} />} />
+const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody history={history} CustomRow={CustomRow} />} />;
+
 
 const DatagridBlock = ({ classes, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
     if (isCustomDatagrid) {
@@ -39,7 +52,7 @@ const DatagridBlock = ({ classes, isCustomDatagrid, children, history, CustomRow
         );
     }
     return (
-        <Datagrid className={classes.tableList} rowClick="edit" {...rest}>
+        <Datagrid className={classes.tableList} classes={{ rowEven: classes.rowEven, rowOdd: classes.rowOdd  }} rowClick="edit" {...rest}>
             {children}
         </Datagrid>
     );

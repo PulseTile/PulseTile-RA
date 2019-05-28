@@ -6,9 +6,13 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     viewButton: {
-        color: theme.palette.viewButton,
-        fontSize: 16,
         textTransform: 'capitalize',
+        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        borderRadius: 0,
+        '& span p': {
+            fontSize: 16,
+            color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.viewButton,
+        }
     },
 });
 
@@ -22,7 +26,7 @@ const styles = theme => ({
  */
 const ViewButton = ({ classes, viewAction, record }) => (
     <Button aria-label="View" onClick={e => viewAction(e, record)} className={classes.viewButton}>
-        <Typography className={classes.viewButton}>View</Typography>
+        <Typography>View</Typography>
     </Button>
 );
 

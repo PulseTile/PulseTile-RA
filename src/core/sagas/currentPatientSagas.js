@@ -1,7 +1,7 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import get from "lodash/get";
 
-import {domainName, token} from "../token";
+import { domainName, token } from "../token";
 import { CURRENT_PATIENT_ACTION, currentPatientAction } from "../actions/currentPatientAction";
 
 export default takeEvery(CURRENT_PATIENT_ACTION.REQUEST, function*(action) {

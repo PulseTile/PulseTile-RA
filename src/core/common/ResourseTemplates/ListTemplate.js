@@ -38,6 +38,9 @@ const listStyles = theme => ({
         paddingRight: 25,
         border: `1px solid ${theme.palette.borderColor}`,
     },
+    headerBlock: {
+        marginBottom: theme.isShowcase ? 5 : null,
+    },
     list: {
         paddingLeft: 0,
     },
@@ -52,6 +55,7 @@ const listStyles = theme => ({
         fontSize: 18,
         fontWeight: 700,
         paddingLeft: 15,
+        paddingRight: 10,
     },
     emptyBlock: {
         flexGrow: 1,
@@ -63,21 +67,26 @@ const listStyles = theme => ({
         fontWeight: 700,
     },
     filterIcon: {
-        color: theme.isShowcase ? `${theme.palette.fontColor} !important` : `${theme.palette.paperColor} !important`,
-        paddingRight: 15,
+        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
+        paddingLeft: 10,
+        paddingRight: 10,
         border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         height: 35,
     },
     listModeIcon: {
-        color: theme.isShowcase ? `${theme.palette.fontColor} !important` : `${theme.palette.paperColor} !important`,
-        paddingRight: 15,
+        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginRight: 5,
         border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         height: 35,
     },
     expandIcon: {
-        color: theme.isShowcase ? `${theme.palette.fontColor} !important` : `${theme.palette.paperColor} !important`,
+        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
         border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
-        paddingRight: 7,
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginRight: 10,
         height: 35,
     },
     filterInput: {
@@ -89,10 +98,12 @@ const listStyles = theme => ({
         },
     },
     inputBlock: {
-        width: 'calc(100% - 105px)',
+        width: 'calc(100% - 30px)',
         backgroundColor: "#fff",
         borderRadius: 2,
         paddingLeft: 5,
+        marginLeft: 10,
+        marginBottom: 10,
     },
 });
 
@@ -293,7 +304,7 @@ class ListTemplate extends Component {
                 <Grid container spacing={16} className={classes.mainBlock}>
                     { isListOpened &&
                     <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
-                        <React.Fragment>
+                        <div className={classes.headerBlock}>
                             <div className={classes.blockTitle}>
                                 <Typography className={classes.title}>{titleTable}</Typography>
                                 <div className={classes.emptyBlock}></div>
@@ -334,15 +345,10 @@ class ListTemplate extends Component {
                             {
                                 isFilterOpened &&
                                 <Paper className={classes.filterInput} elevation={1}>
-                                    <Tooltip title="Menu">
-                                        <IconButton className={classes.iconButton}>
-                                            <FilterIcon />
-                                        </IconButton>
-                                    </Tooltip>
                                     <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
                                 </Paper>
                             }
-                        </React.Fragment>
+                        </div>
                         <ContentBlock createUrl={createUrl} idsNumber={idsNumber} isCustomDatagrid={isCustomDatagrid} history={history} {...this.props} />
                     </Grid>
                     }

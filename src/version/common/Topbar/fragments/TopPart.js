@@ -19,7 +19,6 @@ const styles = theme => ({
         display: "flex",
         backgroundColor: "white",
         justifyContent: "space-around",
-        border: `1px solid ${theme.palette.borderColor}`,
         minHeight: 54,
         padding: 0,
     },

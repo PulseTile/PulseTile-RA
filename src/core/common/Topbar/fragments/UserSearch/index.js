@@ -19,7 +19,7 @@ const styles = theme => ({
         height: 36,
         minWidth: 350,
         borderRadius: 18,
-        backgroundColor: theme.palette.disabledColor,
+        backgroundColor: theme.isShowcase ? null : theme.palette.disabledColor,
     },
     input: {
         display: "block",
@@ -28,12 +28,21 @@ const styles = theme => ({
         paddingTop: 0,
         paddingBottom: 0,
         paddingLeft: 20,
-        borderRadius: 18,
-        border: 0,
-        backgroundColor: theme.palette.disabledColor,
+        marginRight: 10,
+        borderRadius: theme.isShowcase ? 0 : 18,
+        border: theme.isShowcase ? `1px solid ${theme.palette.disabledColor}` : 0,
+        backgroundColor: theme.isShowcase ? theme.palette.paperColor : theme.palette.disabledColor,
     },
     icon: {
-        color: theme.palette.fontColor,
+        color: theme.isShowcase ? theme.palette.paperColor : theme.palette.fontColor,
+        backgroundColor: theme.isShowcase ? theme.palette.secondaryMainColor : null,
+        borderRadius: 0,
+        height: 35,
+        '&:hover': {
+            color: theme.isShowcase ? theme.palette.secondaryMainColor : null,
+            border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+            backgroundColor: theme.isShowcase ? theme.palette.paperColor : null,
+        }
     },
 });
 
@@ -85,16 +94,16 @@ class UserSearch extends Component {
                     onChange={e => this.handleChange(e)}
                 />
                 { userSearch &&
-                <Tooltip title="Clean Search" disableHoverListener={true}>
-                    <IconButton
-                        className={classes.icon}
-                        aria-haspopup="true"
-                        color="inherit"
-                        onClick={() => this.onRemoveClick()}
-                    >
-                        <CleanIcon />
-                    </IconButton>
-                </Tooltip>
+                    <Tooltip title="Clean Search" disableHoverListener={true}>
+                        <IconButton
+                            className={classes.icon}
+                            aria-haspopup="true"
+                            color="inherit"
+                            onClick={() => this.onRemoveClick()}
+                        >
+                            <CleanIcon />
+                        </IconButton>
+                    </Tooltip>
                 }
                 <Tooltip title="Patients Search" disableHoverListener={true}>
                     <IconButton

@@ -19,15 +19,14 @@ const styles = theme => ({
         },
     },
     newsScoreCellDanger: {
-        borderLeft: `5px solid ${DANGER_COLOR}`
+        borderLeft: `5px solid ${DANGER_COLOR} !important`
     },
     newsScoreCellWarning: {
-        borderLeft: `5px solid ${WARNING_COLOR}`
+        borderLeft: `5px solid ${WARNING_COLOR} !important`
     },
     newsScoreCellSuccess: {
-        borderLeft: `5px solid ${SUCCESS_COLOR}`
+        borderLeft: `5px solid ${SUCCESS_COLOR} !important`
     },
-
 });
 
 
