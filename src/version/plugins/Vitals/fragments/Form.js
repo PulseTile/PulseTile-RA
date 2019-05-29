@@ -158,8 +158,6 @@ const styles = theme => ({
     }
 });
 
-const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
-
 /**
  * This component returns TransferOfCare creation/editing form
  *
@@ -288,6 +286,18 @@ class VitalsInputs extends Component {
     };
 
     componentDidMount() {
+        this.updateSwitchers();
+    }
+
+    componentWillReceiveProps(nextProps, props) {
+        const newItemId = get(nextProps, 'id', null);
+        const prevItemId = get(this.props, 'id', null);
+        if (newItemId !== prevItemId) {
+            this.updateSwitchers();
+        }
+    }
+
+    updateSwitchers = () => {
         const filledValues = this.getCurrentItem();
         const levelOfConsciousness = get(filledValues, 'levelOfConsciousness', 'Alert' );
         const oxygenSupplemental = get(filledValues, 'oxygenSupplemental', false);
@@ -296,21 +306,8 @@ class VitalsInputs extends Component {
             anySupplementalOxygenValue: oxygenSupplemental ? 'Yes' : 'No',
             levelConsciousnessClassName: (levelOfConsciousness !== 'Alert') ? 'levelConsciousnessBlockDanger' : 'levelConsciousnessBlock',
             anySupplementalOxygenClassName: oxygenSupplemental ? 'anySupplementalOxygenBlockWarning' : 'anySupplementalOxygenBlock'
-        })
-    }
-
-    componentWillReceiveProps(nextProps, props) {
-        const newItemId = get(nextProps, 'id', null);
-        const prevItemId = get(this.props, 'id', null);
-        if (newItemId !== prevItemId) {
-            const filledValues = this.getCurrentItem();
-            this.setState({
-                levelOfConsciousnessValue: get(filledValues, 'levelOfConsciousness', 'Alert' ),
-                anySupplementalOxygenValue: get(filledValues, 'oxygenSupplemental', false) ? 'Yes' : 'No',
-
-            })
-        }
-    }
+        });
+    };
 
     getNewScoreDetailsColor = (filledValues) => {
         const newsScore = get(filledValues, 'newsScore', null);
