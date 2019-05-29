@@ -328,7 +328,7 @@ class ListTemplate extends Component {
                                                 open={open}
                                                 changeListMode={this.changeListMode}
                                                 handleClose={this.popoverClose}
-                                                listMode={listMode}
+                                                resourse={title}
                                                 hasChart={hasChart}
                                                 hasTimetable={hasTimetable}
                                             />
