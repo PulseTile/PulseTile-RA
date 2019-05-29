@@ -1,23 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import get from "lodash/get";
 import moment from "moment";
 
 import { withStyles } from "@material-ui/core/styles";
 import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 
 import { DANGER_COLOR, WARNING_COLOR, SUCCESS_COLOR } from "./settings";
+import CustomDatagridRow from "../../../../core/common/ResourseTemplates/fragments/CustomDatagridRow";
+import { DATE_FORMAT } from "../../../../core/common/ResourseTemplates/fragments/constants";
 
 const styles = theme => ({
-    tableRow: {
-        '&:hover': {
-            backgroundColor: theme.palette.secondaryMainColor + '!important',
-            cursor: "pointer"
-        },
-        '&:hover td': {
-            color: theme.palette.paperColor,
-        },
-    },
     newsScoreCellDanger: {
         borderLeft: `5px solid ${DANGER_COLOR} !important`
     },
@@ -42,20 +34,20 @@ function defineColor(newsScoreValue) {
     return result;
 };
 
-const VitalsDatagridRow = ({ classes, record, resource, id, history, children, basePath, ...rest }) => {
+const DatagridRow = props => {
+    const { classes, record } = props;
     if (!record) {
         return null;
     }
-    const detailsPath = basePath + '/' + id;
     const newsScore = get(record, 'newsScore', null);
     const newsScoreCellClassName = defineColor(newsScore);
     return (
-        <TableRow className={classes.tableRow} key={record.id} onClick={() => history.push(detailsPath)}>
+        <CustomDatagridRow {...props} >
             <TableCell key={`${record.id}-number`}>
                 {record.number}
             </TableCell>
             <TableCell key={`${record.id}-dateCreate`}>
-                {moment(record.dateCreate).format('DD-MM-YYYY')}
+                {moment(record.dateCreate).format(DATE_FORMAT)}
             </TableCell>
             <TableCell className={classes[newsScoreCellClassName]} key={`${record.id}-newsScore`}>
                 {record.newsScore}
@@ -63,10 +55,9 @@ const VitalsDatagridRow = ({ classes, record, resource, id, history, children, b
             <TableCell key={`${record.id}-source`}>
                 {record.source}
             </TableCell>
-        </TableRow>
+        </CustomDatagridRow>
     );
-
 };
 
-export default withStyles(styles)(VitalsDatagridRow);
+export default withStyles(styles)(DatagridRow);
 

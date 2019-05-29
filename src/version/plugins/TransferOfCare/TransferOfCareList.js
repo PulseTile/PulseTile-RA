@@ -1,11 +1,11 @@
 import React from "react";
-import { Route } from "react-router";
 import { DateField, TextField } from "react-admin";
 
 import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
 import TransferOfCareCreate from "./TransferOfCareCreate";
 import TransferOfCareEdit from "./TransferOfCareEdit";
 import TransferOfCareShow from "./TransferOfCareShow";
+import DatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with TransferOfCare list
@@ -22,6 +22,8 @@ const TransferOfCareList = ({ classes, ...rest }) => (
       show={TransferOfCareShow}
       resourceUrl="toc"
       title="Transfers of Care"
+      CustomRow={DatagridRow}
+      isCustomDatagrid={true}
       {...rest}
     >
         <TextField label="From (Site / Org)" source="from" />

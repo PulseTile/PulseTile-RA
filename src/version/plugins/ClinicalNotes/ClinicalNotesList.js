@@ -1,11 +1,11 @@
 import React from "react";
-import { Route } from "react-router";
 import { DateField, TextField } from "react-admin";
 
 import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
 import ClinicalNotesCreate from "./ClinicalNotesCreate";
 import ClinicalNotesEdit from "./ClinicalNotesEdit";
 import ClinicalNotesShow from "./ClinicalNotesShow";
+import DatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with Personal Notes list
@@ -22,6 +22,8 @@ const PersonalNotesList = ({ classes, ...rest }) => (
         show={ClinicalNotesShow}
         resourceUrl="clinicalnotes"
         title="Clinical Notes"
+        CustomRow={DatagridRow}
+        isCustomDatagrid={true}
         {...rest}
     >
         <TextField label="Type" source="clinicalNotesType" />

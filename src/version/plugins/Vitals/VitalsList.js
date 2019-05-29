@@ -6,7 +6,7 @@ import VitalsCreate from "./VitalsCreate";
 import VitalsEdit from "./VitalsEdit";
 import VitalsShow from "./VitalsShow";
 import VitalsChart from "./VitalsChart";
-import VitalsDatagridRow from "./fragments/VitalsDatagridRow";
+import VitalsDatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with Vitals list

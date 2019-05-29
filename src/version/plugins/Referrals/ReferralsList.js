@@ -6,6 +6,7 @@ import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
 import ReferralsCreate from "./ReferralsCreate";
 import ReferralsEdit from "./ReferralsEdit";
 import ReferralsShow from "./ReferralsShow";
+import DatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with Personal Notes list
@@ -22,6 +23,8 @@ const ReferralsList = ({ classes, ...rest }) => (
         show={ReferralsShow}
         resourceUrl="referrals"
         title="Referrals"
+        CustomRow={DatagridRow}
+        isCustomDatagrid={true}
         {...rest}
     >
         <DateField label="Date of Referral" source="dateOfReferral" />

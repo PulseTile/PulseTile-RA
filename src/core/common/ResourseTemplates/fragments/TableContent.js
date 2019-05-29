@@ -39,14 +39,13 @@ const styles = theme => ({
     }
 });
 
-const CustomDatagridBody = ({ CustomRow, history, ...rest }) => <DatagridBody {...rest} row={<CustomRow history={history} rowClick="edit" />} />
-const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody history={history} CustomRow={CustomRow} />} />;
+const CustomDatagridBody = ({ CustomRow, location, history, ...rest }) => <DatagridBody {...rest} row={<CustomRow location={location} history={history} rowClick="edit" />} />
+const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, location, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody location={location} history={history} CustomRow={CustomRow} />} />;
 
-
-const DatagridBlock = ({ classes, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
+const DatagridBlock = ({ classes, location, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
     if (isCustomDatagrid) {
         return (
-            <CustomDatagrid className={classes.tableList} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
+            <CustomDatagrid className={classes.tableList} location={location} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
                 {children}
             </CustomDatagrid>
         );
@@ -60,7 +59,7 @@ const DatagridBlock = ({ classes, isCustomDatagrid, children, history, CustomRow
 
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, key, userSearch, filterText, history, isCreatePage, createUrl, children, defaultSort } = props;
+    const { classes, title, idsNumber, resourceUrl, key, userSearch, filterText, history, isCreatePage, createUrl, children, defaultSort, location } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
     return (
         <List

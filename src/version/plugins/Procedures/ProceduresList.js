@@ -6,6 +6,7 @@ import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
 import ProceduresCreate from "./ProceduresCreate";
 import ProceduresEdit from "./ProceduresEdit";
 import ProceduresShow from "./ProceduresShow";
+import DatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with Procedures list
@@ -22,6 +23,8 @@ const ProceduresList = ({ classes, ...rest }) => (
         show={ProceduresShow}
         resourceUrl="procedures"
         title="Procedures"
+        CustomRow={DatagridRow}
+        isCustomDatagrid={true}
         {...rest}
     >
         <TextField label="Procedure Name" source="procedureName" />
