@@ -8,7 +8,11 @@ const styles = theme => ({
     viewButton: {
         textTransform: 'capitalize',
         border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        color: theme.palette.secondaryMainColor + ' !important',
         borderRadius: 0,
+        '&:hover': {
+            border: theme.isShowcase ? `1px solid ${theme.palette.paperColor}` : null,
+        },
         '& span p': {
             fontSize: 16,
             color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.viewButton,
