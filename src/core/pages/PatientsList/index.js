@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 import { TextField, DateField, ShowButton, setSidebarVisibility } from "react-admin";
 
@@ -14,6 +15,8 @@ import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
 import fetchInitialize from "./fetchInitialize";
+import ConfirmationModal from "./fragments/ConfirmationModal";
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
     content: {
@@ -45,21 +48,29 @@ class PatientsList extends Component {
 
     state = {
         loading: false,
+        anchorEl: null,
+        record: null,
     };
 
     componentDidMount() {
         this.props.setSidebarVisibility(false);
     }
 
+    redirectWithoutPermission = (e, record) => {
+        e.stopPropagation();
+        this.setState({
+            record: record
+        }, () => this.redirectToSummary());
+    };
+
     /**
      * This function redirects to Patient Summary page
      *
      * @author Bogdan Shcherban <bsc@piogroup.net>
-     * @param {shape} e
-     * @param {shape} record
+
      */
-    redirectToSummary = (e, record) => {
-        e.stopPropagation();
+    redirectToSummary = () => {
+        const { record } = this.state;
         localStorage.setItem('patientId', record.nhsNumber);
         this.setState({
             loading: true
@@ -74,10 +85,25 @@ class PatientsList extends Component {
         });
     };
 
+    handleClick = (e, record) => {
+        e.stopPropagation();
+        this.setState({
+            anchorEl: e.currentTarget,
+            record: record
+        });
+    };
+
+    handleClose = () => {
+        this.setState({
+            anchorEl: false,
+        });
+    };
+
     render() {
         const { userSearch, classes } = this.props;
-        const { loading } = this.state;
-
+        const { loading, anchorEl } = this.state;
+        const isPermissionRequired = get(themeCommonElements, 'patientSummaryPermission', false);
+        const open = Boolean(anchorEl);
         if (!userSearch) {
             return (
                 <div className={classes.content}>
@@ -100,22 +126,25 @@ class PatientsList extends Component {
         }
 
         return (
-            <ListTemplate
-                basePath="/patients"
-                create={PatientCreate}
-                edit={PatientEdit}
-                show={PatientShow}
-                resourceUrl="patients"
-                title="Patients List"
-                headerFilterAbsent={true}
-                {...this.props}
-            >
-                <TextField source="name" label="Name"/>
-                <TextField source="address" label="Address"/>
-                <DateField source="birthDate" label="Born"/>
-                <TextField source="nhsNumber" label="NHS No."/>
-                <ViewButton viewAction={this.redirectToSummary}/>
-            </ListTemplate>
+            <React.Fragment>
+                <ListTemplate
+                    basePath="/patients"
+                    create={PatientCreate}
+                    edit={PatientEdit}
+                    show={PatientShow}
+                    resourceUrl="patients"
+                    title="Patients List"
+                    headerFilterAbsent={true}
+                    {...this.props}
+                >
+                    <TextField source="name" label="Name"/>
+                    <TextField source="address" label="Address"/>
+                    <DateField source="birthDate" label="Born"/>
+                    <TextField source="nhsNumber" label="NHS No."/>
+                    <ViewButton viewAction={isPermissionRequired ? this.handleClick : this.redirectWithoutPermission}/>
+                </ListTemplate>
+                <ConfirmationModal anchorEl={anchorEl} open={open} handleClose={this.handleClose} agreeAction={this.redirectToSummary} />
+            </React.Fragment>
         );
     }
 }

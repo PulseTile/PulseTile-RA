@@ -28,6 +28,7 @@ export const themeFullMenu = [
 
 export const themeCommonElements = {
     isShowcase: true,
+    patientSummaryPermission: true,
     topbar: ThemeTopbar,
     footer: ThemeFooter,
     feedsSelectors: FeedsSelectors,

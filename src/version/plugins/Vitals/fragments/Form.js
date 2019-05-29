@@ -150,6 +150,13 @@ const styles = theme => ({
         margin: 20,
         borderLeft: `5px solid ${WARNING_COLOR}`
     },
+    switcherLabel: {
+        marginLeft: 10,
+    },
+    switcherLabelActive: {
+        marginLeft: 10,
+        color: theme.palette.secondaryMainColor,
+    }
 });
 
 const patientID = localStorage.getItem('patientId') ? localStorage.getItem('patientId') : localStorage.getItem('userId');
@@ -362,7 +369,7 @@ class VitalsInputs extends Component {
                                         disabled={isDetailsPage}
                                     />
                                 }
-                                label={anySupplementalOxygenValue}
+                                label={<Typography className={classes.switcherLabel}>{anySupplementalOxygenValue}</Typography>}
                             />
                         </div>
                     </FormControl>
@@ -419,7 +426,7 @@ class VitalsInputs extends Component {
                                 <FormControlLabel
                                     value="Alert"
                                     control={<CustomSwitch />}
-                                    label="Alert"
+                                    label={<Typography className={levelOfConsciousnessValue === 'Alert' ? classes.switcherLabelActive : classes.switcherLabel}>Alert</Typography>}
                                     labelPlacement="end"
                                     checked={levelOfConsciousnessValue === 'Alert'}
                                     disabled={isDetailsPage}
@@ -427,7 +434,7 @@ class VitalsInputs extends Component {
                                 <FormControlLabel
                                     value="Voice"
                                     control={<CustomSwitch />}
-                                    label="Voice"
+                                    label={<Typography className={levelOfConsciousnessValue === 'Voice' ? classes.switcherLabelActive : classes.switcherLabel}>Voice</Typography>}
                                     labelPlacement="end"
                                     checked={levelOfConsciousnessValue === 'Voice'}
                                     disabled={isDetailsPage}
@@ -435,7 +442,7 @@ class VitalsInputs extends Component {
                                 <FormControlLabel
                                     value="Pain"
                                     control={<CustomSwitch />}
-                                    label="Pain"
+                                    label={<Typography className={levelOfConsciousnessValue === 'Pain' ? classes.switcherLabelActive : classes.switcherLabel}>Pain</Typography>}
                                     labelPlacement="end"
                                     checked={levelOfConsciousnessValue === 'Pain'}
                                     disabled={isDetailsPage}
@@ -443,7 +450,7 @@ class VitalsInputs extends Component {
                                 <FormControlLabel
                                     value="Unresponsive"
                                     control={<CustomSwitch />}
-                                    label="Unresponsive"
+                                    label={<Typography className={levelOfConsciousnessValue === 'Unresponsive' ? classes.switcherLabelActive : classes.switcherLabel}>Unresponsive</Typography>}
                                     labelPlacement="end"
                                     checked={levelOfConsciousnessValue === 'Unresponsive'}
                                     disabled={isDetailsPage}

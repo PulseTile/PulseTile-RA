@@ -37,9 +37,11 @@ const styles = theme => ({
         flexGrow: 1,
     },
     expandBlockIcon: {
-        height: 20,
-        paddingRight: 20,
-        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
+        height: 35,
+        paddingLeft: 10,
+        paddingRight: 10,
+        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
     },
     editForm: {
         '& > div': {

@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { connect } from 'react-redux';
+import { goBack } from 'react-router-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
-import HomeIcon from "@material-ui/icons/Home";
+import BackIcon from "@material-ui/icons/ArrowBack";
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -22,17 +24,17 @@ const styles = theme => ({
         minHeight: 54,
         padding: 0,
     },
-    homeButtonItem: {
+    backButtonItem: {
         display: "inline-flex",
         position: "relative",
         minHeight: 54,
         minWidth: 54,
-        backgroundColor: theme.palette.secondaryMainColor,
+        backgroundColor: theme.palette.mainColor,
         justifyContent: "center",
         alignItems: "center",
     },
     homeButton : {
-        color: "white",
+        color: theme.palette.secondaryMainColor,
     },
     mainLogoItem: {
         display: "inline-flex",
@@ -103,16 +105,20 @@ class TopPart extends Component {
     };
 
     render() {
-        const { classes, location } = this.props;
+        const { classes, location, goBack } = this.props;
+        const pathname = get(location, 'pathname', null);
         return (
             <Toolbar className={classes.topPart}>
-                <div className={classes.homeButtonItem}>
-                    <Tooltip title="Home">
-                        <IconButton id="icon-home" aria-label="Home" className={classes.homeButton} onClick={() => this.goHomePage()}>
-                            <HomeIcon />
-                        </IconButton>
-                    </Tooltip>
-                </div>
+                {
+                    (pathname !== '/charts' && pathname !== '/') &&
+                        <div className={classes.backButtonItem}>
+                            <Tooltip title="Home">
+                                <IconButton id="icon-home" aria-label="Home" className={classes.homeButton} onClick={() => goBack()}>
+                                    <BackIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </div>
+                }
                 <div className={classes.mainLogoItem}>
                     <CardMedia
                         id="logo-image"
@@ -138,6 +144,9 @@ const mapDispatchToProps = dispatch => {
     return {
         removeUserSearch() {
             dispatch(userSearchAction.remove());
+        },
+        goBack() {
+            dispatch(goBack());
         },
     }
 };

@@ -25,7 +25,7 @@ const ItemsList = ({ classes, items, list, history }) => {
     } else {
         return (
             <List className={classes.list}>
-                {items.reverse().map((item, key) => {
+                {items.slice(0).reverse().map((item, key) => {
                     const showRoute = "/" + list + "/" + item.sourceId + "/show";
                     return (
                         <li key={key} className={classes.listItem} onClick={() => history.push(showRoute)}>
