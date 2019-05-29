@@ -1,10 +1,10 @@
 import React from "react";
 
-const ChartContent = ({ chartBlock }) => {
+const ChartContent = ({ chartBlock, ...rest }) => {
     const ChartBlock = chartBlock;
     return (
         <React.Fragment>
-            <ChartBlock />
+            <ChartBlock {...rest} />
         </React.Fragment>
     );
 };

@@ -3,14 +3,22 @@ import get from "lodash/get";
 import moment from "moment";
 import { ResponsiveContainer, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Line } from "recharts";
 import { connect } from 'react-redux';
+import { Toolbar } from "react-admin";
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from '@material-ui/core/Typography';
+
+import CreateButton from "../../../core/common/Buttons/CreateButton";
 
 const styles = {
     chartBlock: {
         width: '100%',
         height: 500,
+    },
+    toolbar: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
     }
 };
 
@@ -37,6 +45,12 @@ class VitalsChart extends Component {
         disabledLines: [],
     };
 
+    /**
+     * This action is run when user click on the dot on the legend to toggle lines visibility
+     *
+     * @author BogdanScherban <bsc@piogroup.net>
+     * @param {shape} e
+     */
     toggleLine = e => {
         const { disabledLines } = this.state;
         const dataKey = e.dataKey;
@@ -51,8 +65,21 @@ class VitalsChart extends Component {
         })
     };
 
+    /**
+     * This action is run when user click on the dot on the chart
+     *
+     * @author BogdanScherban <bsc@piogroup.net>
+     * @param {shape} e
+     */
+    onPointClick = e => {
+        const { history } = this.props;
+        const sourceId = get(e, 'payload.sourceId', null);
+        const detailsUrl = '/vitalsigns/' + sourceId;
+        history.push(detailsUrl);
+    };
+
     render() {
-        const { classes, vitalsList } = this.props;
+        const { classes, vitalsList, history, createUrl } = this.props;
         const { disabledLines } = this.state;
 
         const vitalsListArray = Object.values(vitalsList);
@@ -67,7 +94,8 @@ class VitalsChart extends Component {
                 oxygenSaturation: item.oxygenSaturation,
                 respirationRate: item.respirationRate,
                 systolicBP: item.systolicBP,
-                temperature: item.temperature
+                temperature: item.temperature,
+                sourceId: item.sourceId,
             });
         }
 
@@ -118,7 +146,7 @@ class VitalsChart extends Component {
                                         name={item.label}
                                         dataKey={item.dataKey}
                                         stroke={item.color}
-                                        activeDot={{ r: DOT_RADIUS }}
+                                        activeDot={{ r: DOT_RADIUS, onClick: e => this.onPointClick(e) }}
                                         strokeWidth={STROKE_WIDTH}
                                     />
                                 )
@@ -126,6 +154,9 @@ class VitalsChart extends Component {
                         }
                     </LineChart>
                 </ResponsiveContainer>
+                <Toolbar className={classes.toolbar}>
+                    <CreateButton history={history} redirectPath={createUrl} />
+                </Toolbar>
             </div>
         );
     }
