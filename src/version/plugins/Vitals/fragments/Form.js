@@ -4,7 +4,7 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import { LocalForm, Control } from 'react-redux-form';
 import { connect } from 'react-redux';
-import { CREATE, UPDATE } from 'react-admin';
+import { crudUpdate, crudCreate } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -17,7 +17,6 @@ import SectionToolbar from "../../../../core/common/Toolbars/CustomFormToolbar";
 import ValueWithUnits from "./ValueWithUnits";
 import CustomSwitch from "./CustomSwitch";
 import { DANGER_COLOR, SUCCESS_COLOR, WARNING_COLOR } from "./settings";
-import customDataProvider from "../../../../core/dataProviders/dataProvider";
 
 const styles = theme => ({
     formGroup: {
@@ -188,7 +187,7 @@ class VitalsInputs extends Component {
     };
 
     submitForm = data => {
-        const { isCreate, history } = this.props;
+        const { isCreate, history, createNewVitals, updateVitals } = this.props;
         const { levelOfConsciousnessValue, anySupplementalOxygenValue, newsScoreValue } = this.state;
         const additionalData = {
             levelOfConsciousness: levelOfConsciousnessValue,
@@ -199,13 +198,15 @@ class VitalsInputs extends Component {
         };
         const formData = Object.assign({}, data, additionalData);
         if (isCreate) {
-            customDataProvider(CREATE, 'vitalsigns', { data: formData });
+            createNewVitals(formData);
         } else {
             const filledValues = this.getCurrentItem();
             const id = get(filledValues, 'sourceId', null);
-            customDataProvider(UPDATE, 'vitalsigns', { id: id, data: formData });
+            const source = get(filledValues, 'source', null);
+            formData.id = id;
+            formData.source = source;
+            updateVitals(id, formData, filledValues);
         }
-        history.push('/vitalsigns');
     };
 
     changeLevelOfConsciousness = e => {
@@ -493,4 +494,15 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(styles)(VitalsInputs));
+const mapDispatchToProps = dispatch => {
+    return {
+        createNewVitals(formData) {
+            dispatch(crudCreate('vitalsigns', formData, '/vitalsigns', '/vitalsigns'));
+        },
+        updateVitals(id, formData, filledValues) {
+            dispatch(crudUpdate('vitalsigns', id, formData,  filledValues, '/vitalsigns', '/vitalsigns'));
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(VitalsInputs));

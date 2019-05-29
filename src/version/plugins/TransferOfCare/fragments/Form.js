@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { LocalForm, Control } from 'react-redux-form';
 import { connect } from 'react-redux';
-import { CREATE, UPDATE } from 'react-admin';
+import { crudUpdate, crudCreate } from 'react-admin';
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -153,7 +153,7 @@ class TransferOfCareInputs extends Component {
     };
 
     submitForm = data => {
-        const { history, isCreate } = this.props;
+        const { history, isCreate, createNewItem, updateItem } = this.props;
         const { transferDateTime, recordsArray } = this.state;
         const additionalData = {
             transferDateTime: moment(transferDateTime).unix(),
@@ -162,13 +162,15 @@ class TransferOfCareInputs extends Component {
         };
         const formData = Object.assign({}, data, additionalData);
         if (isCreate) {
-            customDataProvider(CREATE, 'toc', { data: formData });
+            createNewItem(formData);
         } else {
             const filledValues = this.getCurrentItem();
             const id = get(filledValues, 'sourceId', null);
-            customDataProvider(UPDATE, 'toc', { id: id, data: formData });
+            const source = get(filledValues, 'source', null);
+            formData.id = id;
+            formData.source = source;
+            updateItem(id, formData, filledValues);
         }
-        history.push('/toc');
     };
 
     getCurrentItem = () => {
@@ -283,7 +285,13 @@ const mapDispatchToProps = dispatch => {
         },
         getDetails(type, sourceId) {
             dispatch(transferOfCareAction.requestOne(type, sourceId));
-        }
+        },
+        createNewItem(formData) {
+            dispatch(crudCreate('toc', formData, '/toc', '/toc'));
+        },
+        updateItem(id, formData, filledValues) {
+            dispatch(crudUpdate('toc', id, formData,  filledValues, '/toc', '/toc'));
+        },
     }
 };
 
