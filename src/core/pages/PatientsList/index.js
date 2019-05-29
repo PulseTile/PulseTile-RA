@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { TextField, DateField, ShowButton, setSidebarVisibility } from "react-admin";
+import { TextField, DateField, setSidebarVisibility } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 
-import { currentPatientAction } from "../../actions/currentPatientAction";
 import image from "../../../version/images/helm-logo.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
-import LoadingSlider from "../../common/LoadingSlider";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
-import fetchInitialize from "./fetchInitialize";
+import DatagridRow from "./fragments/DatagridRow";
 
 const styles = theme => ({
     content: {
@@ -43,41 +41,12 @@ const styles = theme => ({
  */
 class PatientsList extends Component {
 
-    state = {
-        loading: false,
-    };
-
     componentDidMount() {
         this.props.setSidebarVisibility(false);
     }
 
-    /**
-     * This function redirects to Patient Summary page
-     *
-     * @author Bogdan Shcherban <bsc@piogroup.net>
-     * @param {shape} e
-     * @param {shape} record
-     */
-    redirectToSummary = (e, record) => {
-        e.stopPropagation();
-        localStorage.setItem('patientId', record.nhsNumber);
-        this.setState({
-            loading: true
-        });
-        new Promise(fetchInitialize).then(() => {
-            this.props.updateCurrentPatient(record.nhsNumber);
-            this.props.history.push('/summary');
-            this.props.setSidebarVisibility(true);
-            this.setState({
-                loading: false
-            })
-        });
-    };
-
     render() {
         const { userSearch, classes } = this.props;
-        const { loading } = this.state;
-
         if (!userSearch) {
             return (
                 <div className={classes.content}>
@@ -93,29 +62,27 @@ class PatientsList extends Component {
             )
         }
 
-        if (loading) {
-            return (
-                <LoadingSlider />
-            )
-        }
-
         return (
-            <ListTemplate
-                basePath="/patients"
-                create={PatientCreate}
-                edit={PatientEdit}
-                show={PatientShow}
-                resourceUrl="patients"
-                title="Patients List"
-                headerFilterAbsent={true}
-                {...this.props}
-            >
-                <TextField source="name" label="Name"/>
-                <TextField source="address" label="Address"/>
-                <DateField source="birthDate" label="Born"/>
-                <TextField source="nhsNumber" label="NHS No."/>
-                <ViewButton viewAction={this.redirectToSummary}/>
-            </ListTemplate>
+            <React.Fragment>
+                <ListTemplate
+                    basePath="/patients"
+                    create={PatientCreate}
+                    edit={PatientEdit}
+                    show={PatientShow}
+                    resourceUrl="patients"
+                    title="Patients List"
+                    headerFilterAbsent={true}
+                    CustomRow={DatagridRow}
+                    isCustomDatagrid={true}
+                    {...this.props}
+                >
+                    <TextField source="name" label="Name"/>
+                    <TextField source="address" label="Address"/>
+                    <DateField source="birthDate" label="Born"/>
+                    <TextField source="nhsNumber" label="NHS No."/>
+                    <ViewButton />
+                </ListTemplate>
+            </React.Fragment>
         );
     }
 }
@@ -128,9 +95,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateCurrentPatient(data) {
-            dispatch(currentPatientAction.request(data));
-        },
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },

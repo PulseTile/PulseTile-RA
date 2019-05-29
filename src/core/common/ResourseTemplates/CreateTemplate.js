@@ -29,7 +29,7 @@ const styles = theme => ({
         paddingLeft: 15,
     },
     title: {
-        color: theme.palette.paperColor,
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 700,
     },
@@ -37,9 +37,11 @@ const styles = theme => ({
         flexGrow: 1,
     },
     expandBlockIcon: {
-        height: 20,
-        paddingRight: 20,
-        color: theme.palette.paperColor,
+        height: 35,
+        paddingLeft: 10,
+        paddingRight: 10,
+        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
     },
     createForm: {
         '& > div': {
@@ -56,13 +58,14 @@ const styles = theme => ({
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape}   classes
+ * @param {boolean} isCustom
  * @param {boolean} isListOpened
  * @param {func}    toggleListBlock
  * @param {string}  blockTitle
  * @param {shape}   children
  * @param {shape}   rest
  */
-const CreateTemplate = ({ classes, isListOpened, toggleListBlock, blockTitle, children, ...rest }) => (
+const CreateTemplate = ({ classes, isCustom, isListOpened, toggleListBlock, blockTitle, children, ...rest }) => (
     <Grid item xs={12} sm={isListOpened ? 6 : 12}>
         <div className={classes.blockTitle}>
             <Typography className={classes.title}>{blockTitle}</Typography>
@@ -73,11 +76,18 @@ const CreateTemplate = ({ classes, isListOpened, toggleListBlock, blockTitle, ch
                 </IconButton>
             </Tooltip>
         </div>
-        <Create {...rest}>
-            <SimpleForm className={classes.createForm} toolbar={<CreateFormToolbar />}>
+        { !isCustom
+            ?
+                <Create {...rest}>
+                    <SimpleForm className={classes.createForm} toolbar={<CreateFormToolbar />}>
+                        {children}
+                    </SimpleForm>
+                </Create>
+            :
+            <React.Fragment>
                 {children}
-            </SimpleForm>
-        </Create>
+            </React.Fragment>
+        }
     </Grid>
 );
 

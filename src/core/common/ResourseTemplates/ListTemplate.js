@@ -2,19 +2,16 @@ import React, { Component } from "react";
 import get from "lodash/get";
 import { connect } from 'react-redux';
 import { Route } from "react-router";
-import {
-    List,
-    Filter,
-    TextInput,
-    Datagrid,
-    TextField
-} from "react-admin";
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FilterIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
+import TableIcon from '@material-ui/icons/List';
+import ChartIcon from '@material-ui/icons/ShowChart';
+import TimelineIcon from '@material-ui/icons/Timeline';
+
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,10 +22,13 @@ import { faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
-import ListToolbar from "../../common/Toolbars/ListToolbar";
-import EmptyListBlock from "./EmptyListBlock";
 import DetailsTemplate from "./DetailsTemplate";
-import { ITEMS_PER_PAGE } from "../../config/styles";
+import ListModePopover from "./fragments/ListModePopover";
+import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "./fragments/constants";
+
+import TableContent from "./fragments/TableContent";
+import ChartContent from "./fragments/ChartContent";
+import TimelineContent from "./fragments/TimelineContent";
 
 const listStyles = theme => ({
     mainBlock: {
@@ -37,6 +37,9 @@ const listStyles = theme => ({
         paddingTop: 15,
         paddingRight: 25,
         border: `1px solid ${theme.palette.borderColor}`,
+    },
+    headerBlock: {
+        marginBottom: theme.isShowcase ? 5 : null,
     },
     list: {
         paddingLeft: 0,
@@ -47,29 +50,44 @@ const listStyles = theme => ({
         justifyContent: "space-between",
         alignItems: "center",
         height: 49,
-        color: "#fff",
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
         paddingLeft: 15,
+        paddingRight: 10,
     },
     emptyBlock: {
         flexGrow: 1,
     },
     title: {
-        color: theme.palette.paperColor,
+        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
     },
     filterIcon: {
-        color: `${theme.palette.paperColor} !important`,
-        paddingRight: 15,
+        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
+        paddingLeft: 10,
+        paddingRight: 10,
+        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        height: 35,
+    },
+    listModeIcon: {
+        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginRight: 5,
+        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        height: 35,
     },
     expandIcon: {
-        height: 20,
-        color: `${theme.palette.paperColor} !important`,
-        paddingRight: 7,
+        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
+        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginRight: 10,
+        height: 35,
     },
     filterInput: {
         backgroundColor: theme.palette.mainColor,
@@ -80,27 +98,13 @@ const listStyles = theme => ({
         },
     },
     inputBlock: {
-        width: 'calc(100% - 105px)',
+        width: 'calc(100% - 30px)',
         backgroundColor: "#fff",
         borderRadius: 2,
         paddingLeft: 5,
+        marginLeft: 10,
+        marginBottom: 10,
     },
-    tableList: {
-        '& thead': {
-            '& tr th': {
-                paddingLeft: 10,
-            },
-        },
-        '& tbody tr:hover': {
-            backgroundColor: theme.palette.mainColor + '!important',
-        },
-        '& tbody tr:hover td span': {
-            color: "#fff"
-        },
-        '& tbody tr:hover td button span p': {
-            color: "#fff"
-        }
-    }
 });
 
 /**
@@ -112,6 +116,8 @@ const listStyles = theme => ({
 class ListTemplate extends Component {
 
     state = {
+        listMode: MODE_TABLE,
+        anchorEl: null,
         isListOpened: true,
         isFilterOpened: false,
         filterText: null,
@@ -227,9 +233,50 @@ class ListTemplate extends Component {
         }
     }
 
+    getListModeIcon = () => {
+        const { listMode } = this.state;
+        let result = TableIcon;
+        if (listMode === MODE_CHART) {
+            result = ChartIcon;
+        } else if (listMode === MODE_TIMELINE) {
+            result = TimelineIcon;
+        }
+        return result;
+    };
+
+    getContentBlock = () => {
+        const { listMode } = this.state;
+        let result = TableContent;
+        if (listMode === MODE_CHART) {
+            result = ChartContent;
+        } else if (listMode === MODE_TIMELINE) {
+            result = TimelineContent;
+        }
+        return result;
+    };
+
+    changeListMode = mode => {
+        this.setState({
+            listMode: mode,
+            anchorEl: false,
+        });
+    };
+
+    popoverOpen = event => {
+        this.setState({
+            anchorEl: event.currentTarget,
+        });
+    };
+
+    popoverClose = () => {
+        this.setState({
+            anchorEl: false,
+        });
+    };
+
     render() {
-        const { create, resourceUrl, title, children, classes, history, userSearch, headerFilterAbsent, currentList } = this.props;
-        const { isFilterOpened, key, isListOpened, filterText } = this.state;
+        const { create, resourceUrl, title, classes, history, userSearch, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
+        const { isFilterOpened, isListOpened, anchorEl, listMode } = this.state;
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
         ];
@@ -245,6 +292,11 @@ class ListTemplate extends Component {
         const currentListArray = Object.values(currentList);
         const idsNumber = currentListArray.length > 0 ? currentListArray.length : 0;
 
+        const ListModeIcon = this.getListModeIcon();
+        const ContentBlock = this.getContentBlock();
+
+        const open = Boolean(anchorEl);
+
         return (
             <React.Fragment>
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -252,56 +304,52 @@ class ListTemplate extends Component {
                 <Grid container spacing={16} className={classes.mainBlock}>
                     { isListOpened &&
                     <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
-                        <React.Fragment>
+                        <div className={classes.headerBlock}>
                             <div className={classes.blockTitle}>
                                 <Typography className={classes.title}>{titleTable}</Typography>
                                 <div className={classes.emptyBlock}></div>
                                 {!this.isListPage() &&
-                                <Tooltip title="Expand">
-                                    <IconButton onClick={() => history.push("/" + resourceUrl)}  >
-                                        <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
-                                    </IconButton>
-                                </Tooltip>
+                                    <Tooltip title="Expand">
+                                        <IconButton onClick={() => history.push("/" + resourceUrl)}  >
+                                            <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
+                                        </IconButton>
+                                    </Tooltip>
+                                }
+                                {
+                                    (hasChart || hasTimetable) &&
+                                        <React.Fragment>
+                                            <Tooltip title="Table">
+                                                <IconButton onClick={e => this.popoverOpen(e)}>
+                                                    <ListModeIcon className={classes.listModeIcon}/>
+                                                </IconButton>
+                                            </Tooltip>
+                                            <ListModePopover
+                                                anchorEl={anchorEl}
+                                                open={open}
+                                                changeListMode={this.changeListMode}
+                                                handleClose={this.popoverClose}
+                                                resourse={title}
+                                                hasChart={hasChart}
+                                                hasTimetable={hasTimetable}
+                                            />
+                                        </React.Fragment>
                                 }
                                 { !headerFilterAbsent &&
-                                <Tooltip title="Search">
-                                    <IconButton onClick={() => this.toggleFilter()}>
-                                        <SearchIcon className={classes.filterIcon}/>
-                                    </IconButton>
-                                </Tooltip>
+                                    <Tooltip title="Search">
+                                        <IconButton onClick={() => this.toggleFilter()}>
+                                            <SearchIcon className={classes.filterIcon}/>
+                                        </IconButton>
+                                    </Tooltip>
                                 }
                             </div>
                             {
                                 isFilterOpened &&
                                 <Paper className={classes.filterInput} elevation={1}>
-                                    <Tooltip title="Menu">
-                                        <IconButton className={classes.iconButton}>
-                                            <FilterIcon />
-                                        </IconButton>
-                                    </Tooltip>
                                     <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
                                 </Paper>
                             }
-                        </React.Fragment>
-                        <List
-                            resource={resourceUrl}
-                            key={key}
-                            filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
-                            title={title}
-                            perPage={ITEMS_PER_PAGE}
-                            actions={null}
-                            bulkActions={false}
-                            pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={this.isCreatePage()} createPath={createUrl} />}
-                            {...this.props}
-                        >
-                            { (idsNumber > 0) ?
-                                <Datagrid className={classes.tableList} rowClick="edit">
-                                    {children}
-                                </Datagrid>
-                                :
-                                <EmptyListBlock />
-                            }
-                        </List>
+                        </div>
+                        <ContentBlock createUrl={createUrl} idsNumber={idsNumber} isCustomDatagrid={isCustomDatagrid} history={history} {...this.props} />
                     </Grid>
                     }
                     {
