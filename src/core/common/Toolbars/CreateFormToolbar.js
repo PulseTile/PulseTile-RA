@@ -16,7 +16,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.dangerColor,
         border: `1px solid ${theme.palette.dangerColor}`,
         color: theme.palette.paperColor,
-        borderRadius: theme.isShowcase ? 0 : 20,
+        borderRadius: theme.isOldDesign ? 0 : 20,
         fontSize: 16,
         fontWeight: 800,
         "& svg": {

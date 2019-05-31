@@ -29,7 +29,7 @@ const styles = theme => ({
         paddingLeft: 15,
     },
     title: {
-        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 700,
     },
@@ -40,8 +40,8 @@ const styles = theme => ({
         height: 35,
         paddingLeft: 10,
         paddingRight: 10,
-        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
-        color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.paperColor,
     },
     createForm: {
         '& > div': {

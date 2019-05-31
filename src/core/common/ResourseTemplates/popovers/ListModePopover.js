@@ -8,9 +8,9 @@ import Tooltip from "@material-ui/core/Tooltip/index";
 import TableIcon from '@material-ui/icons/List';
 import ChartIcon from '@material-ui/icons/ShowChart';
 import TimelineIcon from '@material-ui/icons/Timeline';
+import Divider from "@material-ui/core/Divider/index";
 
-import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "./constants";
-import Divider from "@material-ui/core/Divider";
+import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "../fragments/constants";
 
 const styles = theme => ({
     paper: {

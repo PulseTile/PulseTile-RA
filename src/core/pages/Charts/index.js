@@ -17,7 +17,7 @@ import Typography from "@material-ui/core/Typography";
 
 import customDataProvider from "../../dataProviders/dataProvider";
 import CardMedia from "@material-ui/core/CardMedia";
-import image from "../../../version/images/helm-logo.png";
+import image from "../../../version/images/pulsetile-logo.png";
 
 const styles = {
     chartsContainer: {

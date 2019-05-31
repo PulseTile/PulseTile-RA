@@ -61,12 +61,12 @@ export default props => {
     if (Object.values(showHeadings).indexOf(list) === -1) {
         return null;
     }
-    const isShowcase = get(themeCommonElements, 'isShowcase', false);
+    const isOldDesign = get(themeCommonElements, 'isOldDesign', false);
     return (
         <Grid item xs={12} sm={6} md={6} lg={3}>
             <Card className={classes.card}>
                 <div id={id} className={classes.topBlock} aria-label={title} onClick={() => history.push('/' + list)}>
-                    { !isShowcase && <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} /> }
+                    { !isOldDesign && <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} /> }
                     <h1 className={classes.mainHeading}>
                         <Typography className={classes.title}>
                             {title}

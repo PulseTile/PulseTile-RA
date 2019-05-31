@@ -13,16 +13,16 @@ const styles = theme => ({
             '& tr th': {
                 backgroundColor: theme.palette.tableHeadColor + '!important',
                 paddingLeft: 10,
-                borderLeft: theme.isShowcase ? `0.5px solid ${theme.palette.borderColor}` : null,
-                borderRight: theme.isShowcase ? `0.5px solid ${theme.palette.borderColor}` : null,
+                borderLeft: theme.isOldDesign ? `0.5px solid ${theme.palette.borderColor}` : null,
+                borderRight: theme.isOldDesign ? `0.5px solid ${theme.palette.borderColor}` : null,
             },
         },
         '& tbody tr:hover': {
             backgroundColor: theme.palette.secondaryMainColor + '!important',
         },
         '& tbody tr td': {
-            borderLeft: theme.isShowcase ? `0.5px solid ${theme.palette.borderColor}` : null,
-            borderRight: theme.isShowcase ? `0.5px solid ${theme.palette.borderColor}` : null,
+            borderLeft: theme.isOldDesign ? `0.5px solid ${theme.palette.borderColor}` : null,
+            borderRight: theme.isOldDesign ? `0.5px solid ${theme.palette.borderColor}` : null,
         },
         '& tbody tr:hover td span': {
             color: theme.palette.paperColor
@@ -32,20 +32,20 @@ const styles = theme => ({
         }
     },
     rowEven: {
-        backgroundColor: theme.isShowcase ? theme.palette.toolbarColor : theme.palette.paperColor
+        backgroundColor: theme.isOldDesign ? theme.palette.toolbarColor : theme.palette.paperColor
     },
     rowOdd: {
         backgroundColor: theme.palette.paperColor
     }
 });
 
-const CustomDatagridBody = ({ CustomRow, location, history, ...rest }) => <DatagridBody {...rest} row={<CustomRow location={location} history={history} rowClick="edit" />} />
-const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, location, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody location={location} history={history} CustomRow={CustomRow} />} />;
+const CustomDatagridBody = ({ CustomRow, location, hiddenColumns, history, ...rest }) => <DatagridBody {...rest} row={<CustomRow location={location} hiddenColumns={hiddenColumns} history={history} rowClick="edit" />} />
+const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, hiddenColumns, location, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody location={location} hiddenColumns={hiddenColumns} history={history} CustomRow={CustomRow} />} />;
 
-const DatagridBlock = ({ classes, location, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
+const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
     if (isCustomDatagrid) {
         return (
-            <CustomDatagrid className={classes.tableList} location={location} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
+            <CustomDatagrid className={classes.tableList} hiddenColumns={hiddenColumns} location={location} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
                 {children}
             </CustomDatagrid>
         );
@@ -59,7 +59,7 @@ const DatagridBlock = ({ classes, location, isCustomDatagrid, children, history,
 
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, key, userSearch, filterText, history, isCreatePage, createUrl, children, defaultSort, location } = props;
+    const { classes, title, idsNumber, resourceUrl, key, userSearch, filterText, history, isCreatePage, createUrl, children, defaultSort } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
     return (
         <List
