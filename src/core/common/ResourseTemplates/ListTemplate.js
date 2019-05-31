@@ -202,6 +202,17 @@ class ListTemplate extends Component {
         })
     };
 
+    filterByUserSearch = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearch) {
+                return {
+                    filterText: props.userSearch,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
     hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
@@ -340,38 +351,38 @@ class ListTemplate extends Component {
                                 <Typography className={classes.title}>{titleTable}</Typography>
                                 <div className={classes.emptyBlock}></div>
                                 {!this.isListPage() &&
-                                    <Tooltip title="Expand">
-                                        <IconButton onClick={() => history.push("/" + resourceUrl)}  >
-                                            <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
-                                        </IconButton>
-                                    </Tooltip>
+                                <Tooltip title="Expand">
+                                    <IconButton onClick={() => history.push("/" + resourceUrl)}  >
+                                        <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
+                                    </IconButton>
+                                </Tooltip>
                                 }
                                 <ColumnsTogglingIcon hiddenColumns={hiddenColumns} toggleColumn={this.toggleColumn} {...this.props} />
                                 {
                                     (hasChart || hasTimetable) &&
-                                        <React.Fragment>
-                                            <Tooltip title="Table">
-                                                <IconButton onClick={e => this.popoverOpen(e)}>
-                                                    <ListModeIcon className={classes.listModeIcon}/>
-                                                </IconButton>
-                                            </Tooltip>
-                                            <ListModePopover
-                                                anchorEl={anchorEl}
-                                                open={open}
-                                                changeListMode={this.changeListMode}
-                                                handleClose={this.popoverClose}
-                                                resourse={title}
-                                                hasChart={hasChart}
-                                                hasTimetable={hasTimetable}
-                                            />
-                                        </React.Fragment>
+                                    <React.Fragment>
+                                        <Tooltip title="Table">
+                                            <IconButton onClick={e => this.popoverOpen(e)}>
+                                                <ListModeIcon className={classes.listModeIcon}/>
+                                            </IconButton>
+                                        </Tooltip>
+                                        <ListModePopover
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            changeListMode={this.changeListMode}
+                                            handleClose={this.popoverClose}
+                                            resourse={title}
+                                            hasChart={hasChart}
+                                            hasTimetable={hasTimetable}
+                                        />
+                                    </React.Fragment>
                                 }
                                 { !headerFilterAbsent &&
-                                    <Tooltip title="Search">
-                                        <IconButton onClick={() => this.toggleFilter()}>
-                                            <SearchIcon className={classes.filterIcon}/>
-                                        </IconButton>
-                                    </Tooltip>
+                                <Tooltip title="Search">
+                                    <IconButton onClick={() => this.toggleFilter()}>
+                                        <SearchIcon className={classes.filterIcon}/>
+                                    </IconButton>
+                                </Tooltip>
                                 }
                             </div>
                             {
