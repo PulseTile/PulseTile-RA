@@ -6,6 +6,7 @@ import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ContactsCreate from "./ContactsCreate";
 import ContactsEdit from "./ContactsEdit";
 import ContactsShow from "./ContactsShow";
+import DatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with Contacts list
@@ -20,6 +21,8 @@ const ContactsList = props => (
       show={ContactsShow}
       resourceUrl="contacts"
       title="Contacts"
+      CustomRow={DatagridRow}
+      isCustomDatagrid={true}
       {...props}
     >
         <TextField source="name" label="Name" />

@@ -33,7 +33,7 @@ const styles = theme => ({
         justifyContent: "center",
         height: 48,
         paddingLeft: 20,
-        backgroundColor: theme.palette.mainColor,
+        backgroundColor: theme.palette.secondaryMainColor,
         color: "#fff",
         fontSize: 18,
         fontWeight: 800,

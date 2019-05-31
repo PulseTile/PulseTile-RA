@@ -13,13 +13,13 @@ const styles = theme => ({
         margin: 8,
         padding: 0,
         backgroundColor: "white",
-        color: theme.palette.mainColor,
-        border: `1px solid ${theme.palette.mainColor}`,
-        borderRadius: 25,
+        color: theme.palette.secondaryMainColor,
+        border: `1px solid ${theme.palette.secondaryMainColor}`,
+        borderRadius: theme.isOldDesign ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {
-            backgroundColor: theme.palette.mainColor,
+            backgroundColor: theme.palette.secondaryMainColor,
             color: "white",
         }
     }

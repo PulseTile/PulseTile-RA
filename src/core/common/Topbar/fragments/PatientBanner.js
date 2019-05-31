@@ -46,13 +46,13 @@ const PatientBanner = ({ classes, patientInfo }) => {
                 }
                 <Typography variant="body2">
                     <span className={classes.keyName}>Phone: </span>
-                    {get(patientInfo, 'phone', null)}
+                    <span className={classes.keyName}>{get(patientInfo, 'phone', null)}</span>
                 </Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
                 <Typography variant="body2">
                     <span className={classes.keyName}>Gender: </span>
-                    { get(patientInfo, 'gender', null) }
+                    <span className={classes.keyName}>{ get(patientInfo, 'gender', null) }</span>
                 </Typography>
                 <Typography variant="body2">
                     <span className={classes.keyName}>CHI No.: </span>
@@ -61,7 +61,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
             <Grid className={classes.gridBlock} item xs={12}>
                 <Typography variant="body2">
                     <span className={classes.keyName}>Address: </span>
-                    {addressArray.join(', ')}
+                    <span className={classes.keyName}>{addressArray.join(', ')}</span>
                 </Typography>
             </Grid>
         </Grid>

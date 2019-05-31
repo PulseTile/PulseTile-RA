@@ -5,6 +5,7 @@ import showHeadings from "./showHeadingsReducer";
 import createCustomReducer from "./createCustomReducer";
 import httpErrorReducer from "./httpErrorReducer";
 import userSearchReducer from "./userSearchReducer";
+import toggleColumnsReducer from "./toggleColumnsReducer";
 
 import {
     SYNOPSIS_ALLERGIES_ACTION,
@@ -31,6 +32,7 @@ const coreReducers = {
     showHeadings,
     userSearch: userSearchReducer,
     currentPatient: currentPatientReducer,
+    toggleColumns: toggleColumnsReducer,
 };
 
 const reducers = Object.assign({}, coreReducers, nonCoreReducers);

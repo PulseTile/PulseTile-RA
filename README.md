@@ -69,3 +69,38 @@ $ npm run build
 # Local working
 
 If you want to update the project locally, you need to install server path of this project at your local machine. Installation and settings of the server path is described at this link: **place for link** 
+
+    Node.js 9 or higher
+    npm 3 or higher (which comes bundled with Node)
+    Git
+
+You can check current versions by:
+
+$ node --version  
+$ npm --version   
+$ git --version
+
+# Installing 
+
+If you want to install this project at your local machine, it is necessary to do following:
+
+Clone this repository from GitHub:
+
+```
+$ git clone https://github.com/PulseTile/PulseTile-RA
+```
+
+Install all required dependencies from package.json:
+```
+$ cd /MyWorkDirectory
+$ npm install
+```
+
+If you want to run the project at your local machine, you should run the command:
+```
+$ npm start
+```
+If you want to create build, you should run the command:
+```
+$ npm run build
+```
