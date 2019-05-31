@@ -13,7 +13,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.secondaryMainColor,
         color: "white",
         border: `1px solid ${theme.palette.secondaryMainColor}`,
-        borderRadius: theme.isShowcase ? 0 : 25,
+        borderRadius: theme.isOldDesign ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         padding: 0,

@@ -35,13 +35,13 @@ const styles = theme => ({
     topBlock: {
         display: "flex",
         flexDirection: "column",
-        height: theme.isShowcase ? 50 : 100,
+        height: theme.isOldDesign ? 50 : 100,
         backgroundColor: theme.palette.tableHeadColor,
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
-        border: theme.isShowcase ? `1px solid ${theme.palette.borderColor}` : null,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.borderColor}` : null,
             '&:hover': {
             cursor: "pointer",
         },
@@ -56,7 +56,7 @@ const styles = theme => ({
     },
     title: {
         marginBottom: 0,
-        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 20,
         fontWeight: 800,
         zIndex: 99999999,

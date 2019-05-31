@@ -30,7 +30,7 @@ const styles = theme => ({
         minHeight: "auto",
         border: `1px solid ${theme.palette.borderColor}`,
         padding: 0,
-        backgroundColor: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
+        backgroundColor: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.paperColor,
         justifyContent: "space-between",
     },
     menuButtonBlock: {
@@ -38,23 +38,23 @@ const styles = theme => ({
         position: "relative",
         minWidth: 238,
         minHeight: 90,
-        borderRight: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : `1px solid ${theme.palette.borderColor}`,
+        borderRight: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : `1px solid ${theme.palette.borderColor}`,
         justifyContent: "center",
         alignItems: "center",
     },
     menuButton: {
-        borderRadius: theme.isShowcase ? 0 : 15,
+        borderRadius: theme.isOldDesign ? 0 : 15,
         minWidth: 64,
         color: theme.palette.secondaryMainColor,
         textTransform: "none",
         backgroundColor: theme.palette.paperColor,
         '&:hover': {
-            backgroundColor: theme.isShowcase ? theme.palette.paperColor : theme.palette.secondaryMainColor,
-            color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
+            backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.secondaryMainColor,
+            color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.paperColor,
         },
         '&:active': {
-            backgroundColor: theme.isShowcase ? theme.palette.paperColor : theme.palette.secondaryMainColor,
-            color: theme.isShowcase ? theme.palette.secondaryMainColor : theme.palette.paperColor,
+            backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.secondaryMainColor,
+            color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.paperColor,
         },
     },
     title: {
@@ -69,7 +69,7 @@ const styles = theme => ({
         fontWeight: 800,
     },
     patientInfo: {
-        color: theme.isShowcase ?  theme.palette.paperColor :  theme.palette.fontColor,
+        color: theme.isOldDesign ?  theme.palette.paperColor :  theme.palette.fontColor,
         padding: "11px 14px",
         marginLeft: 5,
     },
@@ -79,7 +79,7 @@ const styles = theme => ({
         marginBottom: 5,
     },
     keyName: {
-        color: theme.isShowcase ?  theme.palette.paperColor :  theme.palette.fontColor,
+        color: theme.isOldDesign ?  theme.palette.paperColor :  theme.palette.fontColor,
     }
 });
 

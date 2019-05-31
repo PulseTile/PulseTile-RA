@@ -27,8 +27,10 @@ export const themeFullMenu = [
 ];
 
 export const themeCommonElements = {
-    isShowcase: true,
+    isOldDesign: true,
     patientSummaryPermission: true,
+    patientListColumnToggling: true,
+    redirectToPlugin: true,
     topbar: ThemeTopbar,
     footer: ThemeFooter,
     feedsSelectors: FeedsSelectors,

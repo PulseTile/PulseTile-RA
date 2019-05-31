@@ -22,7 +22,7 @@ const styles = theme => ({
         color: "#fff",
         border: `1px solid ${theme.palette.secondaryMainColor}`,
         backgroundColor: theme.palette.secondaryMainColor,
-        borderRadius: theme.isShowcase ? 0 : 20,
+        borderRadius: theme.isOldDesign ? 0 : 20,
         fontSize: 16,
         fontWeight: 800,
         "& svg": {
@@ -44,7 +44,7 @@ const styles = theme => ({
         paddingLeft: "8px !important",
         backgroundColor: theme.palette.dangerColor,
         color: theme.palette.paperColor,
-        borderRadius: theme.isShowcase ? 0 : 20,
+        borderRadius: theme.isOldDesign ? 0 : 20,
         fontSize: 16,
         fontWeight: 800,
         "& svg": {

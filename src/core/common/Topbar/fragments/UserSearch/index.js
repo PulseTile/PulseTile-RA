@@ -19,7 +19,7 @@ const styles = theme => ({
         height: 36,
         minWidth: 350,
         borderRadius: 18,
-        backgroundColor: theme.isShowcase ? null : theme.palette.disabledColor,
+        backgroundColor: theme.isOldDesign ? null : theme.palette.disabledColor,
     },
     input: {
         display: "block",
@@ -29,19 +29,19 @@ const styles = theme => ({
         paddingBottom: 0,
         paddingLeft: 20,
         marginRight: 10,
-        borderRadius: theme.isShowcase ? 0 : 18,
-        border: theme.isShowcase ? `1px solid ${theme.palette.disabledColor}` : 0,
-        backgroundColor: theme.isShowcase ? theme.palette.paperColor : theme.palette.disabledColor,
+        borderRadius: theme.isOldDesign ? 0 : 18,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.disabledColor}` : 0,
+        backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.disabledColor,
     },
     icon: {
-        color: theme.isShowcase ? theme.palette.paperColor : theme.palette.fontColor,
-        backgroundColor: theme.isShowcase ? theme.palette.secondaryMainColor : null,
+        color: theme.isOldDesign ? theme.palette.paperColor : theme.palette.fontColor,
+        backgroundColor: theme.isOldDesign ? theme.palette.secondaryMainColor : null,
         borderRadius: 0,
         height: 35,
         '&:hover': {
-            color: theme.isShowcase ? theme.palette.secondaryMainColor : null,
-            border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
-            backgroundColor: theme.isShowcase ? theme.palette.paperColor : null,
+            color: theme.isOldDesign ? theme.palette.secondaryMainColor : null,
+            border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+            backgroundColor: theme.isOldDesign ? theme.palette.paperColor : null,
         }
     },
 });

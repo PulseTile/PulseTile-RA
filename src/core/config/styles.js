@@ -70,10 +70,10 @@ function getCurrentPalette(isContrastMode) {
 function getCurrentTheme(isContrastMode) {
     const backgroundImage = isContrastMode ? null : get(themeImages, 'backgroundImage', null);
     const palette = getCurrentPalette(isContrastMode);
-    const isShowcase = get(window, 'config.isShowcase', false);
+    const isOldDesign = get(window, 'config.isOldDesign', false);
     return createMuiTheme({
         palette: palette,
-        isShowcase: isShowcase,
+        isOldDesign: isOldDesign,
         typography: {
             fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
             fontSize: 14,

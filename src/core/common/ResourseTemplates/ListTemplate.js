@@ -6,7 +6,6 @@ import { Route } from "react-router";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import FilterIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
 import TableIcon from '@material-ui/icons/List';
 import ChartIcon from '@material-ui/icons/ShowChart';
@@ -20,15 +19,20 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 
+import { columnsTogglingAction } from "../../actions/columnsTogglingAction";
+
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
 import DetailsTemplate from "./DetailsTemplate";
-import ListModePopover from "./fragments/ListModePopover";
-import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "./fragments/constants";
 
+import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "./fragments/constants";
 import TableContent from "./fragments/TableContent";
 import ChartContent from "./fragments/ChartContent";
 import TimelineContent from "./fragments/TimelineContent";
+
+import ListModePopover from "./popovers/ListModePopover";
+
+import ColumnsTogglingIcon from "./icons/ColumnsTogglingIcon";
 
 const listStyles = theme => ({
     mainBlock: {
@@ -39,7 +43,7 @@ const listStyles = theme => ({
         border: `1px solid ${theme.palette.borderColor}`,
     },
     headerBlock: {
-        marginBottom: theme.isShowcase ? 5 : null,
+        marginBottom: theme.isOldDesign ? 5 : null,
     },
     list: {
         paddingLeft: 0,
@@ -50,7 +54,7 @@ const listStyles = theme => ({
         justifyContent: "space-between",
         alignItems: "center",
         height: 49,
-        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
@@ -61,29 +65,29 @@ const listStyles = theme => ({
         flexGrow: 1,
     },
     title: {
-        color: theme.isShowcase ? theme.palette.fontColor : theme.palette.paperColor,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 700,
     },
     filterIcon: {
-        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
+        color: theme.isOldDesign ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
         paddingLeft: 10,
         paddingRight: 10,
-        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         height: 35,
     },
     listModeIcon: {
-        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
+        color: theme.isOldDesign ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
         paddingLeft: 10,
         paddingRight: 10,
         marginRight: 5,
-        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         height: 35,
     },
     expandIcon: {
-        color: theme.isShowcase ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
-        border: theme.isShowcase ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        color: theme.isOldDesign ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         paddingLeft: 10,
         paddingRight: 10,
         marginRight: 10,
@@ -122,6 +126,7 @@ class ListTemplate extends Component {
         isFilterOpened: false,
         filterText: null,
         key: 0,
+        hiddenColumns: [],
     };
 
     /**
@@ -221,6 +226,19 @@ class ListTemplate extends Component {
         return result;
     };
 
+    componentDidMount() {
+        const { resourceUrl, toggleColumnStore, defaultHiddenColumns } = this.props;
+        if (defaultHiddenColumns) {
+            defaultHiddenColumns.map(item => {
+                toggleColumnStore(resourceUrl, item);
+            });
+        }
+        this.setState({
+            hiddenColumns: defaultHiddenColumns,
+            key: this.state.key + 1,
+        })
+    }
+
     componentWillReceiveProps(nextProps, nextContext) {
         const newListArray = Object.values(get(nextProps, 'currentList', {}));
         const prevListArray = Object.values(get(nextContext, 'currentList', {}));
@@ -274,9 +292,33 @@ class ListTemplate extends Component {
         });
     };
 
+    toggleColumn = value => {
+        const { resourceUrl, toggleColumnStore, updateTableHead } = this.props;
+
+        let hiddenColumnsArray = this.state.hiddenColumns;
+        let key = this.state.key;
+
+        if (hiddenColumnsArray.indexOf(value) !== -1) {
+            let index = hiddenColumnsArray.indexOf(value);
+            hiddenColumnsArray.splice(index, 1);
+        } else {
+            hiddenColumnsArray.push(value);
+        }
+        key++;
+
+        this.setState({
+            hiddenColumns: hiddenColumnsArray,
+            key: key,
+        }, () => {
+            updateTableHead();
+            toggleColumnStore(resourceUrl, value)
+        });
+    };
+
     render() {
         const { create, resourceUrl, title, classes, history, userSearch, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
-        const { isFilterOpened, isListOpened, anchorEl, listMode } = this.state;
+        const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key } = this.state;
+
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
         ];
@@ -315,6 +357,7 @@ class ListTemplate extends Component {
                                         </IconButton>
                                     </Tooltip>
                                 }
+                                <ColumnsTogglingIcon hiddenColumns={hiddenColumns} toggleColumn={this.toggleColumn} {...this.props} />
                                 {
                                     (hasChart || hasTimetable) &&
                                         <React.Fragment>
@@ -349,7 +392,15 @@ class ListTemplate extends Component {
                                 </Paper>
                             }
                         </div>
-                        <ContentBlock createUrl={createUrl} idsNumber={idsNumber} isCustomDatagrid={isCustomDatagrid} history={history} {...this.props} />
+                        <ContentBlock
+                            key={key}
+                            hiddenColumns={hiddenColumns}
+                            createUrl={createUrl}
+                            idsNumber={idsNumber}
+                            isCustomDatagrid={isCustomDatagrid}
+                            history={history}
+                            {...this.props}
+                        />
                     </Grid>
                     }
                     {
@@ -379,4 +430,12 @@ const mapStateToProps = (state, ownProps)  => {
     }
 };
 
-export default withStyles(listStyles)(connect(mapStateToProps, null)(ListTemplate));
+const mapDispatchToProps = dispatch => {
+    return {
+        toggleColumnStore(resource, columnName) {
+            dispatch(columnsTogglingAction.toggle(resource, columnName));
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(listStyles)(ListTemplate));

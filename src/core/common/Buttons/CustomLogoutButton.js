@@ -16,7 +16,7 @@ const styles = theme => ({
         color: "white",
         backgroundColor: theme.palette.secondaryMainColor,
         border: `1px solid ${theme.palette.secondaryMainColor}`,
-        borderRadius: theme.isShowcase ? 0 : 25,
+        borderRadius: theme.isOldDesign ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {
