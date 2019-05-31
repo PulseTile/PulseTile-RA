@@ -118,58 +118,6 @@ class PatientDatagridRow extends Component {
                         </TableCell>
                 }
 
-                {
-                    (hiddenColumns.indexOf('ordersDate') === -1) &&
-                        <TableCell key={`${record.id}-ordersDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    (hiddenColumns.indexOf('ordersCount') === -1) &&
-                        <TableCell key={`${record.id}-ordersCount`}>
-                            {Math.floor(Math.random() * Math.floor(8))}
-                        </TableCell>
-                }
-
-                {
-                    (hiddenColumns.indexOf('resultsDate') === -1) &&
-                        <TableCell key={`${record.id}-resultsDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    (hiddenColumns.indexOf('resultsCount') === -1) &&
-                        <TableCell key={`${record.id}-resultsCount`}>
-                            {Math.floor(Math.random() * Math.floor(12))}
-                        </TableCell>
-                }
-
-                {
-                    (hiddenColumns.indexOf('vitalsDate') === -1) &&
-                        <TableCell key={`${record.id}-vitalsDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    (hiddenColumns.indexOf('vitalsCount') === -1) &&
-                        <TableCell key={`${record.id}-vitalsCount`}>
-                            {Math.floor(Math.random() * Math.floor(12))}
-                        </TableCell>
-                }
-
-                {
-                    (hiddenColumns.indexOf('problemsDate') === -1) &&
-                        <TableCell key={`${record.id}-problemsDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    (hiddenColumns.indexOf('vitalsCount') === -1) &&
-                        <TableCell key={`${record.id}-problemsCount`}>
-                            {Math.floor(Math.random() * Math.floor(12))}
-                        </TableCell>
-                }
-
                 <TableCell className={classes.viewButtonCell}>
                     <ViewButton viewAction={isPermissionRequired ? this.handleClick : this.redirectWithoutPermission} checkRedirectUrl={this.checkRedirectUrl} />
                 </TableCell>

@@ -38,7 +38,7 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "column",
         height: theme.isOldDesign ? 50 : 100,
-        backgroundColor: theme.palette.tableHeadColor,
+        backgroundColor: theme.palette.mainColor,
         justifyContent: "center",
         alignItems: "center",
         position: "relative",

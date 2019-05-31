@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import TodayIcon from "@material-ui/icons/Today";
 import CheckIcon from "@material-ui/icons/Check";
 
-import { currentPatientAction } from "../../actions/currentPatientAction";
 import image from "../../../version/images/logo.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
@@ -123,38 +122,6 @@ class PatientsList extends Component {
                     <TextField source="gender" label="Gender"/>
                     <DateField source="birthDate" label="Born"/>
                     { (hiddenColumns.indexOf('nhsNumber') === -1) && <TextField source="nhsNumber" label="NHS No." /> }
-
-                    {(hiddenColumns.indexOf('ordersDate') === -1) &&
-                        <DateField source="ordersDate" label={<LabelWithIcon classes={classes} title="Orders" icon={<TodayIcon className={classes.icon}/>}/>} />
-                    }
-
-                    {(hiddenColumns.indexOf('ordersCount') === -1) &&
-                        <DateField source="ordersCount" label={<LabelWithIcon classes={classes} title="Orders" icon={<CheckIcon className={classes.icon}/>}/>} />
-                    }
-
-                    {(hiddenColumns.indexOf('resultsDate') === -1) &&
-                        <DateField source="resultsDate" label={<LabelWithIcon classes={classes} title="Results" icon={<TodayIcon className={classes.icon} />} />} />
-                    }
-
-                    {(hiddenColumns.indexOf('resultsCount') === -1) &&
-                        <DateField source="resultsCount" label={<LabelWithIcon classes={classes} title="Results" icon={<CheckIcon className={classes.icon} />} />} />
-                    }
-
-                    {(hiddenColumns.indexOf('vitalsDate') === -1) &&
-                        <DateField source="vitalsDate" label={<LabelWithIcon classes={classes} title="Vitals" icon={<TodayIcon className={classes.icon} />} />} />
-                    }
-
-                    {(hiddenColumns.indexOf('vitalsCount') === -1) &&
-                        <DateField source="vitalsCount" label={<LabelWithIcon classes={classes} title="Vitals" icon={<CheckIcon className={classes.icon}/>}/>} />
-                    }
-
-                    {(hiddenColumns.indexOf('problemsDate') === -1) &&
-                        <DateField source="problemsDate" label={<LabelWithIcon classes={classes} title="Problems" icon={<TodayIcon className={classes.icon} />} />}/>
-                    }
-
-                    {(hiddenColumns.indexOf('problemsCount') === -1) &&
-                        <DateField source="problemsCount" label={<LabelWithIcon classes={classes} title="Problems" icon={<CheckIcon className={classes.icon} />} />} />
-                    }
 
                     <ViewButton />
 
