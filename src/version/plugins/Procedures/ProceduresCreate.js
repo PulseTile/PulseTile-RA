@@ -1,7 +1,7 @@
 import React from "react";
 
 import CreateTemplate from "../../../core/common/ResourseTemplates/CreateTemplate";
-import Inputs from "./fragments/Inputs";
+import Form from "./fragments/Form";
 
 /**
  * This component returns Procedure creation form
@@ -11,8 +11,8 @@ import Inputs from "./fragments/Inputs";
  * @param {shape} rest
  */
 const ProceduresCreate = ({ classes, ...rest }) => (
-    <CreateTemplate blockTitle="Procedure" {...rest}>
-        <Inputs />
+    <CreateTemplate isCustom={true}  blockTitle="Procedure" {...rest}>
+        <Form isCreate={true} />
     </CreateTemplate>
 );
 

@@ -1,7 +1,8 @@
 import React from "react";
 
 import EditTemplate from "../../../core/common/ResourseTemplates/EditTemplate";
-import Inputs from "./fragments/Inputs";
+import Form from "./fragments/Form";
+import CreateTemplate from "../../../core/common/ResourseTemplates/CreateTemplate";
 
 /**
  * This component returns block with edit form for Procedure
@@ -12,8 +13,8 @@ import Inputs from "./fragments/Inputs";
  * @constructor
  */
 const ProceduresEdit = ({ classes, ...rest }) => (
-    <EditTemplate blockTitle="Procedure"  {...rest}>
-        <Inputs />
+    <EditTemplate isCustom={true}  blockTitle="Procedure"  {...rest}>
+        <Form />
     </EditTemplate>
 );
 
