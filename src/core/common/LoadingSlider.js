@@ -111,7 +111,7 @@ const styles = {
             left: 40,
             borderRadius: "50%",
             border: "10px solid #000",
-            borderColor: "#0D672F transparent #0D672F transparent",
+            borderColor: "#0078c8 transparent #0078c8 transparent",
             WebkitAnimation: "rings 1s linear infinite",
             animation: `rings 1s linear infinite`,
         },
