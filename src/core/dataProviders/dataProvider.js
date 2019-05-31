@@ -11,6 +11,8 @@ import sort, { ASC, DESC } from 'sort-array-objects';
 import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
+import fakePatientsProvider from "./fakePatientsProvider";
+
 import newPatientsProvider from "./patientsProvider";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
@@ -239,6 +241,9 @@ const dataProvider = (type, resource, params) => {
  * @param {shape}  params
  */
 export default (type, resource, params) => {
+    // if (resource === `patients`) {
+    //     return fakePatientsProvider(type, resource, params);
+    // }
     if (resource === `patients`) {
         return newPatientsProvider(type, resource, params);
     }

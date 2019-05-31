@@ -15,8 +15,8 @@ const styles = theme => ({
         paddingLeft: "8px !important",
         backgroundColor: theme.palette.dangerColor,
         border: `1px solid ${theme.palette.dangerColor}`,
-        color: "#fff",
-        borderRadius: 20,
+        color: theme.palette.paperColor,
+        borderRadius: theme.isOldDesign ? 0 : 20,
         fontSize: 16,
         fontWeight: 800,
         "& svg": {
@@ -26,7 +26,7 @@ const styles = theme => ({
             textTransform: "capitalize",
         },
         "&:hover": {
-            backgroundColor: "#fff",
+            backgroundColor: theme.palette.paperColor,
             color: theme.palette.dangerColor,
         }
     },

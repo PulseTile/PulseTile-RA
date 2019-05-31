@@ -10,10 +10,10 @@ const styles = theme => ({
         width: 130,
         height: 40,
         margin: 8,
-        backgroundColor: theme.palette.mainColor,
+        backgroundColor: theme.palette.secondaryMainColor,
         color: "white",
-        border: `1px solid ${theme.palette.mainColor}`,
-        borderRadius: 25,
+        border: `1px solid ${theme.palette.secondaryMainColor}`,
+        borderRadius: theme.isOldDesign ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         padding: 0,
@@ -25,7 +25,7 @@ const styles = theme => ({
         },
         "&:hover": {
             backgroundColor: "white",
-            color: theme.palette.mainColor,
+            color: theme.palette.secondaryMainColor,
         }
     },
 });

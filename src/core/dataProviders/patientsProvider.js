@@ -9,6 +9,38 @@ import {
 import sort, { ASC, DESC } from 'sort-array-objects';
 import { token, domainName } from "../token";
 
+function checkFormData(params) {
+
+    const paramsArray = [
+        { param: 'data.firstName', label: 'Name' },
+        { param: 'data.lastName', label: 'Surname' },
+        { param: 'data.birthDate', label: 'Date of Birth' },
+        { param: 'data.address', label: 'Address' },
+        { param: 'data.city', label: 'City' },
+        { param: 'data.district', label: 'District' },
+        { param: 'data.postCode', label: 'Post Code' },
+        { param: 'data.country', label: 'Country' },
+        { param: 'data.phone', label: 'Telephone Number' },
+        { param: 'data.nhsNumber', label: 'CHI Number' },
+    ];
+
+    let missedParamsArray = [];
+    for (let i = 0, n = paramsArray.length; i < n; i++) {
+        let item = paramsArray[i];
+        let value = get(params, item.param, null);
+        if (!value) {
+            missedParamsArray.push(item.label);
+        }
+    }
+
+    if (missedParamsArray.length > 0) {
+        const string = missedParamsArray.join(', ');
+        throw new HttpError('777|Please add ' + string);
+    }
+
+    return true;
+}
+
 const convertPatientsDataRequestToHTTP = (type, resource, params) => {
     let url = "";
     const options = {};
@@ -38,6 +70,9 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
+
+            checkFormData(params);
+
             let userName = get(params, 'data.firstName', null);
             let userId = get(params, 'data.nhsNumber', null);
             let updateData = {
@@ -72,6 +107,9 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
+
+            checkFormData(params);
+
             let patientId = get(params, 'data.nhsNumber', null);
             let name = get(params, 'data.firstName', null);
             let data = {
@@ -282,6 +320,10 @@ function getSortedResults(results, params) {
 export default (type, resource, params) => {
     let { url, options } = convertPatientsDataRequestToHTTP(type, resource, params);
     let responseInfo = {};
+
+    console.log('url', url);
+    console.log('options', options);
+
     return fetch(url, options).then(response => {
         responseInfo.status = get(response, 'status', null);
         return response.json();

@@ -9,9 +9,9 @@ let responseInfo = {};
 export default function createCustomSagas(actionName, actionType, pluginName) {
     return takeEvery(actionName.REQUEST, function*(action) {
         let url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/synopsis/' + pluginName;
-        if (pluginName === 'top3Things') {
-            url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/synopsis/' + pluginName + '/latest';
-        }
+        // if (pluginName === 'top3Things') {
+        //     url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/synopsis/' + pluginName + '/latest';
+        // }
         let options = {};
         options.method = "GET";
         if (!options.headers) {
