@@ -384,6 +384,18 @@ class VitalsInputs extends Component {
                             sourceId={sourceId}
                         />
                         <ValueWithUnits
+                            label="Temperature"
+                            units="C"
+                            model="temperature"
+                            updateInput={this.updateInput}
+                            hasPopup={true}
+                            value={get(filledValues, 'temperature', null)}
+                            isDetailsPage={isDetailsPage}
+                            sourceId={sourceId}
+                        />
+                    </div>
+                    <div>
+                        <ValueWithUnits
                             label="Systolic BP"
                             units="mmHg"
                             model="systolicBP"
@@ -393,29 +405,17 @@ class VitalsInputs extends Component {
                             isDetailsPage={isDetailsPage}
                             sourceId={sourceId}
                         />
+                        <ValueWithUnits
+                            label="Diastolic BP"
+                            units="mmHg"
+                            model="diastolicBP"
+                            updateInput={this.updateInput}
+                            hasPopup={false}
+                            value={get(filledValues, 'diastolicBP', null)}
+                            isDetailsPage={isDetailsPage}
+                            sourceId={sourceId}
+                        />
                     </div>
-
-                    <ValueWithUnits
-                        label="Diastolic BP"
-                        units="mmHg"
-                        model="diastolicBP"
-                        updateInput={this.updateInput}
-                        hasPopup={false}
-                        value={get(filledValues, 'diastolicBP', null)}
-                        isDetailsPage={isDetailsPage}
-                        sourceId={sourceId}
-                    />
-
-                    <ValueWithUnits
-                        label="Temperature"
-                        units="C"
-                        model="temperature"
-                        updateInput={this.updateInput}
-                        hasPopup={true}
-                        value={get(filledValues, 'temperature', null)}
-                        isDetailsPage={isDetailsPage}
-                        sourceId={sourceId}
-                    />
 
                     <FormControl className={classes.formControl}>
                         <div className={classes[levelConsciousnessClassName]}>
