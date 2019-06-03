@@ -1,20 +1,12 @@
 import React from "react";
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
-import { withStyles } from '@material-ui/core/styles';
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartBar } from "@fortawesome/free-solid-svg-icons";
+import { withStyles } from '@material-ui/core/styles/index';
 
 const styles = theme => ({
     chartBlock: {
-        width: '100%',
+        width: '95%',
         height: 500,
-        display: "inline-block",
-        border: `1px solid ${theme.palette.borderColor}`,
-        margin: 20,
     },
     titleBlock: {
         display: "flex",
@@ -42,20 +34,13 @@ const styles = theme => ({
     }
 });
 
-const BarChartTemplate = ({ classes, mainTitle, secondTitle, description, data, barSize, history, onClickAction, barColor }) => {
+const BarChartTemplate = ({ classes, data, barSize, history, onClickAction, barColor }) => {
     return (
         <div className={classes.chartBlock}>
-            <div className={classes.titleBlock}>
-                <Tooltip title="Chart">
-                    <FontAwesomeIcon className={classes.chartIcon} icon={faChartBar} size="1.5x" />
-                </Tooltip>
-                <Typography className={classes.title}>{mainTitle}</Typography>
-            </div>
-            <Typography variant="h1" className={classes.secondTitle}>{secondTitle}</Typography>
-            <Typography className={classes.description}>{description}</Typography>
             <ResponsiveContainer width={'99%'}>
                 <BarChart
                     data={data}
+                    height={400}
                     margin={{ top: 5, right: 0, left: 0, bottom: 25 }} >
                     <XAxis dataKey="Text" fontFamily="sans-serif" tickSize dy="25" />
                     <YAxis />
@@ -67,8 +52,8 @@ const BarChartTemplate = ({ classes, mainTitle, secondTitle, description, data, 
                         onClick={(item) => onClickAction(history, item)}
                     >
                         {data.map((entry, index) => (
-                            <Cell fill={barColor} />
-                        ))}
+                            <Cell fill={barColor} />))
+                        }
                     </Bar>
                 </BarChart>
             </ResponsiveContainer>

@@ -2,17 +2,14 @@ import React, { Component } from "react";
 import moment from "moment";
 import { connect } from 'react-redux';
 import get from "lodash/get";
-import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Cell, Bar } from "recharts";
+import { setSidebarVisibility } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
-import Typography from "@material-ui/core/Typography";
 
 import dummyPatients from "../PatientsList/dummyPatients";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartBar } from '@fortawesome/free-solid-svg-icons';
-import Tooltip from "@material-ui/core/Tooltip";
 
-import BarChartTemplate from "./BarChartTemplate";
+import BarChartTitle from "./fragments/BarChartTitle";
+import BarChartTemplate from "./fragments/BarChartTemplate";
 
 const styles = theme => ({
     chartsContainer: {
@@ -20,9 +17,19 @@ const styles = theme => ({
         justifyContent: "space-around",
         backgroundColor: theme.palette.paperColor,
     },
+    chart: {
+        width: '100%',
+        height: 600,
+        border: `1px solid ${theme.palette.borderColor}`,
+        margin: 10,
+    }
 });
 
 class Charts extends Component {
+
+    componentDidMount() {
+        this.props.setSidebarVisibility(false);
+    }
 
     /**
      * This function calculates percentage of patients by department
@@ -154,26 +161,34 @@ class Charts extends Component {
 
         return (
             <div className={classes.chartsContainer}>
-                <BarChartTemplate
-                    mainTitle="Patients By Setting"
-                    secondTitle="Patients By Setting"
-                    description="This is a brief description of patients by setting."
-                    data={dataGreen}
-                    barSize={120}
-                    onClickAction={this.redirectTo}
-                    history={history}
-                    barColor="#c5e29f"
-                />
-                <BarChartTemplate
-                    mainTitle="Patients By Age"
-                    secondTitle="Patients By Age"
-                    description="This is a brief description of patients by age."
-                    data={dataViolet}
-                    barSize={170}
-                    onClickAction={this.redirectTo}
-                    history={history}
-                    barColor="#d3b2f4"
-                />
+                <div className={classes.chart}>
+                    <BarChartTitle
+                        mainTitle="Patients By Setting"
+                        secondTitle="Patients By Setting"
+                        description="This is a brief description of patients by setting."
+                    />
+                    <BarChartTemplate
+                        data={dataGreen}
+                        barSize={120}
+                        onClickAction={this.redirectTo}
+                        history={history}
+                        barColor="#c5e29f"
+                    />
+                </div>
+                <div className={classes.chart}>
+                    <BarChartTitle
+                        mainTitle="Patients By Age"
+                        secondTitle="Patients By Age"
+                        description="This is a brief description of patients by age."
+                    />
+                    <BarChartTemplate
+                        data={dataViolet}
+                        barSize={170}
+                        onClickAction={this.redirectTo}
+                        history={history}
+                        barColor="#d3b2f4"
+                    />
+                </div>
             </div>
         );
     }
@@ -185,4 +200,12 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(styles)(Charts));
+const mapDispatchToProps = dispatch => {
+    return {
+        setSidebarVisibility(params) {
+            dispatch(setSidebarVisibility(params));
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Charts));
