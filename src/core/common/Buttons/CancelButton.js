@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 const styles = theme => ({
     button: {
         display: "block",
-        width: 100,
+        width: 110,
         height: 40,
         margin: "8px !important",
         padding: 0,
@@ -22,6 +22,9 @@ const styles = theme => ({
             color: theme.palette.dangerColor,
             backgroundColor: "#fff",
         }
+    },
+    icon: {
+        paddingRight: 5,
     }
 });
 
@@ -35,7 +38,7 @@ const styles = theme => ({
 const CancelButton = ({ classes, redirectTo }) => (
     <Tooltip title="Cancel">
         <IconButton aria-label="Cancel" className={classes.button} onClick={() => redirectTo('show')}>
-            <BlockIcon /> Cancel
+            <BlockIcon className={classes.icon} /> Cancel
         </IconButton>
     </Tooltip>
 );

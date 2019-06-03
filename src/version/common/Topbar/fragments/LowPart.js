@@ -70,12 +70,16 @@ const styles = theme => ({
     },
     patientInfo: {
         color: theme.isOldDesign ?  theme.palette.paperColor :  theme.palette.fontColor,
-        padding: "11px 14px",
-        marginLeft: 5,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 14,
+        paddingRight: 14,
+        margin: 0,
     },
     gridBlock: {
         padding: "0px !important",
-        marginTop: 5,
+    },
+    patientNameBlock: {
         marginBottom: 5,
     },
     keyName: {

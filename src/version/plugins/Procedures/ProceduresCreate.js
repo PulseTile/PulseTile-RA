@@ -7,12 +7,11 @@ import Form from "./fragments/Form";
  * This component returns Procedure creation form
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {shape} rest
+ * @param {shape} props
  */
-const ProceduresCreate = ({ classes, ...rest }) => (
-    <CreateTemplate isCustom={true}  blockTitle="Procedure" {...rest}>
-        <Form isCreate={true} />
+const ProceduresCreate = props => (
+    <CreateTemplate isCustom={true}  blockTitle="Procedure" {...props}>
+        <Form isCreate={true} {...props} />
     </CreateTemplate>
 );
 

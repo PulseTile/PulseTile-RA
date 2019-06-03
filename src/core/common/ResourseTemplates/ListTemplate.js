@@ -42,9 +42,6 @@ const listStyles = theme => ({
         paddingRight: 25,
         border: `1px solid ${theme.palette.borderColor}`,
     },
-    headerBlock: {
-        marginBottom: theme.isOldDesign ? 5 : null,
-    },
     list: {
         paddingLeft: 0,
     },

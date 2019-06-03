@@ -28,9 +28,6 @@ const styles = theme => ({
         border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         color: theme.palette.secondaryMainColor + ' !important',
         borderRadius: 0,
-        '&:hover': {
-            border: theme.isOldDesign ? `1px solid ${theme.palette.paperColor}` : null,
-        },
         '& span p': {
             fontSize: 16,
             color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.viewButton,
@@ -45,10 +42,6 @@ const styles = theme => ({
         borderBottom: `1px solid ${theme.palette.secondaryMainColor}`,
         borderRadius: 0,
         color: theme.palette.secondaryMainColor,
-        '&:hover': {
-            border: theme.isOldDesign ? `1px solid ${theme.palette.paperColor}` : null,
-            color: theme.palette.paperColor,
-        },
     },
     link: {
         height: 25,

@@ -1,5 +1,4 @@
 import React from "react";
-import { Route } from "react-router";
 import { DateField, TextField } from "react-admin";
 
 import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
@@ -27,7 +26,7 @@ const ProceduresList = ({ classes, ...rest }) => (
         isCustomDatagrid={true}
         {...rest}
     >
-        <TextField label="Procedure Name" source="procedureName" />
+        <TextField label="Procedure Name" source="name" />
         <DateField label="Procedure Date" source="date" />
         <DateField label="Time" source="time" />
         <TextField label="Source" source="source" />

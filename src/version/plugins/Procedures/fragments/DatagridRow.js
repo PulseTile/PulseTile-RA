@@ -13,14 +13,14 @@ const ProceduresDatagridRow = props => {
     }
     return (
         <CustomDatagridRow {...props} >
-            <TableCell key={`${record.id}-procedureName`}>
-                {record.procedureName}
+            <TableCell key={`${record.id}-name`}>
+                {record.name}
             </TableCell>
             <TableCell key={`${record.id}-date`}>
                 {moment(record.date).format(DATE_FORMAT)}
             </TableCell>
             <TableCell key={`${record.id}-time`}>
-                {record.time}
+                {moment(record.time).format('HH:mm')}
             </TableCell>
             <TableCell key={`${record.id}-source`}>
                 {record.source}

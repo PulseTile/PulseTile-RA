@@ -32,7 +32,7 @@ const styles = theme => ({
     contrastModeLink: {
         marginLeft: 5,
         fontSize: 12,
-        color: theme.palette.mainColor,
+        color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.mainColor,
         textDecoration: "none",
     },
     footerLogo: {
@@ -70,7 +70,9 @@ class Footer extends Component {
         return (
             <footer className={classes.footerBlock}>
                 <Typography className={classes.copyright}>Copyright 2018 Ripple Foundation CIC Ltd. All rights reserved.</Typography>
-                <Link to="/" className={classes.contrastModeLink} onClick={e => this.toggleContrastMode(e)}>{linkText}</Link>
+                <Typography>
+                    <Link to="/" className={classes.contrastModeLink} onClick={e => this.toggleContrastMode(e)}>{linkText}</Link>
+                </Typography>
                 <div className={classes.emptyBlock}></div>
                 <Link to="/">
                     <CardMedia

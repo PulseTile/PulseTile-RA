@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
@@ -9,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 
 import ListBlock from "./ListBlock";
 import { SHOW_ALL } from "../../../core/pages/PatientSummary/config";
+import {themeCommonElements} from "../../config/theme.config";
 
 const styles = theme => ({
     card: {
@@ -18,22 +20,24 @@ const styles = theme => ({
         backgroundColor: theme.palette.mainColor,
     },
     container: {
-        background: theme.patientSummaryPanel.topBlock.background,
+        width: "100%",
+        height: "100%",
+        background: theme.patientSummaryPanel.container.background,
         backgroundSize: "cover",
     },
     topBlock: {
         display: "flex",
         flexDirection: "column",
-        height: 100,
-        backgroundColor: theme.palette.mainColor,
-        background: theme.palette.mainColor,
-        backgroundSize: "cover",
+        height: theme.isOldDesign ? 50 : 100,
+        backgroundColor: theme.palette.tableHeadColor,
         justifyContent: "center",
         alignItems: "center",
-        color: "#fff",
+        position: "relative",
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.borderColor}` : null,
         '&:hover': {
             cursor: "pointer",
-        }
+        },
     },
     icon: {
         marginBottom: 10,
@@ -43,9 +47,10 @@ const styles = theme => ({
     },
     title: {
         marginBottom: 0,
-        color: "#fff",
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 20,
         fontWeight: 800,
+        zIndex: 99999999,
     },
     list: {
         padding: 0,
@@ -78,12 +83,13 @@ const styles = theme => ({
  */
 const RssCard = props => {
     const { classes, sourceId, title, items, loading, icon, link, history, showMode, showHeadings, selectedFeeds } = props;
+    const isOldDesign = get(themeCommonElements, 'isOldDesign', false);
     if (selectedFeeds.indexOf(sourceId) !== -1) {
         return (
             <Grid item xs={12} sm={6} md={6} lg={3}>
                 <Card id={sourceId} className={classes.card} onClick={() => window.open(link, "_blank")}>
                     <div className={classes.topBlock}>
-                        <RssIcon className={classes.icon} />
+                        {!isOldDesign && <RssIcon className={classes.icon} />}
                         <h1 className={classes.mainHeading}>
                             <Typography gutterBottom className={classes.title} >
                                 {title}

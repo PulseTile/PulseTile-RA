@@ -65,6 +65,18 @@ const styles = theme => ({
         padding: 0,
         zIndex: 99999999,
     },
+    listItemNoData: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 48,
+        paddingLeft: 15,
+        zIndex: 99999999,
+        fontSize: "1rem",
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
+        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
+    },
     listItem: {
         display: "flex",
         flexDirection: "column",
@@ -76,6 +88,7 @@ const styles = theme => ({
         borderLeft: `1px solid ${theme.palette.borderColor}`,
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
+        cursor: "pointer",
     },
     emptyRows: {
         height: 150,
