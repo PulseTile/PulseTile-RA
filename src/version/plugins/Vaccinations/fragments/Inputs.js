@@ -4,13 +4,9 @@ import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
-    labelBlock: {
-        '& > div': {
-            marginBottom: "0px !important",
-        },
-    },
-};
+import formStyles from "../../../../core/config/formStyles";
+import FormGroup from "@material-ui/core/FormGroup";
+
 
 /**
  * This component returns Vaccinations creation/editing form
@@ -21,13 +17,73 @@ const styles = {
  */
 const VaccinationsCreate = ({ classes, ...rest }) => (
     <React.Fragment>
-        <TextInput className={classes.labelBlock} source="vaccinationName" label="Name" fullWidth />
-        <DateInput className={classes.labelBlock} source="vaccinationDateTime" label="Vaccination date" fullWidth />
-        <TextInput className={classes.labelBlock} source="series" label="Series" fullWidth />
-        <LongTextInput className={classes.labelBlock} source="comment" label="Comment" fullWidth />
-        <TextInput className={classes.labelBlock} source="author" label="Author" defaultValue={localStorage.getItem('username')} disabled={true} fullWidth />
-        <DateInput className={classes.labelBlock} source="dateCreated" label="Date" defaultValue={moment().format('MM/DD/YYYY')} disabled={true} fullWidth />
+
+        <FormGroup className={classes.formGroup}>
+            <TextInput
+                source="vaccinationName"
+                label="Name"
+                fullWidth
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+            />
+        </FormGroup>
+
+        <FormGroup className={classes.formGroup}>
+            <DateInput
+                source="vaccinationDateTime"
+                label="Vaccination date"
+                fullWidth
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+            />
+        </FormGroup>
+
+        <FormGroup className={classes.formGroup}>
+            <TextInput
+                source="series"
+                label="Series"
+                fullWidth
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+            />
+        </FormGroup>
+
+        <FormGroup className={classes.formGroup}>
+            <LongTextInput
+                source="comment"
+                label="Comment"
+                rows={20}
+                fullWidth
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customTextarea } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+            />
+        </FormGroup>
+
+        <FormGroup className={classes.formGroup}>
+            <TextInput
+                source="author"
+                label="Author"
+                fullWidth
+                defaultValue={localStorage.getItem('username')}
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+                disabled={true}
+            />
+        </FormGroup>
+
+        <FormGroup className={classes.formGroup}>
+            <DateInput
+                source="dateSubmitted"
+                label="Date"
+                fullWidth
+                defaultValue={moment().format('MM/DD/YYYY')}
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+                disabled={true}
+            />
+        </FormGroup>
+
     </React.Fragment>
 );
 
-export default withStyles(styles)(VaccinationsCreate);
+export default withStyles(formStyles)(VaccinationsCreate);

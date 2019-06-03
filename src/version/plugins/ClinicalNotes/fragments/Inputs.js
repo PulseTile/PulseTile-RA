@@ -4,14 +4,8 @@ import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
-    labelBlock: {
-        '& > div': {
-            marginBottom: "0px !important",
-        },
-    },
-};
-
+import formStyles from "../../../../core/config/formStyles";
+import FormGroup from "@material-ui/core/FormGroup";
 /**
  * This component returns Clinical Notes creation/editing form
  *
@@ -21,11 +15,53 @@ const styles = {
  */
 const ClinicalNotesInput = ({ classes, ...rest }) => (
     <React.Fragment>
-        <TextInput className={classes.labelBlock} source="clinicalNotesType" label="Type" fullWidth />
-        <LongTextInput className={classes.labelBlock} source="note" label="Note" fullWidth />
-        <TextInput className={classes.labelBlock} source="author" label="Author" defaultValue={localStorage.getItem('username')} disabled={true} fullWidth />
-        <DateInput className={classes.labelBlock} source="dateCreated" label="Date" defaultValue={moment().format('MM/DD/YYYY')} disabled={true} fullWidth />
+
+        <FormGroup className={classes.formGroup}>
+            <TextInput
+                source="clinicalNotesType"
+                label="Type"
+                fullWidth
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+            />
+        </FormGroup>
+
+        <FormGroup className={classes.formGroup}>
+            <LongTextInput
+                source="note"
+                label="Note"
+                rows={20}
+                fullWidth
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customTextarea } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+            />
+        </FormGroup>
+
+        <FormGroup className={classes.formGroup}>
+            <TextInput
+                source="author"
+                label="Author"
+                fullWidth
+                defaultValue={localStorage.getItem('username')}
+                disabled={true}
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+            />
+        </FormGroup>
+
+        <FormGroup className={classes.formGroup}>
+            <DateInput
+                source="dateCreated"
+                label="Date"
+                fullWidth
+                defaultValue={moment().format('MM/DD/YYYY')}
+                disabled={true}
+                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
+                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
+            />
+        </FormGroup>
+
     </React.Fragment>
 );
 
-export default withStyles(styles)(ClinicalNotesInput);
+export default withStyles(formStyles)(ClinicalNotesInput);
