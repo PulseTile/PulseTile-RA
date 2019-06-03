@@ -22,6 +22,7 @@ const styles = theme => ({
     summaryContainer: getSummaryContainerStyles(synopsisData),
     card: {
         borderRadius: 0,
+        boxShadow: theme.isOldDesign ? "0px 2px 4px rgba(0, 0, 0, 0.3)" : null,
     },
     media: {
         backgroundColor: theme.palette.mainColor,
