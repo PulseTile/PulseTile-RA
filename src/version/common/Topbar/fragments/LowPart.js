@@ -43,7 +43,7 @@ const styles = theme => ({
         alignItems: "center",
     },
     menuButton: {
-        borderRadius: theme.isOldDesign ? 0 : 15,
+        borderRadius: theme.isRectangleButtons ? 0 : 25,
         minWidth: 64,
         color: theme.palette.secondaryMainColor,
         textTransform: "none",

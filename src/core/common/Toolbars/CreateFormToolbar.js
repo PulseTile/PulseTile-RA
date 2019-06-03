@@ -17,7 +17,7 @@ const styles = theme => ({
         color: theme.palette.paperColor,
         backgroundColor: theme.palette.dangerColor,
         border: `1px solid ${theme.palette.dangerColor}`,
-        borderRadius: theme.isOldDesign ? 0 : 25,
+        borderRadius: theme.isRectangleButtons ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {

@@ -21,7 +21,7 @@ const styles = theme => ({
         color: theme.palette.paperColor,
         border: `1px solid ${theme.palette.secondaryMainColor}`,
         backgroundColor: theme.palette.secondaryMainColor,
-        borderRadius: theme.isOldDesign ? 0 : 20,
+        borderRadius: theme.isRectangleButtons ? 0 : 20,
         fontSize: 16,
         fontWeight: 800,
         "& svg": {
@@ -43,7 +43,7 @@ const styles = theme => ({
         marginRight: 15,
         backgroundColor: theme.palette.dangerColor,
         color: theme.palette.paperColor,
-        borderRadius: theme.isOldDesign ? 0 : 20,
+        borderRadius: theme.isRectangleButtons ? 0 : 20,
         fontSize: 16,
         fontWeight: 800,
         "& svg": {
