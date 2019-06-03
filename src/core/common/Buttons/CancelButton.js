@@ -8,20 +8,23 @@ import Tooltip from '@material-ui/core/Tooltip';
 const styles = theme => ({
     button: {
         display: "block",
-        width: 100,
+        width: 110,
         height: 40,
         margin: "8px !important",
         padding: 0,
-        color: "#fff",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.dangerColor,
         border: `1px solid ${theme.palette.dangerColor}`,
-        borderRadius: 25,
+        borderRadius: theme.isRectangleButtons ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {
             color: theme.palette.dangerColor,
-            backgroundColor: "#fff",
+            backgroundColor: theme.palette.paperColor,
         }
+    },
+    icon: {
+        paddingRight: 5,
     }
 });
 
@@ -35,7 +38,7 @@ const styles = theme => ({
 const CancelButton = ({ classes, redirectTo }) => (
     <Tooltip title="Cancel">
         <IconButton aria-label="Cancel" className={classes.button} onClick={() => redirectTo('show')}>
-            <BlockIcon /> Cancel
+            <BlockIcon className={classes.icon} /> Cancel
         </IconButton>
     </Tooltip>
 );

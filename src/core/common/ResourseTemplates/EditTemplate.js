@@ -24,12 +24,12 @@ const styles = theme => ({
         display: "flex",
         alignItems: "center",
         height: 49,
-        color: theme.palette.paperColor,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         paddingLeft: 15,
     },
     title: {
-        color: theme.palette.paperColor,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 700,
     },
@@ -37,13 +37,15 @@ const styles = theme => ({
         flexGrow: 1,
     },
     expandBlockIcon: {
-        height: 20,
-        paddingRight: 20,
-        color: theme.palette.paperColor,
+        height: 35,
+        paddingLeft: 10,
+        paddingRight: 10,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.paperColor,
     },
     editForm: {
         '& > div': {
-            paddingTop: 0,
+            paddingTop: '0px !important',
             paddingLeft: 10,
             paddingRight: 10,
         },
@@ -56,6 +58,7 @@ const styles = theme => ({
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape}   classes
+ * @param {boolean} isCustom
  * @param {boolean} isListOpened
  * @param {string}  blockTitle
  * @param {func}    toggleListBlock
@@ -64,7 +67,7 @@ const styles = theme => ({
  * @param {shape}   rest
  * @constructor
  */
-const EditTemplate = ({ classes, isListOpened, blockTitle, toggleListBlock, children, changeViewType, ...rest }) => (
+const EditTemplate = ({ classes, isCustom, isListOpened, blockTitle, toggleListBlock, children, changeViewType, ...rest }) => (
     <Grid item xs={12} sm={isListOpened ? 6 : 12}>
         <div className={classes.blockTitle}>
             <Typography className={classes.title}>{blockTitle}</Typography>
@@ -75,11 +78,18 @@ const EditTemplate = ({ classes, isListOpened, blockTitle, toggleListBlock, chil
                 </IconButton>
             </Tooltip>
         </div>
-        <Edit undoable={false} {...rest}>
-            <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
-                {children}
-            </SimpleForm>
-        </Edit>
+        { !isCustom
+            ?
+                <Edit undoable={false} {...rest}>
+                    <SimpleForm className={classes.editForm} toolbar={<EditFormToolbar changeViewType={changeViewType} />}>
+                        {children}
+                    </SimpleForm>
+                </Edit>
+            :
+                <React.Fragment>
+                    {children}
+                </React.Fragment>
+        }
     </Grid>
 );
 

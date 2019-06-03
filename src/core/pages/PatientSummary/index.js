@@ -22,6 +22,7 @@ const styles = theme => ({
     summaryContainer: getSummaryContainerStyles(synopsisData),
     card: {
         borderRadius: 0,
+        boxShadow: theme.isOldDesign ? "0px 2px 4px rgba(0, 0, 0, 0.3)" : null,
     },
     media: {
         backgroundColor: theme.palette.mainColor,
@@ -35,13 +36,14 @@ const styles = theme => ({
     topBlock: {
         display: "flex",
         flexDirection: "column",
-        height: 100,
+        height: theme.isOldDesign ? 50 : 100,
         backgroundColor: theme.palette.mainColor,
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-        color: "#fff",
-        '&:hover': {
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.borderColor}` : null,
+            '&:hover': {
             cursor: "pointer",
         },
     },
@@ -55,7 +57,7 @@ const styles = theme => ({
     },
     title: {
         marginBottom: 0,
-        color: "#fff",
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 20,
         fontWeight: 800,
         zIndex: 99999999,
@@ -63,6 +65,18 @@ const styles = theme => ({
     list: {
         padding: 0,
         zIndex: 99999999,
+    },
+    listItemNoData: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 48,
+        paddingLeft: 15,
+        zIndex: 99999999,
+        fontSize: "1rem",
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
+        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
     },
     listItem: {
         display: "flex",
@@ -75,6 +89,7 @@ const styles = theme => ({
         borderLeft: `1px solid ${theme.palette.borderColor}`,
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
+        cursor: "pointer",
     },
     emptyRows: {
         height: 150,

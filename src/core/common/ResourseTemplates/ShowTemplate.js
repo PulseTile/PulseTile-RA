@@ -42,17 +42,23 @@ const styles = theme => ({
         flexGrow: 1,
     },
     expandIcon: {
-        color: theme.palette.paperColor,
+        height: 35,
+        paddingLeft: 10,
+        paddingRight: 10,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.paperColor,
     },
     expandBlockIcon: {
-        height: 20,
-        paddingTop: 5,
-        paddingRight: 7,
-        color: theme.palette.paperColor,
+        height: 35,
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginRight: 35,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.paperColor,
     },
     expansionTypography: {
         paddingTop: 10,
-        color: theme.palette.paperColor,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 700,
     },
@@ -67,7 +73,7 @@ const styles = theme => ({
         }
     },
     showLayoutDetails: {
-        paddingTop: 10,
+        paddingTop: '0px !important',
         paddingLeft: 10,
     },
     labelBlock: {

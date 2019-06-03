@@ -17,7 +17,7 @@ const ItemsList = ({ classes, items, list, history }) => {
     if (items && items.length === 0) {
         return (
             <List className={classes.list}>
-                <li className={classes.listItem}>
+                <li className={classes.listItemNoData}>
                     <Typography>No data</Typography>
                 </li>
             </List>
@@ -25,7 +25,7 @@ const ItemsList = ({ classes, items, list, history }) => {
     } else {
         return (
             <List className={classes.list}>
-                {items.map((item, key) => {
+                {items.slice(0).reverse().map((item, key) => {
                     const showRoute = "/" + list + "/" + item.sourceId + "/show";
                     return (
                         <li key={key} className={classes.listItem} onClick={() => history.push(showRoute)}>

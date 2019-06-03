@@ -1,4 +1,3 @@
-
 import get from "lodash/get";
 import memoize from "lodash/memoize";
 import DeepMerge from 'deepmerge';
@@ -11,6 +10,8 @@ export const ITEMS_PER_PAGE = 10;
 const defaultLightPalette = {
     type: 'light',
     mainColor: "#0D672F",
+    secondaryMainColor: "#0D672F",
+    tableHeadColor: "#c5e39f",
     dangerColor: "#da534f",
     viewButton: "#30ad57",
     disabledColor: "#e9e4e4",
@@ -23,6 +24,8 @@ const defaultLightPalette = {
 const defaultDarkPalette = {
     type: 'dark',
     mainColor: "#000",
+    secondaryMainColor: "#000",
+    tableHeadColor: "#e8e8e8",
     dangerColor: "#000",
     viewButton: "#000",
     disabledColor: "#e9e4e4",
@@ -67,8 +70,12 @@ function getCurrentPalette(isContrastMode) {
 function getCurrentTheme(isContrastMode) {
     const backgroundImage = isContrastMode ? null : get(themeImages, 'backgroundImage', null);
     const palette = getCurrentPalette(isContrastMode);
+    const isOldDesign = get(window, 'config.isOldDesign', false);
+    const isRectangleButtons = get(window, 'config.isRectangleButtons', false);
     return createMuiTheme({
         palette: palette,
+        isOldDesign: isOldDesign,
+        isRectangleButtons: isRectangleButtons,
         typography: {
             fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
             fontSize: 14,

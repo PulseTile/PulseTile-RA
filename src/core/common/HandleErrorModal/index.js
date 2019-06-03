@@ -33,8 +33,8 @@ const styles = theme => ({
         justifyContent: "center",
         height: 48,
         paddingLeft: 20,
-        backgroundColor: theme.palette.mainColor,
-        color: "#fff",
+        backgroundColor: theme.palette.secondaryMainColor,
+        color: theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 800,
     },
@@ -56,7 +56,7 @@ const styles = theme => ({
         margin: "8px !important",
         color: "white",
         backgroundColor: theme.palette.dangerColor,
-        borderRadius: 25,
+        borderRadius: theme.isRectangleButtons ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {
@@ -73,14 +73,12 @@ class HandleErrorModal extends Component {
     };
 
     isSessionExpired = (status, message) => {
-        return (Number(status) === 400 && (message.includes('JWT') || message.includes('secretSessionId')) || Number(status) === 403);
+        return (Number(status) === 400 && message.includes('JWT')) || Number(status) === 403;
     };
 
-    getErrorDescription = (status, isJwtOld, errorMessage) => {
+    getErrorDescription = (status, isJwtOld) => {
         let result = 'Something is wrong';
-        if (Number(status) === 777) {
-            result = errorMessage;
-        } else if (Number(status) === 404) {
+        if (Number(status) === 404) {
             result = 'API is currently unavailable';
         } else if (Number(status) > 499) {
             result = 'Something is wrong with the server. Please try again later.';
@@ -104,14 +102,10 @@ class HandleErrorModal extends Component {
         const errorStatus = get(httpErrors, 'status', null);
         const errorMessage = get(httpErrors, 'message', null);
 
-        let isWrongPatient = false;
-        if (errorMessage) {
-            isWrongPatient = errorMessage.includes('patient');
-        }
         const isOpen = isErrorModalOpen || (errorStatus && errorMessage);
 
         const isJwtOld = this.isSessionExpired(errorStatus, errorMessage);
-        const errorDescription = this.getErrorDescription(errorStatus, isJwtOld, errorMessage);
+        const errorDescription = this.getErrorDescription(errorStatus, isJwtOld);
         return (
             <React.Fragment>
                 <Dialog open={isOpen} {...rest}>
@@ -119,23 +113,12 @@ class HandleErrorModal extends Component {
                         <Typography className={classes.titleBlock}>
                             Connection Error
                         </Typography>
-                        <Typography className={classes.description}>
-                            {
-                                isWrongPatient ? errorMessage : errorDescription
-                            }
-                        </Typography>
+                        <Typography className={classes.description}>{errorDescription}</Typography>
                         <div className={classes.toolbar}>
-                            {
-                                !isWrongPatient &&
-                                    <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
-                            }
+                            <Button aria-label="Close" onClick={() => this.closeModal()}>Close</Button>
                             { isJwtOld
-                                ?
-                                    <CustomLogoutButton title="Login again" hideIcon={true} />
-                                :
-                                    <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>
-                                        { isWrongPatient ? 'Close' : 'Reload page' }
-                                    </Button>
+                                ? <CustomLogoutButton title="Login again" hideIcon={true} />
+                                : <Button aria-label="Reload page" className={classes.reloadButton} onClick={() => window.location.reload()}>Reload page</Button>
                             }
                         </div>
                     </div>

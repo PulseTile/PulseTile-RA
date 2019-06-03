@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import { get } from "lodash/get";
 import { connect } from 'react-redux';
@@ -20,7 +19,7 @@ const styles = theme => ({
         height: 36,
         minWidth: 350,
         borderRadius: 18,
-        backgroundColor: theme.palette.disabledColor,
+        backgroundColor: theme.isOldDesign ? null : theme.palette.disabledColor,
     },
     input: {
         display: "block",
@@ -29,12 +28,21 @@ const styles = theme => ({
         paddingTop: 0,
         paddingBottom: 0,
         paddingLeft: 20,
-        borderRadius: 18,
-        border: 0,
-        backgroundColor: theme.palette.disabledColor,
+        marginRight: theme.isOldDesign ? null : 10,
+        borderRadius: theme.isOldDesign ? 0 : 18,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.disabledColor}` : 0,
+        backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.disabledColor,
     },
     icon: {
-        color: theme.palette.fontColor,
+        color: theme.isOldDesign ? theme.palette.paperColor : theme.palette.fontColor,
+        backgroundColor: theme.isOldDesign ? theme.palette.secondaryMainColor : null,
+        borderRadius: 0,
+        height: 35,
+        '&:hover': {
+            color: theme.isOldDesign ? theme.palette.secondaryMainColor : null,
+            border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+            backgroundColor: theme.isOldDesign ? theme.palette.paperColor : null,
+        }
     },
 });
 
@@ -72,6 +80,14 @@ class UserSearch extends Component {
         window.location.replace('/#/patients');
     };
 
+    onKeyDown = e => {
+        const { searchText } = this.state;
+        if (e.key === 'Enter') {
+            this.props.setUserSearch(searchText);
+            window.location.replace('/#/patients');
+        }
+    };
+
     render() {
         const { classes, userSearch, ...rest } = this.props;
         const { searchText } = this.state;
@@ -84,18 +100,19 @@ class UserSearch extends Component {
                     value={searchText}
                     placeholder="Search"
                     onChange={e => this.handleChange(e)}
+                    onKeyDown={e => this.onKeyDown(e)}
                 />
                 { userSearch &&
-                <Tooltip title="Clean Search" disableHoverListener={true}>
-                    <IconButton
-                        className={classes.icon}
-                        aria-haspopup="true"
-                        color="inherit"
-                        onClick={() => this.onRemoveClick()}
-                    >
-                        <CleanIcon />
-                    </IconButton>
-                </Tooltip>
+                    <Tooltip title="Clean Search" disableHoverListener={true}>
+                        <IconButton
+                            className={classes.icon}
+                            aria-haspopup="true"
+                            color="inherit"
+                            onClick={() => this.onRemoveClick()}
+                        >
+                            <CleanIcon />
+                        </IconButton>
+                    </Tooltip>
                 }
                 <Tooltip title="Patients Search" disableHoverListener={true}>
                     <IconButton

@@ -76,21 +76,11 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             let userName = get(params, 'data.firstName', null);
             let userId = get(params, 'data.nhsNumber', null);
             let updateData = {
-                resourceType: "Patient",
-                name: [
-                    {
-                        family: get(params, 'data.lastName', null),
-                        use: "official",
-                        given: userName.split(' '),
-                        prefix: get(params, 'data.prefix', null),
-                    },
-                    {
-                        use: "usual",
-                        given: [
-                            get(params, 'data.prefix', null)
-                        ]
-                    }
-                ],
+                name: {
+                    family: get(params, 'data.lastName', null),
+                    given: userName.split(' '),
+                    prefix: get(params, 'data.prefix', null),
+                },
                 telecom: String(get(params, 'data.phone', null)),
                 gender: get(params, 'data.gender', null),
                 birthDate: get(params, 'data.birthDate', null),
@@ -123,21 +113,11 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             let patientId = get(params, 'data.nhsNumber', null);
             let name = get(params, 'data.firstName', null);
             let data = {
-                resourceType: "Patient",
-                name: [
-                    {
-                        family: get(params, 'data.lastName', null),
-                        use: "official",
-                        given: name.split(' '),
-                        prefix: get(params, 'data.prefix', null),
-                    },
-                    {
-                        use: "usual",
-                        given: [
-                            get(params, 'data.prefix', null)
-                        ]
-                    }
-                ],
+                name: {
+                    family: get(params, 'data.lastName', null),
+                    given: name.split(' '),
+                    prefix: get(params, 'data.prefix', null),
+                },
                 telecom: String(get(params, 'data.phone', null)),
                 gender: get(params, 'data.gender', null),
                 birthDate: get(params, 'data.birthDate', null),
@@ -182,7 +162,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             const paginationResults = resultsSorting.slice(startItem, endItem);
             return {
                 data: paginationResults,
-                total: patientsArray.length,
+                total: paginationResults.length,
             };
 
         case GET_ONE:
@@ -340,6 +320,10 @@ function getSortedResults(results, params) {
 export default (type, resource, params) => {
     let { url, options } = convertPatientsDataRequestToHTTP(type, resource, params);
     let responseInfo = {};
+
+    console.log('url', url);
+    console.log('options', options);
+
     return fetch(url, options).then(response => {
         responseInfo.status = get(response, 'status', null);
         return response.json();
