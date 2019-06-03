@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import TodayIcon from "@material-ui/icons/Today";
 import CheckIcon from "@material-ui/icons/Check";
 
-import image from "../../../version/images/pulsetile-logo.png";
+import image from "../../../version/images/helm-logo.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";

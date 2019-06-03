@@ -20,7 +20,7 @@ const styles = theme => ({
         height: 'auto',
         width: 120,
         boxSizing: "border-box",
-        borderRadius: 0,
+        borderRadius: theme.isRectangleButtons ? 0 : 25,
         color: theme.palette.secondaryMainColor,
         '&:hover': {
             color: theme.palette.paperColor,

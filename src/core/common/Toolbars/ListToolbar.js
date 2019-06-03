@@ -1,5 +1,4 @@
 import React from "react";
-import { Pagination } from 'react-admin';
 
 import { withStyles } from "@material-ui/core/styles";
 

@@ -1,46 +1,35 @@
 import React, { Component } from "react";
-import { GET_LIST } from 'react-admin';
 import moment from "moment";
 import { connect } from 'react-redux';
 import get from "lodash/get";
-import {
-    BarChart,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Cell,
-    Bar
-} from "recharts";
+import { setSidebarVisibility } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
-import Typography from "@material-ui/core/Typography";
 
-import customDataProvider from "../../dataProviders/dataProvider";
-import CardMedia from "@material-ui/core/CardMedia";
-import image from "../../../version/images/pulsetile-logo.png";
+import dummyPatients from "../PatientsList/dummyPatients";
 
-const styles = {
+import BarChartTitle from "./fragments/BarChartTitle";
+import BarChartTemplate from "./fragments/BarChartTemplate";
+
+const styles = theme => ({
     chartsContainer: {
         display: "flex",
         justifyContent: "space-around",
-        backgroundColor: "white",
+        backgroundColor: theme.palette.paperColor,
     },
-    chartBlock: {
-        display: "inline-block",
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 800,
-        paddingTop: 10,
-        paddingLeft: 10,
-    },
-    description: {
-        paddingTop: 10,
-        paddingLeft: 10,
+    chart: {
+        width: '100%',
+        height: 600,
+        border: `1px solid ${theme.palette.borderColor}`,
+        margin: 10,
     }
-};
+});
 
 class Charts extends Component {
+
+    componentDidMount() {
+        this.props.setSidebarVisibility(false);
+    }
 
     /**
      * This function calculates percentage of patients by department
@@ -148,8 +137,10 @@ class Charts extends Component {
         const { classes, userSearch, history } = this.props;
 
         // const patientsInfo = customDataProvider(GET_LIST, 'patients', {});
-        const patientsInfo = [];
-        const patientsData = get(patientsInfo, 'data', []);
+        // const patientsInfo = [];
+        // const patientsData = get(patientsInfo, 'data', []);
+
+        const patientsData = dummyPatients;
 
         const DepartmentPercentage = this.getDepartmentPercentage(patientsData);
         const dataGreen = [
@@ -170,46 +161,33 @@ class Charts extends Component {
 
         return (
             <div className={classes.chartsContainer}>
-                <div className={classes.chartBlock}>
-                    <Typography className={classes.title}>Patients By Setting</Typography>
-                    <Typography className={classes.description}>This is a brief description of patients by setting.</Typography>
-                    <BarChart
-                        width={800}
-                        height={260}
+                <div className={classes.chart}>
+                    <BarChartTitle
+                        mainTitle="Patients By Setting"
+                        secondTitle="Patients By Setting"
+                        description="This is a brief description of patients by setting."
+                    />
+                    <BarChartTemplate
                         data={dataGreen}
-                        margin={{ top: 5, right: 0, left: 0, bottom: 25 }} >
-                        <XAxis dataKey="Text" fontFamily="sans-serif" tickSize dy="25" />
-                        <YAxis hide />
-                        <CartesianGrid vertical={false} stroke="#E8E8E8" />
-                        <Bar
-                            dataKey="RespondentPercentage"
-                            barSize={170}
-                            fontFamily="sans-serif"
-                            onClick={(item) => this.redirectTo(history, item)}
-                        >
-                            {dataGreen.map((entry, index) => (
-                                <Cell fill={"#c5e29f"} />
-                            ))}
-                        </Bar>
-                    </BarChart>
+                        barSize={120}
+                        onClickAction={this.redirectTo}
+                        history={history}
+                        barColor="#c5e29f"
+                    />
                 </div>
-                <div className={classes.chartBlock}>
-                    <Typography className={classes.title}>Patients By Age</Typography>
-                    <Typography className={classes.description}>This is a brief description of patients by age.</Typography>
-                    <BarChart
-                        width={800}
-                        height={260}
+                <div className={classes.chart}>
+                    <BarChartTitle
+                        mainTitle="Patients By Age"
+                        secondTitle="Patients By Age"
+                        description="This is a brief description of patients by age."
+                    />
+                    <BarChartTemplate
                         data={dataViolet}
-                        margin={{ top: 5, right: 0, left: 0, bottom: 25 }} >
-                        <XAxis dataKey="Text" fontFamily="sans-serif" tickSize dy="25" />
-                        <YAxis hide />
-                        <CartesianGrid vertical={false} stroke="#E8E8E8" />
-                        <Bar dataKey="RespondentPercentage" barSize={170} fontFamily="sans-serif" onClick={(item) => this.redirectTo(history, item)} >
-                            {dataViolet.map((entry, index) => (
-                                <Cell fill={"#d3b2f4"} />
-                            ))}
-                        </Bar>
-                    </BarChart>
+                        barSize={170}
+                        onClickAction={this.redirectTo}
+                        history={history}
+                        barColor="#d3b2f4"
+                    />
                 </div>
             </div>
         );
@@ -222,4 +200,12 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(styles)(Charts));
+const mapDispatchToProps = dispatch => {
+    return {
+        setSidebarVisibility(params) {
+            dispatch(setSidebarVisibility(params));
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Charts));

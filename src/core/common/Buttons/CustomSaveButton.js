@@ -6,19 +6,20 @@ import DoneIcon from '@material-ui/icons/Done';
 
 const styles = theme => ({
     saveButton: {
-        display: "block",
+        display: "flex",
+        alignItems: "flex-end",
         width: 130,
         height: 40,
         margin: 8,
         backgroundColor: theme.palette.secondaryMainColor,
         color: "white",
         border: `1px solid ${theme.palette.secondaryMainColor}`,
-        borderRadius: theme.isOldDesign ? 0 : 25,
+        borderRadius: theme.isRectangleButtons ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         padding: 0,
         "& svg": {
-            marginRight: 2,
+            marginRight: 5,
         },
         "& span": {
             textTransform: "capitalize"
@@ -37,7 +38,7 @@ const styles = theme => ({
  * @param {shape} classes
  */
 const CustomSaveButton = ({ classes, ...rest }) => (
-    <SaveButton aria-label="Complete" label="Complete" icon={<DoneIcon />} className={classes.saveButton} {...rest} />
+    <SaveButton aria-label="Complete" label="Complete" icon={<DoneIcon className={classes.icon} />} className={classes.saveButton} {...rest} />
 );
 
 export default withStyles(styles)(CustomSaveButton);

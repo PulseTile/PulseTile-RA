@@ -28,7 +28,7 @@ const styles = theme => ({
         paddingTop: 0,
         paddingBottom: 0,
         paddingLeft: 20,
-        marginRight: 10,
+        marginRight: theme.isOldDesign ? null : 10,
         borderRadius: theme.isOldDesign ? 0 : 18,
         border: theme.isOldDesign ? `1px solid ${theme.palette.disabledColor}` : 0,
         backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.disabledColor,
@@ -80,6 +80,14 @@ class UserSearch extends Component {
         window.location.replace('/#/patients');
     };
 
+    onKeyDown = e => {
+        const { searchText } = this.state;
+        if (e.key === 'Enter') {
+            this.props.setUserSearch(searchText);
+            window.location.replace('/#/patients');
+        }
+    };
+
     render() {
         const { classes, userSearch, ...rest } = this.props;
         const { searchText } = this.state;
@@ -92,6 +100,7 @@ class UserSearch extends Component {
                     value={searchText}
                     placeholder="Search"
                     onChange={e => this.handleChange(e)}
+                    onKeyDown={e => this.onKeyDown(e)}
                 />
                 { userSearch &&
                     <Tooltip title="Clean Search" disableHoverListener={true}>

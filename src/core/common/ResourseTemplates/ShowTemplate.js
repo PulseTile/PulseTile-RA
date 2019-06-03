@@ -73,7 +73,7 @@ const styles = theme => ({
         }
     },
     showLayoutDetails: {
-        paddingTop: 10,
+        paddingTop: '0px !important',
         paddingLeft: 10,
     },
     labelBlock: {

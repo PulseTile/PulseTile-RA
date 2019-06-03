@@ -23,14 +23,11 @@ const styles = theme => ({
         display: "flex",
     },
     viewButton: {
-        height: 42,
+        height: theme.isRectangleButtons ? 42 : 40,
         textTransform: 'capitalize',
-        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        border: theme.isRectangleButtons ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         color: theme.palette.secondaryMainColor + ' !important',
         borderRadius: 0,
-        '&:hover': {
-            border: theme.isOldDesign ? `1px solid ${theme.palette.paperColor}` : null,
-        },
         '& span p': {
             fontSize: 16,
             color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.viewButton,
@@ -40,15 +37,11 @@ const styles = theme => ({
         height: 40,
         paddingLeft: 0,
         paddingRight: 0,
-        borderTop: `1px solid ${theme.palette.secondaryMainColor}`,
-        borderRight: `1px solid ${theme.palette.secondaryMainColor}`,
-        borderBottom: `1px solid ${theme.palette.secondaryMainColor}`,
+        borderTop: theme.isRectangleButtons ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        borderRight: theme.isRectangleButtons ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        borderBottom: theme.isRectangleButtons ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         borderRadius: 0,
         color: theme.palette.secondaryMainColor,
-        '&:hover': {
-            border: theme.isOldDesign ? `1px solid ${theme.palette.paperColor}` : null,
-            color: theme.palette.paperColor,
-        },
     },
     link: {
         height: 25,

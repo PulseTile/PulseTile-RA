@@ -45,7 +45,7 @@ const styles = theme => ({
     },
     editForm: {
         '& > div': {
-            paddingTop: 0,
+            paddingTop: '0px !important',
             paddingLeft: 10,
             paddingRight: 10,
         },

@@ -27,9 +27,14 @@ const styles = theme => ({
         '& tbody tr:hover td span': {
             color: theme.palette.paperColor
         },
-        '& tbody tr:hover td button span p': {
-            color: theme.palette.paperColor
-        }
+        '& tbody tr:hover td div button': {
+            backgroundColor: theme.palette.paperColor,
+            color: theme.palette.secondaryMainColor
+        },
+        '& tbody tr:hover td div svg': {
+            backgroundColor: theme.palette.paperColor,
+            color: theme.palette.secondaryMainColor
+        },
     },
     rowEven: {
         backgroundColor: theme.isOldDesign ? theme.palette.toolbarColor : theme.palette.paperColor

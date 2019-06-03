@@ -21,7 +21,7 @@ import { themeCommonElements } from "../../../version/config/theme.config";
 const LoadingItems = ({ classes }) => {
     return (
         <List className={classes.list}>
-            <li className={classes.listItem}>
+            <li className={classes.listItemNoData}>
                 <Typography>Loading...</Typography>
             </li>
             <div className={classes.emptyRows}></div>
