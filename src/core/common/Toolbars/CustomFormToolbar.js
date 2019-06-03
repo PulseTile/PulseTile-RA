@@ -40,6 +40,7 @@ const styles = theme => ({
         alignItems: "flex-end",
         width: 110,
         height: 40,
+        marginRight: 15,
         backgroundColor: theme.palette.dangerColor,
         color: theme.palette.paperColor,
         borderRadius: theme.isOldDesign ? 0 : 20,

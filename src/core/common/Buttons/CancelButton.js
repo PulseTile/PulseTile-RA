@@ -12,7 +12,7 @@ const styles = theme => ({
         height: 40,
         margin: "8px !important",
         padding: 0,
-        color: "#fff",
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.dangerColor,
         border: `1px solid ${theme.palette.dangerColor}`,
         borderRadius: theme.isOldDesign ? 0 : 25,
@@ -20,7 +20,7 @@ const styles = theme => ({
         fontWeight: 800,
         "&:hover": {
             color: theme.palette.dangerColor,
-            backgroundColor: "#fff",
+            backgroundColor: theme.palette.paperColor,
         }
     },
     icon: {

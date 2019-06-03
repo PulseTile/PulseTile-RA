@@ -8,30 +8,34 @@ import CustomSaveButton from "../../common/Buttons/CustomSaveButton";
 
 const styles = theme => ({
     listButton: {
-        display: "block",
-        width: 120,
+        display: "flex",
+        flexDirection: "row",
+        width: 110,
         height: 40,
-        paddingTop: "6px !important",
-        paddingLeft: "8px !important",
+        margin: "8px !important",
+        padding: 0,
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.dangerColor,
         border: `1px solid ${theme.palette.dangerColor}`,
-        color: theme.palette.paperColor,
-        borderRadius: theme.isOldDesign ? 0 : 20,
+        borderRadius: theme.isOldDesign ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
+        "&:hover": {
+            color: theme.palette.dangerColor,
+            backgroundColor: theme.palette.paperColor,
+        },
         "& svg": {
             marginRight: 2,
         },
         "& span": {
             textTransform: "capitalize",
         },
-        "&:hover": {
-            backgroundColor: theme.palette.paperColor,
-            color: theme.palette.dangerColor,
-        }
     },
     toolbar: {
         backgroundColor: theme.palette.toolbarColor,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end",
     }
 });
 
