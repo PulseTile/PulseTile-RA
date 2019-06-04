@@ -227,13 +227,16 @@ class ListTemplate extends Component {
         const { resourceUrl, toggleColumnStore, defaultHiddenColumns } = this.props;
         if (defaultHiddenColumns) {
             defaultHiddenColumns.map(item => {
-                toggleColumnStore(resourceUrl, item);
+                toggleColumnStore(resourceUrl, item, false);
             });
         }
         this.setState({
             hiddenColumns: defaultHiddenColumns,
-            key: this.state.key + 1,
-        })
+        });
+
+        if (defaultHiddenColumns) {
+            this.props.updateTableHead();
+        }
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -289,17 +292,17 @@ class ListTemplate extends Component {
         });
     };
 
-    toggleColumn = value => {
+    toggleColumn = (columnName, value) => {
         const { resourceUrl, toggleColumnStore, updateTableHead } = this.props;
 
         let hiddenColumnsArray = this.state.hiddenColumns;
         let key = this.state.key;
 
-        if (hiddenColumnsArray.indexOf(value) !== -1) {
-            let index = hiddenColumnsArray.indexOf(value);
+        if (hiddenColumnsArray.indexOf(columnName) !== -1) {
+            let index = hiddenColumnsArray.indexOf(columnName);
             hiddenColumnsArray.splice(index, 1);
         } else {
-            hiddenColumnsArray.push(value);
+            hiddenColumnsArray.push(columnName);
         }
         key++;
 
@@ -308,7 +311,7 @@ class ListTemplate extends Component {
             key: key,
         }, () => {
             updateTableHead();
-            toggleColumnStore(resourceUrl, value)
+            toggleColumnStore(resourceUrl, columnName, value)
         });
     };
 
@@ -429,8 +432,8 @@ const mapStateToProps = (state, ownProps)  => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        toggleColumnStore(resource, columnName) {
-            dispatch(columnsTogglingAction.toggle(resource, columnName));
+        toggleColumnStore(resource, columnName, value) {
+            dispatch(columnsTogglingAction.toggle(resource, columnName, value));
         },
     }
 };

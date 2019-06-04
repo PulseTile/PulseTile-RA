@@ -55,6 +55,11 @@ const columnsArray = [
     'ordersCount', 'resultsCount', 'vitalsCount', 'problemsCount'
 ];
 
+const defaultHiddenColumns = [
+    'ordersDate', 'resultsDate', 'vitalsDate', 'problemsDate',
+    'ordersCount', 'resultsCount', 'vitalsCount', 'problemsCount'
+];
+
 const PATIENT_INFO = 'patientInfo';
 const DATE_TIME = 'dateTime';
 const COUNT = 'count';
@@ -83,60 +88,73 @@ class ColumnsTogglingPopover extends Component {
     componentDidMount() {
         const { hiddenColumns } = this.props;
         columnsArray.map(item => {
-            if (hiddenColumns.indexOf(item) !== -1) {
+            if (hiddenColumns.length > 0) {
                 this.setState({
-                    [item]: false,
-                })
+                    [item]: (hiddenColumns.indexOf(item) === -1)
+                });
             }
         });
     }
 
-    handleChange = value => {
+    handleChange = columnName => {
+        const value = !this.state[columnName];
         this.setState(
-            {[value]: !this.state[value]},
-            () => this.props.toggleColumn(value)
+            {[columnName]: value},
+            () => this.props.toggleColumn(columnName, value)
         );
     };
 
     selectAll = value => {
-        const { patientInfo } = this.state;
+        const { patientInfo, dateTime, count } = this.state;
 
         if (value === PATIENT_INFO) {
+            const patientInfoValue = !patientInfo;
             this.setState({
-                patientInfo: !this.state.patientInfo,
-                address: !this.state.patientInfo,
-                nhsNumber: !this.state.patientInfo,
+                patientInfo: patientInfoValue,
+                address: patientInfoValue,
+                nhsNumber: patientInfoValue,
             });
-            this.props.toggleColumn('address');
-            this.props.toggleColumn('nhsNumber');
+            this.props.toggleColumn('address', patientInfoValue);
+            this.props.toggleColumn('nhsNumber', patientInfoValue);
         }
 
         if (value === DATE_TIME) {
+            const dateTimeValue = !dateTime;
+
+            console.log('------------------------ DATE_TIME', dateTimeValue)
+
             this.setState({
-                dateTime: !this.state.dateTime,
-                ordersDate: !this.state.dateTime,
-                resultsDate: !this.state.dateTime,
-                vitalsDate: !this.state.dateTime,
-                problemsDate: !this.state.dateTime,
+                dateTime: dateTimeValue,
+                ordersDate: dateTimeValue,
+                resultsDate: dateTimeValue,
+                vitalsDate: dateTimeValue,
+                problemsDate: dateTimeValue,
             });
-            this.props.toggleColumn('ordersDate');
-            this.props.toggleColumn('resultsDate');
-            this.props.toggleColumn('vitalsDate');
-            this.props.toggleColumn('problemsDate');
+            this.props.toggleColumn('ordersDate', dateTimeValue);
+            this.props.toggleColumn('resultsDate', dateTimeValue);
+            this.props.toggleColumn('vitalsDate', dateTimeValue);
+            this.props.toggleColumn('problemsDate', dateTimeValue);
         }
 
         if (value === COUNT) {
+
+
+            const countValue = !count;
+
+            console.log('------------------------ COUNT', countValue)
+
+
             this.setState({
-                count: !this.state.count,
-                ordersCount: !this.state.count,
-                resultsCount: !this.state.count,
-                vitalsCount: !this.state.count,
-                problemsCount: !this.state.count,
+                count: countValue,
+                ordersCount: countValue,
+                resultsCount: countValue,
+                vitalsCount: countValue,
+                problemsCount: countValue,
             });
-            this.props.toggleColumn('ordersCount');
-            this.props.toggleColumn('resultsCount');
-            this.props.toggleColumn('vitalsCount');
-            this.props.toggleColumn('problemsCount');
+            this.props.toggleColumn('ordersCount', countValue);
+            this.props.toggleColumn('resultsCount', countValue);
+            this.props.toggleColumn('vitalsCount', countValue);
+            this.props.toggleColumn('problemsCount', countValue);
         }
 
     };

@@ -176,6 +176,9 @@ class ValueWithUnits extends Component {
     };
 
     handleClose = () => {
+
+        console.log('++++++++++++++++++++++++++++++++')
+
         this.setState({
             anchorEl: false,
         });
@@ -225,7 +228,7 @@ class ValueWithUnits extends Component {
                                 />
                         }
                         { units &&
-                            <div className={classes.units} onClick={e => this.handleClick(e)}>
+                            <div className={classes.units} onMouseOver={e => this.handleClick(e)} onMouseOut={() => this.handleClose()}>
                                 <Typography>{units}</Typography>
                             </div>
                         }

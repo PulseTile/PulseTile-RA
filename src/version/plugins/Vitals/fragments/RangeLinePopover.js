@@ -9,6 +9,9 @@ import rangeLine from "../../../images/range-line.jpeg";
 import { rangeLineSettings } from "./settings";
 
 const styles = theme => ({
+    popover: {
+        pointerEvents: 'none',
+    },
     paper: {
         display: "block",
         width: 490,
@@ -65,6 +68,7 @@ const RangeLinePopover = ({ classes, anchorEl, open, handleClose, label, model }
     return (
         <Popover
             open={open}
+            className={classes.popover}
             classes={{ paper: classes.paper }}
             anchorEl={anchorEl}
             onClose={handleClose}

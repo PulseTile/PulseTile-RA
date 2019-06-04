@@ -81,6 +81,11 @@ class PatientsList extends Component {
         })
     };
 
+    isColumnHidden = columnName => {
+        const { hiddenColumns } = this.props;
+        return hiddenColumns.indexOf(columnName) === -1;
+    };
+
     render() {
         const { userSearch, classes, hiddenColumns } = this.props;
 
@@ -118,40 +123,40 @@ class PatientsList extends Component {
                     {...this.props}
                 >
                     <TextField source="name" label="Name"/>
-                    { (hiddenColumns.indexOf('address') === -1) && <TextField source="address" label="Address" /> }
+                    { this.isColumnHidden('address') && <TextField source="address" label="Address" /> }
                     <TextField source="gender" label="Gender"/>
                     <DateField source="birthDate" label="Born"/>
-                    { (hiddenColumns.indexOf('nhsNumber') === -1) && <TextField source="nhsNumber" label="NHS No." /> }
+                    { this.isColumnHidden('nhsNumber') && <TextField source="nhsNumber" label="NHS No." /> }
 
-                    {(hiddenColumns.indexOf('ordersDate') === -1) &&
+                    { this.isColumnHidden('ordersDate') &&
                         <DateField source="ordersDate" label={<LabelWithIcon classes={classes} title="Orders" icon={<TodayIcon className={classes.icon}/>}/>} />
                     }
 
-                    {(hiddenColumns.indexOf('ordersCount') === -1) &&
+                    { this.isColumnHidden('ordersCount') &&
                         <DateField source="ordersCount" label={<LabelWithIcon classes={classes} title="Orders" icon={<CheckIcon className={classes.icon}/>}/>} />
                     }
 
-                    {(hiddenColumns.indexOf('resultsDate') === -1) &&
+                    { this.isColumnHidden('resultsDate') &&
                         <DateField source="resultsDate" label={<LabelWithIcon classes={classes} title="Results" icon={<TodayIcon className={classes.icon} />} />} />
                     }
 
-                    {(hiddenColumns.indexOf('resultsCount') === -1) &&
+                    { this.isColumnHidden('resultsCount') &&
                         <DateField source="resultsCount" label={<LabelWithIcon classes={classes} title="Results" icon={<CheckIcon className={classes.icon} />} />} />
                     }
 
-                    {(hiddenColumns.indexOf('vitalsDate') === -1) &&
+                    { this.isColumnHidden('vitalsDate')  &&
                         <DateField source="vitalsDate" label={<LabelWithIcon classes={classes} title="Vitals" icon={<TodayIcon className={classes.icon} />} />} />
                     }
 
-                    {(hiddenColumns.indexOf('vitalsCount') === -1) &&
+                    { this.isColumnHidden('vitalsCount') &&
                         <DateField source="vitalsCount" label={<LabelWithIcon classes={classes} title="Vitals" icon={<CheckIcon className={classes.icon}/>}/>} />
                     }
 
-                    {(hiddenColumns.indexOf('problemsDate') === -1) &&
+                    { this.isColumnHidden('problemsDate') &&
                         <DateField source="problemsDate" label={<LabelWithIcon classes={classes} title="Problems" icon={<TodayIcon className={classes.icon} />} />}/>
                     }
 
-                    {(hiddenColumns.indexOf('problemsCount') === -1) &&
+                    { this.isColumnHidden('problemsCount') &&
                         <DateField source="problemsCount" label={<LabelWithIcon classes={classes} title="Problems" icon={<CheckIcon className={classes.icon} />} />} />
                     }
 

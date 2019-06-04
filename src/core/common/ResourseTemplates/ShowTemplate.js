@@ -68,6 +68,7 @@ const styles = theme => ({
         padding: 0,
     },
     showDetails: {
+        padding: '10px 0',
         '& > div': {
             boxShadow: "none",
         }

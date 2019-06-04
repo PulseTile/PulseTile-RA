@@ -90,6 +90,12 @@ const styles = theme => ({
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
         cursor: "pointer",
+        '&:hover': {
+            backgroundColor: theme.palette.secondaryMainColor,
+            '& p': {
+                color: theme.palette.paperColor,
+            }
+        }
     },
     emptyRows: {
         height: 150,
