@@ -72,6 +72,8 @@ function getCurrentTheme(isContrastMode) {
     const palette = getCurrentPalette(isContrastMode);
     const isOldDesign = get(window, 'config.isOldDesign', false);
     const isRectangleButtons = get(window, 'config.isRectangleButtons', false);
+
+    console.log('++++++++++++++++++++++', isRectangleButtons)
     return createMuiTheme({
         palette: palette,
         isOldDesign: isOldDesign,
@@ -82,7 +84,7 @@ function getCurrentTheme(isContrastMode) {
         },
         tableHeader: {
             tableHeaderBlock: {
-                background: getBackground(isContrastMode, palette.mainColor, 'tableHeaderImage'),
+                background: getBackground(isContrastMode, palette.secondaryMainColor, 'tableHeaderImage'),
             },
         },
         patientSummaryPanel: {
@@ -90,7 +92,7 @@ function getCurrentTheme(isContrastMode) {
                 background: `url(${backgroundImage})`,
             },
             topBlock: {
-                background: getBackground(isContrastMode, palette.mainColor, 'cardBackgroundImage'),
+                background: getBackground(isContrastMode, palette.secondaryMainColor, 'cardBackgroundImage'),
             }
         },
         overrides: {

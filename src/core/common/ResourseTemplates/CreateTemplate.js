@@ -48,7 +48,12 @@ const styles = theme => ({
             paddingTop: '0px !important',
             paddingLeft: 10,
             paddingRight: 10,
+            border: `1px solid ${theme.palette.borderColor}`
         },
+    },
+    customFormBlock: {
+        backgroundColor: theme.palette.paperColor,
+        border: `1px solid ${theme.palette.borderColor}`
     },
 });
 
@@ -84,9 +89,9 @@ const CreateTemplate = ({ classes, isCustom, isListOpened, toggleListBlock, bloc
                     </SimpleForm>
                 </Create>
             :
-            <React.Fragment>
+            <div className={classes.customFormBlock}>
                 {children}
-            </React.Fragment>
+            </div>
         }
     </Grid>
 );

@@ -37,7 +37,7 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "column",
         height: theme.isOldDesign ? 50 : 100,
-        backgroundColor: theme.palette.mainColor,
+        backgroundColor: theme.palette.tableHeadColor,
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
@@ -90,6 +90,12 @@ const styles = theme => ({
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
         cursor: "pointer",
+        '&:hover': {
+            backgroundColor: theme.palette.secondaryMainColor,
+            '& p': {
+                color: theme.palette.paperColor,
+            }
+        }
     },
     emptyRows: {
         height: 150,

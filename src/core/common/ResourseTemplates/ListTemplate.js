@@ -10,6 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import TableIcon from '@material-ui/icons/List';
 import ChartIcon from '@material-ui/icons/ShowChart';
 import TimelineIcon from '@material-ui/icons/Timeline';
+import FilterIcon from '@material-ui/icons/FilterList';
 
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/Input';
@@ -91,17 +92,28 @@ const listStyles = theme => ({
         height: 35,
     },
     filterInput: {
-        backgroundColor: theme.palette.mainColor,
+        display: 'flex',
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 5,
+        backgroundColor: `${theme.palette.mainColor} !important`,
         borderRadius: 0,
         boxShadow: "none",
         '& button': {
             color: "#fff",
         },
     },
+    filterInputIcon: {
+        color: theme.palette.fontColor,
+        marginLeft: 5,
+        marginBottom: 10,
+    },
     inputBlock: {
-        width: 'calc(100% - 30px)',
-        backgroundColor: "#fff",
-        borderRadius: 2,
+        width: 'calc(100% - 60px)',
+        borderRadius: theme.isOldDesign ? 0 : 18,
+        height: 36,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.disabledColor}` : 0,
+        backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.disabledColor,
         paddingLeft: 5,
         marginLeft: 10,
         marginBottom: 10,
@@ -210,6 +222,17 @@ class ListTemplate extends Component {
         });
     };
 
+    filterByUserSearchId = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearchID) {
+                return {
+                    filterText: props.userSearchID,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
     hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
@@ -227,13 +250,16 @@ class ListTemplate extends Component {
         const { resourceUrl, toggleColumnStore, defaultHiddenColumns } = this.props;
         if (defaultHiddenColumns) {
             defaultHiddenColumns.map(item => {
-                toggleColumnStore(resourceUrl, item);
+                toggleColumnStore(resourceUrl, item, false);
             });
         }
         this.setState({
             hiddenColumns: defaultHiddenColumns,
-            key: this.state.key + 1,
-        })
+        });
+
+        if (defaultHiddenColumns) {
+            this.props.updateTableHead();
+        }
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -289,17 +315,17 @@ class ListTemplate extends Component {
         });
     };
 
-    toggleColumn = value => {
+    toggleColumn = (columnName, value) => {
         const { resourceUrl, toggleColumnStore, updateTableHead } = this.props;
 
         let hiddenColumnsArray = this.state.hiddenColumns;
         let key = this.state.key;
 
-        if (hiddenColumnsArray.indexOf(value) !== -1) {
-            let index = hiddenColumnsArray.indexOf(value);
+        if (hiddenColumnsArray.indexOf(columnName) !== -1) {
+            let index = hiddenColumnsArray.indexOf(columnName);
             hiddenColumnsArray.splice(index, 1);
         } else {
-            hiddenColumnsArray.push(value);
+            hiddenColumnsArray.push(columnName);
         }
         key++;
 
@@ -308,12 +334,12 @@ class ListTemplate extends Component {
             key: key,
         }, () => {
             updateTableHead();
-            toggleColumnStore(resourceUrl, value)
+            toggleColumnStore(resourceUrl, columnName, value)
         });
     };
 
     render() {
-        const { create, resourceUrl, title, classes, history, userSearch, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
+        const { create, resourceUrl, title, classes, history, userSearch, userSearchID, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
         const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key } = this.state;
 
         const breadcrumbsResource = [
@@ -326,6 +352,10 @@ class ListTemplate extends Component {
         if (userSearch && resourceUrl === 'patients') {
             titleTable = `Patients matching '${userSearch}'`;
             this.filterByUserSearch();
+        }
+        if (userSearchID && resourceUrl === 'patients') {
+            titleTable = `Patients matching '${userSearchID}'`;
+            this.filterByUserSearchId();
         }
 
         const currentListArray = Object.values(currentList);
@@ -384,9 +414,12 @@ class ListTemplate extends Component {
                             </div>
                             {
                                 isFilterOpened &&
-                                <Paper className={classes.filterInput} elevation={1}>
-                                    <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                </Paper>
+                                    <div className={classes.filterBlock}>
+                                        <Paper className={classes.filterInput} elevation={1}>
+                                            <FilterIcon  className={classes.filterInputIcon} />
+                                            <input className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                        </Paper>
+                                    </div>
                             }
                         </div>
                         <ContentBlock
@@ -421,7 +454,8 @@ class ListTemplate extends Component {
 
 const mapStateToProps = (state, ownProps)  => {
     return {
-        userSearch: state.custom.userSearch.data,
+        userSearch: get(state, 'custom.userSearch.data', null),
+        userSearchID: get(state, 'custom.userSearch.id', null),
         currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
         currentData: get(state, 'admin.resources[' + ownProps.resource + '].data', []),
     }
@@ -429,8 +463,8 @@ const mapStateToProps = (state, ownProps)  => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        toggleColumnStore(resource, columnName) {
-            dispatch(columnsTogglingAction.toggle(resource, columnName));
+        toggleColumnStore(resource, columnName, value) {
+            dispatch(columnsTogglingAction.toggle(resource, columnName, value));
         },
     }
 };
