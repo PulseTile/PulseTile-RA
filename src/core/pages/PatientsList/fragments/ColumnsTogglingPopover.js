@@ -92,6 +92,19 @@ class ColumnsTogglingPopover extends Component {
                 this.setState({
                     [item]: (hiddenColumns.indexOf(item) === -1)
                 });
+            } else {
+                this.setState({
+                    dateTime: true,
+                    ordersDate: true,
+                    resultsDate: true,
+                    vitalsDate: true,
+                    problemsDate: true,
+                    count: true,
+                    ordersCount: true,
+                    resultsCount: true,
+                    vitalsCount: true,
+                    problemsCount: true,
+                });
             }
         });
     }
@@ -104,9 +117,17 @@ class ColumnsTogglingPopover extends Component {
         );
     };
 
+    toggleColumnIfHidden = (columnName, value) => {
+        const { hiddenColumns } = this.props;
+        if (value && hiddenColumns.indexOf(columnName) !== -1) {
+            this.props.toggleColumn(columnName, value);
+        } else if (!value) {
+            this.props.toggleColumn(columnName, value);
+        }
+    };
+
     selectAll = value => {
         const { patientInfo, dateTime, count } = this.state;
-
         if (value === PATIENT_INFO) {
             const patientInfoValue = !patientInfo;
             this.setState({
@@ -114,15 +135,12 @@ class ColumnsTogglingPopover extends Component {
                 address: patientInfoValue,
                 nhsNumber: patientInfoValue,
             });
-            this.props.toggleColumn('address', patientInfoValue);
-            this.props.toggleColumn('nhsNumber', patientInfoValue);
+            this.toggleColumnIfHidden('address', patientInfoValue);
+            this.toggleColumnIfHidden('nhsNumber', patientInfoValue);
         }
 
         if (value === DATE_TIME) {
             const dateTimeValue = !dateTime;
-
-            console.log('------------------------ DATE_TIME', dateTimeValue)
-
             this.setState({
                 dateTime: dateTimeValue,
                 ordersDate: dateTimeValue,
@@ -130,20 +148,14 @@ class ColumnsTogglingPopover extends Component {
                 vitalsDate: dateTimeValue,
                 problemsDate: dateTimeValue,
             });
-            this.props.toggleColumn('ordersDate', dateTimeValue);
-            this.props.toggleColumn('resultsDate', dateTimeValue);
-            this.props.toggleColumn('vitalsDate', dateTimeValue);
-            this.props.toggleColumn('problemsDate', dateTimeValue);
+            this.toggleColumnIfHidden('ordersDate', dateTimeValue);
+            this.toggleColumnIfHidden('resultsDate', dateTimeValue);
+            this.toggleColumnIfHidden('vitalsDate', dateTimeValue);
+            this.toggleColumnIfHidden('problemsDate', dateTimeValue);
         }
 
         if (value === COUNT) {
-
-
             const countValue = !count;
-
-            console.log('------------------------ COUNT', countValue)
-
-
             this.setState({
                 count: countValue,
                 ordersCount: countValue,
@@ -151,10 +163,10 @@ class ColumnsTogglingPopover extends Component {
                 vitalsCount: countValue,
                 problemsCount: countValue,
             });
-            this.props.toggleColumn('ordersCount', countValue);
-            this.props.toggleColumn('resultsCount', countValue);
-            this.props.toggleColumn('vitalsCount', countValue);
-            this.props.toggleColumn('problemsCount', countValue);
+            this.toggleColumnIfHidden('ordersCount', countValue);
+            this.toggleColumnIfHidden('resultsCount', countValue);
+            this.toggleColumnIfHidden('vitalsCount', countValue);
+            this.toggleColumnIfHidden('problemsCount', countValue);
         }
 
     };

@@ -19,6 +19,14 @@ const styles = theme => ({
         },
         '& tbody tr:hover': {
             backgroundColor: theme.palette.secondaryMainColor + '!important',
+            '& td div button': {
+                backgroundColor: theme.palette.paperColor,
+                color: theme.palette.secondaryMainColor
+            },
+            '& td div svg': {
+                backgroundColor: theme.palette.paperColor,
+                color: theme.palette.secondaryMainColor
+            },
         },
         '& tbody tr td': {
             borderLeft: theme.isOldDesign ? `0.5px solid ${theme.palette.borderColor}` : null,
@@ -27,14 +35,7 @@ const styles = theme => ({
         '& tbody tr:hover td span': {
             color: theme.palette.paperColor
         },
-        '& tbody tr:hover td div button': {
-            backgroundColor: theme.palette.paperColor,
-            color: theme.palette.secondaryMainColor
-        },
-        '& tbody tr:hover td div svg': {
-            backgroundColor: theme.palette.paperColor,
-            color: theme.palette.secondaryMainColor
-        },
+
     },
     rowEven: {
         backgroundColor: theme.isOldDesign ? theme.palette.toolbarColor : theme.palette.paperColor

@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import helmLogo from "../../../images/pulsetile-logo.png";
+import AdvancedUserSearch from "../../../../core/common/Topbar/fragments/AdvancedUserSearch";
 import UserSearch from "../../../../core/common/Topbar/fragments/UserSearch";
 import ContrastMode from "../../../features/ContrastMode";
 import UserPanelButton from "./UserPanelButton";
@@ -132,6 +133,7 @@ class TopPart extends Component {
                     />
                 </div>
                 <div className={classes.emptyBlock}></div>
+                <AdvancedUserSearch />
                 <UserSearch location={location} />
                 <ContrastMode classes={classes} />
                 <UserPanelButton classes={classes} />

@@ -16,7 +16,6 @@ import { transferOfCareAction } from "../../../actions/transferOfCareAction";
 import SectionToolbar from "../../../../core/common/Toolbars/CustomFormToolbar";
 import RecordsSelector from "./RecordsSelector";
 import { selectors, recordsTypes } from "./selectors";
-import customDataProvider from "../../../../core/dataProviders/dataProvider";
 
 const styles = {
     formGroup: {
