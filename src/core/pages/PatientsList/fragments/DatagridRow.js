@@ -105,76 +105,20 @@ class PatientDatagridRow extends Component {
                 <TableCell key={`${record.id}-name`}>
                     {record.name}
                 </TableCell>
-                {
-                    this.isColumnHidden('address') &&
-                        <TableCell key={`${record.id}-address`}>
-                            {record.address}
-                        </TableCell>
-                }
+                <TableCell key={`${record.id}-address`}>
+                    {record.address}
+                </TableCell>
                 <TableCell key={`${record.id}-gender`}>
                     {record.gender}
                 </TableCell>
                 <TableCell key={`${record.id}-birthDate`}>
                     {moment(record.birthDate).format(DATE_FORMAT)}
                 </TableCell>
-                {
-                    this.isColumnHidden('nhsNumber') &&
-                        <TableCell key={`${record.id}-nhsNumber`}>
-                            {record.nhsNumber}
-                        </TableCell>
-                }
+                <TableCell key={`${record.id}-nhsNumber`}>
+                    {record.nhsNumber}
+                </TableCell>
 
-                {
-                    this.isColumnHidden('ordersDate') &&
-                        <TableCell key={`${record.id}-ordersDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    this.isColumnHidden('ordersCount') &&
-                        <TableCell key={`${record.id}-ordersCount`}>
-                            {Math.floor(Math.random() * Math.floor(8))}
-                        </TableCell>
-                }
 
-                {
-                    this.isColumnHidden('resultsDate') &&
-                        <TableCell key={`${record.id}-resultsDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    this.isColumnHidden('resultsCount') &&
-                        <TableCell key={`${record.id}-resultsCount`}>
-                            {Math.floor(Math.random() * Math.floor(12))}
-                        </TableCell>
-                }
-
-                {
-                    this.isColumnHidden('vitalsDate') &&
-                        <TableCell key={`${record.id}-vitalsDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    this.isColumnHidden('vitalsCount') &&
-                        <TableCell key={`${record.id}-vitalsCount`}>
-                            {Math.floor(Math.random() * Math.floor(12))}
-                        </TableCell>
-                }
-
-                {
-                    this.isColumnHidden('problemsDate') &&
-                        <TableCell key={`${record.id}-problemsDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    this.isColumnHidden('problemsCount') &&
-                        <TableCell key={`${record.id}-problemsCount`}>
-                            {Math.floor(Math.random() * Math.floor(12))}
-                        </TableCell>
-                }
 
                 <TableCell className={classes.viewButtonCell}>
                     <ViewButton viewAction={isPermissionRequired ? this.handleClick : this.redirectWithoutPermission} checkRedirectUrl={this.checkRedirectUrl} />

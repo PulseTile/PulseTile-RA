@@ -6,10 +6,8 @@ import { TextField, DateField, setSidebarVisibility } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import TodayIcon from "@material-ui/icons/Today";
-import CheckIcon from "@material-ui/icons/Check";
 
-import image from "../../../version/images/pulsetile-logo.png";
+import image from "../../../version/images/helm-logo.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
@@ -123,42 +121,10 @@ class PatientsList extends Component {
                     {...this.props}
                 >
                     <TextField source="name" label="Name"/>
-                    { this.isColumnHidden('address') && <TextField source="address" label="Address" /> }
+                    <TextField source="address" label="Address" />
                     <TextField source="gender" label="Gender"/>
                     <DateField source="birthDate" label="Born"/>
-                    { this.isColumnHidden('nhsNumber') && <TextField source="nhsNumber" label="NHS No." /> }
-
-                    { this.isColumnHidden('ordersDate') &&
-                        <DateField source="ordersDate" label={<LabelWithIcon classes={classes} title="Orders" icon={<TodayIcon className={classes.icon}/>}/>} />
-                    }
-
-                    { this.isColumnHidden('ordersCount') &&
-                        <DateField source="ordersCount" label={<LabelWithIcon classes={classes} title="Orders" icon={<CheckIcon className={classes.icon}/>}/>} />
-                    }
-
-                    { this.isColumnHidden('resultsDate') &&
-                        <DateField source="resultsDate" label={<LabelWithIcon classes={classes} title="Results" icon={<TodayIcon className={classes.icon} />} />} />
-                    }
-
-                    { this.isColumnHidden('resultsCount') &&
-                        <DateField source="resultsCount" label={<LabelWithIcon classes={classes} title="Results" icon={<CheckIcon className={classes.icon} />} />} />
-                    }
-
-                    { this.isColumnHidden('vitalsDate')  &&
-                        <DateField source="vitalsDate" label={<LabelWithIcon classes={classes} title="Vitals" icon={<TodayIcon className={classes.icon} />} />} />
-                    }
-
-                    { this.isColumnHidden('vitalsCount') &&
-                        <DateField source="vitalsCount" label={<LabelWithIcon classes={classes} title="Vitals" icon={<CheckIcon className={classes.icon}/>}/>} />
-                    }
-
-                    { this.isColumnHidden('problemsDate') &&
-                        <DateField source="problemsDate" label={<LabelWithIcon classes={classes} title="Problems" icon={<TodayIcon className={classes.icon} />} />}/>
-                    }
-
-                    { this.isColumnHidden('problemsCount') &&
-                        <DateField source="problemsCount" label={<LabelWithIcon classes={classes} title="Problems" icon={<CheckIcon className={classes.icon} />} />} />
-                    }
+                    <TextField source="nhsNumber" label="NHS No." />
 
                     <ViewButton />
 
