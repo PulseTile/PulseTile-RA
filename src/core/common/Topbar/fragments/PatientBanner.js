@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import moment from "moment";
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';

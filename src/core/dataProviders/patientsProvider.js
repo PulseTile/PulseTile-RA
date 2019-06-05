@@ -215,7 +215,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
 
             return {
                 data: paginationResults,
-                total: patientsArray.length,
+                total: paginationResults.length,
             };
 
         case GET_ONE:

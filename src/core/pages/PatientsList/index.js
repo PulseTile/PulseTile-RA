@@ -134,10 +134,10 @@ class PatientsList extends Component {
                     {...this.props}
                 >
                     <TextField source="name" label="Name"/>
-                    { this.isColumnHidden('address') && <TextField source="address" label="Address" /> }
+                    <TextField source="address" label="Address" />
                     <TextField source="gender" label="Gender"/>
                     <DateField source="birthDate" label="Born"/>
-                    { this.isColumnHidden('nhsNumber') && <TextField source="nhsNumber" label="NHS No." /> }
+                    <TextField source="nhsNumber" label="NHS No." />
 
                     <ViewButton />
 
