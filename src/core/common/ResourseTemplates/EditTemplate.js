@@ -45,10 +45,15 @@ const styles = theme => ({
     },
     editForm: {
         '& > div': {
-            paddingTop: 0,
+            paddingTop: '0px !important',
             paddingLeft: 10,
             paddingRight: 10,
+            border: `1px solid ${theme.palette.borderColor}`
         },
+    },
+    customFormBlock: {
+        backgroundColor: theme.palette.paperColor,
+        border: `1px solid ${theme.palette.borderColor}`
     },
 });
 
@@ -86,9 +91,9 @@ const EditTemplate = ({ classes, isCustom, isListOpened, blockTitle, toggleListB
                     </SimpleForm>
                 </Edit>
             :
-                <React.Fragment>
+                <div className={classes.customFormBlock}>
                     {children}
-                </React.Fragment>
+                </div>
         }
     </Grid>
 );

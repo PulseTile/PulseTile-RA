@@ -17,7 +17,7 @@ const ItemsList = ({ classes, items, list, history }) => {
     if (items && items.length === 0) {
         return (
             <List className={classes.list}>
-                <li className={classes.listItem}>
+                <li className={classes.listItemNoData}>
                     <Typography>No data</Typography>
                 </li>
             </List>

@@ -1,6 +1,5 @@
 import React from "react";
 import get from "lodash/get";
-import moment from "moment";
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -26,7 +25,7 @@ const PatientBanner = ({ classes, patientInfo }) => {
     return (
         <Grid className={classes.patientInfo} container spacing={24}>
             <Grid className={classes.gridBlock} item xs={12} lg={8}>
-                <Typography variant="h6">
+                <Typography variant="h6" className={classes.patientNameBlock}>
                     <span className={classes.keyName}>{get(patientInfo, 'name', null)}</span>
                 </Typography>
                 { doctor &&
@@ -35,6 +34,10 @@ const PatientBanner = ({ classes, patientInfo }) => {
                         {doctor}
                     </Typography>
                 }
+                <Typography variant="body2">
+                    <span className={classes.keyName}>Address: </span>
+                    <span className={classes.keyName}>{addressArray.join(', ')}</span>
+                </Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
                 {
@@ -57,12 +60,6 @@ const PatientBanner = ({ classes, patientInfo }) => {
                 <Typography variant="body2">
                     <span className={classes.keyName}>CHI No.: </span>
                     { get(patientInfo, 'nhsNumber', null) }</Typography>
-            </Grid>
-            <Grid className={classes.gridBlock} item xs={12}>
-                <Typography variant="body2">
-                    <span className={classes.keyName}>Address: </span>
-                    <span className={classes.keyName}>{addressArray.join(', ')}</span>
-                </Typography>
             </Grid>
         </Grid>
     );

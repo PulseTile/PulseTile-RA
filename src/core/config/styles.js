@@ -71,9 +71,13 @@ function getCurrentTheme(isContrastMode) {
     const backgroundImage = isContrastMode ? null : get(themeImages, 'backgroundImage', null);
     const palette = getCurrentPalette(isContrastMode);
     const isOldDesign = get(window, 'config.isOldDesign', false);
+    const isRectangleButtons = get(window, 'config.isRectangleButtons', false);
+
+    console.log('++++++++++++++++++++++', isRectangleButtons)
     return createMuiTheme({
         palette: palette,
         isOldDesign: isOldDesign,
+        isRectangleButtons: isRectangleButtons,
         typography: {
             fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
             fontSize: 14,

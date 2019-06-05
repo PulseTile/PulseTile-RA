@@ -5,6 +5,7 @@ import { setSidebarVisibility } from "react-admin";
 
 import TableCell from '@material-ui/core/TableCell';
 
+import { columnsTogglingAction } from "../../../actions/columnsTogglingAction";
 import CustomDatagridRow from "../../../common/ResourseTemplates/fragments/CustomDatagridRow";
 import { DATE_FORMAT } from "../../../common/ResourseTemplates/fragments/constants";
 import ViewButton from "../../../common/Buttons/ViewButton";
@@ -77,6 +78,11 @@ class PatientDatagridRow extends Component {
          });
     };
 
+    isColumnHidden = columnName => {
+        const { hiddenColumns } = this.props;
+        return hiddenColumns.indexOf(columnName) === -1;
+    };
+
     render() {
         const { classes, record, hiddenColumns } = this.props;
         const { loading, anchorEl } = this.state;
@@ -100,7 +106,7 @@ class PatientDatagridRow extends Component {
                     {record.name}
                 </TableCell>
                 {
-                    (hiddenColumns.indexOf('address') === -1) &&
+                    this.isColumnHidden('address') &&
                         <TableCell key={`${record.id}-address`}>
                             {record.address}
                         </TableCell>
@@ -112,7 +118,7 @@ class PatientDatagridRow extends Component {
                     {moment(record.birthDate).format(DATE_FORMAT)}
                 </TableCell>
                 {
-                    (hiddenColumns.indexOf('nhsNumber') === -1) &&
+                    this.isColumnHidden('nhsNumber') &&
                         <TableCell key={`${record.id}-nhsNumber`}>
                             {record.nhsNumber}
                         </TableCell>
@@ -135,6 +141,9 @@ const mapDispatchToProps = dispatch => {
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
+        removeHiddenColumns() {
+            dispatch(columnsTogglingAction.remove());
+        }
     }
 };
 
