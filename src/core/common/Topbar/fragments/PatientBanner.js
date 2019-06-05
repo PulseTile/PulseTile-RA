@@ -62,12 +62,6 @@ const PatientBanner = ({ classes, patientInfo }) => {
                     <span className={classes.keyName}>CHI No.: </span>
                     { get(patientInfo, 'nhsNumber', null) }</Typography>
             </Grid>
-            <Grid className={classes.gridBlock} item xs={12}>
-                <Typography variant="body2">
-                    <span className={classes.keyName}>Address: </span>
-                    <span className={classes.keyName}>{addressArray.join(', ')}</span>
-                </Typography>
-            </Grid>
         </Grid>
     );
 };
