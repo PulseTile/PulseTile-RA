@@ -6,7 +6,12 @@ import { setSidebarVisibility } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = {
+import dummyPatients from "../PatientsList/dummyPatients";
+
+import BarChartTitle from "./fragments/BarChartTitle";
+import BarChartTemplate from "./fragments/BarChartTemplate";
+
+const styles = theme => ({
     chartsContainer: {
         display: "flex",
         justifyContent: "space-around",
