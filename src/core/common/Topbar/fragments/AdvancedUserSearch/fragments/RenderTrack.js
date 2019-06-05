@@ -11,7 +11,7 @@ const styles = {
     }
 };
 
-const RenderTrack = ({ classes, props, children, preferencesValue, min, max }) => {
+const RenderTrack = ({ classes, props, children, value, min, max }) => {
     return (
         <div onMouseDown={props.onMouseDown} onTouchStart={props.onTouchStart} className={classes.mainBlock}>
             <div
@@ -21,8 +21,8 @@ const RenderTrack = ({ classes, props, children, preferencesValue, min, max }) =
                     width: "100%",
                     borderRadius: "4px",
                     background: getTrackBackground({
-                        values: preferencesValue,
-                        colors: ["#0D672F", "#ccc"],
+                        values: value,
+                        colors: ["#ccc", "#0D672F", "#ccc"],
                         min: min,
                         max: max
                     }),

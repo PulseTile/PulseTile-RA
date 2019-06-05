@@ -63,16 +63,42 @@ const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, chi
     );
 };
 
+function getSearch(userSearch, userSearchID) {
+    let result = null
+    if (userSearch) {
+        result = userSearch;
+    }
+    if (userSearchID) {
+        result = userSearchID;
+    }
+    return result;
+}
+
+function getSearchType(userSearch, userSearchID) {
+    let result = null
+    if (userSearch) {
+        result = 'name';
+    }
+    if (userSearchID) {
+        result = 'id';
+    }
+    return result;
+}
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, key, userSearch, filterText, history, isCreatePage, createUrl, children, defaultSort } = props;
+    const { classes, title, idsNumber, resourceUrl, key, userSearch, userSearchID, filterText, history, isCreatePage, createUrl, children, defaultSort } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
+    const search = getSearch(userSearch, userSearchID);
+    const searchType = getSearchType(userSearch, userSearchID);
     return (
         <List
             resource={resourceUrl}
             key={key}
             sort={{ field: sortField, order: 'DESC' }}
-            filter={{ filterText: (userSearch && resourceUrl === 'patients') ? userSearch : filterText }}
+            filter={{
+                filterText: (search && resourceUrl === 'patients') ? search : filterText,
+                filterType: searchType,
+            }}
             title={title}
             perPage={ITEMS_PER_PAGE}
             actions={null}

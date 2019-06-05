@@ -14,11 +14,18 @@ export default (state = initialState, action) => {
                 loading: false,
                 data: action.data,
             };
+        case USER_SEARCH_ACTION.REQUEST_ID:
+            return {
+                ...state,
+                loading: false,
+                id: action.data,
+            };
         case USER_SEARCH_ACTION.REMOVE:
             return {
                 ...state,
                 loading: false,
                 data: null,
+                id: null,
             };
         default:
             return state;

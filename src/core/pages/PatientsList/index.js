@@ -87,9 +87,9 @@ class PatientsList extends Component {
     };
 
     render() {
-        const { userSearch, classes, hiddenColumns } = this.props;
+        const { userSearch, userSearchID, classes } = this.props;
 
-        if (!userSearch) {
+        if (!userSearch && !userSearchID) {
             return (
                 <div className={classes.content}>
                     <div className={classes.imageBlock} >
@@ -170,7 +170,8 @@ class PatientsList extends Component {
 
 const mapStateToProps = state => {
     return {
-        userSearch: state.custom.userSearch.data,
+        userSearch: get(state, 'custom.userSearch.data', null),
+        userSearchID: get(state, 'custom.userSearch.id', null),
         hiddenColumns:  get(state, 'custom.toggleColumns.data.patients', []),
     }
 };

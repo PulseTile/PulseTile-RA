@@ -222,6 +222,17 @@ class ListTemplate extends Component {
         });
     };
 
+    filterByUserSearchId = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearchID) {
+                return {
+                    filterText: props.userSearchID,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
     hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
@@ -328,7 +339,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, classes, history, userSearch, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
+        const { create, resourceUrl, title, classes, history, userSearch, userSearchID, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
         const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key } = this.state;
 
         const breadcrumbsResource = [
@@ -341,6 +352,10 @@ class ListTemplate extends Component {
         if (userSearch && resourceUrl === 'patients') {
             titleTable = `Patients matching '${userSearch}'`;
             this.filterByUserSearch();
+        }
+        if (userSearchID && resourceUrl === 'patients') {
+            titleTable = `Patients matching '${userSearchID}'`;
+            this.filterByUserSearchId();
         }
 
         const currentListArray = Object.values(currentList);
@@ -439,7 +454,8 @@ class ListTemplate extends Component {
 
 const mapStateToProps = (state, ownProps)  => {
     return {
-        userSearch: state.custom.userSearch.data,
+        userSearch: get(state, 'custom.userSearch.data', null),
+        userSearchID: get(state, 'custom.userSearch.id', null),
         currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
         currentData: get(state, 'admin.resources[' + ownProps.resource + '].data', []),
     }
