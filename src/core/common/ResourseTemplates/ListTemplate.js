@@ -10,6 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import TableIcon from '@material-ui/icons/List';
 import ChartIcon from '@material-ui/icons/ShowChart';
 import TimelineIcon from '@material-ui/icons/Timeline';
+import FilterIcon from '@material-ui/icons/FilterList';
 
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/Input';
@@ -91,17 +92,28 @@ const listStyles = theme => ({
         height: 35,
     },
     filterInput: {
-        backgroundColor: theme.palette.mainColor,
+        display: 'flex',
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 5,
+        backgroundColor: `${theme.palette.mainColor} !important`,
         borderRadius: 0,
         boxShadow: "none",
         '& button': {
             color: "#fff",
         },
     },
+    filterInputIcon: {
+        color: theme.palette.fontColor,
+        marginLeft: 5,
+        marginBottom: 10,
+    },
     inputBlock: {
-        width: 'calc(100% - 30px)',
-        backgroundColor: "#fff",
-        borderRadius: 2,
+        width: 'calc(100% - 60px)',
+        borderRadius: theme.isOldDesign ? 0 : 18,
+        height: 36,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.disabledColor}` : 0,
+        backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.disabledColor,
         paddingLeft: 5,
         marginLeft: 10,
         marginBottom: 10,
@@ -387,9 +399,12 @@ class ListTemplate extends Component {
                             </div>
                             {
                                 isFilterOpened &&
-                                <Paper className={classes.filterInput} elevation={1}>
-                                    <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                </Paper>
+                                    <div className={classes.filterBlock}>
+                                        <Paper className={classes.filterInput} elevation={1}>
+                                            <FilterIcon  className={classes.filterInputIcon} />
+                                            <input className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                        </Paper>
+                                    </div>
                             }
                         </div>
                         <ContentBlock
