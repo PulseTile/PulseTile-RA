@@ -91,7 +91,7 @@ class ClinicalQueryDialog extends Component {
                 <LocalForm model="clinicalQuery" onSubmit={values => this.submitForm(values)}>
 
                     <FormGroup className={classes.formGroup}>
-                        <FormLabel className={classes.formLabel}>Select Age Params</FormLabel>
+                        <FormLabel className={classes.formLabel}>Search Type</FormLabel>
                         <Control.select className={classes.formSelect} model='searchType' onChange={e => this.changeSearchType(e)} required>
                             <option></option>
                             <option value='allergies'>Allergies</option>
