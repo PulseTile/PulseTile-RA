@@ -1,11 +1,11 @@
 import React from "react";
-import { Route } from "react-router";
 import { DateField, TextField } from "react-admin";
 
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import MedicationsCreate from "./MedicationsCreate";
 import MedicationsEdit from "./MedicationsEdit";
 import MedicationsShow from "./MedicationsShow";
+import DatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with Medications list
@@ -22,6 +22,8 @@ export const MedicationsList = ({ classes, ...rest }) => (
       show={MedicationsShow}
       resourceUrl="medications"
       title="Medications"
+      CustomRow={DatagridRow}
+      isCustomDatagrid={true}
       {...rest}
     >
         <TextField source="name" label="Name" />

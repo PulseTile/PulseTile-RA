@@ -9,13 +9,52 @@ import {
 import sort, { ASC, DESC } from 'sort-array-objects';
 import { token, domainName } from "../token";
 
+function checkFormData(params) {
+
+    const paramsArray = [
+        { param: 'data.firstName', label: 'Name' },
+        { param: 'data.lastName', label: 'Surname' },
+        { param: 'data.birthDate', label: 'Date of Birth' },
+        { param: 'data.address', label: 'Address' },
+        { param: 'data.city', label: 'City' },
+        { param: 'data.district', label: 'District' },
+        { param: 'data.postCode', label: 'Post Code' },
+        { param: 'data.country', label: 'Country' },
+        { param: 'data.phone', label: 'Telephone Number' },
+        { param: 'data.nhsNumber', label: 'CHI Number' },
+    ];
+
+    let missedParamsArray = [];
+    for (let i = 0, n = paramsArray.length; i < n; i++) {
+        let item = paramsArray[i];
+        let value = get(params, item.param, null);
+        if (!value) {
+            missedParamsArray.push(item.label);
+        }
+    }
+
+    if (missedParamsArray.length > 0) {
+        const string = missedParamsArray.join(', ');
+        throw new HttpError('777|Please add ' + string);
+    }
+
+    return true;
+}
+
 const convertPatientsDataRequestToHTTP = (type, resource, params) => {
     let url = "";
     const options = {};
     switch (type) {
         case GET_LIST: {
             const search = get(params, 'filter.filterText', null);
-            url = `${domainName}/mpi/Patient?name=${search}`;
+            const searchType = get(params, 'filter.filterType', null);
+
+            if (searchType === 'id') {
+                url = `${domainName}/mpi/Patient/${search}`;
+            } else {
+                url = `${domainName}/mpi/Patient?name=${search}`;
+            }
+
             if (!options.headers) {
                 options.headers = new Headers({Accept: 'application/json'});
             }
@@ -38,6 +77,9 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
+
+            checkFormData(params);
+
             let userName = get(params, 'data.firstName', null);
             let userId = get(params, 'data.nhsNumber', null);
             let updateData = {
@@ -72,6 +114,9 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
+
+            checkFormData(params);
+
             let patientId = get(params, 'data.nhsNumber', null);
             let name = get(params, 'data.firstName', null);
             let data = {
@@ -114,14 +159,40 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
     switch (type) {
 
         case GET_LIST:
-            const pageNumber = get(params, 'pagination.page', 1);
-            const numberPerPage = get(params, 'pagination.perPage', 10);
-            const patientsArray = get(response, 'entry', []);
-            const results = getPatientsList(patientsArray);
-            const resultsSorting = getSortedResults(results, params);
-            const startItem = (pageNumber - 1) * numberPerPage;
-            const endItem = pageNumber * numberPerPage;
-            const paginationResults = resultsSorting.slice(startItem, endItem);
+            const searchType = get(params, 'filter.filterType', null);
+
+            let paginationResults = [];
+            if (searchType === 'name') {
+                const pageNumber = get(params, 'pagination.page', 1);
+                const numberPerPage = get(params, 'pagination.perPage', 10);
+                const patientsArray = get(response, 'entry', []);
+                const results = getPatientsList(patientsArray);
+                const resultsSorting = getSortedResults(results, params);
+                const startItem = (pageNumber - 1) * numberPerPage;
+                const endItem = pageNumber * numberPerPage;
+                paginationResults = resultsSorting.slice(startItem, endItem);
+            } else if (searchType === 'id') {
+                const patientInfo = get(response, 'patient', null);
+                const addressFromResponse = get(response, 'address', null);
+                const result = {
+                    id: get(patientInfo, ['identifier', [0], 'value'], null),
+                    name: getTotalName(patientInfo, true),
+                    address: getTotalAddress(patientInfo, true),
+                    city: get(addressFromResponse, [[0], 'city'], null),
+                    country: get(addressFromResponse, [[0], 'country'], null),
+                    district: get(addressFromResponse, [[0], 'district'], null),
+                    postCode: get(addressFromResponse, [[0], 'postalCode'], null),
+                    birthDate: get(patientInfo, 'birthDate', null),
+                    department: get(patientInfo, 'department', null),
+                    gender: get(patientInfo, 'gender', null),
+                    nhsNumber: get(patientInfo, ['identifier', [0], 'value'], null),
+                    phone: get(patientInfo, 'telecom', null),
+                }
+
+                paginationResults = [result];
+            }
+
+
             return {
                 data: paginationResults,
                 total: paginationResults.length,
@@ -162,7 +233,6 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             };
 
         case UPDATE:
-            let newPrefix = get(params, 'data.prefix', null);
             let newFirstName = get(params, 'data.firstName', null);
             let newLastName = get(params, 'data.lastName', null);
 
@@ -172,7 +242,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             let newPostalCode = get(params, 'data.postCode', null);
 
             let newData = params.data;
-            newData.name = [newPrefix, newFirstName, newLastName].join(' ');
+            newData.name = [newFirstName, newLastName].join(' ');
             newData.address = [newAddressLine, newCity, newDistrict, newPostalCode].join(' ');
             return {
                 id: get(params, 'data.nhsNumber', null),
@@ -189,7 +259,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                 sourceID = compositionUidArray[0];
             }
             dataFromRequest.id = Number(get(params, 'data.nhsNumber', null));
-            dataFromRequest.name = get(params, 'data.prefix', null) + ' ' + get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
+            dataFromRequest.name = get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
             dataFromRequest.address = get(params, 'data.address', null) + ' ' + get(params, 'data.city', null) + ' ' + get(params, 'data.district', null) + ' ' + get(params, 'data.postCode', null);
             dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
@@ -237,12 +307,12 @@ function getPatientsList(patientsArray) {
  * This function prepare total patient name (for table)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} item
+ * @param {shape}   item
+ * @param {boolean} isSingle
  * @return {string}
  */
-function getTotalName(item) {
-    const nameFromResponse = get(item, 'resource.name', null);
-    const prefix = get(nameFromResponse, [[0], 'prefix'], null);
+function getTotalName(item, isSingle = null) {
+    const nameFromResponse = isSingle ? get(item, 'name', null) : get(item, 'resource.name', null);
     const namesArray = get(nameFromResponse, [[0], 'given'], null);
     const firstName = namesArray.join(' ');
     const surname = get(nameFromResponse, [[0], 'family'], null);
@@ -253,11 +323,12 @@ function getTotalName(item) {
  * This function prepare total patient address (for table)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} item
+ * @param {shape}   item
+ * @param {boolean} isSingle
  * @return {string}
  */
-function getTotalAddress(item) {
-    const addressFromResponse = get(item, 'resource.address', null);
+function getTotalAddress(item, isSingle) {
+    const addressFromResponse = isSingle ? get(item, 'address', null) : get(item, 'resource.address', null);
     const addressArray = [
         get(addressFromResponse, [[0], 'line', [0]], null),
         get(addressFromResponse, [[0], 'city'], null),
@@ -284,6 +355,10 @@ function getSortedResults(results, params) {
 export default (type, resource, params) => {
     let { url, options } = convertPatientsDataRequestToHTTP(type, resource, params);
     let responseInfo = {};
+
+    console.log('url', url);
+    console.log('options', options);
+
     return fetch(url, options).then(response => {
         responseInfo.status = get(response, 'status', null);
         return response.json();

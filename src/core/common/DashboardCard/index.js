@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
@@ -9,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import ItemsList from "./ItemsList";
 import { SHOW_ALL } from "../../pages/PatientSummary/config";
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 /**
  * This component returns list of empty rows if information is loading
@@ -19,7 +21,7 @@ import { SHOW_ALL } from "../../pages/PatientSummary/config";
 const LoadingItems = ({ classes }) => {
     return (
         <List className={classes.list}>
-            <li className={classes.listItem}>
+            <li className={classes.listItemNoData}>
                 <Typography>Loading...</Typography>
             </li>
             <div className={classes.emptyRows}></div>
@@ -59,11 +61,12 @@ export default props => {
     if (Object.values(showHeadings).indexOf(list) === -1) {
         return null;
     }
+    const isOldDesign = get(themeCommonElements, 'isOldDesign', false);
     return (
         <Grid item xs={12} sm={6} md={6} lg={3}>
             <Card className={classes.card}>
                 <div id={id} className={classes.topBlock} aria-label={title} onClick={() => history.push('/' + list)}>
-                    <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} />
+                    { !isOldDesign && <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} /> }
                     <h1 className={classes.mainHeading}>
                         <Typography className={classes.title}>
                             {title}

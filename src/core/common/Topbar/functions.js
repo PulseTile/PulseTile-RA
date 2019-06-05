@@ -8,6 +8,7 @@ export function pageHasTitle(location) {
     const pagesWithTitle = [
         '/charts',
         '/patients',
+        '/'
     ];
     return pagesWithTitle.indexOf(pathName) !== -1;
 }

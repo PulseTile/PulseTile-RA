@@ -11,10 +11,15 @@ import DialogWithStyles from "./DialogWithStyles";
 
 const styles = {
     settingsIconBlock: {
-        paddingLeft: 20,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
     },
-    title: {
-        marginLeft: 10,
+    icon: {
+        display: "block",
+    },
+    iconTitle: {
+        marginTop: 15,
     },
 };
 
@@ -39,13 +44,13 @@ class SettingsDialog extends Component {
         const { classes } = this.props;
         const { open } = this.state;
         return (
-            <div id="patientSummary-Top" className={classes.settingsIconBlock}>
-                <Tooltip title="Settings">
+            <div id="patientSummary-Top"  className={classes.settingsIconBlock}>
+                <Tooltip className={classes.icon} title="Settings">
                     <IconButton id="icon-settings" aria-haspopup="true" aria-label="Settings" color="inherit" onClick={() => this.toggleDialog()}>
                         <SettingsIcon />
-                        <Typography variant="h1" className={classes.title}>Home</Typography>
                     </IconButton>
                 </Tooltip>
+                <Typography className={classes.iconTitle} variant="h1">Home</Typography>
                 <DialogWithStyles open={open} onClose={this.toggleDialog} />
             </div>
         );

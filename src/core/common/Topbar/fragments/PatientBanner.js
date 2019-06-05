@@ -1,6 +1,5 @@
 import React from "react";
 import get from "lodash/get";
-import moment from "moment";
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -22,42 +21,41 @@ const PatientBanner = ({ classes, patientInfo }) => {
     return (
         <Grid id="patientBanner" className={classes.patientInfo} container spacing={24}>
             <Grid className={classes.gridBlock} item xs={12} lg={8}>
-                <Typography id="patientBanner-name" variant="h6">
-                    {get(patientInfo, 'name', null)}
+                <Typography id="patientBanner-name" variant="h6" className={classes.patientNameBlock}>
+                    <span className={classes.keyName}>{get(patientInfo, 'name', null)}</span>
                 </Typography>
                 { doctor &&
-                <Typography id="patientBanner-doctor" variant="body2">
-                    <span className={classes.keyName}>Doctor: </span>
-                    {doctor}
-                </Typography>
+                    <Typography id="patientBanner-doctor" variant="body2">
+                        <span className={classes.keyName}>Doctor: </span>
+                        <span className={classes.keyName}>{doctor}</span>
+                    </Typography>
                 }
+                <Typography id="patientBanner-address" variant="body2">
+                    <span className={classes.keyName}>Address: </span>
+                    <span className={classes.keyName}>{addressArray.join(', ')}</span>
+                </Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
                 {
                     dateOfBirth &&
-                    <Typography variant="body2">
-                        <span className={classes.keyName}>D.O.B.: </span>
-                        {dateOfBirth}
-                    </Typography>
+                        <Typography variant="body2">
+                            <span className={classes.keyName}>D.O.B.: </span>
+                            <span className={classes.keyName}>{dateOfBirth}</span>
+                        </Typography>
                 }
                 <Typography id="patientBanner-phone" variant="body2">
                     <span className={classes.keyName}>Phone: </span>
-                    {get(patientInfo, 'phone', null)}
+                    <span className={classes.keyName}>{get(patientInfo, 'phone', null)}</span>
                 </Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
                 <Typography id="patientBanner-gender" variant="body2">
                     <span className={classes.keyName}>Gender: </span>
-                    { get(patientInfo, 'gender', null) }
+                    <span className={classes.keyName}>{ get(patientInfo, 'gender', null) }</span>
                 </Typography>
                 <Typography id="patientBanner-nhsNumber" variant="body2">
                     <span className={classes.keyName}>NHS No.: </span>
-                    { get(patientInfo, 'nhsNumber', null) }</Typography>
-            </Grid>
-            <Grid className={classes.gridBlock} item xs={12}>
-                <Typography id="patientBanner-address" variant="body2">
-                    <span className={classes.keyName}>Address: </span>
-                    { get(patientInfo, 'address', null) }
+                    <span className={classes.keyName}>{ get(patientInfo, 'nhsNumber', null) }</span>
                 </Typography>
             </Grid>
         </Grid>

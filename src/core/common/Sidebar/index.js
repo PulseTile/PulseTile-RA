@@ -30,15 +30,15 @@ const styles = theme => ({
         border: `1px solid ${theme.palette.borderColor}`,
     },
     menuItem: {
-        color: `${theme.palette.mainColor} !important`,
+        color: `${theme.palette.secondaryMainColor} !important`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
         '&:hover': {
-            backgroundColor: theme.palette.mainColor,
+            backgroundColor: theme.palette.secondaryMainColor,
             color: "#fff !important",
         },
     },
     menuItemSelected: {
-        backgroundColor: theme.palette.mainColor + '! important',
+        backgroundColor: theme.palette.secondaryMainColor + '! important',
         color: "#fff !important",
         borderBottom: `1px solid ${theme.palette.borderColor}`,
     },

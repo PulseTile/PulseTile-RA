@@ -15,10 +15,10 @@ const styles = {
     root: {
         flexDirection: 'column',
         zIndex: 1,
-        minHeight: '100vh',
+        minHeight: '98vh',
         position: 'relative',
         '& > div': {
-            minHeight: '100vh',
+            minHeight: '98vh',
         },
         '& main > div': {
             padding: 0,
