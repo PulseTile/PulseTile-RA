@@ -34,7 +34,7 @@ const styles = theme => ({
         height: 48,
         paddingLeft: 20,
         backgroundColor: theme.palette.secondaryMainColor,
-        color: "#fff",
+        color: theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 800,
     },
@@ -56,7 +56,7 @@ const styles = theme => ({
         margin: "8px !important",
         color: "white",
         backgroundColor: theme.palette.dangerColor,
-        borderRadius: 25,
+        borderRadius: theme.isRectangleButtons ? 0 : 25,
         fontSize: 16,
         fontWeight: 800,
         "&:hover": {

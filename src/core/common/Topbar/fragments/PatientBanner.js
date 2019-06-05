@@ -1,6 +1,5 @@
 import React from "react";
 import get from "lodash/get";
-import moment from "moment";
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -35,6 +34,10 @@ const PatientBanner = ({ classes, patientInfo }) => {
                         {doctor}
                     </Typography>
                 }
+                <Typography variant="body2">
+                    <span className={classes.keyName}>Address: </span>
+                    <span className={classes.keyName}>{addressArray.join(', ')}</span>
+                </Typography>
             </Grid>
             <Grid className={classes.gridBlock} item xs={6} lg={2}>
                 {

@@ -19,12 +19,14 @@ import EditButton from "../../common/Buttons/EditButton";
 const styles = theme => ({
     expansionPanel: {
         height: "49px !important",
+        border: `1px solid ${theme.palette.borderColor}`,
         '& > div': {
             minHeight: "49px !important",
         }
     },
     currentExpansionPanel: {
         margin: "0px !important",
+        border: `1px solid ${theme.palette.borderColor}`,
         '& > div': {
             minHeight: "49px !important",
         }
@@ -68,12 +70,13 @@ const styles = theme => ({
         padding: 0,
     },
     showDetails: {
+        padding: '10px 0',
         '& > div': {
             boxShadow: "none",
         }
     },
     showLayoutDetails: {
-        paddingTop: 10,
+        paddingTop: '0px !important',
         paddingLeft: 10,
     },
     labelBlock: {

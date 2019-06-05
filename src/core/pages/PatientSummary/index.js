@@ -22,6 +22,7 @@ const styles = theme => ({
     summaryContainer: getSummaryContainerStyles(synopsisData),
     card: {
         borderRadius: 0,
+        boxShadow: theme.isOldDesign ? "0px 2px 4px rgba(0, 0, 0, 0.3)" : null,
     },
     media: {
         backgroundColor: theme.palette.mainColor,
@@ -67,6 +68,18 @@ const styles = theme => ({
         backgroundColor: "#fff",
         border: "1px solid #e5e5e5",
     },
+    listItemNoData: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: 48,
+        paddingLeft: 15,
+        zIndex: 99999999,
+        fontSize: "1rem",
+        borderLeft: `1px solid ${theme.palette.borderColor}`,
+        borderRight: `1px solid ${theme.palette.borderColor}`,
+        borderBottom: `1px solid ${theme.palette.borderColor}`,
+    },
     listItem: {
         display: "flex",
         flexDirection: "column",
@@ -78,6 +91,13 @@ const styles = theme => ({
         borderLeft: `1px solid ${theme.palette.borderColor}`,
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
+        cursor: "pointer",
+        '&:hover': {
+            backgroundColor: theme.palette.secondaryMainColor,
+            '& p': {
+                color: theme.palette.paperColor,
+            }
+        }
     },
     emptyRows: {
         height: 150,

@@ -8,6 +8,9 @@ import CustomSaveButton from "../Buttons/CustomSaveButton";
 const styles = theme => ({
     toolbar: {
         backgroundColor: theme.palette.toolbarColor,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end",
     }
 });
 

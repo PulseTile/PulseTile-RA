@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "lodash/get";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -28,7 +28,7 @@ const styles = theme => ({
         paddingTop: 0,
         paddingBottom: 0,
         paddingLeft: 20,
-        marginRight: 10,
+        marginRight: theme.isOldDesign ? null : 10,
         borderRadius: theme.isOldDesign ? 0 : 18,
         border: theme.isOldDesign ? `1px solid ${theme.palette.disabledColor}` : 0,
         backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.disabledColor,
@@ -64,6 +64,10 @@ class UserSearch extends Component {
             this.setState({
                 searchText: '',
             });
+        } else if (userSearch) {
+            this.setState({
+                searchText: userSearch,
+            });
         }
     }
 
@@ -76,8 +80,17 @@ class UserSearch extends Component {
     };
 
     onSearchClick = searchText => {
+        this.props.removeUserSearch();
         this.props.setUserSearch(searchText);
         window.location.replace('/#/patients');
+    };
+
+    onKeyDown = e => {
+        const { searchText } = this.state;
+        if (e.key === 'Enter') {
+            this.props.setUserSearch(searchText);
+            window.location.replace('/#/patients');
+        }
     };
 
     render() {
@@ -92,6 +105,7 @@ class UserSearch extends Component {
                     value={searchText}
                     placeholder="Search"
                     onChange={e => this.handleChange(e)}
+                    onKeyDown={e => this.onKeyDown(e)}
                 />
                 { userSearch &&
                     <Tooltip title="Clean Search" disableHoverListener={true}>
@@ -122,7 +136,7 @@ class UserSearch extends Component {
 
 const mapStateToProps = state => {
     return {
-        userSearch: state.custom.userSearch.data,
+        userSearch: get(state, 'custom.userSearch.data', null),
     }
 };
 

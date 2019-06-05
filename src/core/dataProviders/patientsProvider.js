@@ -47,7 +47,14 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
     switch (type) {
         case GET_LIST: {
             const search = get(params, 'filter.filterText', null);
-            url = `${domainName}/mpi/Patient?name=${search}`;
+            const searchType = get(params, 'filter.filterType', null);
+
+            if (searchType === 'id') {
+                url = `${domainName}/mpi/Patient/${search}`;
+            } else {
+                url = `${domainName}/mpi/Patient?name=${search}`;
+            }
+
             if (!options.headers) {
                 options.headers = new Headers({Accept: 'application/json'});
             }
@@ -172,14 +179,40 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
     switch (type) {
 
         case GET_LIST:
-            const pageNumber = get(params, 'pagination.page', 1);
-            const numberPerPage = get(params, 'pagination.perPage', 10);
-            const patientsArray = get(response, 'entry', []);
-            const results = getPatientsList(patientsArray);
-            const resultsSorting = getSortedResults(results, params);
-            const startItem = (pageNumber - 1) * numberPerPage;
-            const endItem = pageNumber * numberPerPage;
-            const paginationResults = resultsSorting.slice(startItem, endItem);
+            const searchType = get(params, 'filter.filterType', null);
+
+            let paginationResults = [];
+            if (searchType === 'name') {
+                const pageNumber = get(params, 'pagination.page', 1);
+                const numberPerPage = get(params, 'pagination.perPage', 10);
+                const patientsArray = get(response, 'entry', []);
+                const results = getPatientsList(patientsArray);
+                const resultsSorting = getSortedResults(results, params);
+                const startItem = (pageNumber - 1) * numberPerPage;
+                const endItem = pageNumber * numberPerPage;
+                paginationResults = resultsSorting.slice(startItem, endItem);
+            } else if (searchType === 'id') {
+                const patientInfo = get(response, 'patient', null);
+                const addressFromResponse = get(response, 'address', null);
+                const result = {
+                    id: get(patientInfo, ['identifier', [0], 'value'], null),
+                    name: getTotalName(patientInfo, true),
+                    address: getTotalAddress(patientInfo, true),
+                    city: get(addressFromResponse, [[0], 'city'], null),
+                    country: get(addressFromResponse, [[0], 'country'], null),
+                    district: get(addressFromResponse, [[0], 'district'], null),
+                    postCode: get(addressFromResponse, [[0], 'postalCode'], null),
+                    birthDate: get(patientInfo, 'birthDate', null),
+                    department: get(patientInfo, 'department', null),
+                    gender: get(patientInfo, 'gender', null),
+                    nhsNumber: get(patientInfo, ['identifier', [0], 'value'], null),
+                    phone: get(patientInfo, 'telecom', null),
+                }
+
+                paginationResults = [result];
+            }
+
+
             return {
                 data: paginationResults,
                 total: patientsArray.length,
@@ -294,11 +327,12 @@ function getPatientsList(patientsArray) {
  * This function prepare total patient name (for table)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} item
+ * @param {shape}   item
+ * @param {boolean} isSingle
  * @return {string}
  */
-function getTotalName(item) {
-    const nameFromResponse = get(item, 'resource.name', null);
+function getTotalName(item, isSingle = null) {
+    const nameFromResponse = isSingle ? get(item, 'name', null) : get(item, 'resource.name', null);
     const namesArray = get(nameFromResponse, [[0], 'given'], null);
     const firstName = namesArray.join(' ');
     const surname = get(nameFromResponse, [[0], 'family'], null);
@@ -309,11 +343,12 @@ function getTotalName(item) {
  * This function prepare total patient address (for table)
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} item
+ * @param {shape}   item
+ * @param {boolean} isSingle
  * @return {string}
  */
-function getTotalAddress(item) {
-    const addressFromResponse = get(item, 'resource.address', null);
+function getTotalAddress(item, isSingle) {
+    const addressFromResponse = isSingle ? get(item, 'address', null) : get(item, 'resource.address', null);
     const addressArray = [
         get(addressFromResponse, [[0], 'line', [0]], null),
         get(addressFromResponse, [[0], 'city'], null),
