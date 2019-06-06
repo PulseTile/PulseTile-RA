@@ -410,7 +410,7 @@ class VitalsInputs extends Component {
                             units="mmHg"
                             model="diastolicBP"
                             updateInput={this.updateInput}
-                            hasPopup={false}
+                            hasPopup={true}
                             value={get(filledValues, 'diastolicBP', null)}
                             isDetailsPage={isDetailsPage}
                             sourceId={sourceId}

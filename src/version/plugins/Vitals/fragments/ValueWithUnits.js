@@ -176,9 +176,6 @@ class ValueWithUnits extends Component {
     };
 
     handleClose = () => {
-
-        console.log('++++++++++++++++++++++++++++++++')
-
         this.setState({
             anchorEl: false,
         });

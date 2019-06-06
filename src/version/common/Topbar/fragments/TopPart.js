@@ -106,7 +106,7 @@ class TopPart extends Component {
     };
 
     render() {
-        const { classes, location, goBack } = this.props;
+        const { classes, location, goBack, advancedSearchInfo, clinicalQueryInfo } = this.props;
         const pathname = get(location, 'pathname', null);
         return (
             <Toolbar className={classes.topPart}>
@@ -134,11 +134,18 @@ class TopPart extends Component {
                 </div>
                 <div className={classes.emptyBlock}></div>
                 <AdvancedUserSearch />
-                <UserSearch location={location} />
+                { (!advancedSearchInfo && !clinicalQueryInfo) && <UserSearch location={location} /> }
                 <ContrastMode classes={classes} />
                 <UserPanelButton classes={classes} />
             </Toolbar>
         );
+    }
+};
+
+const mapStateToProps = state => {
+    return {
+        advancedSearchInfo: get(state, 'custom.advancedSearch.data', null),
+        clinicalQueryInfo: get(state, 'custom.clinicalQuery.data', null),
     }
 };
 
@@ -153,4 +160,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(TopPart));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TopPart));

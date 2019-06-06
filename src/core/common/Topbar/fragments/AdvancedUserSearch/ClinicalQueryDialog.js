@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { LocalForm, Control } from 'react-redux-form';
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -11,8 +13,10 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
+import { userSearchAction } from "../../../../actions/userSearchAction";
+import { advancedSearchAction } from "../../../../actions/advancedSearchAction";
+import { clinicalQueryAction } from "../../../../actions/clinicalQueryAction";
 import DialogTemplate from "./DialogTemplate";
-
 import formStyles from "./fragments/formStyles";
 import RangeLine from "./fragments/RangeLine";
 import Button from "@material-ui/core/Button";
@@ -20,6 +24,8 @@ import Button from "@material-ui/core/Button";
 class ClinicalQueryDialog extends Component {
 
     state = {
+        searchQuery: null,
+        searchValue: null,
         ageParams: 'ageRange',
         dateOfBirth: null,
         gender: null,
@@ -57,12 +63,21 @@ class ClinicalQueryDialog extends Component {
         })
     };
 
+    changeBlockTitle = (e, paramName) => {
+        this.setState({
+            [paramName]: e.target.value,
+        })
+    };
+
     getBlockTitle = () => {
-        const { age, ageParams, searchType, dateOfBirth, gender } = this.state;
+        const { searchQuery, searchValue, age, ageParams, searchType, dateOfBirth, gender } = this.state;
         let title = "Clinical Query";
         let titleArray = [];
         if (searchType) {
             titleArray.push(`Search Type: ${searchType}`)
+        }
+        if (searchQuery && searchValue) {
+            titleArray.push(`${searchQuery}: ${searchValue}`)
         }
         if (ageParams === 'ageRange') {
             titleArray.push(`Age Range: ${age[0]}-${age[1]}`)
@@ -79,9 +94,46 @@ class ClinicalQueryDialog extends Component {
         return title;
     };
 
+    submitForm = formData => {
+        const { searchType, searchQuery, searchValue } = formData;
+        const { dateOfBirth, gender, age } = this.state;
+
+        const clinicalQueryData = {
+            title: this.getBlockTitle(),
+            searchType: searchType,
+            searchQuery: searchQuery,
+            searchValue: searchValue,
+            dateOfBirth: dateOfBirth ? moment(dateOfBirth).format('DD-MM-YYYY') : null,
+            minAge: age[0],
+            maxAge: age[1],
+            gender: gender
+        };
+
+        this.props.removeUserSearch();
+        this.props.removeAdvancedSearch();
+        this.props.setClinicalQuery(clinicalQueryData);
+
+        window.location.replace('/#/patients');
+        this.props.onClose();
+    };
+
+    closeModal = () => {
+        this.setState({
+            searchQuery: null,
+            searchValue: null,
+            ageParams: 'ageRange',
+            dateOfBirth: null,
+            gender: null,
+            age: [0, 100],
+            searchType: null,
+        });
+        this.props.removeAdvancedSearch();
+        this.props.onClose();
+    };
+
     render() {
-        const { classes, onClose } = this.props;
-        const { age, ageParams, dateOfBirth, gender } = this.state;
+        const { classes } = this.props;
+        const { age, searchType, searchValue, searchQuery, ageParams, dateOfBirth, gender } = this.state;
         const title = this.getBlockTitle();
         return (
             <DialogTemplate
@@ -92,33 +144,36 @@ class ClinicalQueryDialog extends Component {
 
                     <FormGroup className={classes.formGroup}>
                         <FormLabel className={classes.formLabel}>Search Type</FormLabel>
-                        <Control.select className={classes.formSelect} model='searchType' onChange={e => this.changeSearchType(e)} required>
+                        <Control.select className={classes.formSelect} model='clinicalQuery.searchType' onChange={e => this.changeSearchType(e)}>
                             <option></option>
-                            <option value='allergies'>Allergies</option>
-                            <option value='problems'>Problems / Diagnosis</option>
-                            <option value='procedures'>Procedures</option>
-                            <option value='medications'>Medications</option>
+                            <option value='allergies' selected={searchType === 'allergies'}>Allergies</option>
+                            <option value='problems' selected={searchType === 'problems'}>Problems / Diagnosis</option>
+                            <option value='procedures' selected={searchType === 'procedures'}>Procedures</option>
+                            <option value='medications' selected={searchType === 'medications'}>Medications</option>
                         </Control.select>
                     </FormGroup>
 
                     <FormGroup className={classes.formGroup}>
                         <FormLabel className={classes.formLabel}>Search Query</FormLabel>
                         <div className={classes.searchQueryBlock}>
-                            <Control.select className={classes.formSelect} model='searchQuery' required>
-                                <option value='contains'>Contains</option>
+                            <Control.select className={classes.formSelect} model='clinicalQuery.searchQuery' onChange={e => this.changeBlockTitle(e, 'searchQuery')}>
+                                <option></option>
+                                <option value='contains' selected={searchQuery === 'contains'}>Contains</option>
                             </Control.select>
                             <Control.text
                                 className={classes.formInputRight}
-                                model="value"
+                                model="clinicalQuery.searchValue"
+                                defaultValue={searchValue}
+                                onChange={e => this.changeBlockTitle(e, 'searchValue')}
                             />
                         </div>
                     </FormGroup>
 
                     <FormGroup className={classes.formGroup}>
                         <FormLabel className={classes.formLabel}>Select Age Params</FormLabel>
-                        <Control.select className={classes.formSelect} model='ageParams' onChange={e => this.changeAgeParams(e)} required>
-                            <option value='dateOfBirth'>Date of Birth</option>
-                            <option value='ageRange' selected>Age Range</option>
+                        <Control.select className={classes.formSelect} model='ageParams' onChange={e => this.changeAgeParams(e)}>
+                            <option value='ageRange' selected={ageParams === 'ageRange'}>Age Range</option>
+                            <option value='dateOfBirth' selected={ageParams === 'dateOfBirth'}>Date of Birth</option>
                         </Control.select>
                     </FormGroup>
 
@@ -160,7 +215,7 @@ class ClinicalQueryDialog extends Component {
                     </FormGroup>
 
                     <div className={classes.toolbar}>
-                        <Button type="button" aria-label="Close" className={classes.closeButton} onClick={() => onClose()}>Close</Button>
+                        <Button type="button" aria-label="Close" className={classes.closeButton} onClick={() => this.closeModal()}>Close</Button>
                         <Button type="submit" aria-label="Reload page" className={classes.searchButton}>Search</Button>
                     </div>
 
@@ -170,4 +225,24 @@ class ClinicalQueryDialog extends Component {
     }
 };
 
-export default withStyles(formStyles)(ClinicalQueryDialog);
+const mapStateToProps = state => {
+    return {
+        clinicalQueryInfo: get(state, 'custom.clinicalQuery.data', null),
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        removeUserSearch() {
+            dispatch(userSearchAction.remove());
+        },
+        removeAdvancedSearch() {
+            dispatch(advancedSearchAction.remove());
+        },
+        setClinicalQuery(data) {
+            dispatch(clinicalQueryAction.create(data));
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(formStyles)(ClinicalQueryDialog));

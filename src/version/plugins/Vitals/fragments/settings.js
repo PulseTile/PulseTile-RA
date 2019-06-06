@@ -27,6 +27,12 @@ export const rangeLineLimits = {
         redMin: 90,
         redMax: 220,
     },
+    diastolicBP: {
+        greenMin: 101,
+        greenMax: 219,
+        redMin: 90,
+        redMax: 220,
+    },
     temperature: {
         greenMin: 36.0,
         greenMax: 38.1,
@@ -64,6 +70,15 @@ export const rangeLineSettings = {
         { label: null, position: 'rangeAxisItemTop' },
     ],
     systolicBP: [
+        { label: '≤ 90', position: 'rangeAxisItemTop' },
+        { label: '91-100', position: 'rangeAxisItemBottom' },
+        { label: '101-110', position: 'rangeAxisItemTop' },
+        { label: '111-219', position: 'rangeAxisItemBottom' },
+        { label: null, position: 'rangeAxisItemTop' },
+        { label: null, position: 'rangeAxisItemTop' },
+        { label: '≥ 220', position: 'rangeAxisItemTop' },
+    ],
+    diastolicBP: [
         { label: '≤ 90', position: 'rangeAxisItemTop' },
         { label: '91-100', position: 'rangeAxisItemBottom' },
         { label: '101-110', position: 'rangeAxisItemTop' },
