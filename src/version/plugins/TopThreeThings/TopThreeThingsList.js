@@ -1,11 +1,11 @@
 import React from "react";
-import { Route } from "react-router";
 import { DateField, TextField } from "react-admin";
 
 import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
 import TopThreeThingsCreate from "./TopThreeThingsCreate";
 import TopThreeThingsEdit from "./TopThreeThingsEdit";
 import TopThreeThingsShow from "./TopThreeThingsShow";
+import DatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with Top Three Things list
@@ -23,6 +23,8 @@ const TopThreeThingsList = ({ classes, ...rest }) => (
       show={TopThreeThingsShow}
       resourceUrl="top3Things"
       title="Top Three Things"
+      CustomRow={DatagridRow}
+      isCustomDatagrid={true}
       {...rest}
     >
         <DateField source="dateCreated" label="Date created"  />
