@@ -340,7 +340,7 @@ class ListTemplate extends Component {
 
     render() {
         const { create, resourceUrl, title, classes, history, userSearch, userSearchID, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
-        const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key } = this.state;
+        const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key, filterText } = this.state;
 
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -424,6 +424,7 @@ class ListTemplate extends Component {
                         </div>
                         <ContentBlock
                             key={key}
+                            filterText={filterText}
                             hiddenColumns={hiddenColumns}
                             createUrl={createUrl}
                             idsNumber={idsNumber}
