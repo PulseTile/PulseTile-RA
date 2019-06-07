@@ -109,6 +109,8 @@ class ClinicalQueryDialog extends Component {
             gender: gender
         };
 
+
+
         this.props.removeUserSearch();
         this.props.removeAdvancedSearch();
         this.props.setClinicalQuery(clinicalQueryData);
@@ -127,7 +129,7 @@ class ClinicalQueryDialog extends Component {
             age: [0, 100],
             searchType: null,
         });
-        this.props.removeAdvancedSearch();
+        this.props.removeClinicalQuery();
         this.props.onClose();
     };
 
@@ -238,6 +240,9 @@ const mapDispatchToProps = dispatch => {
         },
         removeAdvancedSearch() {
             dispatch(advancedSearchAction.remove());
+        },
+        removeClinicalQuery() {
+            dispatch(clinicalQueryAction.remove());
         },
         setClinicalQuery(data) {
             dispatch(clinicalQueryAction.create(data));
