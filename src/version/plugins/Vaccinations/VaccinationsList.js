@@ -1,11 +1,11 @@
 import React from "react";
-import { Route } from "react-router";
 import { DateField, TextField } from "react-admin";
 
 import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
 import VaccinationsCreate from "./VaccinationsCreate";
 import VaccinationsEdit from "./VaccinationsEdit";
 import VaccinationsShow from "./VaccinationsShow";
+import DatagridRow from "./fragments/DatagridRow";
 
 /**
  * This component returns block with Vaccinations list
@@ -22,6 +22,8 @@ const VaccinationsList = ({ classes, ...rest }) => (
       show={VaccinationsShow}
       resourceUrl="vaccinations"
       title="Vaccinations"
+      CustomRow={DatagridRow}
+      isCustomDatagrid={true}
       {...rest}
     >
         <TextField label="Vaccination Name" source="vaccinationName" />
