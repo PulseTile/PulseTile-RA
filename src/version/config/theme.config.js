@@ -3,6 +3,7 @@ import ThemeFooter from "../common/Footer";
 import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
 import FeedsPanels from "../plugins/Feeds/FeedsPanels";
 import Charts from "../../core/pages/Charts";
+import RespectSummaryPanel from "../pages/ReSPECT/fragments/summaryPanel";
 
 export const themeShortMenu = [
     { url: '/', label: 'Charts' },
@@ -24,6 +25,7 @@ export const themeFullMenu = [
     { url: '/referrals', label: 'Referrals' },
     { url: '/toc', label: 'Transfers Of Care' },
     { url: '/vitalsigns', label: 'Vitals' },
+    { url: '/respect', label: 'ReSPECT' },
 ];
 
 export const themeCommonElements = {
@@ -37,6 +39,7 @@ export const themeCommonElements = {
     feedsSelectors: FeedsSelectors,
     feedsPanels: FeedsPanels,
     homePage: Charts,
+    respectPanel: RespectSummaryPanel,
 };
 
 export const themeImages = {};
