@@ -9,16 +9,15 @@ import Typography from "@material-ui/core/Typography";
 import TodayIcon from "@material-ui/icons/Today";
 import CheckIcon from "@material-ui/icons/Check";
 
+import { patientsCountAction } from "../../actions/patientsCountAction";
 import image from "../../../version/images/pulsetile-logo.png";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
-
 import DatagridRow from "./fragments/DatagridRow";
 import ColumnsTogglingPopover from "./fragments/ColumnsTogglingPopover";
-
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
@@ -73,6 +72,20 @@ class PatientsList extends Component {
 
     componentDidMount() {
         this.props.setSidebarVisibility(false);
+    }
+
+    componentWillReceiveProps(newProps, prevList) {
+        const { getPatientsCounts } = this.props;
+
+        const prevPatientsIds = get(prevList, 'patientsIds', []);
+        const newPatientsIds = get(newProps, 'patientsIds', []);
+        const isPatientListCount = get(themeCommonElements, 'isPatientListCount', false);
+
+        if (isPatientListCount && (prevPatientsIds !== newPatientsIds) && newPatientsIds.length > 0) {
+            newPatientsIds.map(item => {
+                getPatientsCounts(item);
+            });
+        }
     }
 
     updateTableHead = () => {
@@ -173,6 +186,7 @@ const mapStateToProps = state => {
         userSearch: get(state, 'custom.userSearch.data', null),
         userSearchID: get(state, 'custom.userSearch.id', null),
         hiddenColumns:  get(state, 'custom.toggleColumns.data.patients', []),
+        patientsIds: get(state, 'admin.resources.patients.list.ids', []),
     }
 };
 
@@ -181,6 +195,9 @@ const mapDispatchToProps = dispatch => {
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
+        getPatientsCounts(patientId) {
+            dispatch(patientsCountAction.request(patientId));
+        }
     }
 };
 

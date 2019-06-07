@@ -8,6 +8,7 @@ import userSearchReducer from "./userSearchReducer";
 import toggleColumnsReducer from "./toggleColumnsReducer";
 import advancedSearchReducer from "./advancedSearchReducer";
 import clinicalQueryReducer from "./clinicalQueryReducer";
+import patientsCountReducer from "./patientsCountReducer";
 
 import {
     SYNOPSIS_ALLERGIES_ACTION,
@@ -37,6 +38,7 @@ const coreReducers = {
     toggleColumns: toggleColumnsReducer,
     advancedSearch: advancedSearchReducer,
     clinicalQuery: clinicalQueryReducer,
+    patientsCount: patientsCountReducer,
 };
 
 const reducers = Object.assign({}, coreReducers, nonCoreReducers);

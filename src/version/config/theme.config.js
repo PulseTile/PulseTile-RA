@@ -30,6 +30,7 @@ export const themeCommonElements = {
     isOldDesign: true,
     patientSummaryPermission: true,
     patientListColumnToggling: true,
+    isPatientListCount: true,
     redirectToPlugin: true,
     topbar: ThemeTopbar,
     footer: ThemeFooter,

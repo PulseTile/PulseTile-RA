@@ -7,6 +7,7 @@ import demographicsSagas from "./demographicsSagas";
 import httpErrorSagas from "./httpErrorSagas";
 import showModeSagas from "./showModeSagas";
 import showHeadingsSagas from "./showHeadingsSagas";
+import patientsCountSagas from "./patientsCountSagas";
 
 import createSynopsisSagas from "./createSynopsisSagas";
 import {
@@ -30,6 +31,7 @@ const coreSagas = [
     httpErrorSagas,
     showModeSagas,
     showHeadingsSagas,
+    patientsCountSagas,
 ];
 
 const mergeSagas = coreSagas.concat(nonCoreSagas);
