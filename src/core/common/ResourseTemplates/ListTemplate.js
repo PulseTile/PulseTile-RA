@@ -6,33 +6,29 @@ import { Route } from "react-router";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import SearchIcon from '@material-ui/icons/Search';
 import TableIcon from '@material-ui/icons/List';
 import ChartIcon from '@material-ui/icons/ShowChart';
 import TimelineIcon from '@material-ui/icons/Timeline';
-import FilterIcon from '@material-ui/icons/FilterList';
 
 import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 import { columnsTogglingAction } from "../../actions/columnsTogglingAction";
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
+import CustomIcon from "../../common/CustomIcon";
 import DetailsTemplate from "./DetailsTemplate";
 
 import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "./fragments/constants";
 import TableContent from "./fragments/TableContent";
 import ChartContent from "./fragments/ChartContent";
 import TimelineContent from "./fragments/TimelineContent";
-
 import ListModePopover from "./popovers/ListModePopover";
-
 import ColumnsTogglingIcon from "./icons/ColumnsTogglingIcon";
 
 const listStyles = theme => ({
@@ -81,14 +77,6 @@ const listStyles = theme => ({
         paddingRight: 10,
         marginRight: 5,
         border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
-        height: 35,
-    },
-    expandIcon: {
-        color: theme.isOldDesign ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
-        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginRight: 10,
         height: 35,
     },
     filterInput: {
@@ -179,7 +167,8 @@ class ListTemplate extends Component {
         })
     };
 
-    toggleListBlock = () => {
+    toggleListBlock = e => {
+        e.stopPropagation();
         this.setState({
             isListOpened: !this.state.isListOpened,
         })
@@ -379,8 +368,8 @@ class ListTemplate extends Component {
                                 <div className={classes.emptyBlock}></div>
                                 {!this.isListPage() &&
                                     <Tooltip title="Expand">
-                                        <IconButton onClick={() => history.push("/" + resourceUrl)}  >
-                                            <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
+                                        <IconButton onClick={() => history.push("/" + resourceUrl)} >
+                                            <CustomIcon iconClassName="fa fa-expand" />
                                         </IconButton>
                                     </Tooltip>
                                 }
@@ -407,7 +396,7 @@ class ListTemplate extends Component {
                                 { !headerFilterAbsent &&
                                     <Tooltip title="Search">
                                         <IconButton onClick={() => this.toggleFilter()}>
-                                            <SearchIcon className={classes.filterIcon}/>
+                                            <FontAwesomeIcon icon={faFilter} className={classes.filterIcon}  size="1x" />
                                         </IconButton>
                                     </Tooltip>
                                 }
@@ -416,7 +405,7 @@ class ListTemplate extends Component {
                                 isFilterOpened &&
                                     <div className={classes.filterBlock}>
                                         <Paper className={classes.filterInput} elevation={1}>
-                                            <FilterIcon  className={classes.filterInputIcon} />
+                                            <FontAwesomeIcon icon={faFilter} className={classes.filterInputIcon}  size="1x" />
                                             <input className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
                                         </Paper>
                                     </div>

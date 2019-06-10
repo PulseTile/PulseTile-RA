@@ -9,12 +9,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCompressArrowsAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 
 import EditButton from "../../common/Buttons/EditButton";
+import CustomIcon from "../../common/CustomIcon";
 
 const styles = theme => ({
     expansionPanel: {
@@ -121,11 +118,11 @@ class ShowTemplate extends Component {
                     <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
                         <Typography className={classes.expansionTypography} >{pageTitle}</Typography>
                         <div className={classes.emptyBlock}></div>
-                        <Tooltip title={isListOpened ? "Expand" : "Compress"}>
-                            <IconButton onClick={() => toggleListBlock()}>
-                                <FontAwesomeIcon className={classes.expandBlockIcon} icon={isListOpened ? faExpandArrowsAlt : faCompressArrowsAlt} size="1x" />
+                        <div title={isListOpened ? "Expand" : "Compress"}>
+                            <IconButton onClick={e => toggleListBlock(e)}>
+                                <CustomIcon iconClassName={isListOpened ? 'fa fa-expand' : 'fa fa-compress'} />
                             </IconButton>
-                        </Tooltip>
+                        </div>
                     </ExpansionPanelSummary>
                     {
                         isMainPanelOpen &&

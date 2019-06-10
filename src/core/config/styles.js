@@ -72,8 +72,6 @@ function getCurrentTheme(isContrastMode) {
     const palette = getCurrentPalette(isContrastMode);
     const isOldDesign = get(window, 'config.isOldDesign', false);
     const isRectangleButtons = get(window, 'config.isRectangleButtons', false);
-
-    console.log('++++++++++++++++++++++', isRectangleButtons)
     return createMuiTheme({
         palette: palette,
         isOldDesign: isOldDesign,
