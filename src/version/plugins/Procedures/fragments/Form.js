@@ -72,13 +72,13 @@ class ProceduresForm extends Component {
         const time = dateTimeUnix - dateUnix;
         const additionalData = {
             currentStatus: "",
-            date: dateUnix,
+            date: dateUnix * 1000,
             dateSubmitted: moment(data.dateCreated, 'DD-MM-YYYY HH:mm').format(),
             name: data.procedureName,
             originalComposition: "",
             originalSource: "",
             source: "ethercis",
-            time: time,
+            time: time * 1000,
             userId: localStorage.getItem('userId'),
         };
         const formData = Object.assign({}, data, additionalData);

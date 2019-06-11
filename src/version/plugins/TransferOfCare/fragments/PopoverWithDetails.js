@@ -157,6 +157,8 @@ const MedicationsDetails = ({ classes, details, sourceId }) => {
 
 const ReferralsDetails = ({ classes, details, sourceId }) => {
     const recordInfo = getRecordInfo(details, sourceId);
+    const dateOfReferral = get(recordInfo, 'dateOfReferral', null);
+    const dateOfReferralConvert = dateOfReferral ? moment(dateOfReferral).format('DD-MM-YYYY') : moment().format('DD-MM-YYYY');
     return (
         <div className={classes.detailsPopover}>
             <div className={classes.blockTitle}>
@@ -165,7 +167,20 @@ const ReferralsDetails = ({ classes, details, sourceId }) => {
             { recordInfo ?
                 <React.Fragment>
                     <div>
-                        No data...
+                        <div className={classes.blockDouble}>
+                            <div className={classes.infoItem}>
+                                <Typography variant="h1">From</Typography>
+                                <Typography variant="body1">{get(recordInfo, 'referralFrom', null)}</Typography>
+                            </div>
+                            <div className={classes.infoItem}>
+                                <Typography variant="h1">To</Typography>
+                                <Typography variant="body1">{get(recordInfo, 'referralTo', null)}</Typography>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classes.infoItem}>
+                        <Typography variant="h1">Date of Referral</Typography>
+                        <Typography variant="body1">{dateOfReferralConvert}</Typography>
                     </div>
                 </React.Fragment>
                 :
