@@ -278,7 +278,7 @@ class VitalsInputs extends Component {
         let result = null;
         for (let i = 0, n = vitalsListArray.length; i < n; i++) {
             let item = vitalsListArray[i];
-            if (item.sourceId === sourceId) {
+            if (item.sourceId === sourceId || item.id === sourceId) {
                 result = item;
                 break;
             }

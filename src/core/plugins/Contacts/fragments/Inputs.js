@@ -94,6 +94,7 @@ const ContactsInputs = ({ classes, ...rest }) => (
                 source="author"
                 label="Author"
                 fullWidth
+                defaultValue={localStorage.getItem('username')}
                 InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
                 InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
                 disabled={true}
