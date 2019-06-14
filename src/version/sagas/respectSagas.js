@@ -1,7 +1,7 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import get from "lodash/get";
 
-import { domainName } from "../../core/token";
+import { domainName, token } from "../../core/token";
 import { VERSIONS_SERVER_ACTION, versionsServerAction } from "../actions/ReSPECT/versionsServerAction";
 import { httpErrorAction } from '../../core/actions/httpErrorAction';
 
@@ -14,6 +14,7 @@ const getVersionsList = takeEvery(VERSIONS_SERVER_ACTION.REQUEST, function*(acti
     }
     options.headers = {
         'X-Requested-With': "XMLHttpRequest",
+        Authorization: "Bearer " + token,
     };
 
     try {
@@ -35,6 +36,7 @@ const getVersionById = takeEvery(VERSIONS_SERVER_ACTION.REQUEST_ONE, function*(a
     }
     options.headers = {
         'X-Requested-With': "XMLHttpRequest",
+        Authorization: "Bearer " + token,
     };
 
     try {
@@ -56,6 +58,7 @@ const getLatestVersion = takeEvery(VERSIONS_SERVER_ACTION.REQUEST_LATEST, functi
     }
     options.headers = {
         'X-Requested-With': "XMLHttpRequest",
+        Authorization: "Bearer " + token,
     };
 
     try {
@@ -76,10 +79,12 @@ const createNewVersion = takeEvery(VERSIONS_SERVER_ACTION.CREATE, function*(acti
     }
     options.headers = {
         'X-Requested-With': "XMLHttpRequest",
+        Authorization: "Bearer " + token,
     };
     try {
         const result = yield fetch(url, options).then(res => res.json());
-        yield put(versionsServerAction.successCreate(result))
+        yield put(versionsServerAction.successCreate(result));
+        yield put(versionsServerAction.request());
     } catch(e) {
         yield put(versionsServerAction.error(e))
     }
@@ -98,6 +103,7 @@ const putOneSection = takeEvery(VERSIONS_SERVER_ACTION.PUT, function*(action) {
     options.headers = {
         'Content-Type': 'application/json',
         'X-Requested-With': "XMLHttpRequest",
+        Authorization: "Bearer " + token,
     };
     options.body = JSON.stringify(versionData);
 
