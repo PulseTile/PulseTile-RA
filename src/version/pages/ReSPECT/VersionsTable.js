@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -80,6 +81,18 @@ class VersionsTable extends Component {
         this.props.getVersionsFromServer();
     };
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        const oldVersion = get(nextContext, 'currentVersionInfo', null);
+        const newVersion = get(nextProps, 'currentVersionInfo', null);
+        const oldVersionNumber = get(oldVersion, 'version', null);
+        const newVersionNumber = get(newVersion, 'version', null);
+        if (oldVersionNumber !== newVersionNumber) {
+            this.setState({
+                currentVersion: newVersionNumber,
+            })
+        }
+    }
+
     showVersion = (version, sourceId) => {
         this.setState(
             state => ({ currentVersion: version }),
@@ -153,6 +166,7 @@ const mapStateToProps = state => {
     return {
         versionsInfo: state.custom.versionsServerInfo.data,
         isLoading: state.custom.versionsServerInfo.loading,
+        currentVersionInfo: get(state, 'custom.versionsServerInfo.version', null),
     }
 };
 

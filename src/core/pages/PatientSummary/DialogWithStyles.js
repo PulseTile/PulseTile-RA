@@ -131,6 +131,7 @@ class DialogContent extends Component {
         const { classes, onClose, showMode, ...rest } = this.props;
         const { selectedMode, selectedHeadings } = this.state;
         const FeedSelector = get(themeCommonElements, 'feedsSelectors', false);
+        const hasRespectPlugin = get(themeCommonElements, 'respectPanel', false);
         return (
             <Dialog onBackdropClick={() => onClose()} {...rest}>
                 <div className={classes.dialogBlock} >
@@ -156,6 +157,17 @@ class DialogContent extends Component {
                                     </div>
                                 );
                             })
+                        }
+                        { hasRespectPlugin &&
+                            <div className={classes.dialogLabel}>
+                                <Checkbox
+                                    className={classes.checkbox}
+                                    checked={this.isHeadingChecked('respect')}
+                                    color="primary"
+                                    onChange={() => this.toggleVisibility('respect')}
+                                />
+                                <Typography className={classes.checkboxLabel}>ReSPECT</Typography>
+                            </div>
                         }
                     </div>
                     { FeedSelector && <FeedSelector classes={classes} /> }

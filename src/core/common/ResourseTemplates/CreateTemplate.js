@@ -1,13 +1,5 @@
 import React from "react";
-import {
-    Create,
-    SimpleForm,
-    TextInput,
-    BooleanInput,
-    DateInput,
-    DisabledInput,
-    LongTextInput,
-} from "react-admin";
+import { Create, SimpleForm } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";

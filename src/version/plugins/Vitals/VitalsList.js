@@ -25,6 +25,8 @@ const VitalsList = ({ classes, ...rest }) => (
         CustomRow={VitalsDatagridRow}
         resourceUrl="vitalsigns"
         title="Vitals"
+        defaultSort="number"
+        defaultSortOrder="ASC"
         hasChart={true}
         isCustomDatagrid={true}
         {...rest}

@@ -86,15 +86,16 @@ function getSearchType(userSearch, userSearchID) {
 }
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, key, userSearch, userSearchID, filterText, history, isCreatePage, createUrl, children, defaultSort } = props;
+    const { classes, title, idsNumber, resourceUrl, key, userSearch, userSearchID, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
+    const sortOrder = defaultSortOrder ? defaultSortOrder : 'DESC';
     const search = getSearch(userSearch, userSearchID);
     const searchType = getSearchType(userSearch, userSearchID);
     return (
         <List
             resource={resourceUrl}
             key={key}
-            sort={{ field: sortField, order: 'DESC' }}
+            sort={{ field: sortField, order: sortOrder }}
             filter={{
                 filterText: (search && resourceUrl === 'patients') ? search : filterText,
                 filterType: searchType,

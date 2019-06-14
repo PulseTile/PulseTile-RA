@@ -1,6 +1,7 @@
 import get from "lodash/get";
 import { faAllergies, faPhone, faCapsules, faNotesMedical  } from '@fortawesome/free-solid-svg-icons';
 import { nonCoreSynopsisData } from "../../../version/config/nonCoreSynopsis";
+import {themeCommonElements} from "../../../version/config/theme.config";
 
 /**
  * This function returns data for patient summary page
@@ -31,6 +32,10 @@ export function getHeadingsLists() {
     synopsisData.forEach(item => {
         result.push(item.list);
     });
+    const hasRespectPlugin = get(themeCommonElements, 'respectPanel', false);
+    if (hasRespectPlugin) {
+        result.push('respect');
+    }
     return result;
 }
 

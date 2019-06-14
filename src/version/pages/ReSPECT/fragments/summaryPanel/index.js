@@ -88,8 +88,11 @@ class RespectSummaryPanel extends Component {
     }
 
     render() {
-        const { classes, loading, history, showMode, versionsServerInfo, toggleRespectModal } = this.props;
+        const { classes, loading, history, showMode, versionsServerInfo, toggleRespectModal, showHeadings } = this.props;
         const isOldDesign = get(themeCommonElements, 'isOldDesign', false);
+        if (Object.values(showHeadings).indexOf('respect') === -1) {
+            return null;
+        }
         return (
             <Grid item xs={12} sm={6} md={6} lg={3}>
                 <Card className={classes.card}>
@@ -99,15 +102,15 @@ class RespectSummaryPanel extends Component {
                             ReSPECT
                         </Typography>
                     </div>
-                    {/*{ (showMode === SHOW_ALL || !showMode) &&*/}
-                        {/*<ListBlock*/}
-                            {/*loading={loading}*/}
-                            {/*classes={classes}*/}
-                            {/*items={versionsServerInfo}*/}
-                            {/*history={history}*/}
-                            {/*toggleRespectModal={toggleRespectModal}*/}
-                        {/*/>*/}
-                    {/*}*/}
+                    { (showMode === SHOW_ALL || !showMode) &&
+                        <ListBlock
+                            loading={loading}
+                            classes={classes}
+                            items={versionsServerInfo}
+                            history={history}
+                            toggleRespectModal={toggleRespectModal}
+                        />
+                    }
                 </Card>
             </Grid>
         );
@@ -117,6 +120,7 @@ class RespectSummaryPanel extends Component {
 const mapStateToProps = state => {
     return {
         versionsServerInfo: state.custom.versionsServerInfo.data,
+        showHeadings: state.custom.showHeadings.data,
     }
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, SelectInput, BooleanInput, DateInput, DisabledInput, LongTextInput } from "react-admin";
+import { TextInput, SelectInput, BooleanInput, DateInput, LongTextInput } from "react-admin";
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';

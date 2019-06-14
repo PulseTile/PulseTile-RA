@@ -1,5 +1,5 @@
 import React from "react";
-import { Toolbar, SaveButton, ListButton } from "react-admin";
+import { Toolbar, ListButton } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import BlockIcon from '@material-ui/icons/Block';

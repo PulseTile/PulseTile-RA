@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
+import {versionsServerAction} from "../../../../actions/ReSPECT/versionsServerAction";
 
 /**
  * This component returns synopsis list
@@ -15,9 +16,10 @@ import Typography from "@material-ui/core/Typography";
  */
 class ItemsList extends Component {
 
-    redirectToRespect = () => {
+    redirectToRespect = (item) => {
         this.props.toggleRespectModal();
         this.props.history.push('/respect');
+        this.props.getOneVersion(item.sourceId, item.version)
     };
 
     render() {
@@ -25,9 +27,9 @@ class ItemsList extends Component {
         if (items && items.length > 0) {
             return (
                 <List className={classes.list}>
-                    {items.map((item, key) => {
+                    {items && items.slice(0, 4).map((item, key) => {
                         return (
-                            <li key={key} className={classes.listItem} onClick={() => this.redirectToRespect()}>
+                            <li key={key} className={classes.listItem} onClick={() => this.redirectToRespect(item)}>
                                 <Typography noWrap={true}>
                                     Version {item.version}
                                 </Typography>
@@ -49,4 +51,12 @@ class ItemsList extends Component {
     }
 }
 
-export default ItemsList;
+const mapDispatchToProps = dispatch => {
+    return {
+        getOneVersion(sourceId, version) {
+            dispatch(versionsServerAction.requestOne(sourceId, version));
+        },
+    }
+};
+
+export default connect(null, mapDispatchToProps)( ItemsList);
