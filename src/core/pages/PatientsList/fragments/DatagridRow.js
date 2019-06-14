@@ -152,26 +152,26 @@ class PatientDatagridRow extends Component {
 
                 {
                     this.isColumnHidden('vitalsDate') &&
-                        <TableCell key={`${record.id}-vitalsDate`}>
+                        <TableCell key={`${record.id}-vitalsDate`} onClick={e => this.checkRedirectUrl(e, '/vitals')}>
                             {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
                         </TableCell>
                 }
                 {
                     this.isColumnHidden('vitalsCount') &&
-                        <TableCell key={`${record.id}-vitalsCount`}>
+                        <TableCell key={`${record.id}-vitalsCount`} onClick={e => this.checkRedirectUrl(e, '/vitals')}>
                             {Math.floor(Math.random() * Math.floor(12))}
                         </TableCell>
                 }
 
                 {
                     this.isColumnHidden('problemsDate') &&
-                        <TableCell key={`${record.id}-problemsDate`}>
+                        <TableCell key={`${record.id}-problemsDate`} onClick={e => this.checkRedirectUrl(e, '/problems')}>
                             {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
                         </TableCell>
                 }
                 {
                     this.isColumnHidden('problemsCount') &&
-                        <TableCell key={`${record.id}-problemsCount`}>
+                        <TableCell key={`${record.id}-problemsCount`} onClick={e => this.checkRedirectUrl(e, '/problems')}>
                             {Math.floor(Math.random() * Math.floor(12))}
                         </TableCell>
                 }

@@ -23,7 +23,7 @@ class ItemsList extends Component {
     };
 
     render() {
-        const { classes, items } = this.props;
+        const { classes, items, history } = this.props;
         if (items && items.length > 0) {
             return (
                 <List className={classes.list}>
@@ -41,10 +41,9 @@ class ItemsList extends Component {
         } else {
             return (
                 <List className={classes.list}>
-                    <li className={classes.listItem} onClick={() => this.redirectToRespect()}>
+                    <li className={classes.listItem} onClick={() => history.push('/respect')}>
                         <Typography>No versions</Typography>
                     </li>
-                    <div className={classes.emptyRows}></div>
                 </List>
             );
         }

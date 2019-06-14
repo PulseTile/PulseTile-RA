@@ -185,14 +185,15 @@ class VitalsInputs extends Component {
     };
 
     submitForm = data => {
-        const { isCreate, history, createNewVitals, updateVitals } = this.props;
+        const { isCreate, vitalsList, createNewVitals, updateVitals } = this.props;
         const { levelOfConsciousnessValue, anySupplementalOxygenValue, newsScoreValue } = this.state;
         const additionalData = {
             levelOfConsciousness: levelOfConsciousnessValue,
             oxygenSupplemental: (anySupplementalOxygenValue === 'Yes'),
             newsScore: newsScoreValue.toString(),
             dateCreate: moment().unix(),
-            author: localStorage.getItem('username')
+            author: localStorage.getItem('username'),
+            number: vitalsList.length + 1,
         };
         const formData = Object.assign({}, data, additionalData);
         if (isCreate) {

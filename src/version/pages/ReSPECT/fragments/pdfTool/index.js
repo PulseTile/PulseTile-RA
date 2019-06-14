@@ -229,9 +229,6 @@ export default (obj, patientInfo) => {
         }
     };
 
-    console.log('form',form );
-
-
     doc.image(page1, 0, 0, {width: doc.page.width, height: doc.page.height});
 
     // SECTION 1

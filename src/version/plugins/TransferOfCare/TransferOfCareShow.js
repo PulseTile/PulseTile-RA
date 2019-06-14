@@ -20,11 +20,6 @@ const styles = {
  */
 const TransferOfCareShow = ({ classes, ...rest }) => {
 
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    console.log('rest', rest);
-
-
-
     return (
         <ShowTemplate pageTitle="Transfers of Care" {...rest}>
             <TextField className={classes.labelBlock} label="From (Site / Org)" source="from" />

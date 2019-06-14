@@ -222,12 +222,16 @@ class ListTemplate extends Component {
         });
     };
 
-    hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
+    hasNewItem = (resource, newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
         for (let i = 0, n = newDataArray.length; i < n; i++) {
             let item = newDataArray[i];
-            if (get(item, 'isNew', false) && get(item, 'lastName', null) === userSearch) {
+            if (resource === 'patients' && get(item, 'isNew', false) && get(item, 'lastName', null) === userSearch) {
+                result = true;
+                break;
+            }
+            if (resource !== 'patients' && get(item, 'isNew', false)) {
                 result = true;
                 break;
             }
@@ -253,9 +257,10 @@ class ListTemplate extends Component {
 
     componentWillReceiveProps(nextProps, nextContext) {
         const newListArray = Object.values(get(nextProps, 'currentList', {}));
-        const prevListArray = Object.values(get(nextContext, 'currentList', {}));
+        const prevListArray = Object.values(get(this.props, 'currentList', {}));
         const userSearch = get(nextProps, 'userSearch', null);
-        const hasNewItem = this.hasNewItem(newListArray, prevListArray, nextProps, userSearch);
+        const resource = get(nextProps, 'resource', null);
+        const hasNewItem = this.hasNewItem(resource, newListArray, prevListArray, nextProps, userSearch);
         if (newListArray.length === 1 && prevListArray.length === 0 && hasNewItem) {
             this.setState({
                 key: this.state.key + 1
