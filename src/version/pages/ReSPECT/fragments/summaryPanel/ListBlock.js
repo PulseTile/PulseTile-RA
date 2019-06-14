@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import {versionsServerAction} from "../../../../actions/ReSPECT/versionsServerAction";
+import get from "lodash/get";
 
 /**
  * This component returns synopsis list
@@ -23,7 +24,16 @@ class ItemsList extends Component {
     };
 
     render() {
-        const { classes, items, history } = this.props;
+        const { classes, items, history, isLoading } = this.props;
+        if (isLoading) {
+            return (
+                <List className={classes.list}>
+                    <li className={classes.listItem}>
+                        <Typography>Loading...</Typography>
+                    </li>
+                </List>
+            );
+        }
         if (items && items.length > 0) {
             return (
                 <List className={classes.list}>
@@ -50,6 +60,12 @@ class ItemsList extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        isLoading: state.custom.versionsServerInfo.loading,
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         getOneVersion(sourceId, version) {
@@ -58,4 +74,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)( ItemsList);
+export default connect(mapStateToProps, mapDispatchToProps)( ItemsList);
