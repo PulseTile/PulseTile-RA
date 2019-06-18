@@ -11,6 +11,7 @@ export default takeEvery(FEEDS_LIST_ACTION.REQUEST, function*(action) {
     }
     options.headers = {
         Authorization: "Bearer " + token,
+        'X-Requested-With': "XMLHttpRequest",
     };
     try {
         const result = yield fetch(url, options).then(res => res.json());

@@ -12,6 +12,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
+import {pageHasPatientBanner} from "./LowPart";
 
 const styles = theme => ({
     menuAndBannerMobile: {
@@ -27,7 +28,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.paperColor,
     },
     mobileMenuButton: {
-        color: theme.palette.mainColor,
+        color: theme.palette.secondaryMainColor,
     },
     iconArrowDown: {
         color: theme.palette.fontColor,
@@ -79,16 +80,16 @@ class MobileMenu extends Component {
     };
 
     render() {
-        const { classes, setSidebarVisibility, isSidebarOpen, patientInfo } = this.props;
+        const { classes, setSidebarVisibility, isSidebarOpen, patientInfo, isPageHasPatientBanner } = this.props;
         const { isMobileBannerOpened } = this.state;
         return (
             <React.Fragment>
                 <div className={classes.menuAndBannerMobile}>
                     <MenuButtonMobile classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
                     <Typography variant="h6" className={classes.patientName}>{get(patientInfo, 'name', null)}</Typography>
-                    <FontAwesomeIcon icon={faSortDown} size="1x" className={classes.iconArrowDown} onClick={() => this.toggleMobileBanner()} />
+                    { !isPageHasPatientBanner && <FontAwesomeIcon icon={faSortDown} size="1x" className={classes.iconArrowDown} onClick={() => this.toggleMobileBanner()} /> }
                 </div>
-                { isMobileBannerOpened &&
+                { (isMobileBannerOpened && !isPageHasPatientBanner) &&
                     <div className={classes.patientBannerMobile}>
                         <Typography variant="body2" className={classes.bannerRow}>
                             <span>Doctor: </span>

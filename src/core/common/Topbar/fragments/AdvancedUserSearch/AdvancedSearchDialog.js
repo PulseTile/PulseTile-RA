@@ -110,12 +110,14 @@ class AdvancedSearchDialog extends Component {
         const { lastName, firstName, nhsNumber } = formData;
         const { dateOfBirth, gender, age } = this.state;
 
+        const searchDateOfBirth = dateOfBirth ? moment(dateOfBirth).format('YYYY-MM-DD') : null;
+
         const advancedSearchData = {
             title: this.getBlockTitle(),
             nhsNumber: nhsNumber,
             firstName: firstName,
             lastName: lastName,
-            dateOfBirth: dateOfBirth ? moment(dateOfBirth).format('DD-MM-YYYY') : null,
+            dateOfBirth: searchDateOfBirth,
             minAge: age[0],
             maxAge: age[1],
             gender: gender
@@ -129,7 +131,14 @@ class AdvancedSearchDialog extends Component {
             this.props.setUserId(nhsNumber);
         } else if (lastName) {
             this.props.setUserSearch(lastName.toLowerCase());
+        } else if (searchDateOfBirth) {
+            this.props.setSearchType('by_birthdate', searchDateOfBirth);
+        } else if (gender) {
+            this.props.setSearchType('by_gender', gender);
+        } else if (age) {
+            this.props.setSearchType('by_age', age);
         }
+
         window.location.replace('/#/patients');
         this.props.onClose();
     };
@@ -248,6 +257,9 @@ const mapDispatchToProps = dispatch => {
         },
         setUserId(data) {
             dispatch(userSearchAction.requestId(data));
+        },
+        setSearchType(type, value) {
+            dispatch(userSearchAction.searchBy(type, value));
         },
         removeUserSearch() {
             dispatch(userSearchAction.remove());

@@ -41,20 +41,59 @@ function checkFormData(params) {
     return true;
 }
 
+function getRequestUrl(params) {
+    const search = get(params, 'filter.filterText', null);
+    const searchType = get(params, 'filter.filterType', null);
+    let result = null;
+    if (searchType === 'id') {
+        result = `${domainName}/mpi/Patient/${search}`;
+    } else if (searchType === 'by_age' && search) {
+        result = `${domainName}/mpi/Patient?type=by_age&from=${search[0]}&to=${search[1]}`;
+    } else if (searchType && search) {
+        result = `${domainName}/mpi/Patient?${searchType}=${search}`;
+    } else if (search) {
+        result = `${domainName}/mpi/Patient?name=${search}`;
+    }
+    return result;
+}
+
+function getUserSearchResultsById(response) {
+    const patientInfo = get(response, 'patient', null);
+    const addressFromResponse = get(response, 'address', null);
+    const result = {
+        id: get(patientInfo, ['identifier', [0], 'value'], null),
+        name: getTotalName(patientInfo, true),
+        address: getTotalAddress(patientInfo, true),
+        city: get(addressFromResponse, [[0], 'city'], null),
+        country: get(addressFromResponse, [[0], 'country'], null),
+        district: get(addressFromResponse, [[0], 'district'], null),
+        postCode: get(addressFromResponse, [[0], 'postalCode'], null),
+        birthDate: get(patientInfo, 'birthDate', null),
+        department: get(patientInfo, 'department', null),
+        gender: get(patientInfo, 'gender', null),
+        nhsNumber: get(patientInfo, ['identifier', [0], 'value'], null),
+        phone: get(patientInfo, 'telecom', null),
+    };
+    return [result];
+}
+
+function getUserSearchResults(response, params) {
+    const pageNumber = get(params, 'pagination.page', 1);
+    const numberPerPage = get(params, 'pagination.perPage', 10);
+    const patientsArray = get(response, 'entry', []);
+    const results = getPatientsList(patientsArray);
+    const resultsSorting = getSortedResults(results, params);
+    const startItem = (pageNumber - 1) * numberPerPage;
+    const endItem = pageNumber * numberPerPage;
+    return resultsSorting.slice(startItem, endItem);
+}
+
 const convertPatientsDataRequestToHTTP = (type, resource, params) => {
     let url = "";
     const options = {};
     switch (type) {
         case GET_LIST: {
-            const search = get(params, 'filter.filterText', null);
-            const searchType = get(params, 'filter.filterType', null);
-
-            if (searchType === 'id') {
-                url = `${domainName}/mpi/Patient/${search}`;
-            } else {
-                url = `${domainName}/mpi/Patient?name=${search}`;
-            }
-
+            url = getRequestUrl(params);
             if (!options.headers) {
                 options.headers = new Headers({Accept: 'application/json'});
             }
@@ -151,7 +190,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
 
         default:
             return { data: 'No results' };
-    };
+    }
     return {url, options};
 };
 
@@ -160,39 +199,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
 
         case GET_LIST:
             const searchType = get(params, 'filter.filterType', null);
-
-            let paginationResults = [];
-            if (searchType === 'name') {
-                const pageNumber = get(params, 'pagination.page', 1);
-                const numberPerPage = get(params, 'pagination.perPage', 10);
-                const patientsArray = get(response, 'entry', []);
-                const results = getPatientsList(patientsArray);
-                const resultsSorting = getSortedResults(results, params);
-                const startItem = (pageNumber - 1) * numberPerPage;
-                const endItem = pageNumber * numberPerPage;
-                paginationResults = resultsSorting.slice(startItem, endItem);
-            } else if (searchType === 'id') {
-                const patientInfo = get(response, 'patient', null);
-                const addressFromResponse = get(response, 'address', null);
-                const result = {
-                    id: get(patientInfo, ['identifier', [0], 'value'], null),
-                    name: getTotalName(patientInfo, true),
-                    address: getTotalAddress(patientInfo, true),
-                    city: get(addressFromResponse, [[0], 'city'], null),
-                    country: get(addressFromResponse, [[0], 'country'], null),
-                    district: get(addressFromResponse, [[0], 'district'], null),
-                    postCode: get(addressFromResponse, [[0], 'postalCode'], null),
-                    birthDate: get(patientInfo, 'birthDate', null),
-                    department: get(patientInfo, 'department', null),
-                    gender: get(patientInfo, 'gender', null),
-                    nhsNumber: get(patientInfo, ['identifier', [0], 'value'], null),
-                    phone: get(patientInfo, 'telecom', null),
-                }
-
-                paginationResults = [result];
-            }
-
-
+            const paginationResults = (searchType === 'id') ? getUserSearchResultsById(response) : getUserSearchResults(response, params);
             return {
                 data: paginationResults,
                 total: paginationResults.length,

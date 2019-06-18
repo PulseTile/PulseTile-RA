@@ -74,23 +74,26 @@ function getSearch(userSearch, userSearchID) {
     return result;
 }
 
-function getSearchType(userSearch, userSearchID) {
-    let result = null
+function getSearchType(userSearch, userSearchID, userSearchType) {
+    let result = null;
     if (userSearch) {
         result = 'name';
     }
     if (userSearchID) {
         result = 'id';
     }
+    if (userSearchType) {
+        result = userSearchType;
+    }
     return result;
 }
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, key, userSearch, userSearchID, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
+    const { classes, title, idsNumber, resourceUrl, key, userSearch, userSearchID, userSearchType, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
     const sortOrder = defaultSortOrder ? defaultSortOrder : 'DESC';
     const search = getSearch(userSearch, userSearchID);
-    const searchType = getSearchType(userSearch, userSearchID);
+    const searchType = getSearchType(userSearch, userSearchID, userSearchType);
     return (
         <List
             resource={resourceUrl}

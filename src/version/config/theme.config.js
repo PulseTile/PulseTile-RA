@@ -2,6 +2,7 @@ import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
 import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
 import FeedsPanels from "../plugins/Feeds/FeedsPanels";
+import BusinessIntelligence from "../../core/pages/BusinessIntelligence";
 import Charts from "../../core/pages/Charts";
 import RespectSummaryPanel from "../pages/ReSPECT/fragments/summaryPanel";
 

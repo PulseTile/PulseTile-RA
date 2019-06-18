@@ -11,7 +11,7 @@ import CheckIcon from "@material-ui/icons/Check";
 
 import { patientsCountAction } from "../../actions/patientsCountAction";
 import image from "../../../version/images/pulsetile-logo.png";
-import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
+import PatientListTemplate from "./fragments/PatientListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
@@ -100,9 +100,9 @@ class PatientsList extends Component {
     };
 
     render() {
-        const { userSearch, userSearchID, classes } = this.props;
+        const { userSearch, userSearchID, userSearchType, userSearchValue, classes } = this.props;
 
-        if (!userSearch && !userSearchID) {
+        if (!userSearch && !userSearchID && !userSearchType && !userSearchValue) {
             return (
                 <div className={classes.content}>
                     <div className={classes.imageBlock} >
@@ -119,7 +119,7 @@ class PatientsList extends Component {
 
         return (
             <React.Fragment>
-                <ListTemplate
+                <PatientListTemplate
                     basePath="/patients"
                     create={PatientCreate}
                     edit={PatientEdit}
@@ -175,7 +175,7 @@ class PatientsList extends Component {
 
                     <ViewButton />
 
-                </ListTemplate>
+                </PatientListTemplate>
             </React.Fragment>
         );
     }
@@ -185,6 +185,8 @@ const mapStateToProps = state => {
     return {
         userSearch: get(state, 'custom.userSearch.data', null),
         userSearchID: get(state, 'custom.userSearch.id', null),
+        userSearchType: get(state, 'custom.userSearch.type', null),
+        userSearchValue: get(state, 'custom.userSearch.value', null),
         hiddenColumns:  get(state, 'custom.toggleColumns.data.patients', []),
         patientsIds: get(state, 'admin.resources.patients.list.ids', []),
     }

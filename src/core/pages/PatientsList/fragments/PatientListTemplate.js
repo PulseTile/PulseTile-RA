@@ -17,19 +17,19 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
-import { columnsTogglingAction } from "../../actions/columnsTogglingAction";
+import { columnsTogglingAction } from "../../../actions/columnsTogglingAction";
 
-import Breadcrumbs from "../../common/Breadcrumbs";
-import TableHeader from "../../common/TableHeader";
-import CustomIcon from "../../common/CustomIcon";
-import DetailsTemplate from "./DetailsTemplate";
+import Breadcrumbs from "../../../common/Breadcrumbs";
+import TableHeader from "../../../common/TableHeader";
+import CustomIcon from "../../../common/CustomIcon";
+import DetailsTemplate from "../../../common/ResourseTemplates/DetailsTemplate";
 
-import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "./fragments/constants";
-import TableContent from "./fragments/TableContent";
-import ChartContent from "./fragments/ChartContent";
-import TimelineContent from "./fragments/TimelineContent";
-import ListModePopover from "./popovers/ListModePopover";
-import ColumnsTogglingIcon from "./icons/ColumnsTogglingIcon";
+import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "../../../common/ResourseTemplates/fragments/constants";
+import TableContent from "../../../common/ResourseTemplates/fragments/TableContent";
+import ChartContent from "../../../common/ResourseTemplates/fragments/ChartContent";
+import TimelineContent from "../../../common/ResourseTemplates/fragments/TimelineContent";
+import ListModePopover from "../../../common/ResourseTemplates/popovers/ListModePopover";
+import ColumnsTogglingIcon from "../../../common/ResourseTemplates/icons/ColumnsTogglingIcon";
 
 const listStyles = theme => ({
     mainBlock: {
@@ -200,11 +200,48 @@ class ListTemplate extends Component {
         })
     };
 
+    filterByUserSearch = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearch) {
+                return {
+                    filterText: props.userSearch,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
+    filterByUserSearchId = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearchID) {
+                return {
+                    filterText: props.userSearchID,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
+    filterByUserSearchType = () => {
+        this.setState((state, props) => {
+            if (state.filterText !== props.userSearchValue) {
+                return {
+                    filterText: props.userSearchValue,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
     hasNewItem = (resource, newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
         for (let i = 0, n = newDataArray.length; i < n; i++) {
             let item = newDataArray[i];
+            if (resource === 'patients' && get(item, 'isNew', false) && get(item, 'lastName', null) === userSearch) {
+                result = true;
+                break;
+            }
             if (resource !== 'patients' && get(item, 'isNew', false)) {
                 result = true;
                 break;
@@ -317,6 +354,18 @@ class ListTemplate extends Component {
         const createUrl = this.getCreateUrl();
 
         let titleTable = title;
+        if (userSearch && resourceUrl === 'patients') {
+            titleTable = `Patients matching '${userSearch}'`;
+            this.filterByUserSearch();
+        }
+        if (userSearchID && resourceUrl === 'patients') {
+            titleTable = `Patients matching '${userSearchID}'`;
+            this.filterByUserSearchId();
+        }
+        if (userSearchType && userSearchValue && resourceUrl === 'patients') {
+            titleTable = `Patients matching '${userSearchID}'`;
+            this.filterByUserSearchType();
+        }
 
         const currentListArray = Object.values(currentList);
         const idsNumber = currentListArray.length > 0 ? currentListArray.length : 0;
@@ -338,48 +387,48 @@ class ListTemplate extends Component {
                                 <Typography className={classes.title}>{titleTable}</Typography>
                                 <div className={classes.emptyBlock}></div>
                                 {!this.isListPage() &&
-                                    <Tooltip title="Expand">
-                                        <IconButton onClick={() => history.push("/" + resourceUrl)} >
-                                            <CustomIcon iconClassName="fa fa-expand" />
-                                        </IconButton>
-                                    </Tooltip>
+                                <Tooltip title="Expand">
+                                    <IconButton onClick={() => history.push("/" + resourceUrl)} >
+                                        <CustomIcon iconClassName="fa fa-expand" />
+                                    </IconButton>
+                                </Tooltip>
                                 }
                                 <ColumnsTogglingIcon hiddenColumns={hiddenColumns} toggleColumn={this.toggleColumn} {...this.props} />
                                 {
                                     (hasChart || hasTimetable) &&
-                                        <React.Fragment>
-                                            <Tooltip title="Table">
-                                                <IconButton onClick={e => this.popoverOpen(e)}>
-                                                    <ListModeIcon className={classes.listModeIcon}/>
-                                                </IconButton>
-                                            </Tooltip>
-                                            <ListModePopover
-                                                anchorEl={anchorEl}
-                                                open={open}
-                                                changeListMode={this.changeListMode}
-                                                handleClose={this.popoverClose}
-                                                resourse={title}
-                                                hasChart={hasChart}
-                                                hasTimetable={hasTimetable}
-                                            />
-                                        </React.Fragment>
+                                    <React.Fragment>
+                                        <Tooltip title="Table">
+                                            <IconButton onClick={e => this.popoverOpen(e)}>
+                                                <ListModeIcon className={classes.listModeIcon}/>
+                                            </IconButton>
+                                        </Tooltip>
+                                        <ListModePopover
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            changeListMode={this.changeListMode}
+                                            handleClose={this.popoverClose}
+                                            resourse={title}
+                                            hasChart={hasChart}
+                                            hasTimetable={hasTimetable}
+                                        />
+                                    </React.Fragment>
                                 }
                                 { !headerFilterAbsent &&
-                                    <Tooltip title="Search">
-                                        <IconButton onClick={() => this.toggleFilter()}>
-                                            <FontAwesomeIcon icon={faFilter} className={classes.filterIcon}  size="1x" />
-                                        </IconButton>
-                                    </Tooltip>
+                                <Tooltip title="Search">
+                                    <IconButton onClick={() => this.toggleFilter()}>
+                                        <FontAwesomeIcon icon={faFilter} className={classes.filterIcon}  size="1x" />
+                                    </IconButton>
+                                </Tooltip>
                                 }
                             </div>
                             {
                                 isFilterOpened &&
-                                    <div className={classes.filterBlock}>
-                                        <Paper className={classes.filterInput} elevation={1}>
-                                            <FontAwesomeIcon icon={faFilter} className={classes.filterInputIcon}  size="1x" />
-                                            <input className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                        </Paper>
-                                    </div>
+                                <div className={classes.filterBlock}>
+                                    <Paper className={classes.filterInput} elevation={1}>
+                                        <FontAwesomeIcon icon={faFilter} className={classes.filterInputIcon}  size="1x" />
+                                        <input className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                    </Paper>
+                                </div>
                             }
                         </div>
                         <ContentBlock
@@ -415,6 +464,10 @@ class ListTemplate extends Component {
 
 const mapStateToProps = (state, ownProps)  => {
     return {
+        userSearch: get(state, 'custom.userSearch.data', null),
+        userSearchID: get(state, 'custom.userSearch.id', null),
+        userSearchType: get(state, 'custom.userSearch.type', null),
+        userSearchValue: get(state, 'custom.userSearch.value', null),
         currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
         currentData: get(state, 'admin.resources[' + ownProps.resource + '].data', []),
     }
