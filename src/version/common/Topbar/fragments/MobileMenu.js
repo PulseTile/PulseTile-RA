@@ -25,13 +25,28 @@ const styles = theme => ({
         flexDirection: "row",
         padding: 0,
         justifyContent: "space-between",
-        backgroundColor: theme.palette.paperColor,
+        backgroundColor: theme.palette.secondaryMainColor,
+    },
+    menuButtonBlock: {
+        display: 'flex',
+        flexDirection: 'row',
+        border: `1px solid ${theme.palette.paperColor}`,
+        height: 34,
+        margin: 7,
+        borderRadius: 0,
+        paddingRight: 10,
+        boxSizing: 'border-box',
+    },
+    menuButtonTitle: {
+        paddingTop: 7,
+        cursor: "pointer",
     },
     mobileMenuButton: {
-        color: theme.palette.secondaryMainColor,
+        color: theme.palette.paperColor,
+        height: 'auto',
     },
     iconArrowDown: {
-        color: theme.palette.fontColor,
+        color: theme.palette.paperColor,
         paddingTop: 15,
         paddingRight: 15,
     },
@@ -41,12 +56,12 @@ const styles = theme => ({
         width: "100%",
         minHeight: "auto",
         '& span': {
-            color: theme.palette.fontColor,
+            color: theme.palette.paperColor,
         },
     },
     patientName: {
         paddingTop: 15,
-        color: theme.palette.fontColor,
+        color: theme.palette.paperColor,
     },
     bannerRow: {
         marginBottom: 5,
@@ -54,17 +69,19 @@ const styles = theme => ({
 });
 
 const MenuButtonMobile = ({ classes, setSidebarVisibility, isSidebarOpen }) => (
-    <Tooltip title={isSidebarOpen ? 'Menu' : 'Close'}>
-        <IconButton
-            className={classes.mobileMenuButton}
-            aria-haspopup="true"
-            color="inherit"
-            onClick={() => setSidebarVisibility(!isSidebarOpen)}
-            aria-label={isSidebarOpen ? 'Menu' : 'Close'}
-        >
-            { isSidebarOpen ? <MenuIcon /> : <CloseIcon /> }
-        </IconButton>
-    </Tooltip>
+    <div className={classes.menuButtonBlock} onClick={() => setSidebarVisibility(!isSidebarOpen)}>
+        <Tooltip title={isSidebarOpen ? 'Menu' : 'Close'}>
+            <IconButton
+                className={classes.mobileMenuButton}
+                aria-haspopup="true"
+                color="inherit"
+                aria-label={isSidebarOpen ? 'Menu' : 'Close'}
+            >
+                { isSidebarOpen ? <MenuIcon /> : <CloseIcon /> }
+            </IconButton>
+        </Tooltip>
+        <Typography variant="h1" className={classes.menuButtonTitle}>Menu</Typography>
+    </div>
 );
 
 class MobileMenu extends Component {
@@ -86,7 +103,7 @@ class MobileMenu extends Component {
             <React.Fragment>
                 <div className={classes.menuAndBannerMobile}>
                     <MenuButtonMobile classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
-                    <Typography variant="h6" className={classes.patientName}>{get(patientInfo, 'name', null)}</Typography>
+                    { !isPageHasPatientBanner && <Typography variant="h6" className={classes.patientName}>{get(patientInfo, 'name', null)}</Typography> }
                     { !isPageHasPatientBanner && <FontAwesomeIcon icon={faSortDown} size="1x" className={classes.iconArrowDown} onClick={() => this.toggleMobileBanner()} /> }
                 </div>
                 { (isMobileBannerOpened && !isPageHasPatientBanner) &&

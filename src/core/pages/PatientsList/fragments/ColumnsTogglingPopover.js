@@ -26,6 +26,10 @@ const styles = theme => ({
             color: theme.palette.paperColor,
             backgroundColor: theme.palette.secondaryMainColor
         }
+    },
+    formGroup: {
+        paddingTop: 10,
+        paddingBottom: 10,
     }
 });
 
@@ -233,13 +237,14 @@ class ColumnsTogglingPopover extends Component {
                         {/*    control={<CustomCheckbox checked={resultsDate} onChange={() => this.handleChange("resultsDate")} value="resultsDate" />}*/}
                         {/*    label="Results"*/}
                         {/*/>*/}
+
+                    </FormGroup>
+                    <FormGroup className={classes.formGroup} row>
                         <FormControlLabel
                             className={classes.checkboxItem}
                             control={<CustomCheckbox checked={vitalsDate} onChange={() => this.handleChange("vitalsDate")} value="vitalsDate" />}
                             label="Vitals"
                         />
-                    </FormGroup>
-                    <FormGroup row>
                         <FormControlLabel
                             className={classes.checkboxItem}
                             control={<CustomCheckbox checked={problemsDate} onChange={() => this.handleChange("problemsDate")} value="problemsDate" />}
@@ -265,13 +270,14 @@ class ColumnsTogglingPopover extends Component {
                         {/*    control={<CustomCheckbox checked={resultsCount} onChange={() => this.handleChange("resultsCount")} value="resultsCount" />}*/}
                         {/*    label="Results"*/}
                         {/*/>*/}
+
+                    </FormGroup>
+                    <FormGroup className={classes.formGroup} row>
                         <FormControlLabel
                             className={classes.checkboxItem}
                             control={<CustomCheckbox checked={vitalsCount} onChange={() => this.handleChange("vitalsCount")} value="vitalsCount" />}
                             label="Vitals"
                         />
-                    </FormGroup>
-                    <FormGroup row>
                         <FormControlLabel
                             className={classes.checkboxItem}
                             control={<CustomCheckbox checked={problemsCount} onChange={() => this.handleChange("problemsCount")} value="problemsCount" />}

@@ -22,14 +22,14 @@ const styles = theme => ({
         display: "flex",
         backgroundColor: "white",
         justifyContent: "space-around",
-        minHeight: 54,
+        minHeight: 52,
         padding: 0,
     },
     backButtonItem: {
         display: "inline-flex",
         position: "relative",
-        minHeight: 54,
-        minWidth: 54,
+        minHeight: 52,
+        minWidth: 52,
         backgroundColor: theme.palette.mainColor,
         justifyContent: "center",
         alignItems: "center",
@@ -63,6 +63,7 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         borderLeft: `1px solid ${theme.palette.borderColor}`,
+        backgroundColor: theme.palette.mainColor,
         '&:hover': {
             backgroundColor: theme.palette.secondaryMainColor,
         },
@@ -90,6 +91,25 @@ const styles = theme => ({
     },
     emptyBlock: {
         flexGrow: 1,
+    },
+    userSearchBlock: {
+        [theme.breakpoints.down('sm')]: {
+            display: "none",
+        },
+        display: 'flex',
+        flexDirection: 'row',
+        marginRight: 25,
+    },
+    userSearchBlockMobile: {
+        [theme.breakpoints.up('md')]: {
+            display: "none",
+        },
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        backgroundColor: "white",
+        minHeight: 52,
+        padding: 10,
     }
 });
 
@@ -109,35 +129,43 @@ class TopPart extends Component {
         const { classes, location, goBack, advancedSearchInfo, clinicalQueryInfo } = this.props;
         const pathname = get(location, 'pathname', null);
         return (
-            <Toolbar className={classes.topPart}>
-                {
-                    (pathname !== '/charts' && pathname !== '/') &&
-                        <div className={classes.backButtonItem}>
-                            <Tooltip title="Home">
-                                <IconButton id="icon-home" aria-label="Home" className={classes.homeButton} onClick={() => goBack()}>
-                                    <BackIcon />
-                                </IconButton>
-                            </Tooltip>
-                        </div>
-                }
-                <div className={classes.mainLogoItem}>
-                    <CardMedia
-                        id="logo-image"
-                        className={classes.image}
-                        component="img"
-                        alt="Pulse Tile"
-                        height="38px"
-                        image={helmLogo}
-                        title="Pulse Tile"
-                        onClick={() => this.goHomePage()}
-                    />
-                </div>
-                <div className={classes.emptyBlock}></div>
-                <AdvancedUserSearch />
-                { (!advancedSearchInfo && !clinicalQueryInfo) && <UserSearch location={location} /> }
-                <ContrastMode classes={classes} />
-                <UserPanelButton classes={classes} />
-            </Toolbar>
+            <React.Fragment>
+                <Toolbar className={classes.topPart}>
+                    {
+                        (pathname !== '/charts' && pathname !== '/') &&
+                            <div className={classes.backButtonItem}>
+                                <Tooltip title="Home">
+                                    <IconButton id="icon-home" aria-label="Home" className={classes.homeButton} onClick={() => goBack()}>
+                                        <BackIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
+                    }
+                    <div className={classes.mainLogoItem}>
+                        <CardMedia
+                            id="logo-image"
+                            className={classes.image}
+                            component="img"
+                            alt="Pulse Tile"
+                            height="38px"
+                            image={helmLogo}
+                            title="Pulse Tile"
+                            onClick={() => this.goHomePage()}
+                        />
+                    </div>
+                    <div className={classes.emptyBlock}></div>
+                    <div className={classes.userSearchBlock}>
+                        <AdvancedUserSearch />
+                        { (!advancedSearchInfo && !clinicalQueryInfo) && <UserSearch location={location} /> }
+                    </div>
+                    <ContrastMode classes={classes} />
+                    <UserPanelButton classes={classes} />
+                </Toolbar>
+                <Toolbar className={classes.userSearchBlockMobile}>
+                    <AdvancedUserSearch />
+                    { (!advancedSearchInfo && !clinicalQueryInfo) && <UserSearch location={location} /> }
+                </Toolbar>
+            </React.Fragment>
         );
     }
 };

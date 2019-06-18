@@ -12,9 +12,7 @@ const styles = theme => ({
         flexDirection: "column",
         justifyContent: "space-between",
         [theme.breakpoints.only('xs')]: {
-            paddingTop: 0,
-            paddingLeft: 20,
-            paddingRight: 20,
+            padding: 0,
         },
         [theme.breakpoints.up('sm')]: {
             minHeight: 300,

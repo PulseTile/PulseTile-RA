@@ -36,3 +36,9 @@ export function getMenuItems(currentPathname) {
     }
     return defaultShortMenu;
 }
+
+export function isSinglePatientView(currentPathname) {
+    const pathArray = currentPathname.split('/');
+    const currentResource = get(pathArray, [1], null);
+    return isResourcePresentedInMenu(currentResource, themeFullMenu) || isResourcePresentedInMenu(currentResource, defaultFullMenu);
+}

@@ -22,7 +22,7 @@ const styles = theme => ({
         padding: 0,
     },
     menuAndBanner: {
-        [theme.breakpoints.only('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: "none",
         },
         display: "flex",

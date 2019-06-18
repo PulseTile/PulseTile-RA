@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import MobileMenu from "./MobileMenu";
 import MenuItems from "./MenuItems";
-import { getMenuItems } from "./getMenuType";
+import { getMenuItems, isSinglePatientView } from "./getMenuType";
 
 const styles = theme => ({
     sidebarBlock: {
@@ -54,15 +54,45 @@ const CustomSidebar = ({ classes, isSidebarOpen, onMenuClick, location }) => {
     const pathNameArray = currentPathname.split('/');
     const currentList = '/' + pathNameArray[1];
     const menuItems = getMenuItems(currentPathname);
+    const isSPV = isSinglePatientView(currentPathname);
+
+
+    console.log('isSPV', isSPV)
+    console.log('isSidebarOpen', isSidebarOpen)
+
+    if (isSPV) {
+        return (
+            <Responsive
+                small={
+                    isSidebarOpen ? null : <MobileMenu
+                        classes={classes}
+                        menuItems={menuItems}
+                        currentList={currentList}
+                        onMenuClick={onMenuClick}
+                    />
+                }
+                medium={
+                    isSidebarOpen ?
+                        <Sidebar className={classes.sidebarBlock}>
+                            <MenuItems classes={classes} menuItems={menuItems} currentList={currentList} onMenuClick={onMenuClick} />
+                        </Sidebar>
+                        : null
+                }
+            >
+            </Responsive>
+        );
+    }
+
     return (
         <Responsive
             small={
-                isSidebarOpen ? null : <MobileMenu
+                isSidebarOpen ? <MobileMenu
                     classes={classes}
                     menuItems={menuItems}
                     currentList={currentList}
                     onMenuClick={onMenuClick}
                 />
+                : null
             }
             medium={
                 isSidebarOpen ?
