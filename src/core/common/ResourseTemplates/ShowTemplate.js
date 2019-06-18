@@ -110,7 +110,7 @@ class ShowTemplate extends Component {
     };
 
     render() {
-        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
+        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, isDateCreatedAbsent, ...rest } = this.props;
         const { isMainPanelOpen, isSystemInfoPanelOpen } = this.state;
         return (
             <Grid item xs={12} sm={isListOpened ? 6 : 12}>
@@ -145,7 +145,7 @@ class ShowTemplate extends Component {
                             <ExpansionPanelDetails className={classes.expansionPanelDetails}>
                                 <Show className={classes.showDetails} title={pageTitle} {...rest}>
                                     <SimpleShowLayout className={classes.showLayoutDetails}>
-                                        <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
+                                        { !isDateCreatedAbsent && <DateField className={classes.labelBlock} label="Date" source="dateCreated" /> }
                                         <TextField className={classes.labelBlock} label="Source" source="source" />
                                     </SimpleShowLayout>
                                 </Show>

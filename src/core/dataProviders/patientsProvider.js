@@ -48,9 +48,9 @@ function getRequestUrl(params) {
     if (searchType === 'id') {
         result = `${domainName}/mpi/Patient/${search}`;
     } else if (searchType === 'by_age' && search) {
-        result = `${domainName}/mpi/Patient?type=by_age&from=${search[0]}&to=${search[1]}`;
-    } else if (searchType && search) {
-        result = `${domainName}/mpi/Patient?${searchType}=${search}`;
+        result = `${domainName}/mpi/Patient/search/advanced?type=by_age&from=${search[0]}&to=${search[1]}`;
+    } else if (searchType !== 'name' && search) {
+        result = `${domainName}/mpi/Patient/search/advanced?type=${searchType}&value=${search}`;
     } else if (search) {
         result = `${domainName}/mpi/Patient?name=${search}`;
     }
@@ -234,6 +234,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     birthDate: get(patientFromResponse, 'birthDate', null),
                     department: get(patientFromResponse, 'department', null),
                     gender: get(patientFromResponse, 'gender', null),
+                    source: get(patientFromResponse, ['identifier', [0], 'system'], null),
                     nhsNumber: id,
                     phone: get(patientFromResponse, 'telecom', null),
                 }

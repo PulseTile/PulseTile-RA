@@ -19,7 +19,7 @@ const styles = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const PatientShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Patient" {...rest}>
+    <ShowTemplate pageTitle="Patient" isDateCreatedAbsent={true} {...rest}>
         <TextField className={classes.labelBlock} label="Name" source="name" />
         <DateField className={classes.labelBlock} label="Date of Birth" source="dateOfBirth" />
         <TextField className={classes.labelBlock} label="Gender" source="gender" />

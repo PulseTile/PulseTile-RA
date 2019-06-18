@@ -141,21 +141,18 @@ class PatientsList extends Component {
                     <DateField source="birthDate" label="Born"/>
                     { this.isColumnHidden('nhsNumber') && <TextField source="nhsNumber" label="NHS No." /> }
 
-                    { this.isColumnHidden('ordersDate') &&
-                        <DateField source="ordersDate" label={<LabelWithIcon classes={classes} title="Orders" icon={<TodayIcon className={classes.icon}/>}/>} />
-                    }
-
-                    { this.isColumnHidden('ordersCount') &&
-                        <DateField source="ordersCount" label={<LabelWithIcon classes={classes} title="Orders" icon={<CheckIcon className={classes.icon}/>}/>} />
-                    }
-
-                    { this.isColumnHidden('resultsDate') &&
-                        <DateField source="resultsDate" label={<LabelWithIcon classes={classes} title="Results" icon={<TodayIcon className={classes.icon} />} />} />
-                    }
-
-                    { this.isColumnHidden('resultsCount') &&
-                        <DateField source="resultsCount" label={<LabelWithIcon classes={classes} title="Results" icon={<CheckIcon className={classes.icon} />} />} />
-                    }
+                    {/*{ this.isColumnHidden('ordersDate') &&*/}
+                    {/*    <DateField source="ordersDate" label={<LabelWithIcon classes={classes} title="Orders" icon={<TodayIcon className={classes.icon}/>}/>} />*/}
+                    {/*}*/}
+                    {/*{ this.isColumnHidden('ordersCount') &&*/}
+                    {/*    <DateField source="ordersCount" label={<LabelWithIcon classes={classes} title="Orders" icon={<CheckIcon className={classes.icon}/>}/>} />*/}
+                    {/*}*/}
+                    {/*{ this.isColumnHidden('resultsDate') &&*/}
+                    {/*    <DateField source="resultsDate" label={<LabelWithIcon classes={classes} title="Results" icon={<TodayIcon className={classes.icon} />} />} />*/}
+                    {/*}*/}
+                    {/*{ this.isColumnHidden('resultsCount') &&*/}
+                    {/*    <DateField source="resultsCount" label={<LabelWithIcon classes={classes} title="Results" icon={<CheckIcon className={classes.icon} />} />} />*/}
+                    {/*}*/}
 
                     { this.isColumnHidden('vitalsDate')  &&
                         <DateField source="vitalsDate" label={<LabelWithIcon classes={classes} title="Vitals" icon={<TodayIcon className={classes.icon} />} />} />

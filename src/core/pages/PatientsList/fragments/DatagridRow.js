@@ -124,31 +124,31 @@ class PatientDatagridRow extends Component {
                         </TableCell>
                 }
 
-                {
-                    this.isColumnHidden('ordersDate') &&
-                        <TableCell key={`${record.id}-ordersDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    this.isColumnHidden('ordersCount') &&
-                        <TableCell key={`${record.id}-ordersCount`}>
-                            {Math.floor(Math.random() * Math.floor(8))}
-                        </TableCell>
-                }
+                {/*{*/}
+                {/*    this.isColumnHidden('ordersDate') &&*/}
+                {/*        <TableCell key={`${record.id}-ordersDate`}>*/}
+                {/*            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}*/}
+                {/*        </TableCell>*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    this.isColumnHidden('ordersCount') &&*/}
+                {/*        <TableCell key={`${record.id}-ordersCount`}>*/}
+                {/*            {Math.floor(Math.random() * Math.floor(8))}*/}
+                {/*        </TableCell>*/}
+                {/*}*/}
 
-                {
-                    this.isColumnHidden('resultsDate') &&
-                        <TableCell key={`${record.id}-resultsDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    this.isColumnHidden('resultsCount') &&
-                        <TableCell key={`${record.id}-resultsCount`}>
-                            {Math.floor(Math.random() * Math.floor(12))}
-                        </TableCell>
-                }
+                {/*{*/}
+                {/*    this.isColumnHidden('resultsDate') &&*/}
+                {/*        <TableCell key={`${record.id}-resultsDate`}>*/}
+                {/*            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}*/}
+                {/*        </TableCell>*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    this.isColumnHidden('resultsCount') &&*/}
+                {/*        <TableCell key={`${record.id}-resultsCount`}>*/}
+                {/*            {Math.floor(Math.random() * Math.floor(12))}*/}
+                {/*        </TableCell>*/}
+                {/*}*/}
 
                 {
                     this.isColumnHidden('vitalsDate') &&
