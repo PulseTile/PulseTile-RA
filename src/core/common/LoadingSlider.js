@@ -176,8 +176,8 @@ const LoadingSlider = ({ classes }) => {
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Get your 5 A Day</h3>
-                                    <p>Eat at least 5 portions of a variety of fruit and vegetables a day. They're a good source of fibre, vitamins and minerals.</p>
-                                    <p>There are lots of tasty ways to get your 5 A Day, like adding chopped fruit to cereal or including vegetables in your pasta sauces and curries.</p>
+                                    <Typography>Eat at least 5 portions of a variety of fruit and vegetables a day. They're a good source of fibre, vitamins and minerals.</Typography>
+                                    <Typography>There are lots of tasty ways to get your 5 A Day, like adding chopped fruit to cereal or including vegetables in your pasta sauces and curries.</Typography>
                                 </div>
                             </div>
 
@@ -192,8 +192,8 @@ const LoadingSlider = ({ classes }) => {
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Eat Fish</h3>
-                                    <p>Eat fish at least twice a week, including a portion of oily fish. Fish such as pilchards, sardines and salmon are a source of omega-3 fats, which may help protect against heart disease.</p>
-                                    <p>Pregnant or breastfeeding women should not have more than 2 portions of oily fish a week.</p>
+                                    <Typography>Eat fish at least twice a week, including a portion of oily fish. Fish such as pilchards, sardines and salmon are a source of omega-3 fats, which may help protect against heart disease.</Typography>
+                                    <Typography>Pregnant or breastfeeding women should not have more than 2 portions of oily fish a week.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
