@@ -95,7 +95,7 @@ const BarChartTemplate = ({ classes, data, history, onClickAction, searchType, b
     const ticksArray = getTicksArray(data);
     return (
         <div className={classes.chartBlock}>
-            <ResponsiveContainer width={'99%'}>
+            <ResponsiveContainer width={'100%'}>
                 <BarChart
                     data={data}
                     margin={{ top: 5, right: 0, left: 0, bottom: 25 }} >

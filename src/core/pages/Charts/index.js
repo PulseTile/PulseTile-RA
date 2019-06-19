@@ -5,6 +5,7 @@ import get from "lodash/get";
 import { setSidebarVisibility } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 import dummyPatients from "../PatientsList/dummyPatients";
 
@@ -13,19 +14,23 @@ import BarChartTemplate from "./fragments/BarChartTemplate";
 import { userSearchAction } from "../../actions/userSearchAction";
 
 const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
     chartsContainer: {
-        display: "flex",
-        justifyContent: "space-around",
+        width: "100%",
         backgroundColor: theme.palette.paperColor,
+        padding: 5,
+        margin: 0,
     },
     chart: {
-        width: '100%',
-        border: `1px solid ${theme.palette.borderColor}`,
-        margin: 10,
         '& .recharts-text.recharts-cartesian-axis-tick-value': {
             fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
             fontSize: 14,
-        }
+        },
+    },
+    chartBlock: {
+        border: `1px solid ${theme.palette.borderColor}`,
     }
 });
 
@@ -169,37 +174,43 @@ class Charts extends Component {
         ];
 
         return (
-            <div className={classes.chartsContainer}>
-                <div className={classes.chart}>
-                    <BarChartTitle
-                        mainTitle="Patients By Setting"
-                        secondTitle="Patients By Setting"
-                        description="This is a brief description of patients by setting."
-                    />
-                    <BarChartTemplate
-                        data={dataGreen}
-                        onClickAction={this.redirectTo}
-                        history={history}
-                        searchType="by_city"
-                        barColor="#c4e4d6"
-                        borderColor="#78cea7"
-                    />
-                </div>
-                <div className={classes.chart}>
-                    <BarChartTitle
-                        mainTitle="Patients By Age"
-                        secondTitle="Patients By Age"
-                        description="This is a brief description of patients by age."
-                    />
-                    <BarChartTemplate
-                        data={dataViolet}
-                        onClickAction={this.redirectTo}
-                        history={history}
-                        searchType="by_age"
-                        barColor="#d3b2f4"
-                        borderColor="#832edf"
-                    />
-                </div>
+            <div className={classes.root}>
+                <Grid className={classes.chartsContainer} container spacing={16} >
+                    <Grid className={classes.chart} item xs={12} sm={12} md={6}>
+                        <div className={classes.chartBlock}>
+                            <BarChartTitle
+                                mainTitle="Patients By Setting"
+                                secondTitle="Patients By Setting"
+                                description="This is a brief description of patients by setting."
+                            />
+                            <BarChartTemplate
+                                data={dataGreen}
+                                onClickAction={this.redirectTo}
+                                history={history}
+                                searchType="by_city"
+                                barColor="#c4e4d6"
+                                borderColor="#78cea7"
+                            />
+                        </div>
+                    </Grid>
+                    <Grid className={classes.chart} item xs={12} sm={12} md={6}>
+                        <div className={classes.chartBlock}>
+                            <BarChartTitle
+                                mainTitle="Patients By Age"
+                                secondTitle="Patients By Age"
+                                description="This is a brief description of patients by age."
+                            />
+                            <BarChartTemplate
+                                data={dataViolet}
+                                onClickAction={this.redirectTo}
+                                history={history}
+                                searchType="by_age"
+                                barColor="#d3b2f4"
+                                borderColor="#832edf"
+                            />
+                        </div>
+                    </Grid>
+                </Grid>
             </div>
         );
     }
