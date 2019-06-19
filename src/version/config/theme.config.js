@@ -5,6 +5,7 @@ import FeedsPanels from "../plugins/Feeds/FeedsPanels";
 import BusinessIntelligence from "../../core/pages/BusinessIntelligence";
 import Charts from "../../core/pages/Charts";
 import RespectSummaryPanel from "../pages/ReSPECT/fragments/summaryPanel";
+import EmergencySummaryPanel from "../features/EmergencySummaryPanel";
 
 export const themeShortMenu = [
     { url: '/', label: 'Charts' },
@@ -41,6 +42,7 @@ export const themeCommonElements = {
     feedsPanels: FeedsPanels,
     homePage: Charts,
     respectPanel: RespectSummaryPanel,
+    emergencySummaryPanel: EmergencySummaryPanel,
 };
 
 export const themeImages = {};

@@ -79,10 +79,9 @@ class VitalsChart extends Component {
     };
 
     render() {
-        const { classes, vitalsList, history, createUrl } = this.props;
+        const { classes, vitalsList, vitalsEmergencySummary, history, createUrl } = this.props;
         const { disabledLines } = this.state;
-
-        const vitalsListArray = Object.values(vitalsList);
+        const vitalsListArray = vitalsEmergencySummary ? Object.values(vitalsEmergencySummary) : Object.values(vitalsList);
         let chartData = [];
         for (let i = 0, n = vitalsListArray.length; i < n; i++) {
 
@@ -154,9 +153,12 @@ class VitalsChart extends Component {
                         }
                     </LineChart>
                 </ResponsiveContainer>
-                <Toolbar className={classes.toolbar}>
-                    <CreateButton history={history} redirectPath={createUrl} />
-                </Toolbar>
+                {
+                    createUrl &&
+                        <Toolbar className={classes.toolbar}>
+                            <CreateButton history={history} redirectPath={createUrl} />
+                        </Toolbar>
+                }
             </div>
         );
     }

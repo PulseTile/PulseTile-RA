@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { Show, SimpleShowLayout, TextField, DateField } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -12,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import EditButton from "../../common/Buttons/EditButton";
 import CustomIcon from "../../common/CustomIcon";
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
     expansionPanel: {
@@ -110,8 +112,9 @@ class ShowTemplate extends Component {
     };
 
     render() {
-        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, isDateCreatedAbsent, ...rest } = this.props;
+        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, isDateCreatedAbsent, isSystemInfoAbsent, ...rest } = this.props;
         const { isMainPanelOpen, isSystemInfoPanelOpen } = this.state;
+        const EmergencySummaryPanel = get(themeCommonElements, 'emergencySummaryPanel', false);
         return (
             <Grid item xs={12} sm={isListOpened ? 6 : 12}>
                 <ExpansionPanel className={isMainPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isMainPanelOpen} onChange={() => this.toggleMainPanel()}>
@@ -136,22 +139,28 @@ class ShowTemplate extends Component {
                             </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>
-                <ExpansionPanel className={isSystemInfoPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isSystemInfoPanelOpen} onChange={() => this.toggleSystemInfoPanel()}>
-                    <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
-                        <Typography className={classes.expansionTypography} >System Information</Typography>
-                    </ExpansionPanelSummary>
-                    {
-                        isSystemInfoPanelOpen &&
-                            <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                                <Show className={classes.showDetails} title={pageTitle} {...rest}>
-                                    <SimpleShowLayout className={classes.showLayoutDetails}>
-                                        { !isDateCreatedAbsent && <DateField className={classes.labelBlock} label="Date" source="dateCreated" /> }
-                                        <TextField className={classes.labelBlock} label="Source" source="source" />
-                                    </SimpleShowLayout>
-                                </Show>
-                            </ExpansionPanelDetails>
-                    }
-                </ExpansionPanel>
+                {
+                    !isSystemInfoAbsent &&
+                        <ExpansionPanel className={isSystemInfoPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isSystemInfoPanelOpen} onChange={() => this.toggleSystemInfoPanel()}>
+                            <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
+                                <Typography className={classes.expansionTypography} >System Information</Typography>
+                            </ExpansionPanelSummary>
+                            {
+                                isSystemInfoPanelOpen &&
+                                <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                                    <Show className={classes.showDetails} title={pageTitle} {...rest}>
+                                        <SimpleShowLayout className={classes.showLayoutDetails}>
+                                            { !isDateCreatedAbsent && <DateField className={classes.labelBlock} label="Date" source="dateCreated" /> }
+                                            <TextField className={classes.labelBlock} label="Source" source="source" />
+                                        </SimpleShowLayout>
+                                    </Show>
+                                </ExpansionPanelDetails>
+                            }
+                        </ExpansionPanel>
+                }
+                {
+                    EmergencySummaryPanel && <EmergencySummaryPanel {...this.props} />
+                }
             </Grid>
         );
     }
