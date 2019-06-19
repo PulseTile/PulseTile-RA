@@ -23,11 +23,14 @@ const styles = theme => ({
         width: "100%",
         height: "100%",
         position: "absolute",
-        backgroundColor: theme.palette.paperColor,
+        background: 'rgba(0, 0, 0, 0.5)',
         zIndex: 999999999999,
     },
     menuBlock: {
         border: `1px solid ${theme.palette.borderColor}`,
+        maxWidth: 240,
+        height: '100%',
+        backgroundColor: theme.palette.paperColor,
     },
     menuItem: {
         color: `${theme.palette.secondaryMainColor} !important`,

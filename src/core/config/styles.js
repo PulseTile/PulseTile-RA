@@ -149,6 +149,10 @@ function getCurrentTheme(isContrastMode) {
                 body2: {
                     fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
                     fontSize: 14,
+                },
+                h3: {
+                    fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
+                    fontSize: 16,
                 }
             },
         }
