@@ -58,11 +58,6 @@ const CustomSidebar = ({ classes, isSidebarOpen, onMenuClick, location }) => {
     const currentList = '/' + pathNameArray[1];
     const menuItems = getMenuItems(currentPathname);
     const isSPV = isSinglePatientView(currentPathname);
-
-
-    console.log('isSPV', isSPV)
-    console.log('isSidebarOpen', isSidebarOpen)
-
     if (isSPV) {
         return (
             <Responsive
