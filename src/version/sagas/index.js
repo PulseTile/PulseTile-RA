@@ -2,7 +2,6 @@ import feedsListSagas from "./feedsListSagas";
 import feedsRssSagas from "./feedsRssSagas";
 import transferOfCareSagas from "./transferOfCareSagas";
 import respectSagas from "./respectSagas";
-import emergencySummarySagas from "./emergencySummarySagas";
 
 import createSynopsisSagas from "../../core/sagas/createSynopsisSagas";
 import {
@@ -23,5 +22,4 @@ export default [
     createSynopsisSagas(SYNOPSIS_TOP_THREE_THINGS_ACTION, synopsisTopThreeThingsAction, 'top3Things'),
     transferOfCareSagas,
     respectSagas,
-    emergencySummarySagas,
 ];

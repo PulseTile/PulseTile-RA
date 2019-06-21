@@ -11,7 +11,7 @@ import CheckIcon from "@material-ui/icons/Check";
 
 import { patientsCountAction } from "../../actions/patientsCountAction";
 import image from "../../../version/images/pulsetile-logo.png";
-import PatientListTemplate from "./fragments/PatientListTemplate";
+import PatientListTemplate from "./templates/PatientListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";

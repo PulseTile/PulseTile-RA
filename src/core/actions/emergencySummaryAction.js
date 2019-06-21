@@ -1,4 +1,4 @@
-import { createRequestTypes } from "../../core/actions/functions";
+import { createRequestTypes } from "./functions";
 
 export const EMERGENCY_SUMMARY_ACTION = createRequestTypes('EMERGENCY_SUMMARY_ACTION');
 

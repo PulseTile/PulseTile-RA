@@ -1,7 +1,7 @@
 import get from "lodash/get";
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/es/effects';
 
-import { token, domainName } from "../../core/token";
+import { token, domainName } from "../token";
 import { EMERGENCY_SUMMARY_ACTION, emergencySummaryAction } from "../actions/emergencySummaryAction";
 
 export default takeEvery(EMERGENCY_SUMMARY_ACTION.REQUEST, function*(action) {

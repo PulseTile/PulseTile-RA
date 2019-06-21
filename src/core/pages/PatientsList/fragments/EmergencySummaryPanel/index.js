@@ -2,18 +2,16 @@ import React, { Component } from "react";
 import get from "lodash/get";
 import { connect } from 'react-redux';
 
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import { withStyles } from '@material-ui/core/styles/index';
+import Typography from '@material-ui/core/Typography/index';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel/index';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails/index';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary/index';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import { emergencySummaryAction } from "../../actions/emergencySummaryAction";
-import VitalsChart from "../../plugins/Vitals/VitalsChart";
+import { emergencySummaryAction } from "../../../../actions/emergencySummaryAction";
+import VitalsChart from "../../../../../version/plugins/Vitals/VitalsChart";
 import ItemBlock from "./ItemBlock";
-import ViewButton from "../../../core/common/Buttons/ViewButton";
-import {themeCommonElements} from "../../config/theme.config";
 
 const styles = theme => ({
     expansionPanel: {
@@ -133,19 +131,22 @@ class EmergencySummaryPanel extends Component {
                 <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
                     <Typography className={classes.expansionTypography}>Emergency Summary</Typography>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                    <div className={classes.itemBlock}>
-                        <Typography variant="h3">Name</Typography>
-                        <Typography className={classes.blockContent}>{get(currentPatient, 'firstName', null)} {get(currentPatient, 'lastName', null)}</Typography>
-                    </div>
-                    <ItemBlock isLoading={isLoading} list={problemsList} title="Diagnosis" />
-                    <ItemBlock isLoading={isLoading} list={medicationsList} title="Medications" />
-                    <ItemBlock isLoading={isLoading} list={allergiesList} title="Allergies" />
-                    <div className={classes.itemBlock}>
-                        <Typography variant="h3">Vitals</Typography>
-                        <VitalsChart vitalsEmergencySummary={get(emergencySummary, 'vitalsigns', [])} history={history} />
-                    </div>
-                </ExpansionPanelDetails>
+                {
+                    isPanelOpen &&
+                        <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                            <div className={classes.itemBlock}>
+                                <Typography variant="h3">Name</Typography>
+                                <Typography className={classes.blockContent}>{get(currentPatient, 'firstName', null)} {get(currentPatient, 'lastName', null)}</Typography>
+                            </div>
+                            <ItemBlock isLoading={isLoading} list={problemsList} title="Diagnosis" />
+                            <ItemBlock isLoading={isLoading} list={medicationsList} title="Medications" />
+                            <ItemBlock isLoading={isLoading} list={allergiesList} title="Allergies" />
+                            <div className={classes.itemBlock}>
+                                <Typography variant="h3">Vitals</Typography>
+                                <VitalsChart vitalsEmergencySummary={get(emergencySummary, 'vitalsigns', [])} history={history} />
+                            </div>
+                        </ExpansionPanelDetails>
+                }
             </ExpansionPanel>
         );
     }

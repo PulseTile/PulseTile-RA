@@ -11,7 +11,6 @@ import createCustomReducer from "../../core/reducers/createCustomReducer";
 import createRespectPluginReducer from "./createRespectPluginReducer";
 import respectModal from "./respectModalReducer";
 import versionsServerInfo from "./versionsServerInfoReducer";
-import emergencySummaryReducer from "./emergencySummaryReducer";
 
 import { PERSONAL_DETAILS_ACTION } from "../actions/ReSPECT/personalDetailsAction";
 import { SUMMARY_INFORMATION_ACTION } from "../actions/ReSPECT/summaryInformationAction";
@@ -49,6 +48,5 @@ export default {
     emergencyContacts: createRespectPluginReducer(EMERGENCY_CONTACTS_ACTION),
     confirmation: createRespectPluginReducer(CONFIRMATION_ACTION),
     emergencyView: createRespectPluginReducer(EMERGENCY_VIEW_ACTION),
-    emergencySummary: emergencySummaryReducer,
     versionsServerInfo,
 };

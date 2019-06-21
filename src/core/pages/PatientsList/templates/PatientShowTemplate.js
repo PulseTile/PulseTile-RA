@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import get from "lodash/get";
-import { Show, SimpleShowLayout, TextField, DateField } from "react-admin";
+import { Show, SimpleShowLayout, TextField } from "react-admin";
 
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import { withStyles } from '@material-ui/core/styles/index';
+import Grid from '@material-ui/core/Grid/index';
+import Typography from '@material-ui/core/Typography/index';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel/index';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails/index';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary/index';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton/index';
 
-import EditButton from "../../common/Buttons/EditButton";
-import CustomIcon from "../../common/CustomIcon";
-import { themeCommonElements } from "../../../version/config/theme.config";
+import EditButton from "../../../common/Buttons/EditButton";
+import CustomIcon from "../../../common/CustomIcon";
+import EmergencySummaryPanel from "../fragments/EmergencySummaryPanel";
+import { themeCommonElements } from "../../../../version/config/theme.config";
 
 const styles = theme => ({
     expansionPanel: {
@@ -112,8 +113,9 @@ class ShowTemplate extends Component {
     };
 
     render() {
-        const { classes, children, resource, isListOpened, pageTitle, toggleListBlock, changeViewType, ...rest } = this.props;
+        const { classes, children, isListOpened, pageTitle, toggleListBlock, changeViewType, isDateCreatedAbsent, isSystemInfoAbsent, ...rest } = this.props;
         const { isMainPanelOpen, isSystemInfoPanelOpen } = this.state;
+        const hasEmergencySummaryPanel = get(themeCommonElements, 'emergencySummaryPanel', false);
         return (
             <Grid item xs={12} sm={isListOpened ? 6 : 12}>
                 <ExpansionPanel className={isMainPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isMainPanelOpen} onChange={() => this.toggleMainPanel()}>
@@ -128,14 +130,14 @@ class ShowTemplate extends Component {
                     </ExpansionPanelSummary>
                     {
                         isMainPanelOpen &&
-                            <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                                <Show className={classes.showDetails} title={pageTitle} {...rest}>
-                                    <SimpleShowLayout className={classes.showLayoutDetails}>
-                                        {children}
-                                    </SimpleShowLayout>
-                                </Show>
-                                <EditButton redirectTo={changeViewType} />
-                            </ExpansionPanelDetails>
+                        <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                            <Show className={classes.showDetails} title={pageTitle} {...rest}>
+                                <SimpleShowLayout className={classes.showLayoutDetails}>
+                                    {children}
+                                </SimpleShowLayout>
+                            </Show>
+                            <EditButton redirectTo={changeViewType} />
+                        </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>
                 <ExpansionPanel className={isSystemInfoPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isSystemInfoPanelOpen} onChange={() => this.toggleSystemInfoPanel()}>
@@ -147,13 +149,15 @@ class ShowTemplate extends Component {
                             <ExpansionPanelDetails className={classes.expansionPanelDetails}>
                                 <Show className={classes.showDetails} title={pageTitle} {...rest}>
                                     <SimpleShowLayout className={classes.showLayoutDetails}>
-                                        <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
                                         <TextField className={classes.labelBlock} label="Source" source="source" />
                                     </SimpleShowLayout>
                                 </Show>
                             </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>
+                {
+                    hasEmergencySummaryPanel && <EmergencySummaryPanel {...this.props} />
+                }
             </Grid>
         );
     }
