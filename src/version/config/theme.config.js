@@ -42,6 +42,7 @@ export const themeCommonElements = {
     homePage: Charts,
     respectPanel: RespectSummaryPanel,
     hasEmergencySummaryPanel: true,
+    hasPatientSummaryRoll: true,
 };
 
 export const themeImages = {};
