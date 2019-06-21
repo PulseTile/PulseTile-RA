@@ -12,6 +12,7 @@ import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
 import fakePatientsProvider from "./fakePatientsProvider";
+import fakeTestResultsProvider from "./fakeTestResultsProvider";
 
 import newPatientsProvider from "./patientsProvider";
 import { httpErrorAction } from '../actions/httpErrorAction';
@@ -244,6 +245,9 @@ export default (type, resource, params) => {
     // }
     if (resource === `patients`) {
         return newPatientsProvider(type, resource, params);
+    }
+    if (resource === `labresults`) {
+        return fakeTestResultsProvider(type, resource, params);
     }
     return dataProvider(type, resource, params);
 };

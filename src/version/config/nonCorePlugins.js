@@ -5,6 +5,7 @@ import MdtList from "../plugins/MDT/MdtList";
 import ProceduresList from "../plugins/Procedures/ProceduresList";
 import PersonalNotesList from "../plugins/PersonalNotes/PersonalNotesList";
 import ReferralsList from "../plugins/Referrals/ReferralsList";
+import ResultsList from "../plugins/Results/ResultsList";
 import TransferOfCareList from "../plugins/TransferOfCare/TransferOfCareList";
 import VitalsList from "../plugins/Vitals/VitalsList";
 
@@ -43,6 +44,11 @@ export default [
         name: "referrals",
         label: "Referrals",
         list: ReferralsList,
+    },
+    {
+        name: "labresults",
+        label: "Results",
+        list: ResultsList,
     },
     {
         name: "toc",

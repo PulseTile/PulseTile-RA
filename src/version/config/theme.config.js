@@ -24,6 +24,7 @@ export const themeFullMenu = [
     { url: '/personalnotes', label: 'Personal Notes' },
     { url: '/procedures', label: 'Procedures' },
     { url: '/referrals', label: 'Referrals' },
+    { url: '/labresults', label: 'Results' },
     { url: '/toc', label: 'Transfers Of Care' },
     { url: '/vitalsigns', label: 'Vitals' },
     { url: '/respect', label: 'ReSPECT' },

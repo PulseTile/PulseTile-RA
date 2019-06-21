@@ -89,7 +89,7 @@ function getSearchType(userSearch, userSearchID, userSearchType) {
 }
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, key, userSearch, userSearchID, userSearchType, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
+    const { classes, title, idsNumber, resourceUrl, notCreate, key, userSearch, userSearchID, userSearchType, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
     const sortOrder = defaultSortOrder ? defaultSortOrder : 'DESC';
     const search = getSearch(userSearch, userSearchID);
@@ -107,7 +107,7 @@ const TableContent = props => {
             perPage={ITEMS_PER_PAGE}
             actions={null}
             bulkActions={false}
-            pagination={<ListToolbar resourceUrl={resourceUrl} history={history} isCreatePage={isCreatePage} createPath={createUrl} />}
+            pagination={<ListToolbar notCreate={notCreate} resourceUrl={resourceUrl} history={history} isCreatePage={isCreatePage} createPath={createUrl} />}
             {...props}
         >
             { (idsNumber > 0) ?

@@ -45,9 +45,6 @@ function getPatientInfo(response) {
 }
 
 export default (state = initialState, action) => {
-
-    console.log('action', action)
-
     switch (action.type) {
         case CURRENT_PATIENT_ACTION.REQUEST:
             return {

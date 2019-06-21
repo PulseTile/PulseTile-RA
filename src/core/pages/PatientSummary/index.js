@@ -77,16 +77,21 @@ class PatientSummaryInfo extends Component {
     };
 
     componentDidMount() {
-        const { patientInfo } = this.props;
         if (localStorage.getItem('userId') && localStorage.getItem('username')) {
             this.props.getPatientSynopsis();
             this.props.getEmergencySummary(localStorage.getItem('patientId'));
         }
-        this.props.getRandomPhoto(get(patientInfo, 'gender', 'male'));
+    }
+
+    componentWillReceiveProps(nextProps, nextContent) {
+        const { patientInfo } = this.props;
+        if (patientInfo !== nextProps.patientInfo) {
+            this.props.getRandomPhoto(get(nextProps, 'patientInfo.gender', 'male'));
+        }
     }
 
     render() {
-        const { classes, location } = this.props;
+        const { classes, location, history } = this.props;
         const { isRollView } = this.state;
         const breadcrumbsResource = [
             { url: location.pathname, title: "Patient Summary", isActive: false }
@@ -119,7 +124,7 @@ class PatientSummaryInfo extends Component {
                 </div>
                 <Grid className={classes.summaryContainer} spacing={16} container>
                     {
-                        isRollView ? <PatientSummaryRoll /> : <PatientSummaryTable />
+                        isRollView ? <PatientSummaryRoll history={history} /> : <PatientSummaryTable />
                     }
                 </Grid>
             </Grid>

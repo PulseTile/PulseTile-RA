@@ -53,12 +53,12 @@ const styles = theme => ({
 class PatientSummaryTable extends Component {
 
     render() {
-        const { classes, emergencySummary, history, isVitalsLoading } = this.props;
+        const { classes, emergencySummary, history, location, isVitalsLoading } = this.props;
         return (
             <div className={classes.headerBlock}>
                 <PhotoAndVitals classes={classes} />
                 <PatientSummaryPanels classes={classes} />
-                <LabResults classes={classes} />
+                <LabResults classes={classes} location={location} />
                 <Grid container xs={12} className={classes.content}>
                     <Grid item xs={12} sm={12} md={6} className={classes.timelineBlock}>
                         <div className={classes.blockTitle}>

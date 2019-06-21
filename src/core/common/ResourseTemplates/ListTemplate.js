@@ -307,7 +307,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, classes, history, userSearch, userSearchID, userSearchType, userSearchValue, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
+        const { create, resourceUrl, title, classes, history, notCreate, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
         const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key, filterText } = this.state;
 
         const breadcrumbsResource = [
@@ -390,6 +390,7 @@ class ListTemplate extends Component {
                             idsNumber={idsNumber}
                             isCustomDatagrid={isCustomDatagrid}
                             history={history}
+                            notCreate={notCreate}
                             {...this.props}
                         />
                     </Grid>
