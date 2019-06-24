@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
-import {versionsServerAction} from "../../../../actions/ReSPECT/versionsServerAction";
-import get from "lodash/get";
+import ChevronRight from "@material-ui/icons/ChevronRight";
+
+import { versionsServerAction } from "../../../../actions/ReSPECT/versionsServerAction";
+import { themeCommonElements } from "../../../../config/theme.config";
 
 /**
  * This component returns synopsis list
@@ -35,6 +38,7 @@ class ItemsList extends Component {
             );
         }
         if (items && items.length > 0) {
+            const menuHasChevrons = get(themeCommonElements, 'menuHasChevrons', false);
             return (
                 <List className={classes.list}>
                     {items && items.slice(0, 4).map((item, key) => {
@@ -43,6 +47,7 @@ class ItemsList extends Component {
                                 <Typography noWrap={true}>
                                     Version {item.version}
                                 </Typography>
+                                { menuHasChevrons && <ChevronRight /> }
                             </li>
                         );
                     })}

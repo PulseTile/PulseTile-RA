@@ -7,6 +7,7 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import RssIcon from '@material-ui/icons/RssFeed';
 import Grid from '@material-ui/core/Grid';
+import ChevronRight from "@material-ui/icons/ChevronRight";
 
 import ListBlock from "./ListBlock";
 import { SHOW_ALL } from "../../../core/pages/PatientSummary/config";
@@ -33,7 +34,7 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
+        color: theme.palette.mainColor,
         border: theme.isOldDesign ? `1px solid ${theme.palette.borderColor}` : null,
         '&:hover': {
             cursor: "pointer",
@@ -43,13 +44,20 @@ const styles = theme => ({
         marginBottom: 10,
     },
     mainHeading: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         margin: 0,
+        zIndex: 99999999,
+        '& svg': {
+            color: theme.palette.fontColor,
+        }
     },
     title: {
         marginBottom: 0,
-        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
-        fontSize: 20,
-        fontWeight: 800,
+        color: theme.palette.fontColor,
+        fontSize: 18,
+        fontWeight: 600,
         zIndex: 99999999,
     },
     list: {
@@ -60,14 +68,23 @@ const styles = theme => ({
     },
     listItem: {
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        textAlign: "justify",
         height: 48,
         paddingLeft: 15,
+        paddingRight: 15,
         fontSize: "1rem",
         borderLeft: `1px solid ${theme.palette.borderColor}`,
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
+        '&:hover': {
+            backgroundColor: theme.palette.secondaryMainColor,
+            '& p': {
+                color: theme.palette.paperColor,
+            }
+        }
     },
     feedsItem: {
         fontSize: "1rem",
@@ -84,6 +101,7 @@ const styles = theme => ({
 const RssCard = props => {
     const { classes, sourceId, title, items, loading, icon, link, history, showMode, showHeadings, selectedFeeds } = props;
     const isOldDesign = get(themeCommonElements, 'isOldDesign', false);
+    const menuHasChevrons = get(themeCommonElements, 'menuHasChevrons', false);
     if (selectedFeeds.indexOf(sourceId) !== -1) {
         return (
             <Grid item xs={12} sm={6} md={6} lg={3}>
@@ -94,6 +112,7 @@ const RssCard = props => {
                             <Typography gutterBottom className={classes.title} >
                                 {title}
                             </Typography>
+                            { menuHasChevrons && <ChevronRight /> }
                         </h1>
                     </div>
                     { (showMode === SHOW_ALL || !showMode) &&

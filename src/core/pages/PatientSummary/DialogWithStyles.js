@@ -65,7 +65,13 @@ const styles = theme => ({
     closeIcon: {
         float: "right",
         height: 25,
-    }
+    },
+    radio: {
+        '&$checked': {
+            color: theme.palette.mainColor,
+        }
+    },
+    checked: {}
 });
 
 /**
@@ -152,6 +158,7 @@ class DialogContent extends Component {
                                             checked={this.isHeadingChecked(item.list)}
                                             color="primary"
                                             onChange={() => this.toggleVisibility(item.list)}
+                                            classes={{ root: classes.radio, checked: classes.checked }}
                                         />
                                         <Typography className={classes.checkboxLabel}>{item.title}</Typography>
                                     </div>
@@ -165,6 +172,7 @@ class DialogContent extends Component {
                                     checked={this.isHeadingChecked('respect')}
                                     color="primary"
                                     onChange={() => this.toggleVisibility('respect')}
+                                    classes={{ root: classes.radio, checked: classes.checked }}
                                 />
                                 <Typography className={classes.checkboxLabel}>ReSPECT</Typography>
                             </div>
@@ -183,6 +191,7 @@ class DialogContent extends Component {
                                         checked={selectedMode === item.type}
                                         color="primary"
                                         onChange={() => this.selectShowMode(item.type)}
+                                        classes={{ root: classes.radio, checked: classes.checked }}
                                     />
                                     <Typography className={classes.checkboxLabel}>{item.label}</Typography>
                                 </label>

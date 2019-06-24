@@ -19,6 +19,8 @@ const defaultLightPalette = {
     paperColor: "#fff",
     toolbarColor: "#e5e5e5",
     fontColor: "#000",
+    topbarButton: "#757575",
+    menuItemsColor: "#3E3E3E",
 };
 
 const defaultDarkPalette = {
@@ -36,6 +38,8 @@ const defaultDarkPalette = {
     background: "#fff",
     text: "#000",
     divider: "#000",
+    topbarButton: "#000",
+    menuItemsColor: "#000",
 };
 
 /**

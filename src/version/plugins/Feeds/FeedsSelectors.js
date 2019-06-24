@@ -86,6 +86,7 @@ class FeedsSelectors extends Component {
                             checked={this.isFeedsChecked(item.sourceId)}
                             color="primary"
                             onChange={() => this.toggleVisibility(item)}
+                            classes={{ root: classes.radio, checked: classes.checked }}
                         />
                         <Typography className={classes.checkboxLabel}>{item.name}</Typography>
                     </div>

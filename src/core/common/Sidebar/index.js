@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import get from "lodash/get";
 
 import { withRouter } from 'react-router-dom';
-import { Sidebar, getResources, Responsive, setSidebarVisibility } from 'react-admin';
+import { Sidebar, getResources, Responsive } from 'react-admin';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -33,14 +33,22 @@ const styles = theme => ({
         backgroundColor: theme.palette.paperColor,
     },
     menuItem: {
-        color: `${theme.palette.secondaryMainColor} !important`,
+        color: `${theme.palette.menuItemsColor} !important`,
+        fontSize: 14,
+        fontWeight: 600,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
         '&:hover': {
             backgroundColor: theme.palette.secondaryMainColor,
             color: "#fff !important",
         },
+        '&:hover div p': {
+            backgroundColor: theme.palette.secondaryMainColor,
+            color: "#fff !important",
+        },
     },
     menuItemSelected: {
+        fontSize: 14,
+        fontWeight: 600,
         backgroundColor: theme.palette.secondaryMainColor + '! important',
         color: "#fff !important",
         borderBottom: `1px solid ${theme.palette.borderColor}`,

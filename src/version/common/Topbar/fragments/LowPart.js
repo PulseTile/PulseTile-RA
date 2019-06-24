@@ -45,9 +45,11 @@ const styles = theme => ({
     menuButton: {
         borderRadius: theme.isRectangleButtons ? 0 : 25,
         minWidth: 64,
-        color: theme.palette.secondaryMainColor,
+        color: theme.palette.fontColor,
         textTransform: "none",
-        backgroundColor: theme.palette.paperColor,
+        backgroundColor: theme.palette.tableHeadColor,
+        fontSize: 16,
+        fontWeight: 600,
         '&:hover': {
             backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.secondaryMainColor,
             color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.paperColor,

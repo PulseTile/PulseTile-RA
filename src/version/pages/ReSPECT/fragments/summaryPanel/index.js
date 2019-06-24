@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
+import ChevronRight from "@material-ui/icons/ChevronRight";
 import Grid from '@material-ui/core/Grid';
 import { faNotesMedical  } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -65,6 +66,9 @@ const styles = theme => ({
         borderLeft: `1px solid ${theme.palette.borderColor}`,
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
+        '& svg': {
+            color: theme.palette.fontColor,
+        }
     },
     emptyRows: {
         height: 150,
@@ -90,6 +94,7 @@ class RespectSummaryPanel extends Component {
     render() {
         const { classes, loading, history, showMode, versionsServerInfo, toggleRespectModal, showHeadings } = this.props;
         const isOldDesign = get(themeCommonElements, 'isOldDesign', false);
+        const menuHasChevrons = get(themeCommonElements, 'menuHasChevrons', false);
         if (Object.values(showHeadings).indexOf('respect') === -1) {
             return null;
         }
@@ -98,9 +103,12 @@ class RespectSummaryPanel extends Component {
                 <Card className={classes.card}>
                     <div className={classes.topBlock} onClick={() => history.push('/respect')}>
                         { !isOldDesign && <FontAwesomeIcon icon={faNotesMedical} size="2x" className={classes.icon} /> }
-                        <Typography gutterBottom variant="h5" component="h3" className={classes.title} >
-                            ReSPECT
-                        </Typography>
+                        <h1 className={classes.mainHeading}>
+                            <Typography gutterBottom className={classes.title} >
+                                ReSPECT
+                            </Typography>
+                            { menuHasChevrons && <ChevronRight /> }
+                        </h1>
                     </div>
                     { (showMode === SHOW_ALL || !showMode) &&
                         <ListBlock

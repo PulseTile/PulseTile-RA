@@ -35,7 +35,7 @@ const styles = theme => ({
         alignItems: "center",
     },
     homeButton : {
-        color: theme.palette.secondaryMainColor,
+        color: theme.palette.paperColor,
     },
     mainLogoItem: {
         display: "inline-flex",
@@ -63,7 +63,7 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         borderLeft: `1px solid ${theme.palette.borderColor}`,
-        backgroundColor: theme.palette.mainColor,
+        backgroundColor: theme.palette.paperColor,
         '&:hover': {
             backgroundColor: theme.palette.secondaryMainColor,
         },
@@ -71,22 +71,22 @@ const styles = theme => ({
             backgroundColor: theme.palette.secondaryMainColor,
         },
         '&:hover button': {
-            color: "white",
+            color: theme.palette.paperColor,
         },
         '&:active button': {
-            color: "white",
+            color: theme.palette.paperColor,
         },
         '&:hover a': {
-            color: "white",
+            color: theme.palette.paperColor,
         },
         '&:active a': {
-            color: "white",
+            color: theme.palette.paperColor,
         },
     },
     rightBlockButton: {
-        color: theme.palette.secondaryMainColor,
+        color: theme.palette.topbarButton,
         '&:hover': {
-            color: "white",
+            color: theme.palette.paperColor,
         },
     },
     emptyBlock: {
@@ -107,7 +107,7 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: "space-between",
-        backgroundColor: "white",
+        backgroundColor: theme.palette.paperColor,
         minHeight: 52,
         padding: 10,
     }

@@ -31,7 +31,7 @@ export const themeFullMenu = [
 ];
 
 export const themeCommonElements = {
-    isOldDesign: true,
+    menuHasChevrons: true,
     patientSummaryPermission: true,
     patientListColumnToggling: true,
     isPatientListCount: true,

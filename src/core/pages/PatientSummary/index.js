@@ -59,6 +59,12 @@ const styles = theme => ({
         marginLeft: 15,
         marginRight: 10,
     },
+    radio: {
+        '&$checked': {
+            color: theme.palette.mainColor,
+        }
+    },
+    checked: {}
 });
 
 const TABLE_VIEW = 'table';
@@ -108,15 +114,15 @@ class PatientSummaryInfo extends Component {
                             <RadioGroup name="viewType" className={classes.radioGroup} value={viewType} onChange={() => this.toggleView()} row>
                                 <FormControlLabel
                                     className={classes.formControlLabel}
-                                    value={TABLE_VIEW}
-                                    control={<Radio />}
-                                    label="Table"
+                                    value={ROLL_VIEW}
+                                    control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />}
+                                    label="Roll"
                                 />
                                 <FormControlLabel
                                     className={classes.formControlLabel}
-                                    value={ROLL_VIEW}
-                                    control={<Radio />}
-                                    label="Roll"
+                                    value={TABLE_VIEW}
+                                    control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />}
+                                    label="Table"
                                 />
                             </RadioGroup>
                         </FormGroup>
@@ -124,7 +130,7 @@ class PatientSummaryInfo extends Component {
                 </div>
                 <Grid className={classes.summaryContainer} spacing={16} container>
                     {
-                        isRollView ? <PatientSummaryRoll history={history} /> : <PatientSummaryTable />
+                        isRollView ? <PatientSummaryRoll history={history} /> : <PatientSummaryTable history={history} />
                     }
                 </Grid>
             </Grid>

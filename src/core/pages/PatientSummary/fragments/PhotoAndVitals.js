@@ -12,6 +12,8 @@ import HorizontalBarChart from "./HorizontalBarChart";
 
 const styles = {
     patientPhoto: {
+        height: 110,
+        width: 110,
         borderRadius: '50%'
     },
     ageAndHeight: {
@@ -47,7 +49,7 @@ const DIAGNOSIS_YELLOW = 'Underweight';
 const DIAGNOSIS_RED = 'Obese';
 
 
-const OXYGEN_SATURATION_HARDCODE = 93;
+const OXYGEN_SATURATION_HARDCODE = 91;
 const SYSTOLIC_PRESSURE_HARDCODE = 150;
 const DIASTOLIC_PRESSURE_HARDCODE = 88;
 
@@ -129,8 +131,8 @@ class PhotoAndVitals extends Component {
         const { classes, patientInfo, isLoadingPhoto, isLoading, patientPhoto } = this.props;
         const age = this.getPatientAge();
 
-        const weight = Math.floor(Math.random() * (120 - 40) + 40);
-        const bmi = Math.floor(Math.random() * (50 - 10) + 10);
+        const weight = 87.5;
+        const bmi = 17.92;
 
         const weightResult = this.getWeightResult(bmi);
 
@@ -139,15 +141,16 @@ class PhotoAndVitals extends Component {
         const systolicColor = this.getSystolicColor(SYSTOLIC_PRESSURE_HARDCODE);
         const diastolicColor = this.getDiastolicColor(DIASTOLIC_PRESSURE_HARDCODE);
 
+        const patientName = `${get(patientInfo, 'firstName', null)} ${get(patientInfo, 'lastName', null)}`;
         return (
             <React.Fragment>
                 <div className={classes.blockTitle}>
-                    <Typography className={classes.title}>{get(patientInfo, 'firstName', null)} {get(patientInfo, 'lastName', null)}</Typography>
+                    <Typography className={classes.title}>{patientName}</Typography>
                 </div>
                 <Grid container xs={12} className={classes.content}>
                     <Grid item xs={12} sm={6} md={5} className={classes.photoAndVitals}>
                         <Grid container xs={12} className={classes.insideGridBlock}>
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid item xs={12} sm={6} md={3}>
                                 {
                                     isLoadingPhoto
                                         ? <Typography>Loading...</Typography>
@@ -155,21 +158,33 @@ class PhotoAndVitals extends Component {
                                             <CardMedia
                                                 className={classes.patientPhoto}
                                                 component="img"
-                                                alt="ReSPECT"
+                                                alt={patientName}
                                                 image={patientPhoto}
-                                                title="ReSPECT"
+                                                title={patientName}
                                             />
                                 }
 
                             </Grid>
-                            <Grid item xs={12} sm={6} md={8} className={classes.ageAndHeight}>
+                            <Grid item xs={12} sm={6} md={9} className={classes.ageAndHeight}>
                                 <div className={classes.parameter}>
                                     <Typography variant="body2">Age: </Typography>
                                     <Typography className={classes.value}>{isLoading ? 'Loading...' : age}</Typography>
                                 </div>
                                 <div className={classes.parameter}>
                                     <Typography variant="body2" >Height: </Typography>
-                                    <Typography className={classes.value}>{Math.floor(Math.random() * (200 - 156) + 156)} cm</Typography>
+                                    <Typography className={classes.value}>184 cm</Typography>
+                                </div>
+                                <div className={classes.parameter}>
+                                    <Typography variant="body2" >CPR Status: </Typography>
+                                    <Typography className={classes.value}>For active CPR</Typography>
+                                </div>
+                                <div className={classes.parameter}>
+                                    <Typography variant="body2" >Blood Group: </Typography>
+                                    <Typography className={classes.value}>O+</Typography>
+                                </div>
+                                <div className={classes.parameter}>
+                                    <Typography variant="body2" >Donor status: </Typography>
+                                    <Typography className={classes.value}>Organ Donor</Typography>
                                 </div>
                             </Grid>
                         </Grid>

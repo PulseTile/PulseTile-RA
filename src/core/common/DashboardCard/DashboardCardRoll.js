@@ -7,38 +7,33 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import ItemsList from "./ItemsList";
+import DummyItemsList from "./DummyItemsList";
 import { SHOW_ALL } from "../../pages/PatientSummary/config";
-import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
     card: {
         borderRadius: 0,
     },
-    media: {
-        backgroundColor: theme.palette.mainColor,
-    },
     topBlock: {
-        display: "flex",
-        flexDirection: "column",
-        height: theme.isOldDesign ? 50 : 100,
-        backgroundColor: theme.palette.mainColor,
-        justifyContent: "center",
-        alignItems: "center",
+        paddingLeft: 15,
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderLeft: `0.5px solid ${theme.palette.paperColor}`,
+        borderRight: `0.5px solid ${theme.palette.paperColor}`,
+        backgroundColor: theme.palette.tableHeadColor,
         position: "relative",
-        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
-        border: theme.isOldDesign ? `1px solid ${theme.palette.borderColor}` : null,
+        color: theme.palette.fontColor,
         '&:hover': {
             cursor: "pointer",
         },
     },
-    title: {
+    synopsisTitle: {
         marginBottom: 0,
-        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
-        fontSize: 20,
-        fontWeight: 800,
+        backgroundColor: theme.palette.tableHeadColor,
+        color: theme.palette.fontColor,
+        fontSize: 18,
+        fontWeight: 600,
         zIndex: 99999999,
     },
     icon: {
@@ -67,10 +62,13 @@ const styles = theme => ({
     },
     listItem: {
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        textAlign: "justify",
         height: 48,
         paddingLeft: 15,
+        paddingRight: 15,
         zIndex: 99999999,
         fontSize: "1rem",
         borderLeft: `1px solid ${theme.palette.borderColor}`,
@@ -110,6 +108,12 @@ const LoadingItems = ({ classes }) => {
     );
 };
 
+const dummyItems = {
+    problems: ['Overweight', 'Type 2 diabetic', 'Hypertensive'],
+    medications: ['Metformin', 'Gloposode', 'Statins'],
+    allergies: ['Latex', '', ''],
+};
+
 /**
  * This component returns list block
  *
@@ -121,8 +125,11 @@ const LoadingItems = ({ classes }) => {
  */
 const ListBlock = ({ classes, items, list, history }) => {
     if (items) {
+        // return (
+        //     <ItemsList classes={classes} items={items} list={list} history={history} />
+        // );
         return (
-            <ItemsList classes={classes} items={items} list={list} history={history} />
+            <DummyItemsList classes={classes} items={dummyItems[list]} list={list} history={history} />
         );
     }
     return (
@@ -142,20 +149,16 @@ const DashboardCardRoll = props => {
     if (Object.values(showHeadings).indexOf(list) === -1) {
         return null;
     }
-    const isOldDesign = get(themeCommonElements, 'isOldDesign', false);
     return (
         <Grid item xs={12} sm={6} md={6} lg={4}>
             <Card className={classes.card}>
-                <div id={id} className={classes.topBlock} aria-label={title} onClick={() => history.push('/' + list)}>
-                    { !isOldDesign && <FontAwesomeIcon icon={icon} size="2x" className={classes.icon} /> }
-                    <h1 className={classes.mainHeading}>
-                        <Typography className={classes.title}>
-                            {title}
-                        </Typography>
-                    </h1>
+                <div className={classes.topBlock} aria-label={title} onClick={() => history.push('/' + list)}>
+                    <Typography className={classes.synopsisTitle}>
+                        {title}
+                    </Typography>
                 </div>
                 { (showMode === SHOW_ALL || !showMode) &&
-                <ListBlock loading={loading} classes={classes} items={items} list={list} history={history} />
+                    <ListBlock loading={loading} classes={classes} items={items} list={list} history={history} />
                 }
             </Card>
         </Grid>

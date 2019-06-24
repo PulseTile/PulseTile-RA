@@ -24,7 +24,7 @@ const styles = theme => ({
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
+        color: theme.palette.mainColor,
         border: theme.isOldDesign ? `1px solid ${theme.palette.borderColor}` : null,
         '&:hover': {
             cursor: "pointer",
@@ -35,14 +35,20 @@ const styles = theme => ({
         zIndex: 99999999,
     },
     mainHeading: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         margin: 0,
         zIndex: 99999999,
+        '& svg': {
+            color: theme.palette.fontColor,
+        }
     },
     title: {
         marginBottom: 0,
-        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
-        fontSize: 20,
-        fontWeight: 800,
+        color: theme.palette.fontColor,
+        fontSize: 18,
+        fontWeight: 600,
         zIndex: 99999999,
     },
     list: {
@@ -63,19 +69,26 @@ const styles = theme => ({
     },
     listItem: {
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        textAlign: "justify",
         height: 48,
         paddingLeft: 15,
+        paddingRight: 15,
         zIndex: 99999999,
         fontSize: "1rem",
         borderLeft: `1px solid ${theme.palette.borderColor}`,
         borderRight: `1px solid ${theme.palette.borderColor}`,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
         cursor: "pointer",
+        color: theme.palette.fontColor,
         '&:hover': {
             backgroundColor: theme.palette.secondaryMainColor,
             '& p': {
+                color: theme.palette.paperColor,
+            },
+            '& svg': {
                 color: theme.palette.paperColor,
             }
         }
@@ -92,7 +105,7 @@ const styles = theme => ({
 class PatientSummaryTable extends Component {
 
     render() {
-        const { classes, loading, showMode, showHeadings } = this.props;
+        const { classes, history, loading, showMode, showHeadings } = this.props;
         const FeedsPanels = get(themeCommonElements, 'feedsPanels', false);
         const RespectPanel = get(themeCommonElements, 'respectPanel', false);
         return (
