@@ -3,7 +3,7 @@ import memoize from "lodash/memoize";
 import DeepMerge from 'deepmerge';
 
 import { createMuiTheme } from '@material-ui/core/styles';
-import { themeImages } from "../../version/config/theme.config";
+import { themeImages, themeCommonElements } from "../../version/config/theme.config";
 
 export const ITEMS_PER_PAGE = 10;
 
@@ -76,6 +76,8 @@ function getCurrentTheme(isContrastMode) {
     const palette = getCurrentPalette(isContrastMode);
     const isOldDesign = get(window, 'config.isOldDesign', false);
     const isRectangleButtons = get(window, 'config.isRectangleButtons', false);
+    const isTableHeaderInverted = get(themeCommonElements, 'invertedTableHeaders', false);
+    const tableHeaderColor = isTableHeaderInverted ? palette.tableHeadColor : palette.secondaryMainColor;
     return createMuiTheme({
         palette: palette,
         isOldDesign: isOldDesign,
@@ -86,7 +88,7 @@ function getCurrentTheme(isContrastMode) {
         },
         tableHeader: {
             tableHeaderBlock: {
-                background: getBackground(isContrastMode, palette.secondaryMainColor, 'tableHeaderImage'),
+                background: getBackground(isContrastMode, tableHeaderColor, 'tableHeaderImage'),
             },
         },
         patientSummaryPanel: {

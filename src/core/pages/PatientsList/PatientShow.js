@@ -23,7 +23,7 @@ const PatientShow = ({ classes, ...rest }) => (
         <TextField className={classes.labelBlock} label="Name" source="name" />
         <DateField className={classes.labelBlock} label="Date of Birth" source="dateOfBirth" />
         <TextField className={classes.labelBlock} label="Gender" source="gender" />
-        <TextField className={classes.labelBlock} label="Address" source="address" />
+        <TextField className={classes.labelBlock} label="Address" source="totalAddress" />
     </PatientShowTemplate>
 );
 

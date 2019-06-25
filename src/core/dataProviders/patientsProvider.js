@@ -44,9 +44,12 @@ function checkFormData(params) {
 function getRequestUrl(params) {
     const search = get(params, 'filter.filterText', null);
     const searchType = get(params, 'filter.filterType', null);
+    const clinicalSearchType = get(params, 'filter.clinicalQuery.searchType', null);
     let result = null;
     if (searchType === 'id') {
         result = `${domainName}/mpi/Patient/${search}`;
+    } else if (searchType === 'clinicalQuery' && clinicalSearchType) {
+        result = `${domainName}/api/patient/clinicalSearch/${clinicalSearchType}`;
     } else if (searchType === 'by_age' && search) {
         result = `${domainName}/mpi/Patient/search/advanced?type=by_age&from=${search[0]}&to=${search[1]}`;
     } else if (searchType !== 'name' && search) {
@@ -55,6 +58,43 @@ function getRequestUrl(params) {
         result = `${domainName}/mpi/Patient?name=${search}`;
     }
     return result;
+}
+
+function getRequestMethod(params) {
+    const isClinicalQuery = get(params, 'filter.clinicalQuery', null);
+    return isClinicalQuery ? 'POST' : 'GET';
+}
+
+function getRequestBody(params) {
+    const isClinicalQuery = get(params, 'filter.clinicalQuery', null);
+    if (!isClinicalQuery) {
+        return null;
+    }
+
+    console.log('PARAMS', params);
+
+    let requestBody = {
+        query: get(params, 'filter.clinicalQuery.searchValue', null),
+        gender: get(params, 'filter.clinicalQuery.gender', null),
+    };
+
+    const dateOfBirth = get(params, 'filter.clinicalQuery.dateOfBirth', null);
+    const from = get(params, 'filter.clinicalQuery.minAge', null);
+    const to = get(params, 'filter.clinicalQuery.maxAge', null);
+
+    console.log('dateOfBirth', dateOfBirth)
+    if (dateOfBirth) {
+        console.log('-------------------------------------------')
+        requestBody.dateOfBirth = dateOfBirth;
+    } else if (from && to) {
+        console.log('+++++++++++++++++++++++++++++++++++++++++++')
+        requestBody.from = from;
+        requestBody.to = to;
+    }
+
+    console.log('requestBody', requestBody)
+
+    return JSON.stringify(requestBody);
 }
 
 function getUserSearchResultsById(response) {
@@ -90,10 +130,13 @@ function getUserSearchResults(response, params) {
 
 const convertPatientsDataRequestToHTTP = (type, resource, params) => {
     let url = "";
+    let method = "";
     const options = {};
     switch (type) {
         case GET_LIST: {
             url = getRequestUrl(params);
+            method = getRequestMethod(params);
+            options.method = method;
             if (!options.headers) {
                 options.headers = new Headers({Accept: 'application/json'});
             }
@@ -101,6 +144,9 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
                 Authorization: "Bearer " + token,
                 'X-Requested-With': "XMLHttpRequest",
             };
+            if (method === 'POST') {
+                options.body = getRequestBody(params);
+            }
             break;
         }
 
@@ -226,7 +272,8 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     firstName: firstName,
                     lastName: lastName,
                     name: [firstName, lastName].join(' '),
-                    address: [line, city, district, postCode].join(', '),
+                    totalAddress: [line, city, district, postCode].join(', '),
+                    address: line,
                     city: city,
                     country: country,
                     district: district,
@@ -252,6 +299,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             let newData = params.data;
             newData.name = [newFirstName, newLastName].join(' ');
             newData.address = [newAddressLine, newCity, newDistrict, newPostalCode].join(' ');
+            newData.totalAddress = [newAddressLine, newCity, newDistrict, newPostalCode].join(' ');
             return {
                 id: get(params, 'data.nhsNumber', null),
                 data: newData,
@@ -297,6 +345,7 @@ function getPatientsList(patientsArray) {
             id: get(item, ['resource', 'identifier', [0], 'value'], null),
             name: getTotalName(item),
             address: getTotalAddress(item),
+            totalAddress: getTotalAddress(item),
             city: get(addressFromResponse, [[0], 'city'], null),
             country: get(addressFromResponse, [[0], 'country'], null),
             district: get(addressFromResponse, [[0], 'district'], null),

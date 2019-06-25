@@ -16,6 +16,10 @@ import { userSearchAction } from "../../actions/userSearchAction";
 const styles = theme => ({
     root: {
         flexGrow: 1,
+        width: '100%',
+        height: '100%',
+        background: theme.patientSummaryPanel.container.background,
+        backgroundSize: "cover",
     },
     chartsContainer: {
         width: "100%",

@@ -32,6 +32,12 @@ import ListModePopover from "./popovers/ListModePopover";
 import ColumnsTogglingIcon from "./icons/ColumnsTogglingIcon";
 
 const listStyles = theme => ({
+    container: {
+        width: '100%',
+        height: '100%',
+        background: theme.patientSummaryPanel.container.background,
+        backgroundSize: "cover",
+    },
     mainBlock: {
         margin: 0,
         paddingLeft: 10,
@@ -327,7 +333,7 @@ class ListTemplate extends Component {
         const open = Boolean(anchorEl);
 
         return (
-            <React.Fragment>
+            <div className={classes.container}>
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <TableHeader resource={resourceUrl} />
                 <Grid container spacing={16} className={classes.mainBlock}>
@@ -409,7 +415,7 @@ class ListTemplate extends Component {
                             />
                     }
                 </Grid>
-            </React.Fragment>
+            </div>
         );
     }
 }

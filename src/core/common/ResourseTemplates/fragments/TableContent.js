@@ -74,7 +74,7 @@ function getSearch(userSearch, userSearchID) {
     return result;
 }
 
-function getSearchType(userSearch, userSearchID, userSearchType) {
+function getSearchType(userSearch, userSearchID, userSearchType, userClinicalQuery) {
     let result = null;
     if (userSearch) {
         result = 'name';
@@ -85,15 +85,18 @@ function getSearchType(userSearch, userSearchID, userSearchType) {
     if (userSearchType) {
         result = userSearchType;
     }
+    if (userClinicalQuery) {
+        result = 'clinicalQuery'
+    }
     return result;
 }
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, notCreate, key, userSearch, userSearchID, userSearchType, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
+    const { classes, title, idsNumber, resourceUrl, notCreate, key, userSearch, userSearchID, userSearchType, userClinicalQuery, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
     const sortOrder = defaultSortOrder ? defaultSortOrder : 'DESC';
     const search = getSearch(userSearch, userSearchID);
-    const searchType = getSearchType(userSearch, userSearchID, userSearchType);
+    const searchType = getSearchType(userSearch, userSearchID, userSearchType, userClinicalQuery);
     return (
         <List
             resource={resourceUrl}
@@ -102,6 +105,7 @@ const TableContent = props => {
             filter={{
                 filterText: (search && resourceUrl === 'patients') ? search : filterText,
                 filterType: searchType,
+                clinicalQuery: userClinicalQuery,
             }}
             title={title}
             perPage={ITEMS_PER_PAGE}

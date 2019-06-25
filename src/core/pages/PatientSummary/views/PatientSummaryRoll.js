@@ -11,6 +11,7 @@ import VitalsChart from "../../../../version/plugins/Vitals/VitalsChart";
 import PhotoAndVitals from "../fragments/PhotoAndVitals";
 import PatientSummaryPanels from "../fragments/PatientSummaryPanels";
 import LabResults from "../fragments/LabResults";
+import EventsTimeline from "../fragments/EventsTimeline";
 
 const styles = theme => ({
     headerBlock:{
@@ -64,7 +65,7 @@ class PatientSummaryTable extends Component {
                         <div className={classes.blockTitle}>
                             <Typography className={classes.title}>Timeline</Typography>
                         </div>
-                        <Typography>PLACE FOR TIMELINE</Typography>
+                        {/*<EventsTimeline />*/}
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} className={classes.timelineBlock}>
                         <div className={classes.blockTitle}>

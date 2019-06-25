@@ -4,12 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
-    chartBlock: {
-        width: '90%',
-        height: 80,
-        textAlign: 'center',
-        paddingTop: 10,
-    },
     backgroundBlock: {
         height: 16,
         backgroundColor: theme.palette.disabledColor,
@@ -28,12 +22,12 @@ const styles = theme => ({
 const HorizontalBarChart = ({ classes, title, color, value, maximal }) => {
     const colorBlockWidth = 100 * value / maximal;
     return (
-        <div className={classes.chartBlock}>
+        <React.Fragment>
             <div className={classes.backgroundBlock}>
                 <div className={classes.coloredBlock} style={{ backgroundColor: color, width: colorBlockWidth + '%' }}></div>
             </div>
             <Typography variant="caption" className={classes.title}>{title}</Typography>
-        </div>
+        </React.Fragment>
     );
 };
 

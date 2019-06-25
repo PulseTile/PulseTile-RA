@@ -33,6 +33,12 @@ import sections from "./sections";
 import createPDF from "./fragments/pdfTool";
 
 const styles = theme => ({
+    container: {
+        width: '100%',
+        height: '100%',
+        background: theme.patientSummaryPanel.container.background,
+        backgroundSize: "cover",
+    },
     root: {
         width: '100%',
     },
@@ -158,7 +164,7 @@ class SectionsTable extends Component {
         ];
         const currentSection = this.getCurrentSection(currentRow);
         return (
-            <React.Fragment>
+            <div className={classes.container}>
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <RespectPageHeader />
                 <Grid container spacing={16} className={classes.mainBlock}>
@@ -203,7 +209,7 @@ class SectionsTable extends Component {
                             />
                     }
                 </Grid>
-            </React.Fragment>
+            </div>
         );
     }
 }

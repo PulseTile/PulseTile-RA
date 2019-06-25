@@ -67,9 +67,10 @@ class Footer extends Component {
         const { classes } = this.props;
         const { isContrastMode } = this.state;
         const linkText = isContrastMode ? "Disable High Contrast Mode" : "Enable High Contrast Mode";
+        const currentYear = new Date().getFullYear();
         return (
             <footer className={classes.footerBlock}>
-                <Typography className={classes.copyright}>Copyright 2018 Ripple Foundation CIC Ltd. All rights reserved.</Typography>
+                <Typography className={classes.copyright}>Copyright {currentYear} Ripple Foundation CIC Ltd. All rights reserved.</Typography>
                 <Typography>
                     <Link to="/" className={classes.contrastModeLink} onClick={e => this.toggleContrastMode(e)}>{linkText}</Link>
                 </Typography>

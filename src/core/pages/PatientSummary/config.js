@@ -10,13 +10,41 @@ import {themeCommonElements} from "../../../version/config/theme.config";
  * @return {array}
  */
 export const coreSynopsisData = [
-    { id: "block-problems", title: "Problems / Issues", list: "problems", icon: faNotesMedical, isActive: true, },
-    { id: "block-medications", title: "Medications", list: "medications", icon: faCapsules, isActive: true },
-    { id: "block-allergies", title: "Allergies", list: "allergies", icon: faAllergies, isActive: true },
-    { id: "block-contacts", title: "Contacts", list: "contacts", icon: faPhone, isActive: true },
+    {
+        id: "block-problems",
+        title: "Problems / Issues",
+        list: "problems",
+        icon: faNotesMedical,
+        isActive: true,
+        description: "The key problems that affect your health, some with clear diagnoses from your doctor",
+    },
+    {
+        id: "block-medications",
+        title: "Medications",
+        list: "medications",
+        icon: faCapsules,
+        isActive: true,
+        description: "The medical tablets and other medications that you take regularly for your health care",
+    },
+    {
+        id: "block-allergies",
+        title: "Allergies",
+        list: "allergies",
+        icon: faAllergies,
+        isActive: true,
+        description: "Those things that your body reacts against, that you have an allergy to",
+    },
+    {
+        id: "block-contacts",
+        title: "Contacts",
+        list: "contacts",
+        icon: faPhone,
+        isActive: true,
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
 ];
 
-const totalSynopsisData = coreSynopsisData.concat(nonCoreSynopsisData);
+export const totalSynopsisData = coreSynopsisData.concat(nonCoreSynopsisData);
 export const synopsisData = totalSynopsisData.filter(item => item.isActive);
 
 export const SHOW_HEADING = 'heading';

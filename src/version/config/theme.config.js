@@ -2,6 +2,7 @@ import ThemeTopbar from "../common/Topbar";
 import ThemeFooter from "../common/Footer";
 import FeedsSelectors from "../plugins/Feeds/FeedsSelectors";
 import FeedsPanels from "../plugins/Feeds/FeedsPanels";
+import BackgroundImage from "../images/background.jpg";
 import BusinessIntelligence from "../../core/pages/BusinessIntelligence";
 import Charts from "../../core/pages/Charts";
 import RespectSummaryPanel from "../pages/ReSPECT/fragments/summaryPanel";
@@ -32,6 +33,7 @@ export const themeFullMenu = [
 
 export const themeCommonElements = {
     menuHasChevrons: true,
+    invertedTableHeaders: true,
     patientSummaryPermission: true,
     patientListColumnToggling: true,
     isPatientListCount: true,
@@ -46,4 +48,6 @@ export const themeCommonElements = {
     hasPatientSummaryRoll: true,
 };
 
-export const themeImages = {};
+export const themeImages = {
+    backgroundImage: BackgroundImage,
+};

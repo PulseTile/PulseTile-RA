@@ -100,9 +100,9 @@ class PatientsList extends Component {
     };
 
     render() {
-        const { userSearch, userSearchID, userSearchType, userSearchValue, classes } = this.props;
+        const { userSearch, userSearchID, userSearchType, userClinicalQuery, userSearchValue, classes } = this.props;
 
-        if (!userSearch && !userSearchID && !userSearchType && !userSearchValue) {
+        if (!userSearch && !userSearchID && !userSearchType && !userSearchValue && !userClinicalQuery) {
             return (
                 <div className={classes.content}>
                     <div className={classes.imageBlock} >
@@ -116,6 +116,7 @@ class PatientsList extends Component {
                 </div>
             )
         }
+
 
         return (
             <React.Fragment>
@@ -136,7 +137,7 @@ class PatientsList extends Component {
                     {...this.props}
                 >
                     <TextField source="name" label="Name"/>
-                    { this.isColumnHidden('address') && <TextField source="address" label="Address" /> }
+                    { this.isColumnHidden('address') && <TextField source="totalAddress" label="Address" /> }
                     <TextField source="gender" label="Gender"/>
                     <DateField source="birthDate" label="Born"/>
                     { this.isColumnHidden('nhsNumber') && <TextField source="nhsNumber" label="NHS No." /> }
@@ -184,6 +185,7 @@ const mapStateToProps = state => {
         userSearchID: get(state, 'custom.userSearch.id', null),
         userSearchType: get(state, 'custom.userSearch.type', null),
         userSearchValue: get(state, 'custom.userSearch.value', null),
+        userClinicalQuery: get(state, 'custom.clinicalQuery.data', null),
         hiddenColumns:  get(state, 'custom.toggleColumns.data.patients', []),
         patientsIds: get(state, 'admin.resources.patients.list.ids', []),
     }

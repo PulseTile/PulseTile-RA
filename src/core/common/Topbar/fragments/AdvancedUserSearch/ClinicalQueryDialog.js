@@ -95,21 +95,18 @@ class ClinicalQueryDialog extends Component {
     };
 
     submitForm = formData => {
-        const { searchType, searchQuery, searchValue } = formData;
-        const { dateOfBirth, gender, age } = this.state;
+        const { searchType, ageParams, searchQuery, searchValue, dateOfBirth, gender, age } = this.state;
 
         const clinicalQueryData = {
             title: this.getBlockTitle(),
             searchType: searchType,
             searchQuery: searchQuery,
             searchValue: searchValue,
-            dateOfBirth: dateOfBirth ? moment(dateOfBirth).format('DD-MM-YYYY') : null,
+            dateOfBirth: (ageParams === 'dateOfBirth' && dateOfBirth) ? moment(dateOfBirth).format('DD-MM-YYYY') : null,
             minAge: age[0],
             maxAge: age[1],
             gender: gender
         };
-
-
 
         this.props.removeUserSearch();
         this.props.removeAdvancedSearch();

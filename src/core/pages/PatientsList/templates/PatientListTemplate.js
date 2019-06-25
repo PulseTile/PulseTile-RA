@@ -32,6 +32,12 @@ import ListModePopover from "../../../common/ResourseTemplates/popovers/ListMode
 import ColumnsTogglingIcon from "../../../common/ResourseTemplates/icons/ColumnsTogglingIcon";
 
 const listStyles = theme => ({
+    container: {
+        width: '100%',
+        height: '100%',
+        background: theme.patientSummaryPanel.container.background,
+        backgroundSize: "cover",
+    },
     mainBlock: {
         margin: 0,
         paddingLeft: 10,
@@ -122,6 +128,7 @@ class ListTemplate extends Component {
         isListOpened: true,
         isFilterOpened: false,
         filterText: null,
+        userClinicalQuery: null,
         key: 0,
         hiddenColumns: [],
     };
@@ -227,6 +234,17 @@ class ListTemplate extends Component {
             if (state.filterText !== props.userSearchValue) {
                 return {
                     filterText: props.userSearchValue,
+                    key: this.state.key + 1,
+                }
+            }
+        });
+    };
+
+    filterByClinicalQuery = () => {
+        this.setState((state, props) => {
+            if (state.userClinicalQuery !== props.userClinicalQuery) {
+                return {
+                    userClinicalQuery: props.userClinicalQuery,
                     key: this.state.key + 1,
                 }
             }
@@ -344,7 +362,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, classes, history, userSearch, userSearchID, userSearchType, userSearchValue, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
+        const { create, resourceUrl, title, classes, history, userSearch, userSearchID, userSearchType, userSearchValue, userClinicalQuery, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
         const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key, filterText } = this.state;
 
         const breadcrumbsResource = [
@@ -354,17 +372,21 @@ class ListTemplate extends Component {
         const createUrl = this.getCreateUrl();
 
         let titleTable = title;
-        if (userSearch && resourceUrl === 'patients') {
+        if (userSearch) {
             titleTable = `Patients matching '${userSearch}'`;
             this.filterByUserSearch();
         }
-        if (userSearchID && resourceUrl === 'patients') {
+        if (userSearchID) {
             titleTable = `Patients matching '${userSearchID}'`;
             this.filterByUserSearchId();
         }
-        if (userSearchType && userSearchValue && resourceUrl === 'patients') {
+        if (userSearchType && userSearchValue) {
             titleTable = `Patients matching '${userSearchID}'`;
             this.filterByUserSearchType();
+        }
+        if (userClinicalQuery) {
+            titleTable = `Patients matching '${userSearchID}'`;
+            this.filterByClinicalQuery();
         }
 
         const currentListArray = Object.values(currentList);
@@ -376,9 +398,8 @@ class ListTemplate extends Component {
         const open = Boolean(anchorEl);
 
         return (
-            <React.Fragment>
+            <div className={classes.container}>
                 <Breadcrumbs resource={breadcrumbsResource} />
-                <TableHeader resource={resourceUrl} />
                 <Grid container spacing={16} className={classes.mainBlock}>
                     { isListOpened &&
                     <Grid className={classes.list} item xs={12} sm={this.isListPage() ? 12 : 6}>
@@ -457,7 +478,7 @@ class ListTemplate extends Component {
                             />
                     }
                 </Grid>
-            </React.Fragment>
+            </div>
         );
     }
 }
@@ -468,6 +489,7 @@ const mapStateToProps = (state, ownProps)  => {
         userSearchID: get(state, 'custom.userSearch.id', null),
         userSearchType: get(state, 'custom.userSearch.type', null),
         userSearchValue: get(state, 'custom.userSearch.value', null),
+        userClinicalQuery: get(state, 'custom.clinicalQuery.data', null),
         currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
         currentData: get(state, 'admin.resources[' + ownProps.resource + '].data', []),
     }

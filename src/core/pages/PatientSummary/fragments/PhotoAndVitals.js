@@ -35,7 +35,13 @@ const styles = {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: "center",
-    }
+    },
+    chartBlock: {
+        width: '90%',
+        height: 80,
+        textAlign: 'center',
+        paddingTop: 10,
+    },
 };
 
 const COLOR_AMBER = '#ffac5a';
@@ -232,11 +238,15 @@ class PhotoAndVitals extends Component {
                                 </Grid>
 
                                 <Grid item xs={12} sm={12} md={4}>
-                                    <HorizontalBarChart title="Systolic" value={SYSTOLIC_PRESSURE_HARDCODE} color={systolicColor} maximal={220} />
+                                    <div className={classes.chartBlock}>
+                                        <HorizontalBarChart title="Systolic" value={SYSTOLIC_PRESSURE_HARDCODE} color={systolicColor} maximal={220} />
+                                    </div>
                                 </Grid>
 
                                 <Grid item xs={12} sm={12} md={4}>
-                                    <HorizontalBarChart title="Diastolic" value={DIASTOLIC_PRESSURE_HARDCODE} color={diastolicColor} maximal={220} />
+                                    <div className={classes.chartBlock}>
+                                        <HorizontalBarChart title="Diastolic" value={DIASTOLIC_PRESSURE_HARDCODE} color={diastolicColor} maximal={220} />
+                                    </div>
                                 </Grid>
 
 

@@ -9,22 +9,22 @@ import respectLogo from "../images/respect-small.png";
 
 const styles = theme => ({
     tableHeaderBlock: {
-        background: theme.tableHeader.tableHeaderBlock.background,
+        background: theme.palette.mainColor,
         backgroundSize: "cover",
-        color: "white",
-        paddingLeft: "14px",
-        paddingTop: "25px",
-        paddingBottom: "14px"
+        color: theme.palette.paperColor,
+        paddingLeft: 14,
+        paddingTop: 25,
+        paddingBottom: 14,
     },
     title: {
         marginTop: 0,
-        color: "#fff",
+        color: theme.palette.paperColor,
         fontSize: 24,
         fontWeight: 800,
     },
     description: {
         marginTop: 10,
-        color: "#fff",
+        color: theme.palette.paperColor,
     },
     respectLogo: {
         width: "auto",
