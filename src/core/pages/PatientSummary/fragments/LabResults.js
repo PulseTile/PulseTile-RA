@@ -65,10 +65,10 @@ const LabResults = ({ classes }) => {
     const COLOR_RED = '#ff5d00';
 
     const dummyLabResults = [
-        { testName: 'HBA1C', normalRange: '< 200', value: 187, units: 'mg/dL', dateCreated: '22-Jun-2019', color: COLOR_GREEN, maximal: 300 },
-        { testName: 'Glucose', normalRange: '< 75', value: 42, units: 'mmol/L', dateCreated: '15-Jul-2019', color: COLOR_GREEN, maximal: 400  },
-        { testName: 'Glucose', normalRange: '< 75', value: 70, units: 'mmol/L', dateCreated: '26-Jun-2019', color: COLOR_YELLOW, maximal: 140  },
-        { testName: 'Glucose', normalRange: '< 75', value: 86, units: 'mg/L', dateCreated: '05-May-2019', color: COLOR_AMBER, maximal: 100  },
+        { testName: 'HBA1C', normalRange: '5-7 mmol/l', value: 7, units: 'mmol/l', dateCreated: '22-Jun-2019', color: COLOR_GREEN, maximal: 10 },
+        { testName: 'Glucose', normalRange: '5-9 mmol/l', value: 6, units: 'mmol/l', dateCreated: '15-Jul-2019', color: COLOR_GREEN, maximal: 60  },
+        { testName: 'Glucose', normalRange: '5-9 mmol/l', value: 10, units: 'mmol/l', dateCreated: '26-Jun-2019', color: COLOR_AMBER, maximal: 20  },
+        { testName: 'Glucose', normalRange: '5-9 mmol/l', value: 15, units: 'mmol/l', dateCreated: '05-May-2019', color: COLOR_RED, maximal: 20  },
     ];
 
     return (

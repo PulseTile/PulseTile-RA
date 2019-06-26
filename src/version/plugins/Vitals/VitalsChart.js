@@ -9,18 +9,21 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from '@material-ui/core/Typography';
 
 import CreateButton from "../../../core/common/Buttons/CreateButton";
+import EmptyListBlock from "../../../core/common/ResourseTemplates/EmptyListBlock";
 
-const styles = {
+const styles = theme => ({
     chartBlock: {
         width: '100%',
         height: 500,
+        backgroundColor: theme.palette.paperColor,
     },
     toolbar: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-    }
-};
+        marginTop: 0,
+    },
+});
 
 function getTooltipFormatter(value, name) {
     const row = get(name, 'props.children', null);
@@ -79,7 +82,7 @@ class VitalsChart extends Component {
     };
 
     render() {
-        const { classes, vitalsList, vitalsEmergencySummary, history, createUrl } = this.props;
+        const { classes, currentList, vitalsList, vitalsEmergencySummary, history, createUrl } = this.props;
         const { disabledLines } = this.state;
         const vitalsListArray = vitalsEmergencySummary ? Object.values(vitalsEmergencySummary) : Object.values(vitalsList);
         let chartData = [];
@@ -110,9 +113,15 @@ class VitalsChart extends Component {
             { dataKey: "temperature", color: "#E3A08F", label: <Typography>Temperature, C</Typography> },
         ];
 
+        if (currentList.length === 0) {
+            return (
+                <EmptyListBlock />
+            )
+        }
+
         return (
             <div className={classes.chartBlock}>
-                <ResponsiveContainer width={'99%'}>
+                <ResponsiveContainer width={'98%'}>
                     <LineChart data={chartData} margin={{ top: 25, left: 0 }}>
                         <XAxis dataKey="name" tick={{ fontFamily: '"HK Grotesk Regular", Arial, sans-serif', fontSize: 14 }} />
                         <YAxis tick={{ fontFamily: '"HK Grotesk Regular", Arial, sans-serif', fontSize: 14 }} />
@@ -167,6 +176,7 @@ class VitalsChart extends Component {
 const mapStateToProps = state => {
     return {
         vitalsList: get(state, 'admin.resources.vitalsigns.data', []),
+        currentList: get(state, 'admin.resources.vitalsigns.list.ids', []),
     }
 };
 

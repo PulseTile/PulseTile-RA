@@ -29,6 +29,7 @@ const VitalsList = ({ classes, ...rest }) => (
         defaultSortOrder="ASC"
         hasChart={true}
         isCustomDatagrid={true}
+        isChartDefault={true}
         {...rest}
     >
         <DateField label="#" source="number" />

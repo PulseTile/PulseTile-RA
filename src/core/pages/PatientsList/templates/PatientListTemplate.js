@@ -39,10 +39,9 @@ const listStyles = theme => ({
         backgroundSize: "cover",
     },
     mainBlock: {
+        width: '100%',
         margin: 0,
-        paddingLeft: 10,
-        paddingTop: 15,
-        paddingRight: 25,
+        padding: 10,
         border: `1px solid ${theme.palette.borderColor}`,
     },
     list: {

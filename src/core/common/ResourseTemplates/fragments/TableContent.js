@@ -9,6 +9,7 @@ import ListToolbar from "../../Toolbars/ListToolbar";
 
 const styles = theme => ({
     tableList: {
+        whiteSpace: "nowrap",
         '& thead': {
             '& tr th': {
                 backgroundColor: theme.palette.tableHeadColor + '!important',
@@ -35,7 +36,9 @@ const styles = theme => ({
         '& tbody tr:hover td span': {
             color: theme.palette.paperColor
         },
-
+    },
+    tableWrapper: {
+        overflowX: 'auto',
     },
     rowEven: {
         backgroundColor: theme.isOldDesign ? theme.palette.toolbarColor : theme.palette.paperColor
@@ -51,9 +54,11 @@ const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, hiddenCo
 const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
     if (isCustomDatagrid) {
         return (
-            <CustomDatagrid className={classes.tableList} hiddenColumns={hiddenColumns} location={location} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
-                {children}
-            </CustomDatagrid>
+            <div className={classes.tableWrapper}>
+                <CustomDatagrid className={classes.tableList} hiddenColumns={hiddenColumns} location={location} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
+                    {children}
+                </CustomDatagrid>
+            </div>
         );
     }
     return (

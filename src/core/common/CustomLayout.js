@@ -21,8 +21,10 @@ const styles = {
             minHeight: '101vh',
         },
         '& main > div': {
+            width: '100vh',
             padding: 0,
         },
+
     },
 };
 

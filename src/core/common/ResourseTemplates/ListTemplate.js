@@ -39,10 +39,9 @@ const listStyles = theme => ({
         backgroundSize: "cover",
     },
     mainBlock: {
+        width: '100%',
         margin: 0,
-        paddingLeft: 10,
-        paddingTop: 15,
-        paddingRight: 25,
+        padding: 10,
         border: `1px solid ${theme.palette.borderColor}`,
     },
     list: {
@@ -220,7 +219,14 @@ class ListTemplate extends Component {
     };
 
     componentDidMount() {
-        const { resourceUrl, toggleColumnStore, defaultHiddenColumns } = this.props;
+        const { resourceUrl, isChartDefault, toggleColumnStore, defaultHiddenColumns } = this.props;
+
+        if (isChartDefault) {
+            this.setState({
+                listMode: MODE_CHART,
+            });
+        }
+
         if (defaultHiddenColumns) {
             defaultHiddenColumns.map(item => {
                 toggleColumnStore(resourceUrl, item, false);
@@ -313,7 +319,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, classes, history, notCreate, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
+        const { create, resourceUrl, title, classes, history, notCreate, headerFilterAbsent, currentList, isChartDefault, hasChart, hasTimetable, isCustomDatagrid } = this.props;
         const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key, filterText } = this.state;
 
         const breadcrumbsResource = [
