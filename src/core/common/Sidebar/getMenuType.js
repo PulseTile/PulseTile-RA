@@ -25,6 +25,9 @@ function isResourcePresentedInMenu(currentResource, menuItemsArray) {
 export function getMenuItems(currentPathname) {
     const pathArray = currentPathname.split('/');
     const currentResource = get(pathArray, [1], null);
+    if (localStorage.getItem('role') === 'PHR') {
+        return themeFullMenu;
+    }
     if (isResourcePresentedInMenu(currentResource, themeShortMenu) || currentPathname === "/") {
         return themeShortMenu;
     }

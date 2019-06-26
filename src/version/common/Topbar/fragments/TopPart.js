@@ -154,10 +154,13 @@ class TopPart extends Component {
                         />
                     </div>
                     <div className={classes.emptyBlock}></div>
-                    <div className={classes.userSearchBlock}>
-                        <AdvancedUserSearch />
-                        { (!advancedSearchInfo && !clinicalQueryInfo) && <UserSearch location={location} /> }
-                    </div>
+                    {
+                        (localStorage.getItem('role') === 'IDCR') &&
+                            <div className={classes.userSearchBlock}>
+                                <AdvancedUserSearch />
+                                { (!advancedSearchInfo && !clinicalQueryInfo) && <UserSearch location={location} /> }
+                            </div>
+                    }
                     <ContrastMode classes={classes} />
                     <UserPanelButton classes={classes} />
                 </Toolbar>

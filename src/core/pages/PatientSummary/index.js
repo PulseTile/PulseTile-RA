@@ -83,16 +83,19 @@ class PatientSummaryInfo extends Component {
     };
 
     componentDidMount() {
+        if (localStorage.getItem('role') === 'PHR') {
+            this.props.updateCurrentPatient(localStorage.getItem('patientId'));
+        }
         if (localStorage.getItem('userId') && localStorage.getItem('username')) {
             this.props.getPatientSynopsis();
-            this.props.getEmergencySummary(localStorage.getItem('patientId'));
+            // this.props.getEmergencySummary(localStorage.getItem('patientId'));
         }
     }
 
     componentWillReceiveProps(nextProps, nextContent) {
         const { patientInfo } = this.props;
         if (patientInfo !== nextProps.patientInfo) {
-            this.props.getRandomPhoto(get(nextProps, 'patientInfo.gender', 'male'));
+            // this.props.getRandomPhoto(get(nextProps, 'patientInfo.gender', 'male'));
         }
     }
 
@@ -166,7 +169,10 @@ const mapDispatchToProps = dispatch => {
         },
         getRandomPhoto(gender) {
             dispatch(currentPatientAction.requestPhoto(gender));
-        }
+        },
+        updateCurrentPatient(data) {
+            dispatch(currentPatientAction.request(data));
+        },
     }
 };
 

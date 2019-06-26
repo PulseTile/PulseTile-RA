@@ -6,12 +6,12 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import VitalsChart from "../../../../version/plugins/Vitals/VitalsChart";
-
 import PhotoAndVitals from "../fragments/PhotoAndVitals";
 import PatientSummaryPanels from "../fragments/PatientSummaryPanels";
 import LabResults from "../fragments/LabResults";
-import EventsTimeline from "../fragments/EventsTimeline";
+import DummyVitalsChart from "../fragments/DummyVitalsChart";
+import CardMedia from "@material-ui/core/CardMedia";
+import dummyEvents from "../../../images/dummyEvents.png";
 
 const styles = theme => ({
     headerBlock:{
@@ -33,6 +33,34 @@ const styles = theme => ({
         paddingLeft: 15,
         paddingRight: 10,
     },
+    blockTitleLeft: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        height: 49,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
+        backgroundColor: theme.palette.mainColor,
+        fontSize: 18,
+        fontWeight: 700,
+        paddingLeft: 15,
+        paddingRight: 10,
+        borderRight: `0.5px solid ${theme.palette.paperColor}`
+    },
+    blockTitleRight: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        height: 49,
+        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
+        backgroundColor: theme.palette.mainColor,
+        fontSize: 18,
+        fontWeight: 700,
+        paddingLeft: 15,
+        paddingRight: 10,
+        borderLeft: `0.5px solid ${theme.palette.paperColor}`
+    },
     title: {
         color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
@@ -48,6 +76,9 @@ const styles = theme => ({
     },
     chartBlock: {
         padding: 10,
+    },
+    dummyEvents: {
+        margin: 20,
     }
 });
 
@@ -62,20 +93,28 @@ class PatientSummaryTable extends Component {
                 <LabResults classes={classes} location={location} />
                 <Grid container xs={12} className={classes.content}>
                     <Grid item xs={12} sm={12} md={6} className={classes.timelineBlock}>
-                        <div className={classes.blockTitle}>
+                        <div className={classes.blockTitleLeft}>
                             <Typography className={classes.title}>Timeline</Typography>
                         </div>
                         {/*<EventsTimeline />*/}
+                        <CardMedia
+                            className={classes.dummyEvents}
+                            component="img"
+                            alt="Events timeline"
+                            image={dummyEvents}
+                            title="Events timeline"
+                        />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} className={classes.timelineBlock}>
-                        <div className={classes.blockTitle}>
+                        <div className={classes.blockTitleRight}>
                             <Typography className={classes.title}>Vitals</Typography>
                         </div>
                         <div className={classes.chartBlock}>
                         {
                             isVitalsLoading
                                 ? <Typography>Loading...</Typography>
-                                : <VitalsChart vitalsEmergencySummary={get(emergencySummary, 'vitalsigns', [])} history={history} />
+                                // : <VitalsChart vitalsEmergencySummary={get(emergencySummary, 'vitalsigns', [])} history={history} />
+                                : <DummyVitalsChart />
                         }
                         </div>
                     </Grid>

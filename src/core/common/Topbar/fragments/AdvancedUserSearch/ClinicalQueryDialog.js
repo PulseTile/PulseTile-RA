@@ -143,7 +143,7 @@ class ClinicalQueryDialog extends Component {
 
                     <FormGroup className={classes.formGroup}>
                         <FormLabel className={classes.formLabel}>Search Type</FormLabel>
-                        <Control.select className={classes.formSelect} model='clinicalQuery.searchType' onChange={e => this.changeSearchType(e)}>
+                        <Control.select className={classes.formSelect} model='clinicalQuery.searchType' onChange={e => this.changeSearchType(e)} required>
                             <option></option>
                             <option value='allergies' selected={searchType === 'allergies'}>Allergies</option>
                             <option value='problems' selected={searchType === 'problems'}>Problems / Diagnosis</option>
@@ -164,6 +164,7 @@ class ClinicalQueryDialog extends Component {
                                 model="clinicalQuery.searchValue"
                                 defaultValue={searchValue}
                                 onChange={e => this.changeBlockTitle(e, 'searchValue')}
+                                required
                             />
                         </div>
                     </FormGroup>

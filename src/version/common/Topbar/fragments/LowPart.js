@@ -135,7 +135,7 @@ export function pageHasPatientBanner(location) {
         'charts',
         'patients'
     ];
-    return pagesWithTitle.indexOf(currentResource) !== -1  ||  pathName === '/';
+    return pagesWithTitle.indexOf(currentResource) !== -1  || (pathName === '/' && localStorage.getItem('role') === 'IDCR');
 }
 
 /**

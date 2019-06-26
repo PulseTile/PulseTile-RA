@@ -112,20 +112,22 @@ class PatientSummaryTable extends Component {
             <React.Fragment>
                 {
                     synopsisData.map((item, key) => {
-                        return (
-                            <DashboardCard
-                                key={key}
-                                showMode={showMode}
-                                showHeadings={showHeadings}
-                                id={item.id}
-                                title={item.title}
-                                list={item.list}
-                                loading={loading}
-                                items={get(this.props, item.list, [])}
-                                icon={item.icon}
-                                {...this.props}
-                            />
-                        );
+                        if (get(item, 'isSynopsis', false)) {
+                            return (
+                                <DashboardCard
+                                    key={key}
+                                    showMode={showMode}
+                                    showHeadings={showHeadings}
+                                    id={item.id}
+                                    title={item.title}
+                                    list={item.list}
+                                    loading={loading}
+                                    items={get(this.props, item.list, [])}
+                                    icon={item.icon}
+                                    {...this.props}
+                                />
+                            );
+                        }
                     })
                 }
                 { FeedsPanels && <FeedsPanels /> }

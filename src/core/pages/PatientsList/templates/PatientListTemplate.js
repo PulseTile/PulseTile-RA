@@ -361,6 +361,46 @@ class ListTemplate extends Component {
         });
     };
 
+    getTitleForAdvancedSearh = (userSearchType, userSearchValue) => {
+        let result = '';
+        if (userSearchType === 'by_gender') {
+            result = `Patients search by Gender: ${userSearchValue}`;
+        }
+        if (userSearchType === 'by_birthdate') {
+            result = `Patients search by Birthdate: ${userSearchValue}`;
+        }
+        if (userSearchType === 'by_city') {
+            result = `Patients search by City: ${userSearchValue}`;
+        }
+        if (userSearchType === 'by_age') {
+            result = `Patients search by Age: ${userSearchValue[0]}-${userSearchValue[1]}`;
+        }
+        return result;
+    };
+
+    getTitleForClinicalSearh = (userClinicalQuery) => {
+        let result = 'Patients Clinical Query: ';
+        const searchType = get(userClinicalQuery, 'searchType', null);
+        const searchValue = get(userClinicalQuery, 'searchValue', null);
+        const gender = get(userClinicalQuery, 'gender', null);
+        const birthDate = get(userClinicalQuery, 'birthDate', null);
+        const maxAge = get(userClinicalQuery, 'maxAge', null);
+        const minAge = get(userClinicalQuery, 'minAge', null);
+        if (searchType && searchValue) {
+            result += ` ${searchType}: ${searchValue}, `;
+        }
+        if (gender) {
+            result += ` gender: ${gender}, `;
+        }
+        if (birthDate) {
+            result += ` birthdate: ${birthDate}, `;
+        }
+        if (maxAge && minAge) {
+            result += ` age: ${minAge}-${maxAge}, `;
+        }
+        return result;
+    };
+
     render() {
         const { create, resourceUrl, title, classes, history, userSearch, userSearchID, userSearchType, userSearchValue, userClinicalQuery, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
         const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key, filterText } = this.state;
@@ -377,15 +417,15 @@ class ListTemplate extends Component {
             this.filterByUserSearch();
         }
         if (userSearchID) {
-            titleTable = `Patients matching '${userSearchID}'`;
+            titleTable = `Patients with ID: '${userSearchID}'`;
             this.filterByUserSearchId();
         }
         if (userSearchType && userSearchValue) {
-            titleTable = `Patients matching '${userSearchID}'`;
+            titleTable = this.getTitleForAdvancedSearh(userSearchType, userSearchValue);
             this.filterByUserSearchType();
         }
         if (userClinicalQuery) {
-            titleTable = `Patients matching '${userSearchID}'`;
+            titleTable = this.getTitleForClinicalSearh(userClinicalQuery);
             this.filterByClinicalQuery();
         }
 

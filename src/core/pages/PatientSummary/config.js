@@ -16,6 +16,7 @@ export const coreSynopsisData = [
         list: "problems",
         icon: faNotesMedical,
         isActive: true,
+        isSynopsis: true,
         description: "The key problems that affect your health, some with clear diagnoses from your doctor",
     },
     {
@@ -24,6 +25,7 @@ export const coreSynopsisData = [
         list: "medications",
         icon: faCapsules,
         isActive: true,
+        isSynopsis: true,
         description: "The medical tablets and other medications that you take regularly for your health care",
     },
     {
@@ -32,6 +34,7 @@ export const coreSynopsisData = [
         list: "allergies",
         icon: faAllergies,
         isActive: true,
+        isSynopsis: true,
         description: "Those things that your body reacts against, that you have an allergy to",
     },
     {
@@ -40,6 +43,7 @@ export const coreSynopsisData = [
         list: "contacts",
         icon: faPhone,
         isActive: true,
+        isSynopsis: true,
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
 ];

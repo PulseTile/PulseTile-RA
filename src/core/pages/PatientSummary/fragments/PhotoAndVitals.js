@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
 
+import patientPhoto from "../../../images/randomPatient.png";
 import PieChartBlock from "./PieChartBlock";
 import HorizontalBarChart from "./HorizontalBarChart";
 
@@ -134,7 +135,7 @@ class PhotoAndVitals extends Component {
     };
 
     render() {
-        const { classes, patientInfo, isLoadingPhoto, isLoading, patientPhoto } = this.props;
+        const { classes, patientInfo, isLoadingPhoto, isLoading } = this.props;
         const age = this.getPatientAge();
 
         const weight = 87.5;
@@ -157,19 +158,13 @@ class PhotoAndVitals extends Component {
                     <Grid item xs={12} sm={6} md={5} className={classes.photoAndVitals}>
                         <Grid container xs={12} className={classes.insideGridBlock}>
                             <Grid item xs={12} sm={6} md={3}>
-                                {
-                                    isLoadingPhoto
-                                        ? <Typography>Loading...</Typography>
-                                        :
-                                            <CardMedia
-                                                className={classes.patientPhoto}
-                                                component="img"
-                                                alt={patientName}
-                                                image={patientPhoto}
-                                                title={patientName}
-                                            />
-                                }
-
+                                <CardMedia
+                                    className={classes.patientPhoto}
+                                    component="img"
+                                    alt={patientName}
+                                    image={patientPhoto}
+                                    title={patientName}
+                                />
                             </Grid>
                             <Grid item xs={12} sm={6} md={9} className={classes.ageAndHeight}>
                                 <div className={classes.parameter}>

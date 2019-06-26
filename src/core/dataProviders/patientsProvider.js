@@ -70,30 +70,19 @@ function getRequestBody(params) {
     if (!isClinicalQuery) {
         return null;
     }
-
-    console.log('PARAMS', params);
-
     let requestBody = {
         query: get(params, 'filter.clinicalQuery.searchValue', null),
         gender: get(params, 'filter.clinicalQuery.gender', null),
     };
-
     const dateOfBirth = get(params, 'filter.clinicalQuery.dateOfBirth', null);
     const from = get(params, 'filter.clinicalQuery.minAge', null);
     const to = get(params, 'filter.clinicalQuery.maxAge', null);
-
-    console.log('dateOfBirth', dateOfBirth)
     if (dateOfBirth) {
-        console.log('-------------------------------------------')
         requestBody.dateOfBirth = dateOfBirth;
     } else if (from && to) {
-        console.log('+++++++++++++++++++++++++++++++++++++++++++')
         requestBody.from = from;
         requestBody.to = to;
     }
-
-    console.log('requestBody', requestBody)
-
     return JSON.stringify(requestBody);
 }
 
@@ -142,6 +131,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             }
             options.headers = {
                 Authorization: "Bearer " + token,
+                'Content-Type': 'application/json',
                 'X-Requested-With': "XMLHttpRequest",
             };
             if (method === 'POST') {

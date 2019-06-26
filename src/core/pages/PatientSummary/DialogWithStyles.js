@@ -151,18 +151,20 @@ class DialogContent extends Component {
                     <div className={classes.dialogItem}>
                         {
                             synopsisData.map((item, key) => {
-                                return (
-                                    <div key={key} className={classes.dialogLabel}>
-                                        <Checkbox
-                                            className={classes.checkbox}
-                                            checked={this.isHeadingChecked(item.list)}
-                                            color="primary"
-                                            onChange={() => this.toggleVisibility(item.list)}
-                                            classes={{ root: classes.radio, checked: classes.checked }}
-                                        />
-                                        <Typography className={classes.checkboxLabel}>{item.title}</Typography>
-                                    </div>
-                                );
+                                if (get(item, 'isSynopsis', false)) {
+                                    return (
+                                        <div key={key} className={classes.dialogLabel}>
+                                            <Checkbox
+                                                className={classes.checkbox}
+                                                checked={this.isHeadingChecked(item.list)}
+                                                color="primary"
+                                                onChange={() => this.toggleVisibility(item.list)}
+                                                classes={{root: classes.radio, checked: classes.checked}}
+                                            />
+                                            <Typography className={classes.checkboxLabel}>{item.title}</Typography>
+                                        </div>
+                                    );
+                                }
                             })
                         }
                         { hasRespectPlugin &&
