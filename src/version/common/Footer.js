@@ -11,6 +11,9 @@ import footerLogo from "../../core/images/ripple-foundation-logo-footer.png";
 
 const styles = theme => ({
     footerBlock: {
+        [theme.breakpoints.only('xs')]: {
+            display: 'none',
+        },
         display: "flex",
         flexDirection: "row",
         alignItems: "center",

@@ -33,7 +33,7 @@ import ColumnsTogglingIcon from "./icons/ColumnsTogglingIcon";
 
 const listStyles = theme => ({
     container: {
-        width: '100%',
+        width: '100vw',
         height: '100%',
         background: theme.patientSummaryPanel.container.background,
         backgroundSize: "cover",
