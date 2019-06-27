@@ -96,7 +96,7 @@ class Population extends Component {
                         <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                             <CartesianGrid stroke="#ebebeb" />
                             <XAxis dataKey="name" tick={{ dy: 10 }} />
-                            <YAxis  tick={{ dx: -10 }} ticks={ticksArray} domain={[0, 'dataMax']} />
+                            <YAxis  tick={{ dx: -10 }} ticks={ticksArray} domain={[0, 'dataMax']} unit="m" />
                             <Tooltip
                                 content={<CustomTooltip classes={classes} />}
                                 cursor={false}

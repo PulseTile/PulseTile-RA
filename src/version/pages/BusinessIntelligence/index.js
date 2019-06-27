@@ -158,15 +158,10 @@ class BusinessIntelligence extends Component {
                     {
                         isChartsPanelOpen &&
                             <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-
-
-
-                                    <Grid className={classes.currentTabContainer} container>
-                                        <CurrentTabContent classes={classes} />
-                                        <ChartsSelector classes={classes} currentTab={currentTab} changeCurrentTab={this.changeCurrentTab} />
-                                    </Grid>
-
-
+                                <Grid className={classes.currentTabContainer} container>
+                                    <CurrentTabContent classes={classes} />
+                                    <ChartsSelector classes={classes} currentTab={currentTab} changeCurrentTab={this.changeCurrentTab} />
+                                </Grid>
                             </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>

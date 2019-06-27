@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import get from "lodash/get";
-import {AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, ResponsiveContainer, Legend, Line} from "recharts";
+import {ScatterChart, Scatter, CartesianGrid, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer, Legend} from "recharts";
 
 import { withStyles } from "@material-ui/core/styles/index";
 import Typography from "@material-ui/core/Typography/index";
@@ -50,23 +50,11 @@ const CustomTooltip = ({ classes, active, payload }) => {
             <div className={classes.tooltip}>
                 <div className={classes.tooltipRow}>
                     <Typography className={classes.parameterName}>Age: </Typography>
-                    <Typography>{get(payload, '[0].payload.name', null)}</Typography>
+                    <Typography>{get(payload, '[0].payload.x', null)}</Typography>
                 </div>
                 <div className={classes.tooltipRow}>
-                    <Typography className={classes.parameterName}>Diabetes: </Typography>
-                    <Typography>{get(payload, '[0].payload.diabetes', null)}</Typography>
-                </div>
-                <div className={classes.tooltipRow}>
-                    <Typography className={classes.parameterName}>Measles: </Typography>
-                    <Typography>{get(payload, '[0].payload.measles', null)}</Typography>
-                </div>
-                <div className={classes.tooltipRow}>
-                    <Typography className={classes.parameterName}>Asthma: </Typography>
-                    <Typography>{get(payload, '[0].payload.asthma', null)}</Typography>
-                </div>
-                <div className={classes.tooltipRow}>
-                    <Typography className={classes.parameterName}>Dementia: </Typography>
-                    <Typography>{get(payload, '[0].payload.dementia', null)}</Typography>
+                    <Typography className={classes.parameterName}>Value: </Typography>
+                    <Typography>{get(payload, '[0].payload.y', null)}</Typography>
                 </div>
             </div>
         );
@@ -104,46 +92,40 @@ class DiagnosisByAge extends Component {
     render() {
         const { classes } = this.props;
         const { disabledLines } = this.state;
-
         const linesArray = [
             { dataKey: "diabetes", color: COLOR_DIABETES, label: <Typography>Diabetes</Typography> },
             { dataKey: "measles", color: COLOR_MEASLES, label: <Typography>Measles</Typography> },
             { dataKey: "asthma", color: COLOR_ASTHMA, label: <Typography>Asthma</Typography> },
             { dataKey: "dementia", color: COLOR_DEMENTIA, label: <Typography>Dementia</Typography> },
         ];
-
         const ticksArray = [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
-
+        let dummyDiabetes = [];
+        let dummyAsthma = [];
+        let dummyMeasles = [];
+        let dummyDementia = [];
+        for (let i = 0, n = dummyData.length; i < n; i++) {
+            let item = dummyData[i];
+            dummyDiabetes.push({ x: item.name, y: item.diabetes });
+            dummyAsthma.push({ x: item.name, y: item.asthma });
+            dummyMeasles.push({ x: item.name, y: item.measles });
+            dummyDementia.push({ x: item.name, y: item.dementia });
+        }
         return (
             <div className={classes.mainBlock}>
-                <Typography variant="body1" className={classes.chartTitle}>Diagnosis By Age</Typography>
                 <div className={classes.chartBlock}>
-                    <ResponsiveContainer height={300}>
-                        <AreaChart data={dummyData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                    <ResponsiveContainer height={400}>
+                        <ScatterChart margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                             <CartesianGrid stroke="#ebebeb" />
-                            <XAxis dataKey="name" tick={{ dy: 10 }} />
-                            <YAxis  tick={{ dx: -10 }} ticks={ticksArray} domain={[0, 'dataMax']} />
+                            <XAxis dataKey={"x"} tick={{ dy: 10 }} allowDuplicatedCategory={false} />
+                            <YAxis dataKey={"y"} tick={{ dx: -10 }} ticks={ticksArray} domain={[0, 'dataMax']} />
                             <Tooltip
                                 content={<CustomTooltip classes={classes} />}
                                 cursor={false}
                             />
-                            {
-                                linesArray.map((item, key) => {
-                                    if (disabledLines.indexOf(item.dataKey) !== -1) {
-                                        return null;
-                                    }
-                                    return (
-                                        <Area
-                                            key={key}
-                                            type="linear"
-                                            dataKey={item.dataKey}
-                                            stackId="1"
-                                            stroke={item.color}
-                                            fill={item.color}
-                                        />
-                                    )
-                                })
-                            }
+                            { (disabledLines.indexOf('diabetes') === -1) && <Scatter data={dummyDiabetes} name="Diabetes" stroke={COLOR_DIABETES} fill={COLOR_DIABETES} /> }
+                            { (disabledLines.indexOf('asthma') === -1) && <Scatter data={dummyAsthma} name="Asthma" stroke={COLOR_ASTHMA} fill={COLOR_ASTHMA} /> }
+                            { (disabledLines.indexOf('measles') === -1) && <Scatter data={dummyMeasles} name="Measles" stroke={COLOR_MEASLES} fill={COLOR_MEASLES} /> }
+                            { (disabledLines.indexOf('dementia') === -1) && <Scatter data={dummyDementia} name="Dementia" stroke={COLOR_DEMENTIA} fill={COLOR_DEMENTIA} /> }
                             <Legend
                                 payload={linesArray.map(item => ({
                                     dataKey: item.dataKey,
@@ -152,7 +134,7 @@ class DiagnosisByAge extends Component {
                                 }))}
                                 onClick={e => this.toggleLine(e)}
                             />
-                        </AreaChart>
+                        </ScatterChart>
                     </ResponsiveContainer>
                 </div>
             </div>

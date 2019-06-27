@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import get from "lodash/get";
-import {AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, ResponsiveContainer, Legend, Line} from "recharts";
+import {
+    CartesianGrid,
+    XAxis,
+    YAxis,
+    Tooltip,
+    ResponsiveContainer,
+    Legend,
+    Bar,
+    Cell, BarChart
+} from "recharts";
 
 import { withStyles } from "@material-ui/core/styles/index";
 import Typography from "@material-ui/core/Typography/index";
@@ -87,7 +96,7 @@ class DiagnosisByAge extends Component {
      * @author BogdanScherban <bsc@piogroup.net>
      * @param {shape} e
      */
-    toggleLine = e => {
+    toggleBar = e => {
         const { disabledLines } = this.state;
         const dataKey = e.dataKey;
         let newDisabledLinesArray = [];
@@ -114,15 +123,17 @@ class DiagnosisByAge extends Component {
 
         const ticksArray = [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
 
+
         return (
             <div className={classes.mainBlock}>
-                <Typography variant="body1" className={classes.chartTitle}>Diagnosis By Age</Typography>
                 <div className={classes.chartBlock}>
-                    <ResponsiveContainer height={300}>
-                        <AreaChart data={dummyData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                    <ResponsiveContainer height={400}>
+                        <BarChart
+                            data={dummyData}
+                            margin={{ top: 5, right: 0, left: 0, bottom: 25 }} >
+                            <XAxis dataKey="name" fontFamily="sans-serif" tick={{ dy: 10 }} />
+                            <YAxis tick={{ dx: -10 }} ticks={ticksArray} domain={[0, 'dataMax']} />
                             <CartesianGrid stroke="#ebebeb" />
-                            <XAxis dataKey="name" tick={{ dy: 10 }} />
-                            <YAxis  tick={{ dx: -10 }} ticks={ticksArray} domain={[0, 'dataMax']} />
                             <Tooltip
                                 content={<CustomTooltip classes={classes} />}
                                 cursor={false}
@@ -133,14 +144,7 @@ class DiagnosisByAge extends Component {
                                         return null;
                                     }
                                     return (
-                                        <Area
-                                            key={key}
-                                            type="linear"
-                                            dataKey={item.dataKey}
-                                            stackId="1"
-                                            stroke={item.color}
-                                            fill={item.color}
-                                        />
+                                        <Bar dataKey={item.dataKey} stackId="a" fill={item.color} />
                                     )
                                 })
                             }
@@ -150,9 +154,9 @@ class DiagnosisByAge extends Component {
                                     color: item.color,
                                     value: item.label,
                                 }))}
-                                onClick={e => this.toggleLine(e)}
+                                onClick={e => this.toggleBar(e)}
                             />
-                        </AreaChart>
+                        </BarChart>
                     </ResponsiveContainer>
                 </div>
             </div>
