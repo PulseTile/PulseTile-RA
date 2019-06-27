@@ -10,8 +10,7 @@ import PhotoAndVitals from "../fragments/PhotoAndVitals";
 import PatientSummaryPanels from "../fragments/PatientSummaryPanels";
 import LabResults from "../fragments/LabResults";
 import DummyVitalsChart from "../fragments/DummyVitalsChart";
-import CardMedia from "@material-ui/core/CardMedia";
-import dummyEvents from "../../../images/dummyEvents.png";
+import EventsTimeline from "../fragments/EventsTimeline";
 
 const styles = theme => ({
     headerBlock:{
@@ -92,20 +91,13 @@ class PatientSummaryTable extends Component {
                 <PatientSummaryPanels classes={classes} />
                 <LabResults classes={classes} location={location} />
                 <Grid container xs={12} className={classes.content}>
-                    <Grid item xs={12} sm={12} md={6} className={classes.timelineBlock}>
+                    <Grid item xs={12} sm={12} md={6}>
                         <div className={classes.blockTitleLeft}>
                             <Typography className={classes.title}>Timeline</Typography>
                         </div>
-                        {/*<EventsTimeline />*/}
-                        <CardMedia
-                            className={classes.dummyEvents}
-                            component="img"
-                            alt="Events timeline"
-                            image={dummyEvents}
-                            title="Events timeline"
-                        />
+                        <EventsTimeline />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6} className={classes.timelineBlock}>
+                    <Grid item xs={12} sm={12} md={6}>
                         <div className={classes.blockTitleRight}>
                             <Typography className={classes.title}>Vitals</Typography>
                         </div>

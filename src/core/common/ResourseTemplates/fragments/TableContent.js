@@ -62,9 +62,11 @@ const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, chi
         );
     }
     return (
-        <Datagrid className={classes.tableList} classes={{ rowEven: classes.rowEven, rowOdd: classes.rowOdd  }} rowClick="edit" {...rest}>
-            {children}
-        </Datagrid>
+        <div className={classes.tableWrapper}>
+            <Datagrid className={classes.tableList} classes={{ rowEven: classes.rowEven, rowOdd: classes.rowOdd  }} rowClick="edit" {...rest}>
+                {children}
+            </Datagrid>
+        </div>
     );
 };
 

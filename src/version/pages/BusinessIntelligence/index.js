@@ -3,13 +3,21 @@ import get from "lodash/get";
 import { connect } from 'react-redux';
 import { setSidebarVisibility } from "react-admin";
 
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import { withStyles } from "@material-ui/core/styles/index";
+import Grid from "@material-ui/core/Grid/index";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel/index";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary/index";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Typography from "@material-ui/core/Typography";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import Typography from "@material-ui/core/Typography/index";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails/index";
+
+import HeatMap from "./tabs/HeatMap";
+import BarCharts from "./tabs/BarCharts";
+import PieCharts from "./tabs/PieCharts";
+
+import ChartsSelector from "./fragments/ChartsSelector";
+import { HEAT_MAP, BAR_CHARTS, PIE_CHARTS } from "./constants";
+import TableContent from "../../../core/common/ResourseTemplates/fragments/TableContent";
 
 const styles = theme => ({
     mainBlock: {
@@ -64,13 +72,26 @@ const styles = theme => ({
     expansionPanelDetails: {
         display: "flex",
         flexDirection: "column",
-        padding: 10,
+        padding: 0,
     },
-});
 
-const HEAT_MAP = 'Heat Map';
-const BAR_CHARTS = 'Bar Charts';
-const PIE_CHARTS = 'Pie Charts';
+    root: {
+        width: '100%',
+        height: '100%',
+        padding: 5,
+    },
+    currentTabContainer: {
+        width: "100%",
+        backgroundColor: theme.palette.paperColor,
+        margin: 0,
+    },
+    tableBlock: {
+        backgroundColor: theme.palette.tableHeadColor,
+        padding: 10,
+        borderLeft: `0.5px solid ${theme.palette.paperColor}`,
+        borderRight: `0.5px solid ${theme.palette.paperColor}`,
+    }
+});
 
 class BusinessIntelligence extends Component {
 
@@ -90,9 +111,30 @@ class BusinessIntelligence extends Component {
         });
     };
 
+    changeCurrentTab = tabName => {
+        this.setState({
+            currentTab: tabName
+        });
+    };
+
+    getCurrentTabContent = () => {
+        const { currentTab } = this.state;
+        let result = HeatMap;
+        if (currentTab === BAR_CHARTS) {
+            result = BarCharts;
+        }
+        if (currentTab === PIE_CHARTS) {
+            result = PieCharts;
+        }
+        return result;
+    };
+
     render() {
         const { classes } = this.props;
         const { isFromPanelOpen, isChartsPanelOpen, currentTab } = this.state;
+
+        const CurrentTabContent = this.getCurrentTabContent();
+
         return (
             <Grid item xs={12} className={classes.mainBlock}>
                 <ExpansionPanel className={isFromPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isFromPanelOpen} onChange={() => this.togglePanel('isFromPanelOpen')}>
@@ -117,8 +159,12 @@ class BusinessIntelligence extends Component {
                         isChartsPanelOpen &&
                             <ExpansionPanelDetails className={classes.expansionPanelDetails}>
 
-                                <Typography>Place for Business Intelligence information</Typography>
 
+
+                                    <Grid className={classes.currentTabContainer} container>
+                                        <CurrentTabContent classes={classes} />
+                                        <ChartsSelector classes={classes} currentTab={currentTab} changeCurrentTab={this.changeCurrentTab} />
+                                    </Grid>
 
 
                             </ExpansionPanelDetails>
