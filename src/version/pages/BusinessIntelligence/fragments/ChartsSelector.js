@@ -84,7 +84,7 @@ class ChartsSelector extends Component {
                         image={currentTab === PIE_CHARTS ? pieChartsSelected : pieCharts }
                         title="Pie Charts"
                     />
-                    <Typography variant="body1" className={currentTab === PIE_CHARTS ? classes.chartTextActive : classes.chartText}>Bar Charts</Typography>
+                    <Typography variant="body1" className={currentTab === PIE_CHARTS ? classes.chartTextActive : classes.chartText}>Pie Charts</Typography>
                 </div>
             </Grid>
         )
