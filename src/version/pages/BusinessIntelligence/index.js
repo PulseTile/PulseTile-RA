@@ -15,9 +15,9 @@ import HeatMap from "./tabs/HeatMap";
 import BarCharts from "./tabs/BarCharts";
 import PieCharts from "./tabs/PieCharts";
 
+import BusinessIntelligenceForm from "./fragments/BusinessIntelligenceForm";
 import ChartsSelector from "./fragments/ChartsSelector";
 import { HEAT_MAP, BAR_CHARTS, PIE_CHARTS } from "./constants";
-import TableContent from "../../../core/common/ResourseTemplates/fragments/TableContent";
 
 const styles = theme => ({
     mainBlock: {
@@ -144,9 +144,7 @@ class BusinessIntelligence extends Component {
                     {
                         isFromPanelOpen &&
                             <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-
-                                <Typography>Place for Business Intelligence form</Typography>
-
+                                <BusinessIntelligenceForm />
                             </ExpansionPanelDetails>
                     }
                 </ExpansionPanel>

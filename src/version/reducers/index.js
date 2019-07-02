@@ -11,6 +11,7 @@ import createCustomReducer from "../../core/reducers/createCustomReducer";
 import createRespectPluginReducer from "./createRespectPluginReducer";
 import respectModal from "./respectModalReducer";
 import versionsServerInfo from "./versionsServerInfoReducer";
+import businessIntelligenceReducer from "./businessIntelligenceReducer";
 
 import { PERSONAL_DETAILS_ACTION } from "../actions/ReSPECT/personalDetailsAction";
 import { SUMMARY_INFORMATION_ACTION } from "../actions/ReSPECT/summaryInformationAction";
@@ -49,4 +50,5 @@ export default {
     confirmation: createRespectPluginReducer(CONFIRMATION_ACTION),
     emergencyView: createRespectPluginReducer(EMERGENCY_VIEW_ACTION),
     versionsServerInfo,
+    businessIntelligence: businessIntelligenceReducer,
 };

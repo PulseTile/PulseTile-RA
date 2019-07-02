@@ -7,7 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 import barCharts from "../images/barCharts.png";
 import barChartsSelected from "../images/barChartsSelected.png";
-import pieCharts from "../images/pieChartsSelected.png";
+import pieCharts from "../images/pieCharts.png";
 import pieChartsSelected from "../images/pieChartsSelected.png";
 import heatMap from "../images/heatMap.png";
 import heatMapSelected from "../images/heatMapSelected.png";
