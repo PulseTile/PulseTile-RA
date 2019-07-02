@@ -23,7 +23,7 @@ const styles = theme => ({
 class RangeLine extends Component {
 
     render() {
-        const { classes, age, onChangeRange, RangeLineAxis } = this.props;
+        const { classes, age, onChangeRange, RangeLineAxis, hasRangeOutput } = this.props;
         return (
             <div className={classes.rangeLine}>
                 <Range
@@ -33,11 +33,14 @@ class RangeLine extends Component {
                     renderThumb={({ props, isDragged }) =>
                         <RenderThumb props={props} isDragged={isDragged} />}
                 />
-                <div className={classes.rangeOutput} id="output">
-                    <Typography>
-                        {age[0].toFixed(0)} - {age[1].toFixed(0)}
-                    </Typography>
-                </div>
+                { RangeLineAxis && <RangeLineAxis /> }
+                { hasRangeOutput &&
+                    <div className={classes.rangeOutput} id="output">
+                        <Typography>
+                            {age[0].toFixed(0)} - {age[1].toFixed(0)}
+                        </Typography>
+                    </div>
+                }
             </div>
         )
     }

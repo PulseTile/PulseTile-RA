@@ -15,7 +15,6 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { businessIntelligenceAction } from "../../../actions/BusinessIntelligence/businessIntelligenceAction";
 import { genderArray, diagnosisArray } from "../constants";
 import RangeLine from "../fragments/RangeLine";
-import AgeAxis from "../fragments/AgeAxis";
 import HealthScoreAxis from "../fragments/HealthScoreAxis";
 import Button from "@material-ui/core/Button";
 
@@ -180,9 +179,6 @@ class BusinessIntelligenceForm extends Component {
 
     updateBusinessIntelligence = () => {
         const { age, healthScore, gender, diagnosis } = this.state;
-
-        console.log('------------------------------------------------')
-
         this.props.updateBusinessIntelligence({
             age: age,
             healthScore: healthScore,
@@ -200,7 +196,7 @@ class BusinessIntelligenceForm extends Component {
                     <Grid item sm={12} md={6}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>By Age</FormLabel>
-                            <RangeLine age={age} onChangeRange={this.onChangeAgeRange} RangeLineAxis={AgeAxis} />
+                            <RangeLine age={age} onChangeRange={this.onChangeAgeRange} hasRangeOutput={true} />
                         </FormGroup>
                     </Grid>
                     <Grid item sm={12} md={6}>

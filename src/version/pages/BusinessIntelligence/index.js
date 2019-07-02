@@ -130,7 +130,8 @@ class BusinessIntelligence extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, history } = this.props;
+
         const { isFromPanelOpen, isChartsPanelOpen, currentTab } = this.state;
 
         const CurrentTabContent = this.getCurrentTabContent();
@@ -158,7 +159,7 @@ class BusinessIntelligence extends Component {
                             <ExpansionPanelDetails className={classes.expansionPanelDetails}>
                                 <Grid className={classes.currentTabContainer} container>
                                     <CurrentTabContent classes={classes} />
-                                    <ChartsSelector classes={classes} currentTab={currentTab} changeCurrentTab={this.changeCurrentTab} />
+                                    <ChartsSelector classes={classes} currentTab={currentTab} changeCurrentTab={this.changeCurrentTab} history={history} />
                                 </Grid>
                             </ExpansionPanelDetails>
                     }
