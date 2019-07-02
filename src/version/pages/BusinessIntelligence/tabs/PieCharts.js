@@ -1,11 +1,11 @@
-import React, { Container } from "react";
+import React from "react";
 
 import { withStyles } from "@material-ui/core/styles/index";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import PieChartByGender from "../charts/PieChartByGender";
-import { COLOR_UNHEALTHY, COLOR_HEALTHY } from "../constants";
+import { COLOR_MALE, COLOR_FEMALE } from "../constants";
 
 const styles = theme => ({
     chartsContainer: {
@@ -50,26 +50,26 @@ const PieCharts = ({ classes }) => {
                 <div className={classes.chartsContainer}>
                     <Grid container sm={12} spacing={16}>
                         <Grid item sm={12} md={6} lg={3}>
-                            <PieChartByGender label="Diabetes" healthy={680} unhealthy={320} />
+                            <PieChartByGender label="Diabetes" male={680} female={320} />
                         </Grid>
                         <Grid item sm={12} md={6} lg={3}>
-                            <PieChartByGender label="Measles" healthy={540} unhealthy={460} />
+                            <PieChartByGender label="Measles" male={540} female={460} />
                         </Grid>
                         <Grid item sm={12} md={6} lg={3}>
-                            <PieChartByGender label="Asthma" healthy={620} unhealthy={380} />
+                            <PieChartByGender label="Asthma" male={620} female={380} />
                         </Grid>
                         <Grid item sm={12} md={6} lg={3}>
-                            <PieChartByGender label="Dementia" healthy={490} unhealthy={510} />
+                            <PieChartByGender label="Dementia" male={490} female={510} />
                         </Grid>
                     </Grid>
                 </div>
                 <div className={classes.legend}>
                     <div className={classes.legendParameter}>
-                        <div className={classes.square} style={{ backgroundColor: COLOR_UNHEALTHY, border: `1px solid ${COLOR_UNHEALTHY}`}} ></div>
+                        <div className={classes.square} style={{ backgroundColor: COLOR_MALE, border: `1px solid ${COLOR_MALE}`}} ></div>
                         <Typography>Male</Typography>
                     </div>
                     <div className={classes.legendParameter}>
-                        <div className={classes.square} style={{ backgroundColor: COLOR_HEALTHY, border: `1px solid ${COLOR_HEALTHY}`}} ></div>
+                        <div className={classes.square} style={{ backgroundColor: COLOR_FEMALE, border: `1px solid ${COLOR_FEMALE}`}} ></div>
                         <Typography>Female</Typography>
                     </div>
                 </div>

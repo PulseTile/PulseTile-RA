@@ -36,6 +36,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.mainColor,
         textAlign: 'center',
         marginBottom: 10,
+        cursor: 'pointer',
     },
     imageBackground: {
         display: 'flex',
@@ -45,6 +46,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.paperColor,
         textAlign: 'center',
         marginBottom: 10,
+        cursor: 'pointer',
     },
     chartTextActive: {
         marginTop: 10,

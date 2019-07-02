@@ -1,12 +1,11 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
+import get from "lodash/get";
 import { ResponsiveContainer, PieChart, Cell, Pie, Tooltip, Legend } from "recharts";
 
 import { withStyles } from "@material-ui/core/styles/index";
-import get from "lodash/get";
+import Typography from "@material-ui/core/Typography";
 
-const COLOR_HEALTHY = '#8784d8';
-const COLOR_UNHEALTHY = '#ff78a6';
+import { COLOR_MALE, COLOR_FEMALE } from "../constants";
 
 const styles = theme => ({
     mainBlock: {
@@ -73,12 +72,11 @@ const CustomTooltip = ({ classes, active, payload }) => {
     return null;
 };
 
-
-const PieChartByGender = ({ classes, label, startAngle, healthy, unhealthy }) => {
+const PieChartByGender = ({ classes, label, male, female }) => {
 
     const data = [
-        {name: 'Female', value: healthy, color: COLOR_HEALTHY },
-        {name: 'Male', value: unhealthy, color: COLOR_UNHEALTHY },
+        { name: 'Female', value: female, color: COLOR_FEMALE },
+        { name: 'Male', value: male, color: COLOR_MALE },
     ];
 
     return (
