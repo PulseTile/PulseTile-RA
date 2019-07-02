@@ -2,6 +2,10 @@ export const HEAT_MAP = 'Heat Map';
 export const BAR_CHARTS = 'Bar Charts';
 export const PIE_CHARTS = 'Pie Charts';
 
+export const COLOR_AMBER = '#ffac5a';
+export const COLOR_GREEN = '#2dcd0d';
+export const COLOR_RED = '#ca0100';
+
 export const COLOR_MALE = '#8784d8';
 export const COLOR_FEMALE = '#ff78a6';
 

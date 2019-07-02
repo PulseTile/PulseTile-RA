@@ -93,6 +93,7 @@ function getUserSearchResultsById(response) {
         id: get(patientInfo, ['identifier', [0], 'value'], null),
         name: getTotalName(patientInfo, true),
         address: getTotalAddress(patientInfo, true),
+        totalAddress: getTotalAddress(patientInfo, true),
         city: get(addressFromResponse, [[0], 'city'], null),
         country: get(addressFromResponse, [[0], 'country'], null),
         district: get(addressFromResponse, [[0], 'district'], null),
