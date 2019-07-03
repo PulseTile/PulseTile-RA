@@ -98,7 +98,10 @@ const convertDataRequestToHTTP = (type, resource, params) => {
  */
 function getResultsFromResponse(response) {
     return response.map((item, id) => {
-        return Object.assign({id: item.sourceId}, item);
+        return Object.assign({
+            number: (id + 1),
+            id: item.sourceId
+        }, item);
     });
 }
 
@@ -120,12 +123,6 @@ function isItemConsider(item, filters, filterText) {
         }
     });
     return result;
-}
-
-function isSearchPresented(item, search) {
-    const userName = item.name.toLowerCase().trim();
-    const searchString = search.toLowerCase().trim();
-    return userName.search(searchString) >= 0;
 }
 
 /**
@@ -200,6 +197,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
                 sourceID = compositionUidArray[0];
             }
             dataFromRequest.id = get(response, 'host', null) + '-' + sourceID;
+            dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
             }

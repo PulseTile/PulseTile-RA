@@ -65,7 +65,13 @@ const styles = theme => ({
     closeIcon: {
         float: "right",
         height: 25,
-    }
+    },
+    radio: {
+        '&$checked': {
+            color: theme.palette.mainColor,
+        }
+    },
+    checked: {}
 });
 
 /**
@@ -131,6 +137,7 @@ class DialogContent extends Component {
         const { classes, onClose, showMode, ...rest } = this.props;
         const { selectedMode, selectedHeadings } = this.state;
         const FeedSelector = get(themeCommonElements, 'feedsSelectors', false);
+        const hasRespectPlugin = get(themeCommonElements, 'respectPanel', false);
         return (
             <Dialog onBackdropClick={() => onClose()} {...rest}>
                 <div className={classes.dialogBlock} >
@@ -144,18 +151,33 @@ class DialogContent extends Component {
                     <div className={classes.dialogItem}>
                         {
                             synopsisData.map((item, key) => {
-                                return (
-                                    <div key={key} className={classes.dialogLabel}>
-                                        <Checkbox
-                                            className={classes.checkbox}
-                                            checked={this.isHeadingChecked(item.list)}
-                                            color="primary"
-                                            onChange={() => this.toggleVisibility(item.list)}
-                                        />
-                                        <Typography className={classes.checkboxLabel}>{item.title}</Typography>
-                                    </div>
-                                );
+                                if (get(item, 'isSynopsis', false)) {
+                                    return (
+                                        <div key={key} className={classes.dialogLabel}>
+                                            <Checkbox
+                                                className={classes.checkbox}
+                                                checked={this.isHeadingChecked(item.list)}
+                                                color="primary"
+                                                onChange={() => this.toggleVisibility(item.list)}
+                                                classes={{root: classes.radio, checked: classes.checked}}
+                                            />
+                                            <Typography className={classes.checkboxLabel}>{item.title}</Typography>
+                                        </div>
+                                    );
+                                }
                             })
+                        }
+                        { hasRespectPlugin &&
+                            <div className={classes.dialogLabel}>
+                                <Checkbox
+                                    className={classes.checkbox}
+                                    checked={this.isHeadingChecked('respect')}
+                                    color="primary"
+                                    onChange={() => this.toggleVisibility('respect')}
+                                    classes={{ root: classes.radio, checked: classes.checked }}
+                                />
+                                <Typography className={classes.checkboxLabel}>ReSPECT</Typography>
+                            </div>
                         }
                     </div>
                     { FeedSelector && <FeedSelector classes={classes} /> }
@@ -171,6 +193,7 @@ class DialogContent extends Component {
                                         checked={selectedMode === item.type}
                                         color="primary"
                                         onChange={() => this.selectShowMode(item.type)}
+                                        classes={{ root: classes.radio, checked: classes.checked }}
                                     />
                                     <Typography className={classes.checkboxLabel}>{item.label}</Typography>
                                 </label>

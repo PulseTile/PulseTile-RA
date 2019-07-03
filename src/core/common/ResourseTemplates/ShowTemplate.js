@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { Show, SimpleShowLayout, TextField, DateField } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -9,22 +10,22 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCompressArrowsAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 
 import EditButton from "../../common/Buttons/EditButton";
+import CustomIcon from "../../common/CustomIcon";
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
     expansionPanel: {
         height: "49px !important",
+        border: `1px solid ${theme.palette.borderColor}`,
         '& > div': {
             minHeight: "49px !important",
         }
     },
     currentExpansionPanel: {
         margin: "0px !important",
+        border: `1px solid ${theme.palette.borderColor}`,
         '& > div': {
             minHeight: "49px !important",
         }
@@ -68,6 +69,7 @@ const styles = theme => ({
         padding: 0,
     },
     showDetails: {
+        padding: '10px 0',
         '& > div': {
             boxShadow: "none",
         }
@@ -118,11 +120,11 @@ class ShowTemplate extends Component {
                     <ExpansionPanelSummary className={classes.expansionPanelSummary} expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}>
                         <Typography className={classes.expansionTypography} >{pageTitle}</Typography>
                         <div className={classes.emptyBlock}></div>
-                        <Tooltip title={isListOpened ? "Expand" : "Compress"}>
-                            <IconButton onClick={() => toggleListBlock()}>
-                                <FontAwesomeIcon className={classes.expandBlockIcon} icon={isListOpened ? faExpandArrowsAlt : faCompressArrowsAlt} size="1x" />
+                        <div title={isListOpened ? "Expand" : "Compress"}>
+                            <IconButton onClick={e => toggleListBlock(e)}>
+                                <CustomIcon iconClassName={isListOpened ? 'fa fa-expand' : 'fa fa-compress'} />
                             </IconButton>
-                        </Tooltip>
+                        </div>
                     </ExpansionPanelSummary>
                     {
                         isMainPanelOpen &&

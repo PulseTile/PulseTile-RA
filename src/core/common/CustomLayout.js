@@ -23,6 +23,7 @@ const styles = {
         '& main > div': {
             padding: 0,
         },
+
     },
 };
 

@@ -114,10 +114,6 @@ class LowPart extends Component {
         const isPageHasTitle = pageHasTitle(location);
         return (
             <Toolbar className={classes.lowPart}>
-                {
-                    isPageHasTitle &&
-                        <PageTitle classes={classes} location={location} />
-                }
                 <div className={classes.menuAndBanner}>
                     <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
                     {

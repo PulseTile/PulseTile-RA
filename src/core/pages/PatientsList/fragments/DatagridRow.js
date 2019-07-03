@@ -5,6 +5,7 @@ import { setSidebarVisibility } from "react-admin";
 
 import TableCell from '@material-ui/core/TableCell';
 
+import { columnsTogglingAction } from "../../../actions/columnsTogglingAction";
 import CustomDatagridRow from "../../../common/ResourseTemplates/fragments/CustomDatagridRow";
 import { DATE_FORMAT } from "../../../common/ResourseTemplates/fragments/constants";
 import ViewButton from "../../../common/Buttons/ViewButton";
@@ -77,6 +78,11 @@ class PatientDatagridRow extends Component {
          });
     };
 
+    isColumnHidden = columnName => {
+        const { hiddenColumns } = this.props;
+        return hiddenColumns.indexOf(columnName) === -1;
+    };
+
     render() {
         const { classes, record, hiddenColumns } = this.props;
         const { loading, anchorEl } = this.state;
@@ -94,15 +100,17 @@ class PatientDatagridRow extends Component {
         const isPermissionRequired = get(themeCommonElements, 'patientSummaryPermission', false);
         const open = Boolean(anchorEl);
 
+        console.log('record', record)
+
         return (
             <CustomDatagridRow {...this.props} >
                 <TableCell key={`${record.id}-name`}>
                     {record.name}
                 </TableCell>
                 {
-                    (hiddenColumns.indexOf('address') === -1) &&
+                    this.isColumnHidden('address') &&
                         <TableCell key={`${record.id}-address`}>
-                            {record.address}
+                            {record.totalAddress}
                         </TableCell>
                 }
                 <TableCell key={`${record.id}-gender`}>
@@ -112,60 +120,60 @@ class PatientDatagridRow extends Component {
                     {moment(record.birthDate).format(DATE_FORMAT)}
                 </TableCell>
                 {
-                    (hiddenColumns.indexOf('nhsNumber') === -1) &&
+                    this.isColumnHidden('nhsNumber') &&
                         <TableCell key={`${record.id}-nhsNumber`}>
                             {record.nhsNumber}
                         </TableCell>
                 }
 
-                {
-                    (hiddenColumns.indexOf('ordersDate') === -1) &&
-                        <TableCell key={`${record.id}-ordersDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    (hiddenColumns.indexOf('ordersCount') === -1) &&
-                        <TableCell key={`${record.id}-ordersCount`}>
-                            {Math.floor(Math.random() * Math.floor(8))}
-                        </TableCell>
-                }
+                {/*{*/}
+                {/*    this.isColumnHidden('ordersDate') &&*/}
+                {/*        <TableCell key={`${record.id}-ordersDate`}>*/}
+                {/*            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}*/}
+                {/*        </TableCell>*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    this.isColumnHidden('ordersCount') &&*/}
+                {/*        <TableCell key={`${record.id}-ordersCount`}>*/}
+                {/*            {Math.floor(Math.random() * Math.floor(8))}*/}
+                {/*        </TableCell>*/}
+                {/*}*/}
+
+                {/*{*/}
+                {/*    this.isColumnHidden('resultsDate') &&*/}
+                {/*        <TableCell key={`${record.id}-resultsDate`}>*/}
+                {/*            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}*/}
+                {/*        </TableCell>*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    this.isColumnHidden('resultsCount') &&*/}
+                {/*        <TableCell key={`${record.id}-resultsCount`}>*/}
+                {/*            {Math.floor(Math.random() * Math.floor(12))}*/}
+                {/*        </TableCell>*/}
+                {/*}*/}
 
                 {
-                    (hiddenColumns.indexOf('resultsDate') === -1) &&
-                        <TableCell key={`${record.id}-resultsDate`}>
+                    this.isColumnHidden('vitalsDate') &&
+                        <TableCell key={`${record.id}-vitalsDate`} onClick={e => this.checkRedirectUrl(e, '/vitalsigns')}>
                             {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
                         </TableCell>
                 }
                 {
-                    (hiddenColumns.indexOf('resultsCount') === -1) &&
-                        <TableCell key={`${record.id}-resultsCount`}>
+                    this.isColumnHidden('vitalsCount') &&
+                        <TableCell key={`${record.id}-vitalsCount`} onClick={e => this.checkRedirectUrl(e, '/vitalsigns')}>
                             {Math.floor(Math.random() * Math.floor(12))}
                         </TableCell>
                 }
 
                 {
-                    (hiddenColumns.indexOf('vitalsDate') === -1) &&
-                        <TableCell key={`${record.id}-vitalsDate`}>
+                    this.isColumnHidden('problemsDate') &&
+                        <TableCell key={`${record.id}-problemsDate`} onClick={e => this.checkRedirectUrl(e, '/problems')}>
                             {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
                         </TableCell>
                 }
                 {
-                    (hiddenColumns.indexOf('vitalsCount') === -1) &&
-                        <TableCell key={`${record.id}-vitalsCount`}>
-                            {Math.floor(Math.random() * Math.floor(12))}
-                        </TableCell>
-                }
-
-                {
-                    (hiddenColumns.indexOf('problemsDate') === -1) &&
-                        <TableCell key={`${record.id}-problemsDate`}>
-                            {moment(randomDate(new Date(2015, 4, 20), new Date())).format(DATE_FORMAT)}
-                        </TableCell>
-                }
-                {
-                    (hiddenColumns.indexOf('vitalsCount') === -1) &&
-                        <TableCell key={`${record.id}-problemsCount`}>
+                    this.isColumnHidden('problemsCount') &&
+                        <TableCell key={`${record.id}-problemsCount`} onClick={e => this.checkRedirectUrl(e, '/problems')}>
                             {Math.floor(Math.random() * Math.floor(12))}
                         </TableCell>
                 }
@@ -187,6 +195,9 @@ const mapDispatchToProps = dispatch => {
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
+        removeHiddenColumns() {
+            dispatch(columnsTogglingAction.remove());
+        }
     }
 };
 

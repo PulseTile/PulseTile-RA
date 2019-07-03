@@ -6,40 +6,42 @@ import { Route } from "react-router";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import SearchIcon from '@material-ui/icons/Search';
 import TableIcon from '@material-ui/icons/List';
 import ChartIcon from '@material-ui/icons/ShowChart';
 import TimelineIcon from '@material-ui/icons/Timeline';
 
 import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 import { columnsTogglingAction } from "../../actions/columnsTogglingAction";
 
 import Breadcrumbs from "../../common/Breadcrumbs";
 import TableHeader from "../../common/TableHeader";
+import CustomIcon from "../../common/CustomIcon";
 import DetailsTemplate from "./DetailsTemplate";
 
 import { MODE_TIMELINE, MODE_TABLE, MODE_CHART } from "./fragments/constants";
 import TableContent from "./fragments/TableContent";
 import ChartContent from "./fragments/ChartContent";
 import TimelineContent from "./fragments/TimelineContent";
-
 import ListModePopover from "./popovers/ListModePopover";
-
 import ColumnsTogglingIcon from "./icons/ColumnsTogglingIcon";
 
 const listStyles = theme => ({
+    container: {
+        width: '100%',
+        height: '100%',
+        background: theme.patientSummaryPanel.container.background,
+        backgroundSize: "cover",
+    },
     mainBlock: {
+        width: '100%',
         margin: 0,
-        paddingLeft: 10,
-        paddingTop: 15,
-        paddingRight: 25,
+        padding: 10,
         border: `1px solid ${theme.palette.borderColor}`,
     },
     list: {
@@ -82,26 +84,29 @@ const listStyles = theme => ({
         border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         height: 35,
     },
-    expandIcon: {
-        color: theme.isOldDesign ? `${theme.palette.secondaryMainColor} !important` : `${theme.palette.paperColor} !important`,
-        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginRight: 10,
-        height: 35,
-    },
     filterInput: {
-        backgroundColor: theme.palette.mainColor,
+        display: 'flex',
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 5,
+        backgroundColor: `${theme.palette.mainColor} !important`,
         borderRadius: 0,
         boxShadow: "none",
         '& button': {
             color: "#fff",
         },
     },
+    filterInputIcon: {
+        color: theme.palette.fontColor,
+        marginLeft: 5,
+        marginBottom: 10,
+    },
     inputBlock: {
-        width: 'calc(100% - 30px)',
-        backgroundColor: "#fff",
-        borderRadius: 2,
+        width: 'calc(100% - 60px)',
+        borderRadius: theme.isOldDesign ? 0 : 18,
+        height: 36,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.disabledColor}` : 0,
+        backgroundColor: theme.isOldDesign ? theme.palette.paperColor : theme.palette.disabledColor,
         paddingLeft: 5,
         marginLeft: 10,
         marginBottom: 10,
@@ -167,7 +172,8 @@ class ListTemplate extends Component {
         })
     };
 
-    toggleListBlock = () => {
+    toggleListBlock = e => {
+        e.stopPropagation();
         this.setState({
             isListOpened: !this.state.isListOpened,
         })
@@ -199,23 +205,12 @@ class ListTemplate extends Component {
         })
     };
 
-    filterByUserSearch = () => {
-        this.setState((state, props) => {
-            if (state.filterText !== props.userSearch) {
-                return {
-                    filterText: props.userSearch,
-                    key: this.state.key + 1,
-                }
-            }
-        });
-    };
-
-    hasNewItem = (newListArray, prevListArray, nextProps, userSearch) => {
+    hasNewItem = (resource, newListArray, prevListArray, nextProps, userSearch) => {
         let result = false;
         const newDataArray = Object.values(get(nextProps, 'currentData', {}));
         for (let i = 0, n = newDataArray.length; i < n; i++) {
             let item = newDataArray[i];
-            if (get(item, 'isNew', false) && get(item, 'lastName', null) === userSearch) {
+            if (resource !== 'patients' && get(item, 'isNew', false)) {
                 result = true;
                 break;
             }
@@ -224,23 +219,34 @@ class ListTemplate extends Component {
     };
 
     componentDidMount() {
-        const { resourceUrl, toggleColumnStore, defaultHiddenColumns } = this.props;
+        const { resourceUrl, isChartDefault, toggleColumnStore, defaultHiddenColumns } = this.props;
+
+        if (isChartDefault) {
+            this.setState({
+                listMode: MODE_CHART,
+            });
+        }
+
         if (defaultHiddenColumns) {
             defaultHiddenColumns.map(item => {
-                toggleColumnStore(resourceUrl, item);
+                toggleColumnStore(resourceUrl, item, false);
             });
         }
         this.setState({
             hiddenColumns: defaultHiddenColumns,
-            key: this.state.key + 1,
-        })
+        });
+
+        if (defaultHiddenColumns) {
+            this.props.updateTableHead();
+        }
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
         const newListArray = Object.values(get(nextProps, 'currentList', {}));
-        const prevListArray = Object.values(get(nextContext, 'currentList', {}));
+        const prevListArray = Object.values(get(this.props, 'currentList', {}));
         const userSearch = get(nextProps, 'userSearch', null);
-        const hasNewItem = this.hasNewItem(newListArray, prevListArray, nextProps, userSearch);
+        const resource = get(nextProps, 'resource', null);
+        const hasNewItem = this.hasNewItem(resource, newListArray, prevListArray, nextProps, userSearch);
         if (newListArray.length === 1 && prevListArray.length === 0 && hasNewItem) {
             this.setState({
                 key: this.state.key + 1
@@ -289,17 +295,17 @@ class ListTemplate extends Component {
         });
     };
 
-    toggleColumn = value => {
+    toggleColumn = (columnName, value) => {
         const { resourceUrl, toggleColumnStore, updateTableHead } = this.props;
 
         let hiddenColumnsArray = this.state.hiddenColumns;
         let key = this.state.key;
 
-        if (hiddenColumnsArray.indexOf(value) !== -1) {
-            let index = hiddenColumnsArray.indexOf(value);
+        if (hiddenColumnsArray.indexOf(columnName) !== -1) {
+            let index = hiddenColumnsArray.indexOf(columnName);
             hiddenColumnsArray.splice(index, 1);
         } else {
-            hiddenColumnsArray.push(value);
+            hiddenColumnsArray.push(columnName);
         }
         key++;
 
@@ -308,13 +314,13 @@ class ListTemplate extends Component {
             key: key,
         }, () => {
             updateTableHead();
-            toggleColumnStore(resourceUrl, value)
+            toggleColumnStore(resourceUrl, columnName, value)
         });
     };
 
     render() {
-        const { create, resourceUrl, title, classes, history, userSearch, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
-        const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key } = this.state;
+        const { create, resourceUrl, title, classes, history, notCreate, headerFilterAbsent, currentList, isChartDefault, hasChart, hasTimetable, isCustomDatagrid } = this.props;
+        const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key, filterText } = this.state;
 
         const breadcrumbsResource = [
             { url: "/" + resourceUrl, title: title, isActive: false },
@@ -323,10 +329,6 @@ class ListTemplate extends Component {
         const createUrl = this.getCreateUrl();
 
         let titleTable = title;
-        if (userSearch && resourceUrl === 'patients') {
-            titleTable = `Patients matching '${userSearch}'`;
-            this.filterByUserSearch();
-        }
 
         const currentListArray = Object.values(currentList);
         const idsNumber = currentListArray.length > 0 ? currentListArray.length : 0;
@@ -337,7 +339,7 @@ class ListTemplate extends Component {
         const open = Boolean(anchorEl);
 
         return (
-            <React.Fragment>
+            <div className={classes.container}>
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <TableHeader resource={resourceUrl} />
                 <Grid container spacing={16} className={classes.mainBlock}>
@@ -349,8 +351,8 @@ class ListTemplate extends Component {
                                 <div className={classes.emptyBlock}></div>
                                 {!this.isListPage() &&
                                     <Tooltip title="Expand">
-                                        <IconButton onClick={() => history.push("/" + resourceUrl)}  >
-                                            <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
+                                        <IconButton onClick={() => history.push("/" + resourceUrl)} >
+                                            <CustomIcon iconClassName="fa fa-expand" />
                                         </IconButton>
                                     </Tooltip>
                                 }
@@ -377,25 +379,30 @@ class ListTemplate extends Component {
                                 { !headerFilterAbsent &&
                                     <Tooltip title="Search">
                                         <IconButton onClick={() => this.toggleFilter()}>
-                                            <SearchIcon className={classes.filterIcon}/>
+                                            <FontAwesomeIcon icon={faFilter} className={classes.filterIcon}  size="1x" />
                                         </IconButton>
                                     </Tooltip>
                                 }
                             </div>
                             {
                                 isFilterOpened &&
-                                <Paper className={classes.filterInput} elevation={1}>
-                                    <InputBase className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                </Paper>
+                                    <div className={classes.filterBlock}>
+                                        <Paper className={classes.filterInput} elevation={1}>
+                                            <FontAwesomeIcon icon={faFilter} className={classes.filterInputIcon}  size="1x" />
+                                            <input className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                        </Paper>
+                                    </div>
                             }
                         </div>
                         <ContentBlock
                             key={key}
+                            filterText={filterText}
                             hiddenColumns={hiddenColumns}
                             createUrl={createUrl}
                             idsNumber={idsNumber}
                             isCustomDatagrid={isCustomDatagrid}
                             history={history}
+                            notCreate={notCreate}
                             {...this.props}
                         />
                     </Grid>
@@ -414,14 +421,13 @@ class ListTemplate extends Component {
                             />
                     }
                 </Grid>
-            </React.Fragment>
+            </div>
         );
     }
 }
 
 const mapStateToProps = (state, ownProps)  => {
     return {
-        userSearch: state.custom.userSearch.data,
         currentList: get(state, 'admin.resources[' + ownProps.resource + '].list.ids', []),
         currentData: get(state, 'admin.resources[' + ownProps.resource + '].data', []),
     }
@@ -429,8 +435,8 @@ const mapStateToProps = (state, ownProps)  => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        toggleColumnStore(resource, columnName) {
-            dispatch(columnsTogglingAction.toggle(resource, columnName));
+        toggleColumnStore(resource, columnName, value) {
+            dispatch(columnsTogglingAction.toggle(resource, columnName, value));
         },
     }
 };
