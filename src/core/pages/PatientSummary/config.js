@@ -37,15 +37,15 @@ export const coreSynopsisData = [
         isSynopsis: true,
         description: "Those things that your body reacts against, that you have an allergy to",
     },
-    {
-        id: "block-contacts",
-        title: "Contacts",
-        list: "contacts",
-        icon: faPhone,
-        isActive: true,
-        isSynopsis: true,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
+    // {
+    //     id: "block-contacts",
+    //     title: "Contacts",
+    //     list: "contacts",
+    //     icon: faPhone,
+    //     isActive: true,
+    //     isSynopsis: true,
+    //     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    // },
 ];
 
 export const totalSynopsisData = coreSynopsisData.concat(nonCoreSynopsisData);
