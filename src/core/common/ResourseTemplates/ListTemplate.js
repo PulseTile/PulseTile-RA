@@ -319,7 +319,7 @@ class ListTemplate extends Component {
     };
 
     render() {
-        const { create, resourceUrl, title, classes, history, userSearch, userSearchID, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
+        const { create, resourceUrl, title, classes, history, notCreate, headerFilterAbsent, currentList, hasChart, hasTimetable, isCustomDatagrid } = this.props;
         const { isFilterOpened, isListOpened, anchorEl, hiddenColumns, key, filterText } = this.state;
 
         const breadcrumbsResource = [
@@ -350,11 +350,11 @@ class ListTemplate extends Component {
                                 <Typography className={classes.title}>{titleTable}</Typography>
                                 <div className={classes.emptyBlock}></div>
                                 {!this.isListPage() &&
-                                <Tooltip title="Expand">
-                                    <IconButton onClick={() => history.push("/" + resourceUrl)}  >
-                                        <FontAwesomeIcon icon={faExpandArrowsAlt} className={classes.expandIcon}  size="1x" />
-                                    </IconButton>
-                                </Tooltip>
+                                    <Tooltip title="Expand">
+                                        <IconButton onClick={() => history.push("/" + resourceUrl)} >
+                                            <CustomIcon iconClassName="fa fa-expand" />
+                                        </IconButton>
+                                    </Tooltip>
                                 }
                                 <ColumnsTogglingIcon hiddenColumns={hiddenColumns} toggleColumn={this.toggleColumn} {...this.props} />
                                 {
@@ -379,19 +379,19 @@ class ListTemplate extends Component {
                                 { !headerFilterAbsent &&
                                 <Tooltip title="Search">
                                     <IconButton onClick={() => this.toggleFilter()}>
-                                        <SearchIcon className={classes.filterIcon}/>
+                                        <FontAwesomeIcon icon={faFilter} className={classes.filterIcon}  size="1x" />
                                     </IconButton>
                                 </Tooltip>
                                 }
                             </div>
                             {
                                 isFilterOpened &&
-                                    <div className={classes.filterBlock}>
-                                        <Paper className={classes.filterInput} elevation={1}>
-                                            <FontAwesomeIcon icon={faFilter} className={classes.filterInputIcon}  size="1x" />
-                                            <input className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
-                                        </Paper>
-                                    </div>
+                                <div className={classes.filterBlock}>
+                                    <Paper className={classes.filterInput} elevation={1}>
+                                        <FontAwesomeIcon icon={faFilter} className={classes.filterInputIcon}  size="1x" />
+                                        <input className={classes.inputBlock} onChange={e => this.filterByText(e)} placeholder="Filter..." />
+                                    </Paper>
+                                </div>
                             }
                         </div>
                         <ContentBlock

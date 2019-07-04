@@ -6,17 +6,15 @@ import { TextField, DateField, setSidebarVisibility } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import TodayIcon from "@material-ui/icons/Today";
-import CheckIcon from "@material-ui/icons/Check";
 
 import image from "../../../version/images/logo.png";
-import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
 import DatagridRow from "./fragments/DatagridRow";
 import ColumnsTogglingPopover from "./fragments/ColumnsTogglingPopover";
+import PatientListTemplate from "./templates/PatientListTemplate";
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
@@ -45,12 +43,6 @@ const styles = theme => ({
         marginLeft: 5,
     },
 });
-
-const LabelWithIcon = ({ classes, title, icon }) => {
-    return (
-        <Typography className={classes.labelWithIcon}  variant="h1">{ title }{ icon }</Typography>
-    )
-};
 
 const defaultHiddenColumns = [
     'ordersDate', 'resultsDate', 'vitalsDate', 'problemsDate',
@@ -166,9 +158,6 @@ const mapDispatchToProps = dispatch => {
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
-        getPatientsCounts(patientId) {
-            dispatch(patientsCountAction.request(patientId));
-        }
     }
 };
 
