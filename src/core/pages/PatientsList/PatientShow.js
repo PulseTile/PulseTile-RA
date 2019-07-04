@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, DateField } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 
-import ShowTemplate from "../../common/ResourseTemplates/ShowTemplate";
+import PatientShowTemplate from "./templates/PatientShowTemplate";
 
 const styles = {
     labelBlock: {
@@ -19,8 +19,7 @@ const styles = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const PatientShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Patient" {...rest}>
-        <TextField className={classes.labelBlock} label="Prefix" source="prefix" />
+    <PatientShowTemplate pageTitle="Patient" {...rest}>
         <TextField className={classes.labelBlock} label="Name" source="firstName" />
         <TextField className={classes.labelBlock} label="Surname" source="lastName" />
         <DateField className={classes.labelBlock} label="Date of Birth" source="birthDate" />
@@ -31,7 +30,7 @@ const PatientShow = ({ classes, ...rest }) => (
         <TextField className={classes.labelBlock} label="Country" source="country" />
         <TextField className={classes.labelBlock} label="Telephone Number" source="phone" />
         <TextField className={classes.labelBlock} label="NHS number" source="nhsNumber" />
-    </ShowTemplate>
+    </PatientShowTemplate>
 );
 
 export default withStyles(styles)(PatientShow);

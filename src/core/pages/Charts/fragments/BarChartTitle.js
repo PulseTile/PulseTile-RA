@@ -22,15 +22,17 @@ const styles = theme => ({
         fontWeight: 700,
     },
     secondTitle: {
-        fontSize: 16,
         paddingTop: 10,
         paddingLeft: 10,
+        fontSize: 24,
+        fontWeight: 700,
     },
     chartIcon: {
         paddingRight: 5,
     },
     description: {
         padding: 10,
+        fontSize: 16,
     }
 });
 
@@ -47,6 +49,6 @@ const BarChartTitle = ({ classes, mainTitle, secondTitle, description, }) => {
             <Typography className={classes.description}>{description}</Typography>
         </div>
     )
-}
+};
 
 export default withStyles(styles)(BarChartTitle);

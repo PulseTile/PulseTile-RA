@@ -4,18 +4,28 @@ import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import FormGroup from "@material-ui/core/FormGroup";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
 
-import DashboardCard from "../../common/DashboardCard";
 import {
     synopsisAllergiesAction,
     synopsisContactsAction,
     synopsisMedicationsAction,
-    synopsisProblemsAction } from "../../actions/synopsisActions";
-import { synopsisData, getSynopsisProps } from "./config";
+    synopsisProblemsAction
+} from "../../actions/synopsisActions";
+import { nonCoreSynopsisActions } from "../../../version/config/nonCoreSynopsis";
+import { emergencySummaryAction } from "../../actions/emergencySummaryAction";
+import { currentPatientAction } from "../../actions/currentPatientAction";
+
+import PatientSummaryTable from "./views/PatientSummaryTable";
+import PatientSummaryRoll from "./views/PatientSummaryRoll";
+import { synopsisData } from "./config";
 import SettingsDialog from "./SettingsDialog";
 import Breadcrumbs from "../../common/Breadcrumbs";
 import { themeCommonElements } from "../../../version/config/theme.config";
-import { nonCoreSynopsisActions } from "../../../version/config/nonCoreSynopsis";
 import { getSummaryContainerStyles } from "./functions";
 
 const styles = theme => ({
@@ -49,103 +59,99 @@ const styles = theme => ({
             cursor: "pointer",
         },
     },
-    icon: {
+    formGroupLabel: {
+        marginTop: 18,
+    },
+    formControlLabel: {
         marginBottom: 10,
-        zIndex: 99999999,
     },
-    mainHeading: {
-        margin: 0,
-        zIndex: 99999999,
-    },
-    title: {
-        marginBottom: 0,
-        color: theme.isOldDesign ? theme.palette.fontColor : theme.palette.paperColor,
-        fontSize: 20,
-        fontWeight: 800,
-        zIndex: 99999999,
-    },
-    list: {
-        padding: 0,
-        zIndex: 99999999,
-    },
-    listItemNoData: {
+    radioGroup: {
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        height: 48,
-        paddingLeft: 15,
-        zIndex: 99999999,
-        fontSize: "1rem",
-        borderLeft: `1px solid ${theme.palette.borderColor}`,
-        borderRight: `1px solid ${theme.palette.borderColor}`,
-        borderBottom: `1px solid ${theme.palette.borderColor}`,
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        marginLeft: 15,
+        marginRight: 10,
     },
-    listItem: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        height: 48,
-        paddingLeft: 15,
-        zIndex: 99999999,
-        fontSize: "1rem",
-        borderLeft: `1px solid ${theme.palette.borderColor}`,
-        borderRight: `1px solid ${theme.palette.borderColor}`,
-        borderBottom: `1px solid ${theme.palette.borderColor}`,
-        cursor: "pointer",
-        '&:hover': {
-            backgroundColor: theme.palette.secondaryMainColor,
-            '& p': {
-                color: theme.palette.paperColor,
-            }
+    radio: {
+        '&$checked': {
+            color: theme.palette.mainColor,
         }
     },
-    emptyRows: {
-        height: 150,
-        zIndex: 99999999,
-        borderLeft: `1px solid ${theme.palette.borderColor}`,
-        borderRight: `1px solid ${theme.palette.borderColor}`,
-        borderBottom: `1px solid ${theme.palette.borderColor}`,
-    },
+    checked: {}
 });
+
+const TABLE_VIEW = 'table';
+const ROLL_VIEW = 'roll';
 
 class PatientSummaryInfo extends Component {
 
+    state = {
+        isRollView: get(themeCommonElements, 'hasPatientSummaryRoll', false),
+    };
+
+    toggleView = () => {
+        this.setState({
+            isRollView: !this.state.isRollView,
+        });
+    };
+
     componentDidMount() {
+        if (localStorage.getItem('role') === 'PHR') {
+            this.props.updateCurrentPatient(localStorage.getItem('patientId'));
+        }
         if (localStorage.getItem('userId') && localStorage.getItem('username')) {
             this.props.getPatientSynopsis();
+            // this.props.getEmergencySummary(localStorage.getItem('patientId'));
+        }
+    }
+
+    componentWillReceiveProps(nextProps, nextContent) {
+        const { patientInfo } = this.props;
+        if (patientInfo !== nextProps.patientInfo) {
+            // this.props.getRandomPhoto(get(nextProps, 'patientInfo.gender', 'male'));
         }
     }
 
     render() {
-        const { classes, loading, showMode, showHeadings, location } = this.props;
+        const { classes, location, history } = this.props;
+        const { isRollView } = this.state;
         const breadcrumbsResource = [
             { url: location.pathname, title: "Patient Summary", isActive: false }
         ];
-        const FeedsPanels = get(themeCommonElements, 'feedsPanels', false);
+        const viewType = isRollView ? ROLL_VIEW : TABLE_VIEW;
+        const hasPatientSummaryRoll = get(themeCommonElements, 'hasPatientSummaryRoll', false);
         return (
             <Grid className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
-                <SettingsDialog className={classes.settingsIcon} />
+                <div className={classes.toggleViewBlock}>
+                    <SettingsDialog className={classes.settingsIcon} />
+                    {
+                        hasPatientSummaryRoll &&
+                            <div className={classes.toggleViewBlock} >
+                                <Typography variant="h1" className={classes.formGroupLabel}>View</Typography>
+                                <FormGroup className={classes.formGroup}>
+                                    <RadioGroup name="viewType" className={classes.radioGroup} value={viewType} onChange={() => this.toggleView()} row>
+                                        <FormControlLabel
+                                            className={classes.formControlLabel}
+                                            value={ROLL_VIEW}
+                                            control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />}
+                                            label="Roll"
+                                        />
+                                        <FormControlLabel
+                                            className={classes.formControlLabel}
+                                            value={TABLE_VIEW}
+                                            control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />}
+                                            label="Table"
+                                        />
+                                    </RadioGroup>
+                                </FormGroup>
+                            </div>
+                    }
+                </div>
                 <Grid className={classes.summaryContainer} spacing={16} container>
                     {
-                        synopsisData.map((item, key) => {
-                            return (
-                                <DashboardCard
-                                    key={key}
-                                    showMode={showMode}
-                                    showHeadings={showHeadings}
-                                    id={item.id}
-                                    title={item.title}
-                                    list={item.list}
-                                    loading={loading}
-                                    items={get(this.props, item.list, [])}
-                                    icon={item.icon}
-                                    {...this.props}
-                                />
-                            );
-                        })
+                        isRollView ? <PatientSummaryRoll history={history} /> : <PatientSummaryTable history={history} />
                     }
-                    { FeedsPanels && <FeedsPanels /> }
                 </Grid>
             </Grid>
         );
@@ -153,16 +159,9 @@ class PatientSummaryInfo extends Component {
 }
 
 const mapStateToProps = state => {
-
-    const patientSummaryProps = {
-        loading: state.custom.demographics.loading,
-        showMode: state.custom.showMode.data,
-        showHeadings: state.custom.showHeadings.data,
-    };
-
-    const synopsisProps = getSynopsisProps(state);
-
-    return Object.assign({}, patientSummaryProps, synopsisProps);
+    return {
+        patientInfo: get(state, 'custom.currentPatient.patientInfo.data', null),
+    }
 };
 
 const mapDispatchToProps = dispatch => {
@@ -181,7 +180,16 @@ const mapDispatchToProps = dispatch => {
             synopsisActions.map(item => {
                 return dispatch(item.request());
             });
-        }
+        },
+        getEmergencySummary(patientId) {
+            dispatch(emergencySummaryAction.request('vitalsigns', patientId));
+        },
+        getRandomPhoto(gender) {
+            dispatch(currentPatientAction.requestPhoto(gender));
+        },
+        updateCurrentPatient(data) {
+            dispatch(currentPatientAction.request(data));
+        },
     }
 };
 

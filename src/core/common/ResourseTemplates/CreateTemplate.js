@@ -1,13 +1,5 @@
 import React from "react";
-import {
-    Create,
-    SimpleForm,
-    TextInput,
-    BooleanInput,
-    DateInput,
-    DisabledInput,
-    LongTextInput,
-} from "react-admin";
+import { Create, SimpleForm } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
@@ -15,10 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCompressArrowsAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
-
 import CreateFormToolbar from "../../common/Toolbars/CreateFormToolbar";
+import CustomIcon from "../CustomIcon";
 
 const styles = theme => ({
     blockTitle: {
@@ -76,8 +66,8 @@ const CreateTemplate = ({ classes, isCustom, isListOpened, toggleListBlock, bloc
             <Typography className={classes.title}>{blockTitle}</Typography>
             <div className={classes.emptyBlock}></div>
             <Tooltip title={isListOpened ? "Expand" : "Compress"}>
-                <IconButton onClick={() => toggleListBlock()}>
-                    <FontAwesomeIcon className={classes.expandBlockIcon} icon={isListOpened ? faExpandArrowsAlt : faCompressArrowsAlt} size="1x" />
+                <IconButton onClick={e => toggleListBlock(e)}>
+                    <CustomIcon iconClassName={isListOpened ? 'fa fa-expand' : 'fa fa-compress'} />
                 </IconButton>
             </Tooltip>
         </div>

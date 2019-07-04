@@ -18,7 +18,7 @@ const styles = theme => ({
         border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         borderRadius: 0,
         width: 'auto',
-        height: 35,
+        height: 38,
     },
 });
 

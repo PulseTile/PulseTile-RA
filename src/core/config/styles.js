@@ -3,7 +3,7 @@ import memoize from "lodash/memoize";
 import DeepMerge from 'deepmerge';
 
 import { createMuiTheme } from '@material-ui/core/styles';
-import { themeImages } from "../../version/config/theme.config";
+import { themeImages, themeCommonElements } from "../../version/config/theme.config";
 
 export const ITEMS_PER_PAGE = 10;
 
@@ -19,6 +19,8 @@ const defaultLightPalette = {
     paperColor: "#fff",
     toolbarColor: "#e5e5e5",
     fontColor: "#000",
+    topbarButton: "#757575",
+    menuItemsColor: "#3E3E3E",
 };
 
 const defaultDarkPalette = {
@@ -36,6 +38,8 @@ const defaultDarkPalette = {
     background: "#fff",
     text: "#000",
     divider: "#000",
+    topbarButton: "#000",
+    menuItemsColor: "#000",
 };
 
 /**
@@ -72,8 +76,8 @@ function getCurrentTheme(isContrastMode) {
     const palette = getCurrentPalette(isContrastMode);
     const isOldDesign = get(window, 'config.isOldDesign', false);
     const isRectangleButtons = get(window, 'config.isRectangleButtons', false);
-
-    console.log('++++++++++++++++++++++', isRectangleButtons)
+    const isTableHeaderInverted = get(themeCommonElements, 'invertedTableHeaders', false);
+    const tableHeaderColor = isTableHeaderInverted ? palette.tableHeadColor : palette.secondaryMainColor;
     return createMuiTheme({
         palette: palette,
         isOldDesign: isOldDesign,
@@ -84,7 +88,7 @@ function getCurrentTheme(isContrastMode) {
         },
         tableHeader: {
             tableHeaderBlock: {
-                background: getBackground(isContrastMode, palette.secondaryMainColor, 'tableHeaderImage'),
+                background: getBackground(isContrastMode, tableHeaderColor, 'tableHeaderImage'),
             },
         },
         patientSummaryPanel: {
@@ -151,6 +155,10 @@ function getCurrentTheme(isContrastMode) {
                 body2: {
                     fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
                     fontSize: 14,
+                },
+                h3: {
+                    fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
+                    fontSize: 16,
                 }
             },
         }

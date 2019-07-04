@@ -26,6 +26,10 @@ const styles = theme => ({
             color: theme.palette.paperColor,
             backgroundColor: theme.palette.secondaryMainColor
         }
+    },
+    formGroup: {
+        paddingTop: 10,
+        paddingBottom: 10,
     }
 });
 
@@ -74,13 +78,13 @@ class ColumnsTogglingPopover extends Component {
         address: true,
         nhsNumber: true,
         dateTime: false,
-        ordersDate: false,
-        resultsDate: false,
+        // ordersDate: false,
+        // resultsDate: false,
         vitalsDate: false,
         problemsDate: false,
         count: false,
-        ordersCount: false,
-        resultsCount: false,
+        // ordersCount: false,
+        // resultsCount: false,
         vitalsCount: false,
         problemsCount: false,
     };
@@ -143,13 +147,13 @@ class ColumnsTogglingPopover extends Component {
             const dateTimeValue = !dateTime;
             this.setState({
                 dateTime: dateTimeValue,
-                ordersDate: dateTimeValue,
-                resultsDate: dateTimeValue,
+                // ordersDate: dateTimeValue,
+                // resultsDate: dateTimeValue,
                 vitalsDate: dateTimeValue,
                 problemsDate: dateTimeValue,
             });
-            this.toggleColumnIfHidden('ordersDate', dateTimeValue);
-            this.toggleColumnIfHidden('resultsDate', dateTimeValue);
+            // this.toggleColumnIfHidden('ordersDate', dateTimeValue);
+            // this.toggleColumnIfHidden('resultsDate', dateTimeValue);
             this.toggleColumnIfHidden('vitalsDate', dateTimeValue);
             this.toggleColumnIfHidden('problemsDate', dateTimeValue);
         }
@@ -158,13 +162,13 @@ class ColumnsTogglingPopover extends Component {
             const countValue = !count;
             this.setState({
                 count: countValue,
-                ordersCount: countValue,
-                resultsCount: countValue,
+                // ordersCount: countValue,
+                // resultsCount: countValue,
                 vitalsCount: countValue,
                 problemsCount: countValue,
             });
-            this.toggleColumnIfHidden('ordersCount', countValue);
-            this.toggleColumnIfHidden('resultsCount', countValue);
+            // this.toggleColumnIfHidden('ordersCount', countValue);
+            // this.toggleColumnIfHidden('resultsCount', countValue);
             this.toggleColumnIfHidden('vitalsCount', countValue);
             this.toggleColumnIfHidden('problemsCount', countValue);
         }
@@ -223,23 +227,24 @@ class ColumnsTogglingPopover extends Component {
                     <Typography>DATE / TIME</Typography>
                     <Divider />
                     <FormGroup row>
-                        <FormControlLabel
-                            className={classes.checkboxItem}
-                            control={<CustomCheckbox checked={ordersDate} onChange={() => this.handleChange("ordersDate")} value="ordersDate" />}
-                            label="Orders"
-                        />
-                        <FormControlLabel
-                            className={classes.checkboxItem}
-                            control={<CustomCheckbox checked={resultsDate} onChange={() => this.handleChange("resultsDate")} value="resultsDate" />}
-                            label="Results"
-                        />
+                        {/*<FormControlLabel*/}
+                        {/*    className={classes.checkboxItem}*/}
+                        {/*    control={<CustomCheckbox checked={ordersDate} onChange={() => this.handleChange("ordersDate")} value="ordersDate" />}*/}
+                        {/*    label="Orders"*/}
+                        {/*/>*/}
+                        {/*<FormControlLabel*/}
+                        {/*    className={classes.checkboxItem}*/}
+                        {/*    control={<CustomCheckbox checked={resultsDate} onChange={() => this.handleChange("resultsDate")} value="resultsDate" />}*/}
+                        {/*    label="Results"*/}
+                        {/*/>*/}
+
+                    </FormGroup>
+                    <FormGroup className={classes.formGroup} row>
                         <FormControlLabel
                             className={classes.checkboxItem}
                             control={<CustomCheckbox checked={vitalsDate} onChange={() => this.handleChange("vitalsDate")} value="vitalsDate" />}
                             label="Vitals"
                         />
-                    </FormGroup>
-                    <FormGroup row>
                         <FormControlLabel
                             className={classes.checkboxItem}
                             control={<CustomCheckbox checked={problemsDate} onChange={() => this.handleChange("problemsDate")} value="problemsDate" />}
@@ -255,23 +260,24 @@ class ColumnsTogglingPopover extends Component {
                     <Typography>COUNT</Typography>
                     <Divider />
                     <FormGroup row>
-                        <FormControlLabel
-                            className={classes.checkboxItem}
-                            control={<CustomCheckbox checked={ordersCount} onChange={() => this.handleChange("ordersCount")} value="ordersCount" />}
-                            label="Orders"
-                        />
-                        <FormControlLabel
-                            className={classes.checkboxItem}
-                            control={<CustomCheckbox checked={resultsCount} onChange={() => this.handleChange("resultsCount")} value="resultsCount" />}
-                            label="Results"
-                        />
+                        {/*<FormControlLabel*/}
+                        {/*    className={classes.checkboxItem}*/}
+                        {/*    control={<CustomCheckbox checked={ordersCount} onChange={() => this.handleChange("ordersCount")} value="ordersCount" />}*/}
+                        {/*    label="Orders"*/}
+                        {/*/>*/}
+                        {/*<FormControlLabel*/}
+                        {/*    className={classes.checkboxItem}*/}
+                        {/*    control={<CustomCheckbox checked={resultsCount} onChange={() => this.handleChange("resultsCount")} value="resultsCount" />}*/}
+                        {/*    label="Results"*/}
+                        {/*/>*/}
+
+                    </FormGroup>
+                    <FormGroup className={classes.formGroup} row>
                         <FormControlLabel
                             className={classes.checkboxItem}
                             control={<CustomCheckbox checked={vitalsCount} onChange={() => this.handleChange("vitalsCount")} value="vitalsCount" />}
                             label="Vitals"
                         />
-                    </FormGroup>
-                    <FormGroup row>
                         <FormControlLabel
                             className={classes.checkboxItem}
                             control={<CustomCheckbox checked={problemsCount} onChange={() => this.handleChange("problemsCount")} value="problemsCount" />}

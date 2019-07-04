@@ -41,27 +41,103 @@ function checkFormData(params) {
     return true;
 }
 
+function getRequestUrl(params) {
+    const search = get(params, 'filter.filterText', null);
+    const searchType = get(params, 'filter.filterType', null);
+    const clinicalSearchType = get(params, 'filter.clinicalQuery.searchType', null);
+    let result = null;
+    if (searchType === 'id') {
+        result = `${domainName}/mpi/Patient/${search}`;
+    } else if (searchType === 'clinicalQuery' && clinicalSearchType) {
+        result = `${domainName}/api/patient/clinicalSearch/${clinicalSearchType}`;
+    } else if (searchType === 'by_age' && search) {
+        result = `${domainName}/mpi/Patient/search/advanced?type=by_age&from=${search[0]}&to=${search[1]}`;
+    } else if (searchType !== 'name' && search) {
+        result = `${domainName}/mpi/Patient/search/advanced?type=${searchType}&value=${search.toLowerCase()}`;
+    } else if (search) {
+        result = `${domainName}/mpi/Patient?name=${search}`;
+    }
+    return result;
+}
+
+function getRequestMethod(params) {
+    const isClinicalQuery = get(params, 'filter.clinicalQuery', null);
+    return isClinicalQuery ? 'POST' : 'GET';
+}
+
+function getRequestBody(params) {
+    const isClinicalQuery = get(params, 'filter.clinicalQuery', null);
+    if (!isClinicalQuery) {
+        return null;
+    }
+    let requestBody = {
+        query: get(params, 'filter.clinicalQuery.searchValue', null),
+        gender: get(params, 'filter.clinicalQuery.gender', null),
+    };
+    const dateOfBirth = get(params, 'filter.clinicalQuery.dateOfBirth', null);
+    const from = get(params, 'filter.clinicalQuery.minAge', null);
+    const to = get(params, 'filter.clinicalQuery.maxAge', null);
+    if (dateOfBirth) {
+        requestBody.dateOfBirth = dateOfBirth;
+    } else if (from && to) {
+        requestBody.from = from;
+        requestBody.to = to;
+    }
+    return JSON.stringify(requestBody);
+}
+
+function getUserSearchResultsById(response) {
+    const patientInfo = get(response, 'patient', null);
+    const addressFromResponse = get(response, 'address', null);
+    const result = {
+        id: get(patientInfo, ['identifier', [0], 'value'], null),
+        name: getTotalName(patientInfo, true),
+        address: getTotalAddress(patientInfo, true),
+        totalAddress: getTotalAddress(patientInfo, true),
+        city: get(addressFromResponse, [[0], 'city'], null),
+        country: get(addressFromResponse, [[0], 'country'], null),
+        district: get(addressFromResponse, [[0], 'district'], null),
+        postCode: get(addressFromResponse, [[0], 'postalCode'], null),
+        birthDate: get(patientInfo, 'birthDate', null),
+        department: get(patientInfo, 'department', null),
+        gender: get(patientInfo, 'gender', null),
+        nhsNumber: get(patientInfo, ['identifier', [0], 'value'], null),
+        phone: get(patientInfo, 'telecom', null),
+    };
+    return [result];
+}
+
+function getUserSearchResults(response, params) {
+    const pageNumber = get(params, 'pagination.page', 1);
+    const numberPerPage = get(params, 'pagination.perPage', 10);
+    const patientsArray = get(response, 'entry', []);
+    const results = getPatientsList(patientsArray);
+    const resultsSorting = getSortedResults(results, params);
+    const startItem = (pageNumber - 1) * numberPerPage;
+    const endItem = pageNumber * numberPerPage;
+    return resultsSorting.slice(startItem, endItem);
+}
+
 const convertPatientsDataRequestToHTTP = (type, resource, params) => {
     let url = "";
+    let method = "";
     const options = {};
     switch (type) {
         case GET_LIST: {
-            const search = get(params, 'filter.filterText', null);
-            const searchType = get(params, 'filter.filterType', null);
-
-            if (searchType === 'id') {
-                url = `${domainName}/mpi/Patient/${search}`;
-            } else {
-                url = `${domainName}/mpi/Patient?name=${search}`;
-            }
-
+            url = getRequestUrl(params);
+            method = getRequestMethod(params);
+            options.method = method;
             if (!options.headers) {
                 options.headers = new Headers({Accept: 'application/json'});
             }
             options.headers = {
                 Authorization: "Bearer " + token,
+                'Content-Type': 'application/json',
                 'X-Requested-With': "XMLHttpRequest",
             };
+            if (method === 'POST') {
+                options.body = getRequestBody(params);
+            }
             break;
         }
 
@@ -151,7 +227,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
 
         default:
             return { data: 'No results' };
-    };
+    }
     return {url, options};
 };
 
@@ -160,39 +236,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
 
         case GET_LIST:
             const searchType = get(params, 'filter.filterType', null);
-
-            let paginationResults = [];
-            if (searchType === 'name') {
-                const pageNumber = get(params, 'pagination.page', 1);
-                const numberPerPage = get(params, 'pagination.perPage', 10);
-                const patientsArray = get(response, 'entry', []);
-                const results = getPatientsList(patientsArray);
-                const resultsSorting = getSortedResults(results, params);
-                const startItem = (pageNumber - 1) * numberPerPage;
-                const endItem = pageNumber * numberPerPage;
-                paginationResults = resultsSorting.slice(startItem, endItem);
-            } else if (searchType === 'id') {
-                const patientInfo = get(response, 'patient', null);
-                const addressFromResponse = get(response, 'address', null);
-                const result = {
-                    id: get(patientInfo, ['identifier', [0], 'value'], null),
-                    name: getTotalName(patientInfo, true),
-                    address: getTotalAddress(patientInfo, true),
-                    city: get(addressFromResponse, [[0], 'city'], null),
-                    country: get(addressFromResponse, [[0], 'country'], null),
-                    district: get(addressFromResponse, [[0], 'district'], null),
-                    postCode: get(addressFromResponse, [[0], 'postalCode'], null),
-                    birthDate: get(patientInfo, 'birthDate', null),
-                    department: get(patientInfo, 'department', null),
-                    gender: get(patientInfo, 'gender', null),
-                    nhsNumber: get(patientInfo, ['identifier', [0], 'value'], null),
-                    phone: get(patientInfo, 'telecom', null),
-                }
-
-                paginationResults = [result];
-            }
-
-
+            const paginationResults = (searchType === 'id') ? getUserSearchResultsById(response) : getUserSearchResults(response, params);
             return {
                 data: paginationResults,
                 total: paginationResults.length,
@@ -219,7 +263,8 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     firstName: firstName,
                     lastName: lastName,
                     name: [firstName, lastName].join(' '),
-                    address: [line, city, district, postCode].join(', '),
+                    totalAddress: [line, city, district, postCode].join(', '),
+                    address: line,
                     city: city,
                     country: country,
                     district: district,
@@ -227,6 +272,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                     birthDate: get(patientFromResponse, 'birthDate', null),
                     department: get(patientFromResponse, 'department', null),
                     gender: get(patientFromResponse, 'gender', null),
+                    source: get(patientFromResponse, ['identifier', [0], 'system'], null),
                     nhsNumber: id,
                     phone: get(patientFromResponse, 'telecom', null),
                 }
@@ -244,6 +290,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             let newData = params.data;
             newData.name = [newFirstName, newLastName].join(' ');
             newData.address = [newAddressLine, newCity, newDistrict, newPostalCode].join(' ');
+            newData.totalAddress = [newAddressLine, newCity, newDistrict, newPostalCode].join(' ');
             return {
                 id: get(params, 'data.nhsNumber', null),
                 data: newData,
@@ -289,6 +336,7 @@ function getPatientsList(patientsArray) {
             id: get(item, ['resource', 'identifier', [0], 'value'], null),
             name: getTotalName(item),
             address: getTotalAddress(item),
+            totalAddress: getTotalAddress(item),
             city: get(addressFromResponse, [[0], 'city'], null),
             country: get(addressFromResponse, [[0], 'country'], null),
             district: get(addressFromResponse, [[0], 'district'], null),
@@ -355,10 +403,6 @@ function getSortedResults(results, params) {
 export default (type, resource, params) => {
     let { url, options } = convertPatientsDataRequestToHTTP(type, resource, params);
     let responseInfo = {};
-
-    console.log('url', url);
-    console.log('options', options);
-
     return fetch(url, options).then(response => {
         responseInfo.status = get(response, 'status', null);
         return response.json();

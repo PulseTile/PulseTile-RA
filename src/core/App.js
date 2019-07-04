@@ -15,6 +15,7 @@ import customRoutes from "./routes";
 import Charts from "./pages/Charts";
 import Layout from "./common/CustomLayout";
 import InitializePage from "./pages/InitializePage";
+import PatientSummaryPage from "./pages/PatientSummary";
 import { themeCommonElements } from "../version/config/theme.config";
 import translations from "./translations";
 
@@ -23,6 +24,7 @@ const Homepage = get(themeCommonElements, 'homePage', Charts);
 const i18nProvider = locale => translations[locale];
 
 const App = () => {
+    const isPhrUser = localStorage.getItem('role') === 'PHR';
     return (
         <Admin
             authProvider={authProvider}
@@ -30,7 +32,7 @@ const App = () => {
             customReducers={{custom: customReducers}}
             customRoutes={customRoutes}
             dataProvider={customDataProvider}
-            dashboard={Homepage}
+            dashboard={isPhrUser ? PatientSummaryPage : Homepage}
             appLayout={Layout}
             loginPage={InitializePage}
             locale="en"
@@ -49,6 +51,6 @@ const App = () => {
             }
         </Admin>
     );
-}
+};
 
 export default App;

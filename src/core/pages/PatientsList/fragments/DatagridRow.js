@@ -100,6 +100,8 @@ class PatientDatagridRow extends Component {
         const isPermissionRequired = get(themeCommonElements, 'patientSummaryPermission', false);
         const open = Boolean(anchorEl);
 
+        console.log('record', record)
+
         return (
             <CustomDatagridRow {...this.props} >
                 <TableCell key={`${record.id}-name`}>
@@ -108,7 +110,7 @@ class PatientDatagridRow extends Component {
                 {
                     this.isColumnHidden('address') &&
                         <TableCell key={`${record.id}-address`}>
-                            {record.address}
+                            {record.totalAddress}
                         </TableCell>
                 }
                 <TableCell key={`${record.id}-gender`}>

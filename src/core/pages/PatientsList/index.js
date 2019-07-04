@@ -15,10 +15,8 @@ import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
-
 import DatagridRow from "./fragments/DatagridRow";
 import ColumnsTogglingPopover from "./fragments/ColumnsTogglingPopover";
-
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
@@ -75,6 +73,20 @@ class PatientsList extends Component {
         this.props.setSidebarVisibility(false);
     }
 
+    componentWillReceiveProps(newProps, prevList) {
+        const { getPatientsCounts } = this.props;
+
+        const prevPatientsIds = get(prevList, 'patientsIds', []);
+        const newPatientsIds = get(newProps, 'patientsIds', []);
+        const isPatientListCount = get(themeCommonElements, 'isPatientListCount', false);
+
+        if (isPatientListCount && (prevPatientsIds !== newPatientsIds) && newPatientsIds.length > 0) {
+            newPatientsIds.map(item => {
+                getPatientsCounts(item);
+            });
+        }
+    }
+
     updateTableHead = () => {
         this.setState({
             key: this.state.key + 1,
@@ -87,9 +99,9 @@ class PatientsList extends Component {
     };
 
     render() {
-        const { userSearch, userSearchID, classes } = this.props;
+        const { userSearch, userSearchID, userSearchType, userClinicalQuery, userSearchValue, classes } = this.props;
 
-        if (!userSearch && !userSearchID) {
+        if (!userSearch && !userSearchID && !userSearchType && !userSearchValue && !userClinicalQuery) {
             return (
                 <div className={classes.content}>
                     <div className={classes.imageBlock} >
@@ -104,9 +116,10 @@ class PatientsList extends Component {
             )
         }
 
+
         return (
             <React.Fragment>
-                <ListTemplate
+                <PatientListTemplate
                     basePath="/patients"
                     create={PatientCreate}
                     edit={PatientEdit}
@@ -123,14 +136,14 @@ class PatientsList extends Component {
                     {...this.props}
                 >
                     <TextField source="name" label="Name"/>
-                    { this.isColumnHidden('address') && <TextField source="address" label="Address" /> }
+                    { this.isColumnHidden('address') && <TextField source="totalAddress" label="Address" /> }
                     <TextField source="gender" label="Gender"/>
                     <DateField source="birthDate" label="Born"/>
                     { this.isColumnHidden('nhsNumber') && <TextField source="nhsNumber" label="NHS No." /> }
 
                     <ViewButton />
 
-                </ListTemplate>
+                </PatientListTemplate>
             </React.Fragment>
         );
     }
@@ -140,7 +153,11 @@ const mapStateToProps = state => {
     return {
         userSearch: get(state, 'custom.userSearch.data', null),
         userSearchID: get(state, 'custom.userSearch.id', null),
+        userSearchType: get(state, 'custom.userSearch.type', null),
+        userSearchValue: get(state, 'custom.userSearch.value', null),
+        userClinicalQuery: get(state, 'custom.clinicalQuery.data', null),
         hiddenColumns:  get(state, 'custom.toggleColumns.data.patients', []),
+        patientsIds: get(state, 'admin.resources.patients.list.ids', []),
     }
 };
 
@@ -149,6 +166,9 @@ const mapDispatchToProps = dispatch => {
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
+        getPatientsCounts(patientId) {
+            dispatch(patientsCountAction.request(patientId));
+        }
     }
 };
 

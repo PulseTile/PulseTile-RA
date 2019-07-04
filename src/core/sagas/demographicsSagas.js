@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import { takeEvery, put } from 'redux-saga/effects';
 
-import { domainName } from "../token";
+import { domainName, token } from "../token";
 import { DEMOGRAPHICS_ACTION, demographicsAction } from "../actions/demographicsAction";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
@@ -15,6 +15,7 @@ export default takeEvery(DEMOGRAPHICS_ACTION.REQUEST, function*(action) {
         options.headers = new Headers({ Accept: 'application/json' });
     }
     options.headers = {
+        Authorization: "Bearer " + token,
         'X-Requested-With': "XMLHttpRequest",
     };
     try {

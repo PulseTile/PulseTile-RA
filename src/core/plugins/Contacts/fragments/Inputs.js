@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, SelectInput, BooleanInput, DateInput, DisabledInput, LongTextInput } from "react-admin";
+import { TextInput, SelectInput, BooleanInput, DateInput, LongTextInput } from "react-admin";
 import moment from "moment";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -94,6 +94,7 @@ const ContactsInputs = ({ classes, ...rest }) => (
                 source="author"
                 label="Author"
                 fullWidth
+                defaultValue={localStorage.getItem('username')}
                 InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
                 InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
                 disabled={true}
