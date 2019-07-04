@@ -69,7 +69,7 @@ const CustomTooltip = ({ classes, active, payload }) => {
 class Population extends Component {
 
     render() {
-        const { classes } = this.props;
+        const { classes, color, population } = this.props;
 
         const data = [
             { name: '2008', uv: 3 },
@@ -90,7 +90,7 @@ class Population extends Component {
         return (
             <div className={classes.mainBlock}>
                 <Typography variant="body1" className={classes.chartTitle}>Population</Typography>
-                <Typography variant="body1" className={classes.populationNumber}>5,230,230</Typography>
+                <Typography variant="body1" className={classes.populationNumber}>{population}</Typography>
                 <div className={classes.chartBlock}>
                     <ResponsiveContainer height={200}>
                         <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -101,7 +101,7 @@ class Population extends Component {
                                 content={<CustomTooltip classes={classes} />}
                                 cursor={false}
                             />
-                            <Area type="linear" dataKey="uv" stroke={COLOR_RED} fill={COLOR_RED} />
+                            <Area type="linear" dataKey="uv" stroke={color} fill={color} />
                         </AreaChart>
                     </ResponsiveContainer>
                 </div>

@@ -33,12 +33,10 @@ const styles = theme => ({
     }
 });
 
-const HARDCORE_VALUE = 68;
-
-const AverageHealthScore = ({ classes }) => {
+const AverageHealthScore = ({ classes, color, healthScore }) => {
     const data = [
-        { name: 'Group A', value: HARDCORE_VALUE },
-        { name: 'Group B', value: 100 - HARDCORE_VALUE }
+        { name: 'Group A', value: healthScore },
+        { name: 'Group B', value: 100 - healthScore }
     ];
     return (
         <React.Fragment>
@@ -55,12 +53,12 @@ const AverageHealthScore = ({ classes }) => {
                             paddingAngle={5}
                             dataKey="value"
                         >
-                            <Cell fill={COLOR_AMBER} />
+                            <Cell fill={color} />
                             <Cell fill={COLOR_EMPTY} />
                         </Pie>
                     </PieChart>
                 </ResponsiveContainer>
-                <Typography variant="h1" className={classes.value}>{HARDCORE_VALUE} %</Typography>
+                <Typography variant="h1" className={classes.value}>{healthScore} %</Typography>
                 <Typography variant="body1">Moderate</Typography>
                 <div className={classes.bordersLabels}>
                     <Typography variant="caption">Unhealthy</Typography>

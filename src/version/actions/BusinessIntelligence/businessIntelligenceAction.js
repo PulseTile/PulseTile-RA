@@ -1,7 +1,8 @@
 import { createRequestTypes } from "../../../core/actions/functions";
 
-export const BUSINESS_INTELLIGENCE_ACTION = createRequestTypes('BUSINESS_INTELLIGENCE_ACTION', { UPDATE: 'UPDATE' });
+export const BUSINESS_INTELLIGENCE_ACTION = createRequestTypes('BUSINESS_INTELLIGENCE_ACTION', { UPDATE: 'UPDATE', REMOVE: 'REMOVE' });
 
 export const businessIntelligenceAction = {
-    update: data => ({type: BUSINESS_INTELLIGENCE_ACTION.UPDATE, data}),
+    update: data => ({ type: BUSINESS_INTELLIGENCE_ACTION.UPDATE, data }),
+    remove: data => ({ type: BUSINESS_INTELLIGENCE_ACTION.REMOVE, data }),
 };

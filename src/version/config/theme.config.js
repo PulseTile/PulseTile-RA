@@ -9,6 +9,7 @@ import RespectSummaryPanel from "../pages/ReSPECT/fragments/summaryPanel";
 export const themeShortMenu = [
     { url: '/', label: 'Charts' },
     { url: '/patients', label: 'Patients' },
+    { url: '/business', label: 'Business Intelligence'},
 ];
 
 export const themeFullMenu = [

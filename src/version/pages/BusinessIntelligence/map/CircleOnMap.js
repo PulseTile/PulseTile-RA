@@ -7,6 +7,7 @@ import PopoverInfo from "./PopoverInfo";
 const styles = theme => ({
     circle: {
         opacity: 0.5,
+        cursor: 'pointer',
     },
 });
 
@@ -29,13 +30,14 @@ class CircleOnMap extends Component {
     };
 
     render() {
-        const { classes, size, color, cityName, healthScore } = this.props;
+        const { classes, id, size, color, cityName, healthScore, onClick } = this.props;
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
         return (
             <React.Fragment>
                 <div
                     className={classes.circle}
+                    onClick={() => onClick(id)}
                     onMouseOver={e => this.handleClick(e)}
                     onMouseOut={() => this.handleClose()}
                     style={{

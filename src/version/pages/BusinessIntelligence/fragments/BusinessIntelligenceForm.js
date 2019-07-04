@@ -10,7 +10,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { businessIntelligenceAction } from "../../../actions/BusinessIntelligence/businessIntelligenceAction";
 import { genderArray, diagnosisArray } from "../constants";
@@ -84,6 +84,22 @@ const styles = theme => ({
             color: theme.palette.paperColor,
         },
     },
+    resetButton: {
+        display: "block",
+        width: 140,
+        height: 40,
+        margin: "8px !important",
+        color: theme.palette.dangerColor,
+        backgroundColor: theme.palette.paperColor,
+        border: `1px solid ${theme.palette.dangerColor}`,
+        borderRadius: theme.isRectangleButtons ? 0 : 25,
+        fontSize: 16,
+        fontWeight: 800,
+        "&:hover": {
+            backgroundColor: theme.palette.dangerColor,
+            color: theme.palette.paperColor,
+        },
+    },
     filterIcon: {
         marginLeft: 5,
     }
@@ -99,6 +115,10 @@ class BusinessIntelligenceForm extends Component {
     };
 
     componentDidMount() {
+        this.setInitialValues();
+    }
+
+    setInitialValues = () => {
         let genders = [];
         let diagnosis = [];
         for (let i = 0, n = genderArray.length; i < n; i++) {
@@ -113,7 +133,18 @@ class BusinessIntelligenceForm extends Component {
             gender: genders,
             diagnosis: diagnosis,
         })
-    }
+    };
+
+    resetForm = () => {
+        const { resetBusinessIntelligence } = this.props;
+        this.setState(state => ({
+            age: [0, 100],
+            healthScore: [0, 100],
+        }), () => {
+            this.setInitialValues();
+            resetBusinessIntelligence();
+        });
+    };
 
     isGenderChecked = item => {
         const { gender } = this.state;
@@ -247,6 +278,10 @@ class BusinessIntelligenceForm extends Component {
                     </Grid>
                 </Grid>
                 <div className={classes.toolbar}>
+                    <Button type="button" aria-label="Update" className={classes.resetButton} onClick={() => this.resetForm()}>
+                        Reset
+                        <FontAwesomeIcon icon={faTimesCircle} className={classes.filterIcon} size="1x" />
+                    </Button>
                     <Button type="submit" aria-label="Update" className={classes.updateButton} onClick={() => this.updateBusinessIntelligence()}>
                         Update
                         <FontAwesomeIcon icon={faFilter} className={classes.filterIcon} size="1x" />
@@ -268,6 +303,9 @@ const mapDispatchToProps = dispatch => {
         updateBusinessIntelligence(data) {
             dispatch(businessIntelligenceAction.update(data));
         },
+        resetBusinessIntelligence() {
+            dispatch(businessIntelligenceAction.remove());
+        }
     }
 };
 

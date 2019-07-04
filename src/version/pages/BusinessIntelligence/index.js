@@ -18,6 +18,7 @@ import PieCharts from "./tabs/PieCharts";
 import BusinessIntelligenceForm from "./fragments/BusinessIntelligenceForm";
 import ChartsSelector from "./fragments/ChartsSelector";
 import { HEAT_MAP, BAR_CHARTS, PIE_CHARTS } from "./constants";
+import { getCityById } from "./dummyCityStatistic";
 
 const styles = theme => ({
     mainBlock: {
@@ -98,12 +99,19 @@ class BusinessIntelligence extends Component {
     state = {
         isFromPanelOpen: true,
         isChartsPanelOpen: true,
-        currentTab: HEAT_MAP
+        currentTab: HEAT_MAP,
+        currentCity: getCityById('york'),
     };
 
     componentDidMount() {
         this.props.setSidebarVisibility(false);
     }
+
+    changeCity = id => {
+        this.setState({
+            currentCity: getCityById(id),
+        });
+    };
 
     togglePanel = panel => {
         this.setState({
@@ -164,7 +172,7 @@ class BusinessIntelligence extends Component {
 
     render() {
         const { classes, history, businessIntelligence } = this.props;
-        const { isFromPanelOpen, isChartsPanelOpen, currentTab } = this.state;
+        const { isFromPanelOpen, isChartsPanelOpen, currentTab, currentCity } = this.state;
         const CurrentTabContent = this.getCurrentTabContent();
         return (
             <Grid item xs={12} className={classes.mainBlock}>
@@ -190,6 +198,8 @@ class BusinessIntelligence extends Component {
                                 <Grid className={classes.currentTabContainer} container>
                                     <CurrentTabContent
                                         classes={classes}
+                                        currentCity={currentCity}
+                                        changeCity={this.changeCity}
                                         businessIntelligence={businessIntelligence}
                                         isAgeRangeVisible={this.isAgeRangeVisible}
                                         isDiagnosisVisible={this.isDiagnosisVisible}

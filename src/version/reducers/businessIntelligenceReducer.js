@@ -16,6 +16,12 @@ export default (state = initialState, action) => {
                 loading: false,
                 data: get(action, 'data', null),
             };
+        case BUSINESS_INTELLIGENCE_ACTION.REMOVE:
+            return {
+                ...state,
+                loading: false,
+                data: null,
+            };
         default:
             return state;
     }
