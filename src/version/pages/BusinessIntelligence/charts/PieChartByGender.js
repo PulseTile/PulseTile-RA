@@ -41,21 +41,24 @@ const styles = theme => ({
     }
 });
 
-function getCustomLabel(item) {
-    return (
-        <text
-            x={item.x}
-            y={item.y}
-            stroke='none'
-            alignmentBaseline='middle'
-            className='recharts-text recharts-pie-label-text'
-            textAnchor='end'
-        >
-            <tspan x={item.x} textAnchor={item.textAnchor} dy='0em'>
-                {item.value / 10}% ({item.value})
-            </tspan>
-        </text>
-    );
+function getCustomLabel(item, dataFilter) {
+    if (dataFilter.length === 2) {
+        return (
+            <text
+                x={item.x}
+                y={item.y}
+                stroke='none'
+                alignmentBaseline='middle'
+                className='recharts-text recharts-pie-label-text'
+                textAnchor='end'
+            >
+                <tspan x={item.x} textAnchor={item.textAnchor} dy='0em'>
+                    {item.value / 10}% ({item.value})
+                </tspan>
+            </text>
+        );
+    }
+    return null;
 };
 
 const CustomTooltip = ({ classes, active, payload }) => {
@@ -72,12 +75,19 @@ const CustomTooltip = ({ classes, active, payload }) => {
     return null;
 };
 
-const PieChartByGender = ({ classes, label, male, female }) => {
+const PieChartByGender = ({ classes, label, male, female, isGenderVisible }) => {
 
     const data = [
-        { name: 'Female', value: female, color: COLOR_FEMALE },
-        { name: 'Male', value: male, color: COLOR_MALE },
+        { name: 'Female', type: 'female', value: female, fill: COLOR_FEMALE, color: COLOR_FEMALE },
+        { name: 'Male',   type: 'male',   value: male,   fill: COLOR_MALE,   color: COLOR_MALE },
     ];
+
+    const dataFilter = [];
+    data.map(item => {
+        if (isGenderVisible(item.type)) {
+            dataFilter.push(item);
+        }
+    });
 
     return (
         <div className={classes.mainBlock}>
@@ -85,9 +95,13 @@ const PieChartByGender = ({ classes, label, male, female }) => {
             <div className={classes.chartBlock}>
                 <ResponsiveContainer width='100%' height={400}>
                     <PieChart>
-                        <Pie isAnimationActive={false} data={data} outerRadius={120} fill="#8884d8" label={item => getCustomLabel(item)} labelLine={false}>
+                        <Pie isAnimationActive={false} data={dataFilter} label={item => getCustomLabel(item, dataFilter)} labelLine={false}>
                         {
-                            data.map((item, key) => <Cell fill={item.color} key={key} />)
+                            data.map((item, key) => {
+                                return (
+                                    <Cell fill={item.color} color={item.color} key={key} />
+                                )
+                            })
                         }
                         </Pie>
                         <Tooltip

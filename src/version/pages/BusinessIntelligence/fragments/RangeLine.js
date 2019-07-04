@@ -27,20 +27,18 @@ class RangeLine extends Component {
         return (
             <div className={classes.rangeLine}>
                 <Range
-                    values={age} step={1} min={0} max={100} onChange={values => onChangeRange(values)}
+                    values={age} step={10} min={0} max={100} onChange={values => onChangeRange(values)}
                     renderTrack={({ props, children }) =>
                         <RenderTrack props={props} children={children} value={age} min={0} max={100} />}
                     renderThumb={({ props, isDragged }) =>
                         <RenderThumb props={props} isDragged={isDragged} />}
                 />
                 { RangeLineAxis && <RangeLineAxis /> }
-                { hasRangeOutput &&
-                    <div className={classes.rangeOutput} id="output">
-                        <Typography>
-                            {age[0].toFixed(0)} - {age[1].toFixed(0)}
-                        </Typography>
-                    </div>
-                }
+                <div className={classes.rangeOutput} id="output">
+                    <Typography>
+                        {age[0].toFixed(0)} - {age[1].toFixed(0)}
+                    </Typography>
+                </div>
             </div>
         )
     }

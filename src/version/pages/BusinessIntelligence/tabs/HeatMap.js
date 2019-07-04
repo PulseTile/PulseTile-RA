@@ -17,7 +17,7 @@ const styles = theme => ({
     }
 });
 
-const HeatMap = ({ classes }) => {
+const HeatMap = ({ classes, businessIntelligence, isDiagnosisVisible, isAgeRangeVisible }) => {
     return (
         <React.Fragment>
             <Grid className={classes.chart} item xs={12} sm={12} md={6}>
@@ -25,7 +25,7 @@ const HeatMap = ({ classes }) => {
                     <Typography variant="h1">Yorkshire, UK</Typography>
                 </div>
                 <div className={classes.chartsContainer}>
-                    <MapWithStatistics />
+                    <MapWithStatistics businessIntelligence={businessIntelligence} />
                 </div>
             </Grid>
             <Grid className={classes.chart} item xs={12} sm={8} md={5}>
@@ -35,7 +35,7 @@ const HeatMap = ({ classes }) => {
                 <div className={classes.chartsContainer}>
                     <AverageHealthScore />
                     <Population />
-                    <DiagnosisByAge />
+                    <DiagnosisByAge isDiagnosisVisible={isDiagnosisVisible} isAgeRangeVisible={isAgeRangeVisible} />
                 </div>
             </Grid>
         </React.Fragment>

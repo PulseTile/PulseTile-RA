@@ -196,7 +196,7 @@ class BusinessIntelligenceForm extends Component {
                     <Grid item sm={12} md={6}>
                         <FormGroup className={classes.formGroup}>
                             <FormLabel className={classes.formLabel}>By Age</FormLabel>
-                            <RangeLine age={age} onChangeRange={this.onChangeAgeRange} hasRangeOutput={true} />
+                            <RangeLine age={age} onChangeRange={this.onChangeAgeRange} />
                         </FormGroup>
                     </Grid>
                     <Grid item sm={12} md={6}>

@@ -101,9 +101,14 @@ class DiagnosisByAge extends Component {
         })
     };
 
-    render() {
-        const { classes } = this.props;
+    isAreaVisible = item => {
+        const { isDiagnosisVisible } = this.props;
         const { disabledLines } = this.state;
+        return disabledLines.indexOf(item) === -1 && isDiagnosisVisible(item);
+    };
+
+    render() {
+        const { classes, isDiagnosisVisible, isAgeRangeVisible } = this.props;
 
         const linesArray = [
             { dataKey: "diabetes", color: COLOR_DIABETES, label: <Typography>Diabetes</Typography> },
@@ -114,12 +119,22 @@ class DiagnosisByAge extends Component {
 
         const ticksArray = [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
 
+        const legendInfo = linesArray
+            .filter(item => isDiagnosisVisible(item.dataKey))
+            .map(item => ({
+                dataKey: item.dataKey,
+                color: item.color,
+                value: item.label,
+            }));
+
+        const dummyDataFilter = dummyData.filter(item => isAgeRangeVisible(item.name));
+
         return (
             <div className={classes.mainBlock}>
                 <Typography variant="body1" className={classes.chartTitle}>Diagnosis By Age</Typography>
                 <div className={classes.chartBlock}>
                     <ResponsiveContainer height={300}>
-                        <AreaChart data={dummyData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                        <AreaChart data={dummyDataFilter} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                             <CartesianGrid stroke="#ebebeb" />
                             <XAxis dataKey="name" tick={{ dy: 10 }} />
                             <YAxis  tick={{ dx: -10 }} ticks={ticksArray} domain={[0, 'dataMax']} />
@@ -129,27 +144,22 @@ class DiagnosisByAge extends Component {
                             />
                             {
                                 linesArray.map((item, key) => {
-                                    if (disabledLines.indexOf(item.dataKey) !== -1) {
-                                        return null;
+                                    if (this.isAreaVisible(item.dataKey)) {
+                                        return (
+                                            <Area
+                                                key={key}
+                                                type="linear"
+                                                dataKey={item.dataKey}
+                                                stackId="1"
+                                                stroke={item.color}
+                                                fill={item.color}
+                                            />
+                                        )
                                     }
-                                    return (
-                                        <Area
-                                            key={key}
-                                            type="linear"
-                                            dataKey={item.dataKey}
-                                            stackId="1"
-                                            stroke={item.color}
-                                            fill={item.color}
-                                        />
-                                    )
                                 })
                             }
                             <Legend
-                                payload={linesArray.map(item => ({
-                                    dataKey: item.dataKey,
-                                    color: item.color,
-                                    value: item.label,
-                                }))}
+                                payload={legendInfo}
                                 onClick={e => this.toggleLine(e)}
                             />
                         </AreaChart>

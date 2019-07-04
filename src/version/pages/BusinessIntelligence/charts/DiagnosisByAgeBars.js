@@ -111,7 +111,7 @@ class DiagnosisByAge extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, isDiagnosisVisible, isAgeRangeVisible } = this.props;
         const { disabledLines } = this.state;
 
         const linesArray = [
@@ -123,13 +123,22 @@ class DiagnosisByAge extends Component {
 
         const ticksArray = [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
 
+        const legendInfo = linesArray
+            .filter(item => isDiagnosisVisible(item.dataKey))
+            .map(item => ({
+                dataKey: item.dataKey,
+                color: item.color,
+                value: item.label,
+            }));
+
+        const dummyDataFilter = dummyData.filter(item => isAgeRangeVisible(item.name));
 
         return (
             <div className={classes.mainBlock}>
                 <div className={classes.chartBlock}>
                     <ResponsiveContainer height={400}>
                         <BarChart
-                            data={dummyData}
+                            data={dummyDataFilter}
                             margin={{ top: 5, right: 0, left: 0, bottom: 25 }} >
                             <XAxis dataKey="name" fontFamily="sans-serif" tick={{ dy: 10 }} />
                             <YAxis tick={{ dx: -10 }} ticks={ticksArray} domain={[0, 'dataMax']} />
@@ -140,20 +149,16 @@ class DiagnosisByAge extends Component {
                             />
                             {
                                 linesArray.map((item, key) => {
-                                    if (disabledLines.indexOf(item.dataKey) !== -1) {
+                                    if (disabledLines.indexOf(item.dataKey) !== -1 || !isDiagnosisVisible(item.dataKey)) {
                                         return null;
                                     }
                                     return (
-                                        <Bar dataKey={item.dataKey} stackId="a" fill={item.color} />
+                                        <Bar key={key} dataKey={item.dataKey} stackId="a" fill={item.color} />
                                     )
                                 })
                             }
                             <Legend
-                                payload={linesArray.map(item => ({
-                                    dataKey: item.dataKey,
-                                    color: item.color,
-                                    value: item.label,
-                                }))}
+                                payload={legendInfo}
                                 onClick={e => this.toggleBar(e)}
                             />
                         </BarChart>

@@ -129,13 +129,43 @@ class BusinessIntelligence extends Component {
         return result;
     };
 
+    isDiagnosisVisible = type => {
+        const { businessIntelligence } = this.props;
+        const diagnosis = get(businessIntelligence, 'diagnosis', []);
+        return !businessIntelligence || diagnosis.indexOf(type) !== -1;
+    };
+
+    isGenderVisible = type => {
+        const { businessIntelligence } = this.props;
+        const genders = get(businessIntelligence, 'gender', []);
+        return !businessIntelligence || genders.indexOf(type) !== -1;
+    };
+
+    isEmptyResults = () => {
+        const { businessIntelligence } = this.props;
+        const diagnosis = get(businessIntelligence, 'diagnosis', []);
+        const genders = get(businessIntelligence, 'gender', []);
+        return businessIntelligence && (diagnosis.length === 0 || genders.length === 0);
+    };
+
+    isAgeRangeVisible = currentRange => {
+        const { businessIntelligence } = this.props;
+        let minCurrentRange = 81;
+        let maxCurrentRange = 125;
+        if (currentRange !== '81+') {
+            const currentRangeArray = currentRange.split('-');
+            minCurrentRange = currentRangeArray[0];
+            maxCurrentRange = currentRangeArray[1];
+        }
+        const minAge = get(businessIntelligence, 'age[0]', 0);
+        const maxAge = get(businessIntelligence, 'age[1]', 125);
+        return !businessIntelligence || (minAge <= minCurrentRange && maxCurrentRange <= maxAge);
+    };
+
     render() {
-        const { classes, history } = this.props;
-
+        const { classes, history, businessIntelligence } = this.props;
         const { isFromPanelOpen, isChartsPanelOpen, currentTab } = this.state;
-
         const CurrentTabContent = this.getCurrentTabContent();
-
         return (
             <Grid item xs={12} className={classes.mainBlock}>
                 <ExpansionPanel className={isFromPanelOpen ? classes.currentExpansionPanel : classes.expansionPanel} expanded={isFromPanelOpen} onChange={() => this.togglePanel('isFromPanelOpen')}>
@@ -158,7 +188,14 @@ class BusinessIntelligence extends Component {
                         isChartsPanelOpen &&
                             <ExpansionPanelDetails className={classes.expansionPanelDetails}>
                                 <Grid className={classes.currentTabContainer} container>
-                                    <CurrentTabContent classes={classes} />
+                                    <CurrentTabContent
+                                        classes={classes}
+                                        businessIntelligence={businessIntelligence}
+                                        isAgeRangeVisible={this.isAgeRangeVisible}
+                                        isDiagnosisVisible={this.isDiagnosisVisible}
+                                        isGenderVisible={this.isGenderVisible}
+                                        isEmptyResults={this.isEmptyResults}
+                                    />
                                     <ChartsSelector classes={classes} currentTab={currentTab} changeCurrentTab={this.changeCurrentTab} history={history} />
                                 </Grid>
                             </ExpansionPanelDetails>
@@ -170,7 +207,9 @@ class BusinessIntelligence extends Component {
 }
 
 const mapStateToProps = state => {
-
+    return {
+        businessIntelligence: get(state, 'custom.businessIntelligence.data', null),
+    };
 };
 
 const mapDispatchToProps = dispatch => {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import get from "lodash/get";
-import {ScatterChart, Scatter, CartesianGrid, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer, Legend} from "recharts";
+import {ScatterChart, Scatter, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend} from "recharts";
 
 import { withStyles } from "@material-ui/core/styles/index";
 import Typography from "@material-ui/core/Typography/index";
@@ -89,9 +89,14 @@ class DiagnosisByAge extends Component {
         })
     };
 
-    render() {
-        const { classes } = this.props;
+    isScatterVisible = type => {
+        const { isDiagnosisVisible } = this.props;
         const { disabledLines } = this.state;
+        return disabledLines.indexOf(type) === -1 && isDiagnosisVisible(type);
+    };
+
+    render() {
+        const { classes, isDiagnosisVisible, isAgeRangeVisible } = this.props;
         const linesArray = [
             { dataKey: "diabetes", color: COLOR_DIABETES, label: <Typography>Diabetes</Typography> },
             { dataKey: "measles", color: COLOR_MEASLES, label: <Typography>Measles</Typography> },
@@ -99,17 +104,25 @@ class DiagnosisByAge extends Component {
             { dataKey: "dementia", color: COLOR_DEMENTIA, label: <Typography>Dementia</Typography> },
         ];
         const ticksArray = [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
+        const dummyDataFilter = dummyData.filter(item => isAgeRangeVisible(item.name));
         let dummyDiabetes = [];
         let dummyAsthma = [];
         let dummyMeasles = [];
         let dummyDementia = [];
-        for (let i = 0, n = dummyData.length; i < n; i++) {
-            let item = dummyData[i];
+        for (let i = 0, n = dummyDataFilter.length; i < n; i++) {
+            let item = dummyDataFilter[i];
             dummyDiabetes.push({ x: item.name, y: item.diabetes });
             dummyAsthma.push({ x: item.name, y: item.asthma });
             dummyMeasles.push({ x: item.name, y: item.measles });
             dummyDementia.push({ x: item.name, y: item.dementia });
         }
+        const legendInfo = linesArray
+            .filter(item => isDiagnosisVisible(item.dataKey))
+            .map(item => ({
+                dataKey: item.dataKey,
+                color: item.color,
+                value: item.label,
+            }));
         return (
             <div className={classes.mainBlock}>
                 <div className={classes.chartBlock}>
@@ -122,16 +135,12 @@ class DiagnosisByAge extends Component {
                                 content={<CustomTooltip classes={classes} />}
                                 cursor={false}
                             />
-                            { (disabledLines.indexOf('diabetes') === -1) && <Scatter data={dummyDiabetes} name="Diabetes" stroke={COLOR_DIABETES} fill={COLOR_DIABETES} /> }
-                            { (disabledLines.indexOf('asthma') === -1) && <Scatter data={dummyAsthma} name="Asthma" stroke={COLOR_ASTHMA} fill={COLOR_ASTHMA} /> }
-                            { (disabledLines.indexOf('measles') === -1) && <Scatter data={dummyMeasles} name="Measles" stroke={COLOR_MEASLES} fill={COLOR_MEASLES} /> }
-                            { (disabledLines.indexOf('dementia') === -1) && <Scatter data={dummyDementia} name="Dementia" stroke={COLOR_DEMENTIA} fill={COLOR_DEMENTIA} /> }
+                            { this.isScatterVisible('diabetes') && <Scatter data={dummyDiabetes} name="Diabetes" stroke={COLOR_DIABETES} fill={COLOR_DIABETES} /> }
+                            { this.isScatterVisible('asthma') && <Scatter data={dummyAsthma} name="Asthma" stroke={COLOR_ASTHMA} fill={COLOR_ASTHMA} /> }
+                            { this.isScatterVisible('measles') && <Scatter data={dummyMeasles} name="Measles" stroke={COLOR_MEASLES} fill={COLOR_MEASLES} /> }
+                            { this.isScatterVisible('dementia') && <Scatter data={dummyDementia} name="Dementia" stroke={COLOR_DEMENTIA} fill={COLOR_DEMENTIA} /> }
                             <Legend
-                                payload={linesArray.map(item => ({
-                                    dataKey: item.dataKey,
-                                    color: item.color,
-                                    value: item.label,
-                                }))}
+                                payload={legendInfo}
                                 onClick={e => this.toggleLine(e)}
                             />
                         </ScatterChart>
