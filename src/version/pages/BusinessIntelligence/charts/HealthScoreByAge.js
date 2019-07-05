@@ -5,12 +5,7 @@ import {ScatterChart, Scatter, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveC
 import { withStyles } from "@material-ui/core/styles/index";
 import Typography from "@material-ui/core/Typography/index";
 
-import dummyData from "./dummyDiagnosisByAge";
-
-const COLOR_DIABETES = '#8784d8';
-const COLOR_MEASLES = '#80ca9d';
-const COLOR_ASTHMA = '#44afa0';
-const COLOR_DEMENTIA = '#ab43af';
+import { COLOR_DIABETES, COLOR_MEASLES, COLOR_ASTHMA, COLOR_DEMENTIA } from "../constants";
 
 const styles = theme => ({
     mainBlock: {
@@ -96,7 +91,7 @@ class DiagnosisByAge extends Component {
     };
 
     render() {
-        const { classes, isDiagnosisVisible, isAgeRangeVisible } = this.props;
+        const { classes, isDiagnosisVisible, isAgeRangeVisible, diagnosisByAge } = this.props;
         const linesArray = [
             { dataKey: "diabetes", color: COLOR_DIABETES, label: <Typography>Diabetes</Typography> },
             { dataKey: "measles", color: COLOR_MEASLES, label: <Typography>Measles</Typography> },
@@ -104,7 +99,7 @@ class DiagnosisByAge extends Component {
             { dataKey: "dementia", color: COLOR_DEMENTIA, label: <Typography>Dementia</Typography> },
         ];
         const ticksArray = [ 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ];
-        const dummyDataFilter = dummyData.filter(item => isAgeRangeVisible(item.name));
+        const dummyDataFilter = diagnosisByAge.filter(item => isAgeRangeVisible(item.name));
         let dummyDiabetes = [];
         let dummyAsthma = [];
         let dummyMeasles = [];

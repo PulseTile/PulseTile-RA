@@ -177,13 +177,21 @@ class BusinessIntelligence extends Component {
         const { patients } = this.props;
         const patientsByCity = _.mapValues(_.groupBy(patients, 'location'),
             clist => clist.map(item => _.omit(item, 'location')));
-        return Object.entries(patientsByCity);
+        const patientsArray = Object.entries(patientsByCity);
+        let result = [];
+        patientsArray.map(item => {
+            result.push({
+                city: item[0],
+                number: item[1].length
+            })
+        });
+        return result;
     };
 
     render() {
         const { classes, history, businessIntelligence, patients } = this.props;
         const { isFromPanelOpen, isChartsPanelOpen, currentTab, currentCity } = this.state;
-        const groupPatientsByCity = this.getPatientsByCity();
+        const patientsNumberArray = this.getPatientsByCity();
         const patientsByCurrentCity = patients ? patients.filter(item => item.location === currentCity.cityName) : [];
         const CurrentTabContent = this.getCurrentTabContent();
         return (
@@ -210,10 +218,11 @@ class BusinessIntelligence extends Component {
                                 <Grid className={classes.currentTabContainer} container>
                                     <CurrentTabContent
                                         classes={classes}
+                                        patients={patients}
                                         currentCity={currentCity}
                                         changeCity={this.changeCity}
+                                        patientsNumberArray={patientsNumberArray}
                                         businessIntelligence={businessIntelligence}
-                                        groupPatientsByCity={groupPatientsByCity}
                                         patientsByCurrentCity={patientsByCurrentCity}
                                         isAgeRangeVisible={this.isAgeRangeVisible}
                                         isDiagnosisVisible={this.isDiagnosisVisible}

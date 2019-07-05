@@ -7,6 +7,7 @@ import CircleOnMap from "./CircleOnMap";
 import MapLegend from "./MapLegend";
 
 import { dummyCities } from "../dummyCityStatistic";
+import { getColorByHealthScore, getAverageHealthScore } from "../functions";
 
 const API_KEY = 'AIzaSyCskY6-WDa0tfSayzD2gzu-EAKIfJUoUGA';
 
@@ -26,11 +27,11 @@ class MapWithStatistics extends Component {
         isVeryGoodSelected: true,
     };
 
-    isItemVisible = item => {
+    isItemVisible = (averageHealthScore) => {
         const { isPoorSelected, isGoodSelected, isVeryGoodSelected } = this.state;
-        return (isPoorSelected && item.healthScore <= 25) ||
-            (isGoodSelected && item.healthScore >= 26 && item.healthScore <= 75) ||
-            (isVeryGoodSelected && item.healthScore >= 76 && item.healthScore < 100);
+        return (isPoorSelected && averageHealthScore <= 25) ||
+            (isGoodSelected && averageHealthScore >= 26 && averageHealthScore <= 75) ||
+            (isVeryGoodSelected && averageHealthScore >= 76 && averageHealthScore < 100);
     };
 
     togglePoor = () => {
@@ -59,11 +60,8 @@ class MapWithStatistics extends Component {
     };
 
     render() {
-        const { changeCity } = this.props;
+        const { changeCity, patients, patientsNumberArray } = this.props;
         const { isPoorSelected, isGoodSelected, isVeryGoodSelected } = this.state;
-
-
-
         return (
             <div style={{ height: '80vh', width: '100%' }}>
                 <GoogleMapReact
@@ -71,8 +69,12 @@ class MapWithStatistics extends Component {
                     defaultCenter={this.props.center}
                     defaultZoom={this.props.zoom}
                 >
-                    { dummyCities.filter(item => this.filterByHealthScore(item.healthScore)).map((item, key) => {
-                        if (this.isItemVisible(item)) {
+                    { dummyCities.map((item, key) => {
+                        const patientsByCurrentCity = patients ? patients.filter(patientItem => patientItem.location === item.cityName) : [];
+                        const patientNumberItem = patientsNumberArray.filter(cityItem => cityItem.city === item.cityName);
+                        const averageHealthScore = getAverageHealthScore(patientsByCurrentCity);
+                        const color = getColorByHealthScore(averageHealthScore);
+                        if (this.isItemVisible(averageHealthScore) && this.filterByHealthScore(averageHealthScore) && get(patientNumberItem, '[0].number', 0) > 0) {
                             return (
                                 <CircleOnMap
                                     key={key}
@@ -80,9 +82,9 @@ class MapWithStatistics extends Component {
                                     lat={item.lat}
                                     lng={item.lng}
                                     size={item.size}
-                                    color={item.color}
+                                    color={color}
                                     cityName={item.cityName}
-                                    healthScore={item.healthScore}
+                                    healthScore={averageHealthScore}
                                     onClick={changeCity}
                                 />
                             )

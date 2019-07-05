@@ -1,3 +1,5 @@
+import { COLOR_AMBER, COLOR_GREEN, COLOR_RED } from "./constants";
+
 export function getAverageHealthScore(patients) {
     let totalScore = 0;
     const patientsNumber = patients.length;
@@ -39,4 +41,20 @@ export function getDiagnosisByAge(patients) {
         })
     });
     return result;
+}
+
+export function getColorByHealthScore(score) {
+    let result = COLOR_GREEN;
+    if (score >= 26 && score <= 75) {
+        result = COLOR_AMBER;
+    } else if (score <= 25) {
+        result = COLOR_RED;
+    }
+    return result;
+}
+
+export function getNumberByGender(patients, gender, diagnosis) {
+    let patientsNumber = patients.length;
+    let patientsFilter = patients.filter(item => (item.gender === gender && item.diagnosis === diagnosis));
+    return (patientsNumber > 0) ? Math.ceil(100 * patientsFilter.length / patientsNumber) : 0;
 }

@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import PieChartByGender from "../charts/PieChartByGender";
 import { COLOR_MALE, COLOR_FEMALE } from "../constants";
 import EmptyListBlock from "../../../../core/common/ResourseTemplates/EmptyListBlock";
+import { getNumberByGender } from "../functions";
 
 const styles = theme => ({
     chartsContainer: {
@@ -42,16 +43,15 @@ const styles = theme => ({
 });
 
 
-const dummyData = [
-    { type: 'diabetes', label: "Diabetes", male: 680, female: 320 },
-    { type: 'measles',  label: "Measles",  male: 540, female: 460 },
-    { type: 'asthma',   label: "Asthma",   male: 620, female: 380 },
-    { type: 'dementia', label: "Dementia", male: 490, female: 510 },
-];
-
 class PieCharts extends Component {
     render() {
-        const { classes, isDiagnosisVisible, isGenderVisible, isEmptyResults } = this.props;
+        const { classes, isDiagnosisVisible, isGenderVisible, isEmptyResults, patientsByCurrentCity } = this.props;
+        const chartsData = [
+            { type: 'diabetes', label: "Diabetes", male: getNumberByGender(patientsByCurrentCity, "male", "Diabetes"), female: getNumberByGender(patientsByCurrentCity, "female", "Diabetes") },
+            { type: 'measles',  label: "Measles",  male: getNumberByGender(patientsByCurrentCity, "male", "Measles"),  female: getNumberByGender(patientsByCurrentCity, "female", "Measles")  },
+            { type: 'asthma',   label: "Asthma",   male: getNumberByGender(patientsByCurrentCity, "male", "Asthma"),   female: getNumberByGender(patientsByCurrentCity, "female", "Asthma")   },
+            { type: 'dementia', label: "Dementia", male: getNumberByGender(patientsByCurrentCity, "male", "Dementia"), female: getNumberByGender(patientsByCurrentCity, "female", "Dementia") },
+        ];
         return (
             <React.Fragment>
                 <Grid className={classes.chart} item xs={12} sm={12} md={11}>
@@ -66,11 +66,16 @@ class PieCharts extends Component {
                                 <div className={classes.chartsContainer}>
                                     <Grid container sm={12} spacing={16}>
                                         {
-                                            dummyData.map((item, key) => {
-                                                if (isDiagnosisVisible(item.type)) {
+                                            chartsData.map((item, key) => {
+                                                if (isDiagnosisVisible(item.type) && (item.male > 0 || item.female > 0)) {
                                                     return (
                                                         <Grid item key={key} sm={12} md={6} lg={3}>
-                                                            <PieChartByGender label={item.label} male={item.male} female={item.female} isGenderVisible={isGenderVisible} />
+                                                            <PieChartByGender
+                                                                label={item.label}
+                                                                male={item.male}
+                                                                female={item.female}
+                                                                isGenderVisible={isGenderVisible}
+                                                            />
                                                         </Grid>
                                                     )
                                                 }

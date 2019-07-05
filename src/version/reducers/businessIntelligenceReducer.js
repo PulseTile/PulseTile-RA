@@ -18,9 +18,6 @@ export default (state = initialState, action) => {
                 patients: null,
             };
         case BUSINESS_INTELLIGENCE_ACTION.SUCCESS:
-
-            console.log('action', action)
-
             return {
                 ...state,
                 loading: false,

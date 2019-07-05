@@ -10,7 +10,7 @@ import MapWithStatistics from "../map";
 import AverageHealthScore from "../charts/AverageHealthScore";
 import Population from "../charts/Population";
 import DiagnosisByAge from "../charts/DiagnosisByAge";
-import { getAverageHealthScore, getDiagnosisByAge } from "../functions";
+import { getAverageHealthScore, getDiagnosisByAge, getColorByHealthScore } from "../functions";
 
 const styles = theme => ({
     chartsContainer: {
@@ -22,8 +22,9 @@ const styles = theme => ({
 class HeatMap extends Component {
 
     render() {
-        const { classes, businessIntelligence, isDiagnosisVisible, isAgeRangeVisible, currentCity, changeCity, groupPatientsByCity, patientsByCurrentCity } = this.props;
+        const { classes, businessIntelligence, isDiagnosisVisible, isAgeRangeVisible, currentCity, changeCity, patients, patientsByCurrentCity, patientsNumberArray } = this.props;
         const averageHealthScore = getAverageHealthScore(patientsByCurrentCity);
+        const color = getColorByHealthScore(averageHealthScore);
         const diagnosisByAge = getDiagnosisByAge(patientsByCurrentCity);
         return (
             <React.Fragment>
@@ -32,7 +33,13 @@ class HeatMap extends Component {
                         <Typography variant="h1">Yorkshire, UK</Typography>
                     </div>
                     <div className={classes.chartsContainer}>
-                        <MapWithStatistics businessIntelligence={businessIntelligence} changeCity={changeCity} currentCityId={currentCity.id} />
+                        <MapWithStatistics
+                            patients={patients}
+                            patientsNumberArray={patientsNumberArray}
+                            businessIntelligence={businessIntelligence}
+                            changeCity={changeCity}
+                            currentCityId={currentCity.id}
+                        />
                     </div>
                 </Grid>
                 <Grid className={classes.chart} item xs={12} sm={8} md={5}>
@@ -41,11 +48,11 @@ class HeatMap extends Component {
                     </div>
                     <div className={classes.chartsContainer}>
                         <AverageHealthScore
-                            color={get(currentCity, 'color', null)}
+                            color={color}
                             healthScore={averageHealthScore}
                         />
                         <Population
-                            color={get(currentCity, 'color', null)}
+                            color={color}
                             population={get(currentCity, 'population', null)}
                         />
                         <DiagnosisByAge diagnosisByAge={diagnosisByAge} isDiagnosisVisible={isDiagnosisVisible} isAgeRangeVisible={isAgeRangeVisible} />
