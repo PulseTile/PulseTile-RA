@@ -6,6 +6,7 @@ import {
 } from "../actions/synopsisActions";
 
 import createCustomReducer from "../../core/reducers/createCustomReducer";
+import businessIntelligenceReducer from "./businessIntelligenceReducer";
 
 /**
  * This component returns version reducers
@@ -17,4 +18,5 @@ export default {
     vaccinationsSynopsis: createCustomReducer(SYNOPSIS_VACCINATIONS_ACTION, "data.synopsis"),
     top3ThingsSynopsis: createCustomReducer(SYNOPSIS_TOP_THREE_THINGS_ACTION, "data.synopsis"),
     contrastMode,
+    businessIntelligence: businessIntelligenceReducer,
 };

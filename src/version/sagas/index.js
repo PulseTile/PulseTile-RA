@@ -1,3 +1,4 @@
+import businessIntelligenceSagas from "./businessIntelligenceSagas";
 import createSynopsisSagas from "../../core/sagas/createSynopsisSagas";
 import {
     SYNOPSIS_VACCINATIONS_ACTION, synopsisVaccinationsAction,
@@ -11,6 +12,7 @@ import {
  * @return {array}
  */
 export default [
+    businessIntelligenceSagas,
     createSynopsisSagas(SYNOPSIS_VACCINATIONS_ACTION, synopsisVaccinationsAction, 'vaccinations'),
     createSynopsisSagas(SYNOPSIS_TOP_THREE_THINGS_ACTION, synopsisTopThreeThingsAction, 'top3Things'),
 ];

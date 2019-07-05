@@ -165,7 +165,6 @@ const EventsTimeline = ({ classes }) => {
 
     const eventsGroupByDateArray = Object.entries(eventsGroupByDate);
 
-    console.log('eventsGroupByDate', eventsGroupByDate)
     return (
         <div className={classes.timeline}>
             <Timeline>

@@ -124,7 +124,8 @@ export function pageHasPatientBanner(location) {
     const currentResource = get(pathArray, [1], null);
     const pagesWithTitle = [
         'charts',
-        'patients'
+        'patients',
+        'business'
     ];
     return pagesWithTitle.indexOf(currentResource) !== -1  ||  pathName === '/';
 }

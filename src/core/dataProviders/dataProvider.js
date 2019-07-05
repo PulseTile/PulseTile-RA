@@ -16,7 +16,7 @@ import fakePatientsProvider from "./fakePatientsProvider";
 import newPatientsProvider from "./patientsProvider";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
-const apiPatientsUser = 'api/patients';
+const apiPatientsUser = 'patient';
 
 /**
  * This constant prepare data for requests (URL and options)

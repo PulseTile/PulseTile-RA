@@ -28,7 +28,7 @@ export function getMenuItems(currentPathname) {
     if (localStorage.getItem('role') === 'PHR') {
         return themeFullMenu;
     }
-    if (isResourcePresentedInMenu(currentResource, themeShortMenu) || currentPathname === "/") {
+    if (isResourcePresentedInMenu(currentResource, themeShortMenu)) {
         return themeShortMenu;
     }
     if (isResourcePresentedInMenu(currentResource, themeFullMenu)) {
