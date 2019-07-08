@@ -8,7 +8,7 @@ let responseInfo = {};
 
 export default function createCustomSagas(actionName, actionType, pluginName) {
     return takeEvery(actionName.REQUEST, function*(action) {
-        let url = domainName + '/patient/' + 5559483395 + '/synopsis/' + pluginName;
+        let url = domainName + '/patient/' + localStorage.getItem('patientId') + '/synopsis/' + pluginName;
         let options = {};
         options.method = "GET";
         if (!options.headers) {

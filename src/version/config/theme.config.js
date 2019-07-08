@@ -1,12 +1,12 @@
 import backgroundImage from "../../version/images/containerBackground.png";
 
 import ThemeTopbar from "../common/Topbar";
-import Charts from "../../core/pages/Charts";
+import Homepage from "../../core/pages/PatientsList";
 
 export const themeShortMenu = [
-    { url: '/', label: 'Charts' },
-    { url: '/patients', label: 'Patients' },
-    { url: '/business', label: 'Business Intelligence'},
+    { url: '/', label: 'Patients' },
+    // { url: '/patients', label: 'Patients' },
+    // { url: '/business', label: 'Business Intelligence'},
 ];
 
 export const themeFullMenu = [
@@ -22,7 +22,7 @@ export const themeFullMenu = [
 
 export const themeCommonElements = {
     topbar: ThemeTopbar,
-    homePage: Charts,
+    homePage: Homepage,
     isFooterAbsent: true,
 };
 

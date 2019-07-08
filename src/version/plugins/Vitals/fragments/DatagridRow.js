@@ -43,8 +43,8 @@ const DatagridRow = props => {
     const newsScoreCellClassName = defineColor(newsScore);
     return (
         <CustomDatagridRow {...props} >
-            <TableCell key={`${record.id}-number`}>
-                {record.number}
+            <TableCell key={`${record.id}-text`}>
+                {record.text}
             </TableCell>
             <TableCell key={`${record.id}-dateCreate`}>
                 {moment(record.dateCreate).format(DATE_FORMAT)}

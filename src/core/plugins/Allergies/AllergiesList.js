@@ -24,7 +24,7 @@ const AllergiesList = props => (
       isCustomDatagrid={true}
       {...props}
     >
-        <TextField source="cause" label="Cause" />
+        <TextField source="text" label="Cause" />
         <DateField source="dateCreated" label="Date" />
         <TextField source="source" label="Source" />
     </ListTemplate>

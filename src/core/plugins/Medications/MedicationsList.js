@@ -26,7 +26,7 @@ export const MedicationsList = ({ classes, ...rest }) => (
       isCustomDatagrid={true}
       {...rest}
     >
-        <TextField source="name" label="Name" />
+        <TextField source="text" label="Name" />
         <DateField source="dateCreated" label="Date" />
         <TextField source="source" label="Source" />
     </ListTemplate>

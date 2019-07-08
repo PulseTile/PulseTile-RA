@@ -43,7 +43,8 @@ const styles = theme => ({
         paddingLeft: 9,
     },
     image: {
-        width: "auto",
+        height: 48,
+        width: 48,
         cursor: "pointer",
     },
     nhsLogo: {
@@ -128,14 +129,6 @@ class TopPart extends Component {
                 </div>
                 <div className={classes.emptyBlock}></div>
                 <UserSearch location={location} />
-                <CardMedia
-                    className={classes.nhsLogo}
-                    component="img"
-                    alt="Pulse Tile"
-                    height="29px"
-                    image={nhsLogo}
-                    title="Pulse Tile"
-                />
                 <ContrastMode classes={classes} />
                 <UserPanelButton classes={classes} />
             </Toolbar>

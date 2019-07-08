@@ -31,19 +31,26 @@ const convertDataRequestToHTTP = (type, resource, params) => {
     const options = {};
     switch (type) {
         case GET_LIST: {
-            url = `${domainName}/${apiPatientsUser}/5559483395/${resource}`;
+            // url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
+
+            if (resource === 'vitalsigns') {
+                url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
+            } else {
+                url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/synopsis/${resource}`;
+            }
+
             if (!options.headers) {
-                options.headers = new Headers({ Accept: 'application/json' });
+                // options.headers = new Headers({ Accept: 'application/json' });
             }
             options.headers = {
                 Authorization: "Bearer " + token,
-                'X-Requested-With': "XMLHttpRequest",
+                // 'X-Requested-With': "XMLHttpRequest",
             };
             break;
         }
 
         case GET_ONE:
-            url = `${domainName}/${apiPatientsUser}/5559483395/${resource}/${params.id}`;
+            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -54,8 +61,14 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
-            let updateData = Object.assign({userId: 5559483395}, params.data);
-            url = `${domainName}/${apiPatientsUser}/5559483395/${resource}/${params.id}`;
+            const newText = getTextByHeading(params, resource);
+            let updateData = Object.assign({
+                    userId: localStorage.getItem('patientId'),
+                },
+                params.data);
+
+            updateData.text = newText;
+            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
             options.method = "PUT";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -65,12 +78,14 @@ const convertDataRequestToHTTP = (type, resource, params) => {
                 'Content-Type': 'application/json',
                 'X-Requested-With': "XMLHttpRequest",
             };
-            options.body = JSON.stringify(updateData);
+            options.body = JSON.stringify({
+                data: updateData
+            });
             break;
 
         case CREATE:
-            let newData = Object.assign({userId: 5559483395}, params.data);
-            url = `${domainName}/${apiPatientsUser}/5559483395/${resource}`;
+            let newData = Object.assign({ userId: localStorage.getItem('patientId') }, params.data);
+            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
             options.method = "POST";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -80,7 +95,9 @@ const convertDataRequestToHTTP = (type, resource, params) => {
                 'Content-Type': 'application/json',
                 'X-Requested-With': "XMLHttpRequest",
             };
-            options.body = JSON.stringify(newData);
+            options.body = JSON.stringify({
+                data: newData
+            });
             break;
 
         default:
@@ -154,6 +171,18 @@ function getSortedResults(results, params) {
     return sort(results, [sortField], sortOrder);
 }
 
+function getTextByHeading(params, resource) {
+    let result = '';
+    if (resource === 'allergies') {
+        result = get(params, 'data.cause', null);
+    } else if (resource === 'problems') {
+        result = get(params, 'data.problem', null);
+    } else if (resource === 'medications') {
+        result = get(params, 'data.name', null);
+    }
+    return result;
+}
+
 /**
  * This constant handle response data
  *
@@ -167,25 +196,67 @@ const convertHTTPResponse = (response, type, resource, params) => {
     switch (type) {
 
         case GET_LIST:
-            const pageNumber = get(params, 'pagination.page', 1);
-            const numberPerPage = get(params, 'pagination.perPage', 10);
-            const results = getResultsFromResponse(response);
+
+            const results = get(response, 'synopsis', []);
+
+            // const pageNumber = get(params, 'pagination.page', 1);
+            // const numberPerPage = get(params, 'pagination.perPage', 10);
+            // const results = getResultsFromResponse(response);
+
             const resultsFiltering = getFilterResults(resource, results, params);
             const resultsSorting = getSortedResults(resultsFiltering, params);
-            const startItem = (pageNumber - 1) * numberPerPage;
-            const endItem = pageNumber * numberPerPage;
-            const paginationResults = resultsSorting.slice(startItem, endItem);
+
+            // const startItem = (pageNumber - 1) * numberPerPage;
+            // const endItem = pageNumber * numberPerPage;
+            // const paginationResults = resultsSorting.slice(startItem, endItem);
+
+            const resultsWithId = [];
+            let count = 1;
+            resultsSorting.map(item => {
+                if (resource === 'vitalsigns') {
+                    resultsWithId.push({
+                        id: item.sourceId,
+                        text: '#' + count,
+                        diastolicBP: item.newsScore,
+                        heartRate: item.heartRate,
+                        oxygenSaturation: item.oxygenSaturation,
+                        respirationRate: item.respirationRate,
+                        systolicBP: item.systolicBP,
+                        temperature: item.temperature,
+                        newsScore: item.newsScore,
+                        source: item.source,
+                        sourceId: item.sourceId,
+                    });
+                    count++;
+                } else {
+                    resultsWithId.push({
+                        id: item.sourceId,
+                        text: item.text,
+                        source: item.source,
+                        sourceId: item.sourceId,
+                    })
+                }
+
+            });
+
             return {
-                data: paginationResults,
+                data: resultsWithId,
                 total: results.length,
             };
 
         case GET_ONE:
             return {
-                data: Object.assign({id: response.sourceId}, response),
+                data: Object.assign({
+                    id: response.sourceId,
+                    text: getTextByHeading({ data: response }, resource)
+                }, response),
             };
 
         case UPDATE:
+
+            console.log('params', params)
+
+            params.data.text = getTextByHeading(params, resource)
             return params;
 
         case CREATE:
@@ -197,6 +268,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
                 sourceID = compositionUidArray[0];
             }
             dataFromRequest.id = get(response, 'host', null) + '-' + sourceID;
+            dataFromRequest.text = getTextByHeading(params, resource);
             dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';

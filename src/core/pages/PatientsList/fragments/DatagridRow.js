@@ -44,17 +44,22 @@ class PatientDatagridRow extends Component {
         const { record } = this.props;
         const { redirectUrl } = this.state;
         localStorage.setItem('patientId', record.nhsNumber);
-        this.setState({
-            loading: true
-        });
-        new Promise(fetchInitialize).then(() => {
-            this.props.updateCurrentPatient(record.nhsNumber);
-            this.props.history.push(redirectUrl);
-            this.props.setSidebarVisibility(true);
-            this.setState({
-                loading: false
-            })
-        });
+
+        // this.setState({
+        //     loading: true
+        // });
+        // new Promise(fetchInitialize).then(() => {
+        //     this.props.updateCurrentPatient(record.nhsNumber);
+        //     this.props.history.push(redirectUrl);
+        //     this.props.setSidebarVisibility(true);
+        //     this.setState({
+        //         loading: false
+        //     })
+        // });
+
+        this.props.updateCurrentPatient(record.nhsNumber);
+        this.props.history.push(redirectUrl);
+        this.props.setSidebarVisibility(true);
     };
 
     handleClick = e => {
@@ -99,9 +104,6 @@ class PatientDatagridRow extends Component {
 
         const isPermissionRequired = get(themeCommonElements, 'patientSummaryPermission', false);
         const open = Boolean(anchorEl);
-
-        console.log('record', record)
-
         return (
             <CustomDatagridRow {...this.props} >
                 <TableCell key={`${record.id}-name`}>

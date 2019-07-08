@@ -14,7 +14,7 @@ const AllergiesDatagridRow = props => {
     return (
         <CustomDatagridRow {...props} >
             <TableCell key={`${record.id}-cause`}>
-                {record.cause}
+                {record.text}
             </TableCell>
             <TableCell key={`${record.id}-dateCreated`}>
                 {moment(record.dateCreated).format(DATE_FORMAT)}

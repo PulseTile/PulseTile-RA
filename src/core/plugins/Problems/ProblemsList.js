@@ -27,8 +27,8 @@ const DiagnosisList = ({ classes, ...rest }) => (
       isCustomDatagrid={true}
       {...rest}
     >
-        <TextField source="problem" label="Problem / Issue" />
-        <DateField source="dateOfOnset" label="Date" />
+        <TextField source="text" label="Problem / Issue" />
+        <DateField source="dateCreated" label="Date" />
         <TextField source="source" label="Source" />
     </ListTemplate>
 );
