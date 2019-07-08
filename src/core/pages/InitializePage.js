@@ -7,11 +7,11 @@ import { token } from "../token";
 
 class InitializePage extends Component {
 
-    componentDidMount() {
-        if (!token) {
-            this.props.initializeAction();
-        }
-    }
+    // componentDidMount() {
+    //     if (!token) {
+    //         this.props.initializeAction();
+    //     }
+    // }
 
     render() {
         return (

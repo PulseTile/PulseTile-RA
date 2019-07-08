@@ -31,7 +31,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
     const options = {};
     switch (type) {
         case GET_LIST: {
-            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
+            url = `${domainName}/${apiPatientsUser}/5559483395/${resource}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -43,7 +43,7 @@ const convertDataRequestToHTTP = (type, resource, params) => {
         }
 
         case GET_ONE:
-            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
+            url = `${domainName}/${apiPatientsUser}/5559483395/${resource}/${params.id}`;
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
             }
@@ -54,8 +54,8 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
-            let updateData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
-            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
+            let updateData = Object.assign({userId: 5559483395}, params.data);
+            url = `${domainName}/${apiPatientsUser}/5559483395/${resource}/${params.id}`;
             options.method = "PUT";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });
@@ -69,8 +69,8 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
-            let newData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
-            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
+            let newData = Object.assign({userId: 5559483395}, params.data);
+            url = `${domainName}/${apiPatientsUser}/5559483395/${resource}`;
             options.method = "POST";
             if (!options.headers) {
                 options.headers = new Headers({ Accept: 'application/json' });

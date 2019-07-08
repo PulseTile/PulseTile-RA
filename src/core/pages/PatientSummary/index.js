@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import get from "lodash/get";
 import { connect } from 'react-redux';
+import { setSidebarVisibility } from "react-admin";
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
@@ -99,10 +100,8 @@ class PatientSummaryInfo extends Component {
         if (localStorage.getItem('role') === 'PHR') {
             this.props.updateCurrentPatient(localStorage.getItem('patientId'));
         }
-        if (localStorage.getItem('userId') && localStorage.getItem('username')) {
-            this.props.getPatientSynopsis();
-            // this.props.getEmergencySummary(localStorage.getItem('patientId'));
-        }
+        this.props.getPatientSynopsis();
+        this.props.setSidebarVisibility(true);
     }
 
     componentWillReceiveProps(nextProps, nextContent) {
@@ -168,7 +167,7 @@ const mapDispatchToProps = dispatch => {
 
     const coreSynopsisActions = [
         synopsisAllergiesAction,
-        synopsisContactsAction,
+        // synopsisContactsAction,
         synopsisProblemsAction,
         synopsisMedicationsAction,
     ];
@@ -189,6 +188,9 @@ const mapDispatchToProps = dispatch => {
         },
         updateCurrentPatient(data) {
             dispatch(currentPatientAction.request(data));
+        },
+        setSidebarVisibility(params) {
+            dispatch(setSidebarVisibility(params));
         },
     }
 };

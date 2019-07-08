@@ -8,18 +8,15 @@ let responseInfo = {};
 
 export default function createCustomSagas(actionName, actionType, pluginName) {
     return takeEvery(actionName.REQUEST, function*(action) {
-        let url = domainName + '/patient/' + localStorage.getItem('patientId') + '/synopsis/' + pluginName;
-        // if (pluginName === 'top3Things') {
-        //     url = domainName + '/api/patients/' + localStorage.getItem('patientId') + '/synopsis/' + pluginName + '/latest';
-        // }
+        let url = domainName + '/patient/' + 5559483395 + '/synopsis/' + pluginName;
         let options = {};
         options.method = "GET";
         if (!options.headers) {
-            options.headers = new Headers({Accept: 'application/json'});
+            // options.headers = new Headers({Accept: 'application/json'});
         }
         options.headers = {
             Authorization: "Bearer " + token,
-            'X-Requested-With': "XMLHttpRequest",
+            // 'X-Requested-With': "XMLHttpRequest",
         };
 
         try {
