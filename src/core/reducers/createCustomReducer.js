@@ -31,6 +31,7 @@ export default function createCustomReducer(actionName, data) {
                 return {
                     ...state,
                     loading: false,
+                    data: null,
                     error: get(action, "error", null),
                 };
             default:

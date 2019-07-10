@@ -271,7 +271,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
             dataFromRequest.text = getTextByHeading(params, resource);
             dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
-                dataFromRequest.source = 'ethercis';
+                dataFromRequest.source = 'redis';
             }
             return {
                 data: dataFromRequest,

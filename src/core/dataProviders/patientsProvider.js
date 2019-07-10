@@ -341,7 +341,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
                         birthDate: get(response, 'birthDate', null),
                         department: get(response, 'department', null),
                         gender: get(response, 'gender', null),
-                        source: 'ethercis',
+                        source: 'redis',
                         nhsNumber: get(response, 'id', null),
                         phone: get(response, 'telecom', null),
                     }
@@ -390,7 +390,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             dataFromRequest.totalAddress = addressRow;
             dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
-                dataFromRequest.source = 'ethercis';
+                dataFromRequest.source = 'redis';
             }
             return {
                 data: dataFromRequest,

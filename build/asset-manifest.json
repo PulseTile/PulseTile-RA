@@ -1,0 +1,19 @@
+{
+  "main.js": "/static/js/main.d5ba70a7.chunk.js",
+  "main.js.map": "/static/js/main.d5ba70a7.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+  "static/css/2.68ff831c.chunk.css": "/static/css/2.68ff831c.chunk.css",
+  "static/js/2.45cb5d37.chunk.js": "/static/js/2.45cb5d37.chunk.js",
+  "static/js/2.45cb5d37.chunk.js.map": "/static/js/2.45cb5d37.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.1ae75a86aca66c28d5e49b33551e3f1d.js": "/precache-manifest.1ae75a86aca66c28d5e49b33551e3f1d.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/2.68ff831c.chunk.css.map": "/static/css/2.68ff831c.chunk.css.map",
+  "static/media/containerBackground.png": "/static/media/containerBackground.0cc5b234.png",
+  "static/media/logo-header.png": "/static/media/logo-header.1f4c19d5.png",
+  "static/media/logo.png": "/static/media/logo.1f4c19d5.png",
+  "static/media/pulsetile-core-logo.png": "/static/media/pulsetile-core-logo.93d3c4ce.png",
+  "static/media/randomPatient.png": "/static/media/randomPatient.eef539fe.png",
+  "static/media/ripple-foundation-logo-footer.png": "/static/media/ripple-foundation-logo-footer.f15dbaae.png"
+}

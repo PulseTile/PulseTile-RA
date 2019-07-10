@@ -288,6 +288,9 @@ class ListTemplate extends Component {
         const prevListArray = Object.values(get(this.props, 'currentList', {}));
         const userSearch = get(nextProps, 'userSearch', null);
         const resource = get(nextProps, 'resource', null);
+
+
+
         const hasNewItem = this.hasNewItem(resource, newListArray, prevListArray, nextProps, userSearch);
         if (newListArray.length === 1 && prevListArray.length === 0 && hasNewItem) {
             this.setState({
@@ -427,6 +430,9 @@ class ListTemplate extends Component {
             titleTable = this.getTitleForClinicalSearh(userClinicalQuery);
             this.filterByClinicalQuery();
         }
+
+        console.log('------------------------')
+
 
         const currentListArray = Object.values(currentList);
         const idsNumber = currentListArray.length > 0 ? currentListArray.length : 0;
