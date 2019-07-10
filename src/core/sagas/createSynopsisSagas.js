@@ -36,10 +36,7 @@ export default function createCustomSagas(actionName, actionType, pluginName) {
             if (responseInfo.status === 200) {
                 yield put(actionType.success(result))
             } else {
-                yield put(httpErrorAction.save({
-                    status: responseInfo.status,
-                    message: responseInfo.errorMessage
-                }));
+                yield put(actionType.error('No data'))
             }
 
         } catch(e) {

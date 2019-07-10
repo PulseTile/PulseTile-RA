@@ -80,6 +80,8 @@ class HandleErrorModal extends Component {
         let result = 'Something is wrong';
         if (Number(status) === 404) {
             result = 'API is currently unavailable';
+        } else if (Number(status) === 400) {
+            result = 'No Records found';
         } else if (Number(status) > 499) {
             result = 'Something is wrong with the server. Please try again later.';
         } else if (isJwtOld) {

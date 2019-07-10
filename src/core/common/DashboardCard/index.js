@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import { connect } from 'react-redux';
 
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +11,7 @@ import ChevronRight from "@material-ui/icons/ChevronRight";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import ItemsList from "./ItemsList";
-import { SHOW_ALL } from "../../pages/PatientSummary/config";
+import {getSynopsisProps, SHOW_ALL} from "../../pages/PatientSummary/config";
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 /**
@@ -35,14 +36,23 @@ const LoadingItems = ({ classes }) => {
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
  * @param {shape}   classes
+ * @param {boolean} loading
  * @param {array}   items
  * @param {shape}   list
  * @param {shape}   history
  */
-const ListBlock = ({ classes, items, list, history }) => {
+const ListBlock = ({ classes, loading, items, list, history }) => {
     if (items) {
         return (
             <ItemsList classes={classes} items={items} list={list} history={history} />
+        );
+    } else if (!get(loading, list, true)) {
+        return (
+            <List className={classes.list}>
+                <li className={classes.listItemNoData}>
+                    <Typography>No data</Typography>
+                </li>
+            </List>
         );
     }
     return (
@@ -57,8 +67,8 @@ const ListBlock = ({ classes, items, list, history }) => {
  * @param props
  * @constructor
  */
-export default props => {
-    const { id, classes, title, items, loading, icon, list, history, showMode, showHeadings } = props;
+const DashboardCard = props => {
+    const { id, classes, title, items, loading, loadingItems, icon, list, history, showMode, showHeadings } = props;
     if (Object.values(showHeadings).indexOf(list) === -1) {
         return null;
     }
@@ -77,9 +87,21 @@ export default props => {
                     </h1>
                 </div>
                 { (showMode === SHOW_ALL || !showMode) &&
-                <ListBlock loading={loading} classes={classes} items={items} list={list} history={history} />
+                    <ListBlock loading={loadingItems} classes={classes} items={items} list={list} history={history} />
                 }
             </Card>
         </Grid>
     );
 }
+
+const mapStateToProps = state => {
+    return {
+        loadingItems: {
+            allergies: get(state, 'custom.allergiesSynopsis.loading', true),
+            medications: get(state, 'custom.medicationsSynopsis.loading', true),
+            problems: get(state, 'custom.problemsSynopsis.loading', true),
+        }
+    }
+};
+
+export default connect(mapStateToProps, null)(DashboardCard);

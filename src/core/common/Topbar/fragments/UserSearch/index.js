@@ -88,6 +88,7 @@ class UserSearch extends Component {
     onKeyDown = e => {
         const { searchText } = this.state;
         if (e.key === 'Enter') {
+            this.props.removeUserSearch();
             this.props.setUserSearch(searchText);
             window.location.replace('/#/patients');
         }

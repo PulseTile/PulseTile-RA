@@ -108,6 +108,11 @@ function getRequestBody(params) {
 // }
 
 function getUserSearchResultsById(response) {
+
+    if (get(response, 'data', null) === 'fail') {
+        return null;
+    }
+
     const nameFromResponse = get(response, 'name', null);
     const firstName = get(nameFromResponse, 'given[0]', null);
     const surname = get(nameFromResponse, 'family', null);
@@ -493,10 +498,10 @@ export default (type, resource, params) => {
                 responseInfo.errorMessage = 'No patient by that surname, please try again';
                 let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
                 // throw new HttpError(errorString);
-            } else if (responseInfo.status !== 200) {
+            } else if (responseInfo.status !== 2030) {
                 responseInfo.errorMessage = get(res, 'error', null);
                 let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
-                throw new HttpError(errorString);
+                // throw new HttpError(errorString);
             }
             return convertPatientsHTTPResponse(res, type, resource, params)
         })

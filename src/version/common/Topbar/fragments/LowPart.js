@@ -139,7 +139,8 @@ export function pageHasPatientBanner(location) {
 class LowPart extends Component {
 
     componentDidMount() {
-        if (localStorage.getItem('patientId')) {
+        const { location } = this.props;
+        if (localStorage.getItem('patientId') && !pageHasPatientBanner(location)) {
             this.props.getCurrentPatientAction();
         }
     }
