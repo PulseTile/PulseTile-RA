@@ -8,5 +8,6 @@
 export default {
     vaccinations: ['vaccinationName'],
     top3Things: [],
-    labresults: ['testName']
+    labresults: ['testName'],
+    events: ['name', 'type'],
 };

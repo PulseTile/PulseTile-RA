@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TableIcon from '@material-ui/icons/List';
 import ChartIcon from '@material-ui/icons/ShowChart';
-import TimelineIcon from '@material-ui/icons/Timeline';
+import TimelineIcon from '@material-ui/icons/AccessTime';
 
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
@@ -97,7 +97,7 @@ const listStyles = theme => ({
         },
     },
     filterInputIcon: {
-        color: theme.palette.fontColor,
+        color: theme.palette.paperColor,
         marginLeft: 5,
         marginBottom: 10,
     },

@@ -124,7 +124,7 @@ class Form extends Component {
                             <option value=''>-- Select from --</option>
                             { eventTypes.map((item, key) => {
                                 return (
-                                    <option key={key} value={item.id}>{item.label}</option>
+                                    <option key={key} value={item.id} selected={item.id === get(filledValues, 'type', null)}>{item.label}</option>
                                 )
                             })}
                         </Control.select>

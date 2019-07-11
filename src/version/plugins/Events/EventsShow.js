@@ -21,6 +21,9 @@ const styles = {
 const EventsShow = ({ classes, ...rest }) => (
     <ShowTemplate pageTitle="Event" {...rest}>
         <TextField className={classes.labelBlock} source="name" label="Event Name" />
+        <TextField className={classes.labelBlock} source="type" label="Event Type" />
+        <TextField className={classes.labelBlock} source="description" label="Notes" />
+        <DateField className={classes.labelBlock} source="dateTime" label="Event Date" showTime />
     </ShowTemplate>
 );
 

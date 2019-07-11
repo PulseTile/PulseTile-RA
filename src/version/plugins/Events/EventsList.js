@@ -5,6 +5,7 @@ import ListTemplate from "../../../core/common/ResourseTemplates/ListTemplate";
 import EventsCreate from "./EventsCreate";
 import EventsEdit from "./EventsEdit";
 import EventsShow from "./EventsShow";
+import EventsTimeline from "./EventsTimeline";
 import DatagridRow from "./fragments/DatagridRow";
 
 /**
@@ -22,6 +23,8 @@ const EventsList = ({ classes, ...rest }) => (
         show={EventsShow}
         resourceUrl="events"
         title="Events"
+        hasTimetable={true}
+        timelineBlock={EventsTimeline}
         CustomRow={DatagridRow}
         isCustomDatagrid={true}
         {...rest}
