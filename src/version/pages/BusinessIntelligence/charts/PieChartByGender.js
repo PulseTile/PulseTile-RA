@@ -41,8 +41,9 @@ const styles = theme => ({
     }
 });
 
-function getCustomLabel(item, dataFilter) {
+function getCustomLabel(item, dataFilter, total) {
     if (dataFilter.length === 2) {
+        const value = Math.floor(100 * item.value / total);
         return (
             <text
                 x={item.x}
@@ -53,7 +54,7 @@ function getCustomLabel(item, dataFilter) {
                 textAnchor='end'
             >
                 <tspan x={item.x} textAnchor={item.textAnchor} dy='0em'>
-                    {item.value / 10}% ({item.value})
+                    {value}
                 </tspan>
             </text>
         );
@@ -76,26 +77,24 @@ const CustomTooltip = ({ classes, active, payload }) => {
 };
 
 const PieChartByGender = ({ classes, label, male, female, isGenderVisible }) => {
-
     const data = [
         { name: 'Female', type: 'female', value: female, fill: COLOR_FEMALE, color: COLOR_FEMALE },
         { name: 'Male',   type: 'male',   value: male,   fill: COLOR_MALE,   color: COLOR_MALE },
     ];
-
+    const total = male + female;
     const dataFilter = [];
     data.map(item => {
         if (isGenderVisible(item.type)) {
             dataFilter.push(item);
         }
     });
-
     return (
         <div className={classes.mainBlock}>
             <Typography variant="h1">{label}</Typography>
             <div className={classes.chartBlock}>
                 <ResponsiveContainer width='100%' height={400}>
                     <PieChart>
-                        <Pie isAnimationActive={false} data={dataFilter} label={item => getCustomLabel(item, dataFilter)} labelLine={false}>
+                        <Pie isAnimationActive={false} data={dataFilter} label={item => getCustomLabel(item, dataFilter, total)} labelLine={false}>
                         {
                             data.map((item, key) => {
                                 return (

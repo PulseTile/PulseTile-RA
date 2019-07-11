@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import DiagnosisByAgeBars from "../charts/DiagnosisByAgeBars";
 import HealthScoreByAge from "../charts/HealthScoreByAge";
 import EmptyListBlock from "../../../../core/common/ResourseTemplates/EmptyListBlock";
+import { getDiagnosisByAge } from "../functions";
 
 const styles = theme => ({
     chartsContainer: {
@@ -16,7 +17,8 @@ const styles = theme => ({
 
 class BarCharts extends Component {
     render() {
-        const { classes, isAgeRangeVisible, isDiagnosisVisible, isEmptyResults } = this.props;
+        const { classes, isAgeRangeVisible, isDiagnosisVisible, isEmptyResults, patientsByCurrentCity } = this.props;
+        const diagnosisByAge = getDiagnosisByAge(patientsByCurrentCity);
         return (
             <React.Fragment>
                 <Grid className={classes.chart} item xs={12} sm={12} md={6}>
@@ -26,7 +28,11 @@ class BarCharts extends Component {
                     {
                         isEmptyResults() ? <EmptyListBlock /> :
                             <div className={classes.chartsContainer}>
-                                <DiagnosisByAgeBars isDiagnosisVisible={isDiagnosisVisible} isAgeRangeVisible={isAgeRangeVisible} />
+                                <DiagnosisByAgeBars
+                                    diagnosisByAge={diagnosisByAge}
+                                    isDiagnosisVisible={isDiagnosisVisible}
+                                    isAgeRangeVisible={isAgeRangeVisible}
+                                />
                             </div>
                     }
                 </Grid>
@@ -37,7 +43,11 @@ class BarCharts extends Component {
                     {
                         isEmptyResults() ? <EmptyListBlock /> :
                             <div className={classes.chartsContainer}>
-                                <HealthScoreByAge isDiagnosisVisible={isDiagnosisVisible} isAgeRangeVisible={isAgeRangeVisible} />
+                                <HealthScoreByAge
+                                    diagnosisByAge={diagnosisByAge}
+                                    isDiagnosisVisible={isDiagnosisVisible}
+                                    isAgeRangeVisible={isAgeRangeVisible}
+                                />
                             </div>
                     }
                 </Grid>

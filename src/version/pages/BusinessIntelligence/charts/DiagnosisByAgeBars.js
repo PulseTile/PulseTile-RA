@@ -8,18 +8,13 @@ import {
     ResponsiveContainer,
     Legend,
     Bar,
-    Cell, BarChart
+    BarChart
 } from "recharts";
 
 import { withStyles } from "@material-ui/core/styles/index";
 import Typography from "@material-ui/core/Typography/index";
 
-import dummyData from "./dummyDiagnosisByAge";
-
-const COLOR_DIABETES = '#8784d8';
-const COLOR_MEASLES = '#80ca9d';
-const COLOR_ASTHMA = '#44afa0';
-const COLOR_DEMENTIA = '#ab43af';
+import { COLOR_DIABETES, COLOR_MEASLES, COLOR_ASTHMA, COLOR_DEMENTIA } from "../constants";
 
 const styles = theme => ({
     mainBlock: {
@@ -111,13 +106,13 @@ class DiagnosisByAge extends Component {
     };
 
     render() {
-        const { classes, isDiagnosisVisible, isAgeRangeVisible } = this.props;
+        const { classes, isDiagnosisVisible, isAgeRangeVisible, diagnosisByAge } = this.props;
         const { disabledLines } = this.state;
 
         const linesArray = [
-            { dataKey: "diabetes", color: COLOR_DIABETES, label: <Typography>Diabetes</Typography> },
             { dataKey: "measles", color: COLOR_MEASLES, label: <Typography>Measles</Typography> },
             { dataKey: "asthma", color: COLOR_ASTHMA, label: <Typography>Asthma</Typography> },
+            { dataKey: "diabetes", color: COLOR_DIABETES, label: <Typography>Diabetes</Typography> },
             { dataKey: "dementia", color: COLOR_DEMENTIA, label: <Typography>Dementia</Typography> },
         ];
 
@@ -131,7 +126,7 @@ class DiagnosisByAge extends Component {
                 value: item.label,
             }));
 
-        const dummyDataFilter = dummyData.filter(item => isAgeRangeVisible(item.name));
+        const dummyDataFilter = diagnosisByAge.filter(item => isAgeRangeVisible(item.name));
 
         return (
             <div className={classes.mainBlock}>

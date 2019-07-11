@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import get from "lodash/get";
+import _ from "lodash";
 import { connect } from 'react-redux';
 import { setSidebarVisibility } from "react-admin";
 
@@ -15,6 +16,7 @@ import HeatMap from "./tabs/HeatMap";
 import BarCharts from "./tabs/BarCharts";
 import PieCharts from "./tabs/PieCharts";
 
+import { businessIntelligenceAction } from "../../actions/BusinessIntelligence/businessIntelligenceAction";
 import BusinessIntelligenceForm from "./fragments/BusinessIntelligenceForm";
 import ChartsSelector from "./fragments/ChartsSelector";
 import { HEAT_MAP, BAR_CHARTS, PIE_CHARTS } from "./constants";
@@ -105,6 +107,7 @@ class BusinessIntelligence extends Component {
 
     componentDidMount() {
         this.props.setSidebarVisibility(false);
+        this.props.getPatientsStatistic();
     }
 
     changeCity = id => {
@@ -170,9 +173,26 @@ class BusinessIntelligence extends Component {
         return !businessIntelligence || (minAge <= minCurrentRange && maxCurrentRange <= maxAge);
     };
 
+    getPatientsByCity = () => {
+        const { patients } = this.props;
+        const patientsByCity = _.mapValues(_.groupBy(patients, 'location'),
+            clist => clist.map(item => _.omit(item, 'location')));
+        const patientsArray = Object.entries(patientsByCity);
+        let result = [];
+        patientsArray.map(item => {
+            result.push({
+                city: item[0],
+                number: item[1].length
+            })
+        });
+        return result;
+    };
+
     render() {
-        const { classes, history, businessIntelligence } = this.props;
+        const { classes, history, businessIntelligence, patients } = this.props;
         const { isFromPanelOpen, isChartsPanelOpen, currentTab, currentCity } = this.state;
+        const patientsNumberArray = this.getPatientsByCity();
+        const patientsByCurrentCity = patients ? patients.filter(item => item.location === currentCity.cityName) : [];
         const CurrentTabContent = this.getCurrentTabContent();
         return (
             <Grid item xs={12} className={classes.mainBlock}>
@@ -198,9 +218,12 @@ class BusinessIntelligence extends Component {
                                 <Grid className={classes.currentTabContainer} container>
                                     <CurrentTabContent
                                         classes={classes}
+                                        patients={patients}
                                         currentCity={currentCity}
                                         changeCity={this.changeCity}
+                                        patientsNumberArray={patientsNumberArray}
                                         businessIntelligence={businessIntelligence}
+                                        patientsByCurrentCity={patientsByCurrentCity}
                                         isAgeRangeVisible={this.isAgeRangeVisible}
                                         isDiagnosisVisible={this.isDiagnosisVisible}
                                         isGenderVisible={this.isGenderVisible}
@@ -219,6 +242,7 @@ class BusinessIntelligence extends Component {
 const mapStateToProps = state => {
     return {
         businessIntelligence: get(state, 'custom.businessIntelligence.data', null),
+        patients: get(state, 'custom.businessIntelligence.patients', []),
     };
 };
 
@@ -227,6 +251,9 @@ const mapDispatchToProps = dispatch => {
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
+        getPatientsStatistic() {
+            dispatch(businessIntelligenceAction.request());
+        }
     }
 };
 

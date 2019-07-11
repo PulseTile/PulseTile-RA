@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 
 import { withStyles } from "@material-ui/core/styles/index";
 import Grid from "@material-ui/core/Grid";
@@ -7,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import PieChartByGender from "../charts/PieChartByGender";
 import { COLOR_MALE, COLOR_FEMALE } from "../constants";
 import EmptyListBlock from "../../../../core/common/ResourseTemplates/EmptyListBlock";
+import { getNumberByGender } from "../functions";
 
 const styles = theme => ({
     chartsContainer: {
@@ -42,16 +44,28 @@ const styles = theme => ({
 });
 
 
-const dummyData = [
-    { type: 'diabetes', label: "Diabetes", male: 680, female: 320 },
-    { type: 'measles',  label: "Measles",  male: 540, female: 460 },
-    { type: 'asthma',   label: "Asthma",   male: 620, female: 380 },
-    { type: 'dementia', label: "Dementia", male: 490, female: 510 },
-];
-
 class PieCharts extends Component {
     render() {
-        const { classes, isDiagnosisVisible, isGenderVisible, isEmptyResults } = this.props;
+        const { classes, isDiagnosisVisible, isGenderVisible, isEmptyResults, patientsByCurrentCity, businessIntelligence } = this.props;
+
+        const healthScoreMin = get(businessIntelligence, 'healthScore[0]', 0);
+        const healthScoreMax = get(businessIntelligence, 'healthScore[1]', 100);
+        const ageMin = get(businessIntelligence, 'age[0]', 0);
+        const ageMax = get(businessIntelligence, 'age[1]', 100);
+
+        const patientsFilter = patientsByCurrentCity.filter(item => (
+            item.age >= ageMin &&
+            item.age <= ageMax &&
+            item.healthScore >= healthScoreMin &&
+            item.healthScore <= healthScoreMax
+        ));
+
+        const chartsData = [
+            { type: 'measles',  label: "Measles",  male: getNumberByGender(patientsFilter, "male", "Measles"),  female: getNumberByGender(patientsFilter, "female", "Measles")  },
+            { type: 'asthma',   label: "Asthma",   male: getNumberByGender(patientsFilter, "male", "Asthma"),   female: getNumberByGender(patientsFilter, "female", "Asthma")   },
+            { type: 'diabetes', label: "Diabetes", male: getNumberByGender(patientsFilter, "male", "Diabetes"), female: getNumberByGender(patientsFilter, "female", "Diabetes") },
+            { type: 'dementia', label: "Dementia", male: getNumberByGender(patientsFilter, "male", "Dementia"), female: getNumberByGender(patientsFilter, "female", "Dementia") },
+        ];
         return (
             <React.Fragment>
                 <Grid className={classes.chart} item xs={12} sm={12} md={11}>
@@ -66,11 +80,16 @@ class PieCharts extends Component {
                                 <div className={classes.chartsContainer}>
                                     <Grid container sm={12} spacing={16}>
                                         {
-                                            dummyData.map((item, key) => {
-                                                if (isDiagnosisVisible(item.type)) {
+                                            chartsData.map((item, key) => {
+                                                if (isDiagnosisVisible(item.type) && (item.male > 0 || item.female > 0)) {
                                                     return (
                                                         <Grid item key={key} sm={12} md={6} lg={3}>
-                                                            <PieChartByGender label={item.label} male={item.male} female={item.female} isGenderVisible={isGenderVisible} />
+                                                            <PieChartByGender
+                                                                label={item.label}
+                                                                male={item.male}
+                                                                female={item.female}
+                                                                isGenderVisible={isGenderVisible}
+                                                            />
                                                         </Grid>
                                                     )
                                                 }
