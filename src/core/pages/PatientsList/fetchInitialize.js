@@ -1,5 +1,5 @@
 import get from "lodash/get";
-import { domainName } from "../../token";
+import {domainName, token} from "../../token";
 
 const url = domainName + `/api/initialise/`;
 let options = {};
@@ -7,6 +7,7 @@ if (!options.headers) {
     options.headers = new Headers({ Accept: 'application/json' });
 }
 options.headers = {
+    Authorization: "Bearer " + token,
     'X-Requested-With': "XMLHttpRequest",
 };
 

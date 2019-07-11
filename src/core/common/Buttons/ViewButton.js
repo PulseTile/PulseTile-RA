@@ -23,9 +23,10 @@ const styles = theme => ({
         display: "flex",
     },
     viewButton: {
-        height: theme.isRectangleButtons ? 42 : 40,
+        height: 40,
         textTransform: 'capitalize',
-        border: theme.isRectangleButtons ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        border: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        backgroundColor: theme.isOldDesign ? theme.palette.paperColor : null,
         color: theme.palette.secondaryMainColor + ' !important',
         borderRadius: 0,
         '& span p': {
@@ -34,12 +35,12 @@ const styles = theme => ({
         }
     },
     arrowButton: {
-        height: 40,
+        height: 38,
         paddingLeft: 0,
         paddingRight: 0,
-        borderTop: theme.isRectangleButtons ? `1px solid ${theme.palette.secondaryMainColor}` : null,
-        borderRight: theme.isRectangleButtons ? `1px solid ${theme.palette.secondaryMainColor}` : null,
-        borderBottom: theme.isRectangleButtons ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        borderTop: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        borderRight: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
+        borderBottom: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
         borderRadius: 0,
         color: theme.palette.secondaryMainColor,
     },

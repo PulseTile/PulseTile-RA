@@ -24,9 +24,13 @@ const FetchLogin = (resolve, reject) => {
                 const decodeToken = jwt.decode(token);
                 const userName = get(decodeToken, 'openid.firstName', null) + ' ' + get(decodeToken, 'openid.lastName', null);
                 const role = ('phrUser' === get(decodeToken, 'openid.role', null)) ? 'PHR' : 'IDCR';
-                localStorage.setItem('userId', decodeToken.nhsNumber);
+                const nhsNumber = decodeToken.nhsNumber;
+                localStorage.setItem('userId', nhsNumber);
                 localStorage.setItem('username', userName);
                 localStorage.setItem('role', role);
+                if (role === 'PHR') {
+                    localStorage.setItem('patientId', nhsNumber);
+                }
                 return resolve(true);
             }
             const isNewPatient = get(response, 'new_patient', false);

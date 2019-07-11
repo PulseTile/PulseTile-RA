@@ -4,7 +4,7 @@ import get from "lodash/get";
 import { domainName, token } from "../token";
 import { CURRENT_PATIENT_ACTION, currentPatientAction } from "../actions/currentPatientAction";
 
-export default takeEvery(CURRENT_PATIENT_ACTION.REQUEST, function*(action) {
+const currentPatientRequest = takeEvery(CURRENT_PATIENT_ACTION.REQUEST, function*(action) {
     const search = get(action, 'data', null);
     let url = `${domainName}/mpi/Patient/${localStorage.getItem('patientId')}`;
     if (search) {
@@ -25,3 +25,19 @@ export default takeEvery(CURRENT_PATIENT_ACTION.REQUEST, function*(action) {
         yield put(currentPatientAction.error(e));
     }
 });
+
+const currentPatientPhoto = takeEvery(CURRENT_PATIENT_ACTION.REQUEST_PHOTO, function*(action) {
+    const gender = get(action, 'data', null);
+    const url = `https://randomuser.me/api/?gender=${gender}`;
+    try {
+        const result = yield fetch(url).then(res => res.json());
+        yield put(currentPatientAction.successPhoto(result));
+    } catch(e) {
+        yield put(currentPatientAction.errorPhoto(e));
+    }
+});
+
+export default [
+    currentPatientRequest,
+    currentPatientPhoto,
+]

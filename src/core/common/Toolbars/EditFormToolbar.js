@@ -1,5 +1,5 @@
 import React from "react";
-import { Toolbar, SaveButton } from "react-admin";
+import { Toolbar } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import CancelButton from "../Buttons/CancelButton";

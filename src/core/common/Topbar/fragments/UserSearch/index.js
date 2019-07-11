@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "lodash/get";
+import get from "lodash/get";
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -64,6 +64,10 @@ class UserSearch extends Component {
             this.setState({
                 searchText: '',
             });
+        } else if (userSearch) {
+            this.setState({
+                searchText: userSearch,
+            });
         }
     }
 
@@ -76,6 +80,7 @@ class UserSearch extends Component {
     };
 
     onSearchClick = searchText => {
+        this.props.removeUserSearch();
         this.props.setUserSearch(searchText);
         window.location.replace('/#/patients');
     };
@@ -131,7 +136,7 @@ class UserSearch extends Component {
 
 const mapStateToProps = state => {
     return {
-        userSearch: state.custom.userSearch.data,
+        userSearch: get(state, 'custom.userSearch.data', null),
     }
 };
 

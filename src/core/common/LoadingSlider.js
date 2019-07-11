@@ -35,14 +35,10 @@ const styles = {
         top: 180,
         left: -40,
         fontFamily: "HK_Grotesk_Regular",
-        "& h2": {
+        "& > p": {
             marginTop: 10,
             marginBottom: 10,
             fontSize: 24,
-        },
-        "& h3": {
-            marginTop: 10,
-            fontSize: 18,
         },
     },
     '@keyframes slide': {
@@ -80,6 +76,12 @@ const styles = {
         color: "#000",
         textAlign: "center",
         fontSize: 14,
+        "& h3": {
+            fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
+            marginTop: 10,
+            marginBottom: 10,
+            fontSize: 18,
+        },
     },
     '@keyframes rings': {
         "0%": {
@@ -111,7 +113,7 @@ const styles = {
             left: 40,
             borderRadius: "50%",
             border: "10px solid #000",
-            borderColor: "#0D672F transparent #0D672F transparent",
+            borderColor: "#3596f4 transparent #3596f4 transparent",
             WebkitAnimation: "rings 1s linear infinite",
             animation: `rings 1s linear infinite`,
         },
@@ -133,79 +135,79 @@ const LoadingSlider = ({ classes }) => {
             <div className={classes.slidesAndRings}>
                 {token &&
                     <div className={classes.tips}>
-                        <h2>Top Tips to a Healthy Life</h2>
+                        <Typography>Top Tips to a Healthy Life</Typography>
                         <div className={classes.slideWrapper}>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Give up smoking</h3>
-                                    <p>If you're a smoker, quit. It's the single best thing you can do for your heart health.</p>
-                                    <p>Smoking is one of the main causes of coronary heart disease. A year after giving up, your risk of a heart attack falls to about half that of a smoker.</p>
-                                    <p>You're more likely to stop smoking for good if you use NHS stop smoking services. Visit the Smokefree website or ask your GP for help with quitting.</p>
+                                    <Typography>If you're a smoker, quit. It's the single best thing you can do for your heart health.</Typography>
+                                    <Typography>Smoking is one of the main causes of coronary heart disease. A year after giving up, your risk of a heart attack falls to about half that of a smoker.</Typography>
+                                    <Typography>You're more likely to stop smoking for good if you use NHS stop smoking services. Visit the Smokefree website or ask your GP for help with quitting.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Get active</h3>
-                                    <p>Getting – and staying – active can reduce your risk of developing heart disease. It can also be a great mood booster and stress buster.</p>
-                                    <p>Do 150 minutes of moderate-intensity aerobic activity every week. One way to achieve this target is by doing 30 minutes of activity on 5 days a week. Fit it in where you can, such as by cycling to work.</p>
+                                    <Typography>Getting – and staying – active can reduce your risk of developing heart disease. It can also be a great mood booster and stress buster.</Typography>
+                                    <Typography>Do 150 minutes of moderate-intensity aerobic activity every week. One way to achieve this target is by doing 30 minutes of activity on 5 days a week. Fit it in where you can, such as by cycling to work.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Manage your weight</h3>
-                                    <p>Being overweight can increase your risk of heart disease. Stick to a healthy, balanced diet low in fat and sugar, with plenty of fruit and vegetables, combined with regular physical activity.</p>
-                                    <p>Find out if you're a healthy weight with the BMI calculator. If you're overweight, try our 12-week NHS weight loss plan.</p>
+                                    <Typography>Being overweight can increase your risk of heart disease. Stick to a healthy, balanced diet low in fat and sugar, with plenty of fruit and vegetables, combined with regular physical activity.</Typography>
+                                    <Typography>Find out if you're a healthy weight with the BMI calculator. If you're overweight, try our 12-week NHS weight loss plan.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Eat more fibre</h3>
-                                    <p>Eat plenty of fibre to help lower your risk of heart disease – aim for at least 30g a day.</p>
-                                    <p>Eat fibre from a variety of sources, such as wholemeal bread, bran, oats and wholegrain cereals, potatoes with their skins on, and plenty of fruit and veg.</p>
+                                    <Typography>Eat plenty of fibre to help lower your risk of heart disease – aim for at least 30g a day.</Typography>
+                                    <Typography>Eat fibre from a variety of sources, such as wholemeal bread, bran, oats and wholegrain cereals, potatoes with their skins on, and plenty of fruit and veg.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Cut down on saturated fat</h3>
-                                    <p>Eating too many foods that are high in saturated fat can raise the level of cholesterol in your blood. This increases your risk of heart disease.</p>
-                                    <p>Choose leaner cuts of meat and lower fat dairy products like 1% fat milk over full-fat (or whole) milk.</p>
+                                    <Typography>Eating too many foods that are high in saturated fat can raise the level of cholesterol in your blood. This increases your risk of heart disease.</Typography>
+                                    <Typography>Choose leaner cuts of meat and lower fat dairy products like 1% fat milk over full-fat (or whole) milk.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Get your 5 A Day</h3>
-                                    <p>Eat at least 5 portions of a variety of fruit and vegetables a day. They're a good source of fibre, vitamins and minerals.</p>
-                                    <p>There are lots of tasty ways to get your 5 A Day, like adding chopped fruit to cereal or including vegetables in your pasta sauces and curries.</p>
+                                    <Typography>Eat at least 5 portions of a variety of fruit and vegetables a day. They're a good source of fibre, vitamins and minerals.</Typography>
+                                    <Typography>There are lots of tasty ways to get your 5 A Day, like adding chopped fruit to cereal or including vegetables in your pasta sauces and curries.</Typography>
                                 </div>
                             </div>
 
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Cut down on salt</h3>
-                                    <p>To maintain healthy blood pressure, avoid using salt at the table and try adding less to your cooking. Once you get used to the taste of food without added salt, you can cut it out completely.</p>
-                                    <p>Watch out for high salt levels in ready-made foods. Most of the salt we eat is already in the foods we buy. Check the food labels – a food is high in salt if it has more than 1.5g salt (or 0.6g sodium) per 100g.</p>
-                                    <p>Adults should eat less than 6g of salt a day in total – that's about 1 teaspoon.</p>
+                                    <Typography>To maintain healthy blood pressure, avoid using salt at the table and try adding less to your cooking. Once you get used to the taste of food without added salt, you can cut it out completely.</Typography>
+                                    <Typography>Watch out for high salt levels in ready-made foods. Most of the salt we eat is already in the foods we buy. Check the food labels – a food is high in salt if it has more than 1.5g salt (or 0.6g sodium) per 100g.</Typography>
+                                    <Typography>Adults should eat less than 6g of salt a day in total – that's about 1 teaspoon.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Eat Fish</h3>
-                                    <p>Eat fish at least twice a week, including a portion of oily fish. Fish such as pilchards, sardines and salmon are a source of omega-3 fats, which may help protect against heart disease.</p>
-                                    <p>Pregnant or breastfeeding women should not have more than 2 portions of oily fish a week.</p>
+                                    <Typography>Eat fish at least twice a week, including a portion of oily fish. Fish such as pilchards, sardines and salmon are a source of omega-3 fats, which may help protect against heart disease.</Typography>
+                                    <Typography>Pregnant or breastfeeding women should not have more than 2 portions of oily fish a week.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Drink less alcohol</h3>
-                                    <p>Do not forget that alcohol contains calories. Regularly drinking more than the NHS recommends can have a noticeable impact on your waistline.</p>
-                                    <p>Try to keep to the recommended daily alcohol limits to reduce the risk of serious problems with your health, including risks to your heart health.</p>
+                                    <Typography>Do not forget that alcohol contains calories. Regularly drinking more than the NHS recommends can have a noticeable impact on your waistline.</Typography>
+                                    <Typography>Try to keep to the recommended daily alcohol limits to reduce the risk of serious problems with your health, including risks to your heart health.</Typography>
                                 </div>
                             </div>
                             <div className={classes.slide}>
                                 <div className={classes.slideNumber}>
                                     <h3>Read the food label</h3>
-                                    <p>When shopping, it's a good idea to look at the label on food and drink packaging to see how many calories and how much fat, salt and sugar the product contains.</p>
-                                    <p>Understanding what's in food and how it fits in with the rest of your diet will help you make healthier choices.</p>
+                                    <Typography>When shopping, it's a good idea to look at the label on food and drink packaging to see how many calories and how much fat, salt and sugar the product contains.</Typography>
+                                    <Typography>Understanding what's in food and how it fits in with the rest of your diet will help you make healthier choices.</Typography>
                                 </div>
                             </div>
                         </div>

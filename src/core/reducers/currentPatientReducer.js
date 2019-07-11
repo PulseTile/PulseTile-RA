@@ -51,16 +51,33 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: true,
             };
+        case CURRENT_PATIENT_ACTION.REQUEST_PHOTO:
+            return {
+                ...state,
+                loadingPhoto: true,
+            };
         case CURRENT_PATIENT_ACTION.SUCCESS:
             return {
                 ...state,
                 loading: false,
                 patientInfo: getPatientInfo(get(action, "data", null)),
             };
+        case CURRENT_PATIENT_ACTION.SUCCESS_PHOTO:
+            return {
+                ...state,
+                loadingPhoto: false,
+                patientPhoto: get(action, 'data.results[0].picture.large', null),
+            };
         case CURRENT_PATIENT_ACTION.FAILURE:
             return {
                 ...state,
                 loading: false,
+                error: get(action, "error", null),
+            };
+        case CURRENT_PATIENT_ACTION.FAILURE_PHOTO:
+            return {
+                ...state,
+                loadingPhoto: false,
                 error: get(action, "error", null),
             };
         default:
