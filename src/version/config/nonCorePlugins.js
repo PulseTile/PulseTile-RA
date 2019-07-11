@@ -1,3 +1,4 @@
+import EventsList from "../plugins/Events/EventsList";
 import VaccinationsList from "../plugins/Vaccinations/VaccinationsList";
 import TopThreeThingsList from "../plugins/TopThreeThings/TopThreeThingsList";
 import ClinicalNotesList from "../plugins/ClinicalNotes/ClinicalNotesList";
@@ -10,6 +11,11 @@ import TransferOfCareList from "../plugins/TransferOfCare/TransferOfCareList";
 import VitalsList from "../plugins/Vitals/VitalsList";
 
 export default [
+    {
+        name: "events",
+        label: "Events",
+        list: EventsList,
+    },
     {
         name: "vaccinations",
         label: "Vaccinations",

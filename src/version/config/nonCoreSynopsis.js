@@ -1,4 +1,4 @@
-import { faSyringe, faUserMd, faNotesMedical, faClinicMedical, faProcedures, faBriefcaseMedical, faMicroscope, faAmbulance, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
+import { faSyringe, faUserMd, faNotesMedical, faClinicMedical, faStethoscope, faProcedures, faBriefcaseMedical, faMicroscope, faAmbulance, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
 
 import { synopsisVaccinationsAction, synopsisTopThreeThingsAction } from "../actions/synopsisActions";
 
@@ -87,6 +87,14 @@ export const nonCoreSynopsisData = [
         title: "Vitals",
         list: "vitalsigns",
         icon: faHeartbeat,
+        isActive: true,
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+        id: "block-events",
+        title: "Events",
+        list: "events",
+        icon: faStethoscope,
         isActive: true,
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
