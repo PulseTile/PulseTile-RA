@@ -143,12 +143,36 @@ function getUserSearchResultsById(response) {
 function getUserSearchResults(response, params) {
     const pageNumber = get(params, 'pagination.page', 1);
     const numberPerPage = get(params, 'pagination.perPage', 10);
-    const patientsArray = get(response, 'entry', []);
-    const results = getPatientsList(patientsArray);
-    const resultsSorting = getSortedResults(results, params);
+    let result = [];
+    response.map(item => {
+        let nameFromResponse = get(item, 'name', null);
+        let firstName = get(nameFromResponse, 'given[0]', null);
+        let surname = get(nameFromResponse, 'family', null);
+        let addressArray = [
+            get(item, 'address.line', null),
+            get(item, 'address.city', null),
+            get(item, 'address.district', null),
+            get(item, 'address.postalCode', null)
+        ];
+        result.push({
+            id: get(item, 'id', null),
+            name: [firstName, surname].join(' '),
+            address: addressArray.join(', '),
+            totalAddress: addressArray.join(', '),
+            city: get(item, 'address.city', null),
+            country: get(item, 'address.country', null),
+            district: get(item, 'address.district', null),
+            postCode: get(item, 'address.postCode', null),
+            birthDate: get(item, 'birthDate', null),
+            department: get(item, 'department', null),
+            gender: get(item, 'gender', null),
+            nhsNumber: get(item, 'id', null),
+            phone: get(item, 'telecom', null),
+        })
+    });
     const startItem = (pageNumber - 1) * numberPerPage;
     const endItem = pageNumber * numberPerPage;
-    return resultsSorting.slice(startItem, endItem);
+    return result.slice(startItem, endItem);
 }
 
 const convertPatientsDataRequestToHTTP = (type, resource, params) => {
@@ -163,7 +187,14 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
             // options.method = method;
 
             let search = get(params, 'filter.filterText', null);
-            url = `${domainName}/mpi/patient/${search}`;
+
+            if (!isNaN(search)) {
+                url = `${domainName}/mpi/patient/${search}`;
+            } else {
+                let surnameCapital = search.charAt(0).toUpperCase() + search.slice(1);
+                url = `${domainName}/mpi/patient?name=${surnameCapital}`;
+            }
+
             options.method = 'GET';
 
             if (!options.headers) {
@@ -279,7 +310,14 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
         case GET_LIST:
             // const searchType = get(params, 'filter.filterType', null);
             // const paginationResults = (searchType === 'id') ? getUserSearchResultsById(response) : getUserSearchResults(response, params);
-            const paginationResults = getUserSearchResultsById(response);
+
+            let search = get(params, 'filter.filterText', null);
+            let paginationResults = [];
+            if (!isNaN(search)) {
+                paginationResults = getUserSearchResultsById(response);
+            } else {
+                paginationResults = getUserSearchResults(response);
+            }
             return {
                 data: paginationResults,
                 total: paginationResults.length,

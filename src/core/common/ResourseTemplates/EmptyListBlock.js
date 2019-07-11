@@ -19,7 +19,7 @@ const styles = theme => ({
 
 const EmptyListBlock = ({ classes }) => (
     <div className={classes.emptyBlock}>
-        <Typography>No Records found</Typography>
+        <Typography>No records found</Typography>
     </div>
 );
 

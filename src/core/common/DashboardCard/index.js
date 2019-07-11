@@ -50,7 +50,7 @@ const ListBlock = ({ classes, loading, items, list, history }) => {
         return (
             <List className={classes.list}>
                 <li className={classes.listItemNoData}>
-                    <Typography>No data</Typography>
+                    <Typography>No records found</Typography>
                 </li>
             </List>
         );
