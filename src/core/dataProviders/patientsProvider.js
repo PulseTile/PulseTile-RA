@@ -304,7 +304,7 @@ const convertPatientsDataRequestToHTTP = (type, resource, params) => {
     return {url, options};
 };
 
-const convertPatientsHTTPResponse = (response, type, resource, params) => {
+const convertPatientsHTTPResponse = (response, type, resource, params, isError) => {
     switch (type) {
 
         case GET_LIST:
@@ -318,9 +318,10 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             } else {
                 paginationResults = getUserSearchResults(response);
             }
+
             return {
-                data: paginationResults,
-                total: paginationResults.length,
+                data: isError ? [] : paginationResults,
+                total: isError ? 0 : paginationResults.length,
             };
 
         case GET_ONE:
@@ -526,6 +527,7 @@ function getSortedResults(results, params) {
 export default (type, resource, params) => {
     let { url, options } = convertPatientsDataRequestToHTTP(type, resource, params);
     let responseInfo = {};
+    let isError = false;
     return fetch(url, options).then(response => {
         responseInfo.status = get(response, 'status', null);
         return response.json();
@@ -536,12 +538,14 @@ export default (type, resource, params) => {
                 responseInfo.errorMessage = 'No patient by that surname, please try again';
                 let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
                 // throw new HttpError(errorString);
-            } else if (responseInfo.status !== 2030) {
+                isError = true;
+            } else if (responseInfo.status !== 200) {
                 responseInfo.errorMessage = get(res, 'error', null);
                 let errorString = responseInfo.status + '|' + responseInfo.errorMessage;
                 // throw new HttpError(errorString);
+                isError = true;
             }
-            return convertPatientsHTTPResponse(res, type, resource, params)
+            return convertPatientsHTTPResponse(res, type, resource, params, isError)
         })
         .catch(err => {
             console.log('Error: ', err);

@@ -436,8 +436,6 @@ class ListTemplate extends Component {
 
         const open = Boolean(anchorEl);
 
-        console.log('key', key)
-
         return (
             <div className={classes.container}>
                 <Breadcrumbs resource={breadcrumbsResource} />
