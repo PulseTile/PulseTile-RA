@@ -1,7 +1,11 @@
 import React from "react";
+import get from "lodash/get";
 
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
+import ChevronRight from "@material-ui/icons/ChevronRight";
+
+import { themeCommonElements } from "../../../version/config/theme.config";
 
 /**
  * This component returns synopsis list
@@ -14,6 +18,7 @@ import Typography from "@material-ui/core/Typography";
  * @constructor
  */
 const ItemsList = ({ classes, items, list, history }) => {
+    const menuHasChevrons = get(themeCommonElements, 'menuHasChevrons', false);
     if (items && items.length === 0) {
         return (
             <List className={classes.list}>
@@ -32,6 +37,7 @@ const ItemsList = ({ classes, items, list, history }) => {
                             <Typography noWrap={true}>
                                 {item.text}
                             </Typography>
+                            { menuHasChevrons && <ChevronRight /> }
                         </li>
                     );
                 })}
