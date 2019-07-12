@@ -100,6 +100,14 @@ class Form extends Component {
         toMakeConnection: false,
     };
 
+    componentDidMount() {
+        const { isCreate } = this.props;
+        const filledValues = isCreate ? null : this.getCurrentItem();
+        this.setState({
+            eventType: get(filledValues, 'type', null),
+        });
+    }
+
     changeDate = value => {
         this.setState({
             eventDateTime: value,
@@ -158,7 +166,6 @@ class Form extends Component {
         const { classes, isCreate } = this.props;
         const { eventDateTime, eventType, toMakeConnection } = this.state;
         const filledValues = isCreate ? null : this.getCurrentItem();
-        const isDischargeType = (get(filledValues, 'type', null) === "Discharge" || eventType === "Discharge");
         const dateTime= get(filledValues, 'dateTime', null);
         const dateCreated = get(filledValues, 'dateCreated', null);
         return (
@@ -209,7 +216,7 @@ class Form extends Component {
                     </FormGroup>
 
                     {
-                        isDischargeType &&
+                        (eventType === "Discharge") &&
 
                             <React.Fragment>
 
@@ -275,7 +282,7 @@ class Form extends Component {
                         <Control.text
                             className={classes.formInput}
                             model="event.dateCreated"
-                            defaultValue={moment(dateCreated).format('DD-MM-YYYY')}
+                            defaultValue={dateCreated ? moment(dateCreated).format('DD-MM-YYYY') : moment().format('DD-MM-YYYY')}
                             disabled={true}
                         />
                     </FormGroup>
