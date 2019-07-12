@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import get from "lodash/get";
 import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { LocalForm, Control } from 'react-redux-form';
 import { connect } from 'react-redux';
@@ -11,6 +13,10 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 
 import SectionToolbar from "../../../../core/common/Toolbars/CustomFormToolbar";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import CustomSwitch from "../../Vitals/fragments/CustomSwitch";
+import Typography from "@material-ui/core/Typography";
+import FormControl from "@material-ui/core/FormControl";
 
 const styles = {
     formGroup: {
@@ -25,6 +31,9 @@ const styles = {
         color: "#000",
         fontSize: 14,
         marginBottom: 15,
+    },
+    formControlLabel: {
+        marginLeft: -10,
     },
     formInput: {
         width: '100%',
@@ -44,7 +53,15 @@ const styles = {
     },
     text: {
         padding: 20,
-    }
+    },
+    checkboxBlock: {
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 15,
+    },
+    switcherLabel: {
+        marginLeft: 10,
+    },
 };
 
 const eventTypes = [
@@ -52,6 +69,20 @@ const eventTypes = [
     { id: "Admission", label: "Admission" },
     { id: "Transfer", label: "Transfer" },
     { id: "Discharge", label: "Discharge" },
+];
+
+const connectionTypes = [
+    { id: "connection1", label: "Connection 1" },
+    { id: "connection2", label: "Connection 2" },
+    { id: "connection3", label: "Connection 3" },
+    { id: "connection4", label: "Connection 4" },
+];
+
+const detailsTypes = [
+    { id: "details1", label: "Details 1" },
+    { id: "details2", label: "Details 2" },
+    { id: "details3", label: "Details 3" },
+    { id: "details4", label: "Details 4" },
 ];
 
 /**
@@ -65,12 +96,33 @@ class Form extends Component {
 
     state = {
         eventType: null,
+        eventDateTime: null,
+        toMakeConnection: false,
+    };
+
+    changeDate = value => {
+        this.setState({
+            eventDateTime: value,
+        });
+    };
+
+    changeEventType = e => {
+        this.setState({
+            eventType: e.target.value,
+        });
+    };
+
+    toggleMakeConnection = () => {
+        this.setState({
+            toMakeConnection: !this.state.toMakeConnection,
+        });
     };
 
     submitForm = data => {
         const { isCreate, createNewItem, updateItem } = this.props;
+        const { eventDateTime } = this.state;
         const additionalData = {
-
+            dateTime: moment(eventDateTime).format('DD-MM-YYYY'),
         };
         const formData = Object.assign({}, data, additionalData);
         if (isCreate) {
@@ -104,7 +156,11 @@ class Form extends Component {
 
     render() {
         const { classes, isCreate } = this.props;
-        let filledValues = isCreate ? null : this.getCurrentItem();
+        const { eventDateTime, eventType, toMakeConnection } = this.state;
+        const filledValues = isCreate ? null : this.getCurrentItem();
+        const isDischargeType = (get(filledValues, 'type', null) === "Discharge" || eventType === "Discharge");
+        const dateTime= get(filledValues, 'dateTime', null);
+        const dateCreated = get(filledValues, 'dateCreated', null);
         return (
             <React.Fragment>
                 <LocalForm model="event" onSubmit={values => this.submitForm(values)}>
@@ -120,7 +176,7 @@ class Form extends Component {
 
                     <FormGroup className={classes.formGroup}>
                         <FormLabel className={classes.formLabel}>Event Type</FormLabel>
-                        <Control.select className={classes.formSelect} model='event.type' required>
+                        <Control.select className={classes.formSelect} model='event.type' onChange={(e) => this.changeEventType(e)} required>
                             <option value=''>-- Select from --</option>
                             { eventTypes.map((item, key) => {
                                 return (
@@ -140,7 +196,72 @@ class Form extends Component {
                     </FormGroup>
 
                     <FormGroup className={classes.formGroup}>
-                        <FormLabel className={classes.formLabel}>Event Name</FormLabel>
+                        <FormLabel className={classes.formLabel}>Event date</FormLabel>
+                        <DatePicker
+                            className={classes.formInput}
+                            selected={eventDateTime ? eventDateTime : dateTime}
+                            onChange={value => this.changeDate(value)}
+                            showTimeSelect
+                            dateFormat="dd-MM-yyyy HH:mm"
+                            timeFormat="HH:mm"
+                            timeIntervals={15}
+                        />
+                    </FormGroup>
+
+                    {
+                        isDischargeType &&
+
+                            <React.Fragment>
+
+                                <div className={classes.checkboxBlock}>
+                                    <FormControl className={classes.formControl}>
+                                        <FormLabel className={classes.formLabel}>To make connection</FormLabel>
+                                        <FormControlLabel
+                                            className={classes.formControlLabel}
+                                            control={
+                                                <CustomSwitch
+                                                    checked={toMakeConnection}
+                                                    value={toMakeConnection}
+                                                    onChange={() => this.toggleMakeConnection()}
+                                                />
+                                            }
+                                            label={<Typography className={classes.switcherLabel}>{toMakeConnection ? "Yes" : "No"}</Typography>}
+                                        />
+                                    </FormControl>
+                                </div>
+
+                                {
+                                    toMakeConnection &&
+                                        <FormGroup className={classes.formGroup}>
+                                            <FormLabel className={classes.formLabel}>To make connection with</FormLabel>
+                                            <Control.select className={classes.formSelect} model='event.connection' required>
+                                                <option value=''>-- Select from --</option>
+                                                { connectionTypes.map((item, key) => {
+                                                    return (
+                                                        <option key={key} value={item.id} selected={item.id === get(filledValues, 'connection', null)}>{item.label}</option>
+                                                    )
+                                                })}
+                                            </Control.select>
+                                        </FormGroup>
+                                }
+
+                                <FormGroup className={classes.formGroup}>
+                                    <FormLabel className={classes.formLabel}>Details</FormLabel>
+                                    <Control.select className={classes.formSelect} model='event.details' required>
+                                        <option value=''>-- Select from --</option>
+                                        { detailsTypes.map((item, key) => {
+                                            return (
+                                                <option key={key} value={item.id} selected={item.id === get(filledValues, 'details', null)}>{item.label}</option>
+                                            )
+                                        })}
+                                    </Control.select>
+                                </FormGroup>
+
+                            </React.Fragment>
+                    }
+
+                    <FormGroup className={classes.formGroup}>
+                        <FormLabel className={classes.formLabel}>Author</FormLabel>
                         <Control.text
                             className={classes.formInput}
                             model='event.author'
@@ -154,7 +275,7 @@ class Form extends Component {
                         <Control.text
                             className={classes.formInput}
                             model="event.dateCreated"
-                            defaultValue={get(filledValues, 'dateCreated', moment().format('DD-MM-YYYY HH:mm'))}
+                            defaultValue={moment(dateCreated).format('DD-MM-YYYY')}
                             disabled={true}
                         />
                     </FormGroup>
