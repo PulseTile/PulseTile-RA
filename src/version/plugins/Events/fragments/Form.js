@@ -126,11 +126,20 @@ class Form extends Component {
         });
     };
 
+    getConvertDateTime = () => {
+        const { isCreate } = this.props;
+        const filledValues = isCreate ? null : this.getCurrentItem();
+        const dateTime = get(filledValues, 'dateTime', null)
+        const dateObj = new Date(dateTime);
+        return dateObj.toISOString();
+    };
+
     submitForm = data => {
         const { isCreate, createNewItem, updateItem } = this.props;
         const { eventDateTime } = this.state;
+
         const additionalData = {
-            dateTime: moment(eventDateTime).format('DD-MM-YYYY'),
+            dateTime: eventDateTime ? eventDateTime.toISOString() : this.getConvertDateTime() ,
         };
         const formData = Object.assign({}, data, additionalData);
         if (isCreate) {

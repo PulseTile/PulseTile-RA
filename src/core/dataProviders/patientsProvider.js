@@ -308,7 +308,9 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             }
             dataFromRequest.id = Number(get(params, 'data.nhsNumber', null));
             dataFromRequest.name = get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
-            dataFromRequest.address = get(params, 'data.address', null) + ' ' + get(params, 'data.city', null) + ' ' + get(params, 'data.district', null) + ' ' + get(params, 'data.postCode', null);
+            let newAddress = get(params, 'data.address', null) + ' ' + get(params, 'data.city', null) + ' ' + get(params, 'data.district', null) + ' ' + get(params, 'data.postCode', null);
+            dataFromRequest.address = newAddress;
+            dataFromRequest.totalAddress = newAddress;
             dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
