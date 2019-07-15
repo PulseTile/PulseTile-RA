@@ -12,6 +12,7 @@ import { token, domainName } from "../token";
 function checkFormData(params) {
 
     const paramsArray = [
+        { param: 'data.prefix', label: 'Preferred Name' },
         { param: 'data.firstName', label: 'Name' },
         { param: 'data.lastName', label: 'Surname' },
         { param: 'data.birthDate', label: 'Date of Birth' },
