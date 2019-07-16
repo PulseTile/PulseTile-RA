@@ -13,8 +13,8 @@ const MedicationsDatagridRow = props => {
     }
     return (
         <CustomDatagridRow {...props} >
-            <TableCell key={`${record.id}-text`}>
-                {record.text}
+            <TableCell key={`${record.id}-name`}>
+                {record.name}
             </TableCell>
             <TableCell key={`${record.id}-dateCreated`}>
                 {moment(record.dateCreated).format(DATE_FORMAT)}

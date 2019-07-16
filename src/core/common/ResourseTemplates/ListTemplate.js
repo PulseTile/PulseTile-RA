@@ -97,7 +97,7 @@ const listStyles = theme => ({
         },
     },
     filterInputIcon: {
-        color: theme.palette.fontColor,
+        color: theme.palette.paperColor,
         marginLeft: 5,
         marginBottom: 10,
     },

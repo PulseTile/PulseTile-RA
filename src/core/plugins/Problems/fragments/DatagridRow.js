@@ -13,8 +13,8 @@ const ProblemsDatagridRow = props => {
     }
     return (
         <CustomDatagridRow {...props} >
-            <TableCell key={`${record.id}-text`}>
-                {record.text}
+            <TableCell key={`${record.id}-problem`}>
+                {record.problem}
             </TableCell>
             <TableCell key={`${record.id}-dateCreated`}>
                 {moment(record.dateCreated).format(DATE_FORMAT)}

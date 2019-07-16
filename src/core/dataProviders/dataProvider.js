@@ -32,20 +32,9 @@ const convertDataRequestToHTTP = (type, resource, params) => {
     const options = {};
     switch (type) {
         case GET_LIST: {
-            // url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
-
-            if (resource === 'vitalsigns') {
-                url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
-            } else {
-                url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/synopsis/${resource}`;
-            }
-
-            if (!options.headers) {
-                // options.headers = new Headers({ Accept: 'application/json' });
-            }
+            url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
             options.headers = {
                 Authorization: "Bearer " + token,
-                // 'X-Requested-With': "XMLHttpRequest",
             };
             break;
         }
@@ -203,7 +192,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
         case GET_LIST:
 
-            const results = get(response, 'synopsis', []);
+            const results = response;
 
             // const pageNumber = get(params, 'pagination.page', 1);
             // const numberPerPage = get(params, 'pagination.perPage', 10);
@@ -223,7 +212,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
                     resultsWithId.push({
                         id: item.sourceId,
                         text: '#' + count,
-                        diastolicBP: item.newsScore,
+                        diastolicBP: item.diastolicBP,
                         heartRate: item.heartRate,
                         oxygenSaturation: item.oxygenSaturation,
                         respirationRate: item.respirationRate,
@@ -235,14 +224,8 @@ const convertHTTPResponse = (response, type, resource, params) => {
                     });
                     count++;
                 } else {
-                    resultsWithId.push({
-                        id: item.sourceId,
-                        text: item.text,
-                        source: item.source,
-                        sourceId: item.sourceId,
-                    })
+                    resultsWithId.push(item)
                 }
-
             });
 
             return {
