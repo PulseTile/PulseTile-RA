@@ -183,9 +183,9 @@ class Charts extends Component {
                     <Grid className={classes.chart} item xs={12} sm={12} md={6}>
                         <div className={classes.chartBlock}>
                             <BarChartTitle
-                                mainTitle="Patients By Setting"
-                                secondTitle="Patients By Setting"
-                                description="This is a brief description of patients by setting."
+                                mainTitle="Patients By Cities"
+                                secondTitle="Patients By Cities"
+                                description="This is a brief description of patients by cities."
                             />
                             <BarChartTemplate
                                 data={dataGreen}

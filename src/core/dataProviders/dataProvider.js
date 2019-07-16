@@ -6,6 +6,7 @@ import {
     UPDATE,
     HttpError,
 } from "react-admin";
+import moment from "moment";
 import sort, { ASC, DESC } from 'sort-array-objects';
 
 import pluginFilters from "../config/pluginFilters";
@@ -56,6 +57,14 @@ const convertDataRequestToHTTP = (type, resource, params) => {
 
         case UPDATE:
             let updateData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
+
+            if (resource === 'problems') {
+                let dateCreated = get(params, 'data.dateCreated', null);
+                let dateOfOnset = get(params, 'data.dateOfOnset', null);
+                updateData.dateCreated = moment(dateCreated).format('DD-MM-YYYY');
+                updateData.dateOfOnset = moment(dateOfOnset).format('YYYY-MM-DD');
+            }
+
             url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
             options.method = "PUT";
             if (!options.headers) {
