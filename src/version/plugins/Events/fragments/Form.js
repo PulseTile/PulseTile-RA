@@ -137,10 +137,14 @@ class Form extends Component {
     submitForm = data => {
         const { isCreate, createNewItem, updateItem } = this.props;
         const { eventDateTime } = this.state;
-
+        const filledValues = isCreate ? null : this.getCurrentItem();
+        const newType =  get(data, 'type', null);
         const additionalData = {
-            dateTime: eventDateTime ? eventDateTime.toISOString() : this.getConvertDateTime() ,
+            dateTime: eventDateTime ? eventDateTime.toISOString() : this.getConvertDateTime(),
+            type: newType ? newType : get(filledValues, 'type', null),
+            dateCreated: isCreate ? 1000 * moment().unix() : get(filledValues, 'dateCreated', null),
         };
+
         const formData = Object.assign({}, data, additionalData);
         if (isCreate) {
             createNewItem(formData);
