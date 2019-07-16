@@ -194,20 +194,20 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
             const results = response;
 
-            // const pageNumber = get(params, 'pagination.page', 1);
-            // const numberPerPage = get(params, 'pagination.perPage', 10);
+            const pageNumber = get(params, 'pagination.page', 1);
+            const numberPerPage = get(params, 'pagination.perPage', 10);
             // const results = getResultsFromResponse(response);
 
             const resultsFiltering = getFilterResults(resource, results, params);
             const resultsSorting = getSortedResults(resultsFiltering, params);
 
-            // const startItem = (pageNumber - 1) * numberPerPage;
-            // const endItem = pageNumber * numberPerPage;
-            // const paginationResults = resultsSorting.slice(startItem, endItem);
+            const startItem = (pageNumber - 1) * numberPerPage;
+            const endItem = pageNumber * numberPerPage;
+            const paginationResults = resultsSorting.slice(startItem, endItem);
 
             const resultsWithId = [];
             let count = 1;
-            resultsSorting.map(item => {
+            paginationResults.map(item => {
                 if (resource === 'vitalsigns') {
                     resultsWithId.push({
                         id: item.sourceId,
@@ -247,7 +247,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
         case CREATE:
             const dataFromRequest = get(params, 'data', null);
-            const sourceID = get(response, 'sid', null);
+            const sourceID = get(response, 'id', null);
             dataFromRequest.id = sourceID;
             dataFromRequest.text = getTextByHeading(params, resource);
             dataFromRequest.isNew = true;
