@@ -381,7 +381,7 @@ const convertPatientsHTTPResponse = (response, type, resource, params, isError) 
                         city: get(response, 'address.city', null),
                         country: get(response, 'address.country', null),
                         district: get(response, 'address.district', null),
-                        postCode: get(response, 'address.postCode', null),
+                        postCode: get(response, 'address.postalCode', null),
                         birthDate: get(response, 'birthDate', null),
                         department: get(response, 'department', null),
                         gender: get(response, 'gender', null),
