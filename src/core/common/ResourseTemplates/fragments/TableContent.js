@@ -48,14 +48,61 @@ const styles = theme => ({
     }
 });
 
-const CustomDatagridBody = ({ CustomRow, location, hiddenColumns, history, ...rest }) => <DatagridBody {...rest} row={<CustomRow location={location} hiddenColumns={hiddenColumns} history={history} rowClick="edit" />} />
-const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, hiddenColumns, location, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody location={location} hiddenColumns={hiddenColumns} history={history} CustomRow={CustomRow} />} />;
+
+function getPath(id, basePath, record) {
+
+    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+    console.log('id', id);
+    console.log('basePath', basePath);
+    console.log('record', record);
+
+    return 'show'
+
+}
+
+const CustomDatagridBody = ({ CustomRow, location, hiddenColumns, history, ...rest }) => {
+    return (
+        <DatagridBody
+            row={<CustomRow
+                location={location}
+                hiddenColumns={hiddenColumns}
+                history={history}
+            />}
+            {...rest}
+        />
+    );
+};
+
+
+const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, hiddenColumns, location, ...rest }) => {
+    return (
+        <Datagrid
+            rowClick={(id, basePath, record) => getPath(id, basePath, record)}
+            body={
+                <CustomDatagridBody
+                    location={location}
+                    hiddenColumns={hiddenColumns}
+                    history={history}
+                    CustomRow={CustomRow}
+                />}
+            {...rest}
+        />
+    );
+};
 
 const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
     if (isCustomDatagrid) {
         return (
             <div className={classes.tableWrapper}>
-                <CustomDatagrid className={classes.tableList} hiddenColumns={hiddenColumns} location={location} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
+                <CustomDatagrid
+                    className={classes.tableList}
+                    hiddenColumns={hiddenColumns}
+                    location={location}
+                    CustomRow={CustomRow}
+                    CustomTableHead={CustomTableHead}
+                    history={history}
+                    {...rest}
+                >
                     {children}
                 </CustomDatagrid>
             </div>
@@ -63,7 +110,12 @@ const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, chi
     }
     return (
         <div className={classes.tableWrapper}>
-            <Datagrid className={classes.tableList} classes={{ rowEven: classes.rowEven, rowOdd: classes.rowOdd  }} rowClick="edit" {...rest}>
+            <Datagrid
+                className={classes.tableList}
+                classes={{ rowEven: classes.rowEven, rowOdd: classes.rowOdd  }}
+                rowClick={(id, basePath, record) => getPath(id, basePath, record)}
+                {...rest}
+            >
                 {children}
             </Datagrid>
         </div>
@@ -71,7 +123,7 @@ const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, chi
 };
 
 function getSearch(userSearch, userSearchID) {
-    let result = null
+    let result = null;
     if (userSearch) {
         result = userSearch;
     }
