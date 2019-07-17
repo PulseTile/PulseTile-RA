@@ -337,6 +337,7 @@ class ListTemplate extends Component {
         const ContentBlock = this.getContentBlock();
 
         const open = Boolean(anchorEl);
+        const isDetailsPage = !this.isListPage();
 
         return (
             <div className={classes.container}>
@@ -403,6 +404,7 @@ class ListTemplate extends Component {
                             isCustomDatagrid={isCustomDatagrid}
                             history={history}
                             notCreate={notCreate}
+                            isDetailsPage={isDetailsPage}
                             {...this.props}
                         />
                     </Grid>

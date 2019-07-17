@@ -99,7 +99,7 @@ function getSearchType(userSearch, userSearchID, userSearchType, userClinicalQue
 }
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, notCreate, key, userSearch, userSearchID, userSearchType, userClinicalQuery, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
+    const { classes, title, idsNumber, isDetailsPage, resourceUrl, notCreate, key, userSearch, userSearchID, userSearchType, userClinicalQuery, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
     const sortOrder = defaultSortOrder ? defaultSortOrder : 'DESC';
     const search = getSearch(userSearch, userSearchID);
@@ -121,10 +121,10 @@ const TableContent = props => {
             pagination={<ListToolbar notCreate={notCreate} resourceUrl={resourceUrl} history={history} isCreatePage={isCreatePage} createPath={createUrl} />}
             {...props}
         >
-            { (idsNumber > 0) ?
-                <DatagridBlock classes={classes} children={children} history={history} {...props} />
-                :
+            { (idsNumber === 0 && !isDetailsPage) ?
                 <EmptyListBlock />
+                :
+                <DatagridBlock classes={classes} children={children} history={history} {...props} />
             }
         </List>
     );
