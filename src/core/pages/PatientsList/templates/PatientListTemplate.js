@@ -494,7 +494,7 @@ class ListTemplate extends Component {
                             }
                         </div>
                         {
-                            (filterText === userSearch || filterText === userSearchID || filterText === userSearchValue || userClinicalQuery === userClinicalQuery) &&
+                            (filterText === userSearch || filterText === userSearchID || filterText === userSearchValue || this.state.userClinicalQuery === this.props.userClinicalQuery) &&
                                 <ContentBlock
                                     key={key}
                                     filterText={filterText}
