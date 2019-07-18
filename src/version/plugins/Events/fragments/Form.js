@@ -97,7 +97,7 @@ class Form extends Component {
     state = {
         eventType: null,
         eventDateTime: null,
-        toMakeConnection: false,
+        // toMakeConnection: false,
     };
 
     componentDidMount() {
@@ -120,11 +120,11 @@ class Form extends Component {
         });
     };
 
-    toggleMakeConnection = () => {
-        this.setState({
-            toMakeConnection: !this.state.toMakeConnection,
-        });
-    };
+    // toggleMakeConnection = () => {
+    //     this.setState({
+    //         toMakeConnection: !this.state.toMakeConnection,
+    //     });
+    // };
 
     getConvertDateTime = () => {
         const { isCreate } = this.props;
@@ -228,57 +228,57 @@ class Form extends Component {
                         />
                     </FormGroup>
 
-                    {
-                        (eventType === "Discharge") &&
+                    {/*{*/}
+                    {/*    (eventType === "Discharge") &&*/}
 
-                            <React.Fragment>
+                    {/*        <React.Fragment>*/}
 
-                                <div className={classes.checkboxBlock}>
-                                    <FormControl className={classes.formControl}>
-                                        <FormLabel className={classes.formLabel}>To make connection</FormLabel>
-                                        <FormControlLabel
-                                            className={classes.formControlLabel}
-                                            control={
-                                                <CustomSwitch
-                                                    checked={toMakeConnection}
-                                                    value={toMakeConnection}
-                                                    onChange={() => this.toggleMakeConnection()}
-                                                />
-                                            }
-                                            label={<Typography className={classes.switcherLabel}>{toMakeConnection ? "Yes" : "No"}</Typography>}
-                                        />
-                                    </FormControl>
-                                </div>
+                    {/*            <div className={classes.checkboxBlock}>*/}
+                    {/*                <FormControl className={classes.formControl}>*/}
+                    {/*                    <FormLabel className={classes.formLabel}>To make connection</FormLabel>*/}
+                    {/*                    <FormControlLabel*/}
+                    {/*                        className={classes.formControlLabel}*/}
+                    {/*                        control={*/}
+                    {/*                            <CustomSwitch*/}
+                    {/*                                checked={toMakeConnection}*/}
+                    {/*                                value={toMakeConnection}*/}
+                    {/*                                onChange={() => this.toggleMakeConnection()}*/}
+                    {/*                            />*/}
+                    {/*                        }*/}
+                    {/*                        label={<Typography className={classes.switcherLabel}>{toMakeConnection ? "Yes" : "No"}</Typography>}*/}
+                    {/*                    />*/}
+                    {/*                </FormControl>*/}
+                    {/*            </div>*/}
 
-                                {
-                                    toMakeConnection &&
-                                        <FormGroup className={classes.formGroup}>
-                                            <FormLabel className={classes.formLabel}>To make connection with</FormLabel>
-                                            <Control.select className={classes.formSelect} model='event.connection' required>
-                                                <option value=''>-- Select from --</option>
-                                                { connectionTypes.map((item, key) => {
-                                                    return (
-                                                        <option key={key} value={item.id} selected={item.id === get(filledValues, 'connection', null)}>{item.label}</option>
-                                                    )
-                                                })}
-                                            </Control.select>
-                                        </FormGroup>
-                                }
+                    {/*            {*/}
+                    {/*                toMakeConnection &&*/}
+                    {/*                    <FormGroup className={classes.formGroup}>*/}
+                    {/*                        <FormLabel className={classes.formLabel}>To make connection with</FormLabel>*/}
+                    {/*                        <Control.select className={classes.formSelect} model='event.connection' required>*/}
+                    {/*                            <option value=''>-- Select from --</option>*/}
+                    {/*                            { connectionTypes.map((item, key) => {*/}
+                    {/*                                return (*/}
+                    {/*                                    <option key={key} value={item.id} selected={item.id === get(filledValues, 'connection', null)}>{item.label}</option>*/}
+                    {/*                                )*/}
+                    {/*                            })}*/}
+                    {/*                        </Control.select>*/}
+                    {/*                    </FormGroup>*/}
+                    {/*            }*/}
 
-                                <FormGroup className={classes.formGroup}>
-                                    <FormLabel className={classes.formLabel}>Details</FormLabel>
-                                    <Control.select className={classes.formSelect} model='event.details' required>
-                                        <option value=''>-- Select from --</option>
-                                        { detailsTypes.map((item, key) => {
-                                            return (
-                                                <option key={key} value={item.id} selected={item.id === get(filledValues, 'details', null)}>{item.label}</option>
-                                            )
-                                        })}
-                                    </Control.select>
-                                </FormGroup>
+                    {/*            <FormGroup className={classes.formGroup}>*/}
+                    {/*                <FormLabel className={classes.formLabel}>Details</FormLabel>*/}
+                    {/*                <Control.select className={classes.formSelect} model='event.details' required>*/}
+                    {/*                    <option value=''>-- Select from --</option>*/}
+                    {/*                    { detailsTypes.map((item, key) => {*/}
+                    {/*                        return (*/}
+                    {/*                            <option key={key} value={item.id} selected={item.id === get(filledValues, 'details', null)}>{item.label}</option>*/}
+                    {/*                        )*/}
+                    {/*                    })}*/}
+                    {/*                </Control.select>*/}
+                    {/*            </FormGroup>*/}
 
-                            </React.Fragment>
-                    }
+                    {/*        </React.Fragment>*/}
+                    {/*}*/}
 
                     <FormGroup className={classes.formGroup}>
                         <FormLabel className={classes.formLabel}>Author</FormLabel>
