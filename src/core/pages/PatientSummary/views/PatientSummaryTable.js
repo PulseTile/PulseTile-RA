@@ -20,11 +20,11 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "column",
         height: theme.isOldDesign ? 50 : 100,
-        backgroundColor: theme.palette.mainColor,
+        backgroundColor: theme.palette.tableHeadColor,
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-        color: theme.palette.paperColor,
+        color: theme.palette.mainColor,
         border: theme.isOldDesign ? `1px solid ${theme.palette.borderColor}` : null,
         '&:hover': {
             cursor: "pointer",
@@ -46,7 +46,7 @@ const styles = theme => ({
     },
     title: {
         marginBottom: 0,
-        color: theme.palette.paperColor,
+        color: theme.palette.fontColor,
         fontSize: 18,
         fontWeight: 600,
         zIndex: 99999999,

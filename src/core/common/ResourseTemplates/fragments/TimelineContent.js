@@ -1,8 +1,11 @@
 import React from "react";
 
-const TimelineContent = ({ }) => {
+const TimelineContent = ({ timelineBlock, ...rest }) => {
+    const TimelineBlock = timelineBlock;
     return (
-        <p>TIMELINE CONTENT</p>
+        <React.Fragment>
+            <TimelineBlock {...rest} />
+        </React.Fragment>
     );
 };
 

@@ -48,14 +48,61 @@ const styles = theme => ({
     }
 });
 
-const CustomDatagridBody = ({ CustomRow, location, hiddenColumns, history, ...rest }) => <DatagridBody {...rest} row={<CustomRow location={location} hiddenColumns={hiddenColumns} history={history} rowClick="edit" />} />
-const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, hiddenColumns, location, ...rest }) => <Datagrid {...rest} rowClick="edit" body={<CustomDatagridBody location={location} hiddenColumns={hiddenColumns} history={history} CustomRow={CustomRow} />} />;
+
+function getPath(id, basePath, record) {
+
+    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+    console.log('id', id);
+    console.log('basePath', basePath);
+    console.log('record', record);
+
+    return 'show'
+
+}
+
+const CustomDatagridBody = ({ CustomRow, location, hiddenColumns, history, ...rest }) => {
+    return (
+        <DatagridBody
+            row={<CustomRow
+                location={location}
+                hiddenColumns={hiddenColumns}
+                history={history}
+            />}
+            {...rest}
+        />
+    );
+};
+
+
+const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, hiddenColumns, location, ...rest }) => {
+    return (
+        <Datagrid
+            rowClick={(id, basePath, record) => getPath(id, basePath, record)}
+            body={
+                <CustomDatagridBody
+                    location={location}
+                    hiddenColumns={hiddenColumns}
+                    history={history}
+                    CustomRow={CustomRow}
+                />}
+            {...rest}
+        />
+    );
+};
 
 const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, children, history, CustomRow, CustomTableHead, ...rest }) => {
     if (isCustomDatagrid) {
         return (
             <div className={classes.tableWrapper}>
-                <CustomDatagrid className={classes.tableList} hiddenColumns={hiddenColumns} location={location} CustomRow={CustomRow} CustomTableHead={CustomTableHead} history={history} rowClick="edit" {...rest}>
+                <CustomDatagrid
+                    className={classes.tableList}
+                    hiddenColumns={hiddenColumns}
+                    location={location}
+                    CustomRow={CustomRow}
+                    CustomTableHead={CustomTableHead}
+                    history={history}
+                    {...rest}
+                >
                     {children}
                 </CustomDatagrid>
             </div>
@@ -63,7 +110,12 @@ const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, chi
     }
     return (
         <div className={classes.tableWrapper}>
-            <Datagrid className={classes.tableList} classes={{ rowEven: classes.rowEven, rowOdd: classes.rowOdd  }} rowClick="edit" {...rest}>
+            <Datagrid
+                className={classes.tableList}
+                classes={{ rowEven: classes.rowEven, rowOdd: classes.rowOdd  }}
+                rowClick={(id, basePath, record) => getPath(id, basePath, record)}
+                {...rest}
+            >
                 {children}
             </Datagrid>
         </div>
@@ -71,7 +123,7 @@ const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, chi
 };
 
 function getSearch(userSearch, userSearchID) {
-    let result = null
+    let result = null;
     if (userSearch) {
         result = userSearch;
     }
@@ -99,7 +151,7 @@ function getSearchType(userSearch, userSearchID, userSearchType, userClinicalQue
 }
 
 const TableContent = props => {
-    const { classes, title, idsNumber, resourceUrl, notCreate, key, userSearch, userSearchID, userSearchType, userClinicalQuery, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
+    const { classes, title, idsNumber, isDetailsPage, resourceUrl, notCreate, key, userSearch, userSearchID, userSearchType, userClinicalQuery, filterText, history, isCreatePage, createUrl, children, defaultSort, defaultSortOrder } = props;
     const sortField = defaultSort ? defaultSort : 'dateCreated';
     const sortOrder = defaultSortOrder ? defaultSortOrder : 'DESC';
     const search = getSearch(userSearch, userSearchID);
@@ -121,10 +173,10 @@ const TableContent = props => {
             pagination={<ListToolbar notCreate={notCreate} resourceUrl={resourceUrl} history={history} isCreatePage={isCreatePage} createPath={createUrl} />}
             {...props}
         >
-            { (idsNumber > 0) ?
-                <DatagridBlock classes={classes} children={children} history={history} {...props} />
-                :
+            { (idsNumber === 0 && !isDetailsPage) ?
                 <EmptyListBlock />
+                :
+                <DatagridBlock classes={classes} children={children} history={history} {...props} />
             }
         </List>
     );
