@@ -70,7 +70,7 @@ const DatagridRow = props => {
     const newsScore = get(record, 'newsScore', null);
     const newsScoreCellClassName = defineColor(newsScore);
     const number = getRowNumber(currentVitals, currentList, record);
-    const dateCreatedConverted = 1000 * record.dateCreate;
+    const dateCreatedConverted = record.dateCreated;
     return (
         <CustomDatagridRow {...props}>
             <TableCell key={`${record.id}-number`} onClick={() => saveCurrentVital(record.id, number)}>

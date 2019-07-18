@@ -105,15 +105,16 @@ const convertDataRequestToHTTP = (type, resource, params) => {
  * This function extracts results from response
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape}  response
- * @return {array}
  */
-function getResultsFromResponse(response) {
+function getResultsFromResponse(response, resource) {
     let result = [];
     const responseArray = Object.values(response);
     for (let i = 0, n = responseArray.length; i < n; i++) {
         let item = responseArray[i];
         item.numberItem = i + 1;
+        if (resource === 'vitalsigns') {
+            item.dateCreated = 1000 * item.dateCreate;
+        }
         result.push(item);
     }
     return result;
@@ -196,7 +197,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
             const pageNumber = get(params, 'pagination.page', 1);
             const numberPerPage = get(params, 'pagination.perPage', 10);
-            const results = getResultsFromResponse(response);
+            const results = getResultsFromResponse(response, resource);
 
             const resultsFiltering = getFilterResults(resource, results, params);
             const resultsSorting = getSortedResults(resultsFiltering, params);
@@ -214,6 +215,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
             return {
                 data: Object.assign({
                     id: response.sourceId,
+                    dateCreated: (resource === 'vitalsigns') ? (1000 * resource.dateCreate) : resource.dateCreate,
                     text: getTextByHeading({ data: response }, resource)
                 }, response),
             };

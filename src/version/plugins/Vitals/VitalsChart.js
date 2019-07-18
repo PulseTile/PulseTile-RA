@@ -90,14 +90,13 @@ class VitalsChart extends Component {
         const { classes, currentList, vitalsList, vitalsEmergencySummary, history, createUrl } = this.props;
         const { disabledLines } = this.state;
         // const vitalsListArray = vitalsEmergencySummary ? Object.values(vitalsEmergencySummary) : vitalsList;
-
         let chartData = [];
         if (vitalsList) {
-            for (let i = 0, n = vitalsList.length; i < n; i++) {
-
-                let item = vitalsList[i];
+            const vitalsReverse = vitalsList.reverse();
+            for (let i = 0, n = vitalsReverse.length; i < n; i++) {
+                let item = vitalsReverse[i];
                 chartData.push({
-                    name: moment(item.dateCreated).format('MM-DD-YYYY'),
+                    name: moment(1000 * item.dateCreate).format('DD-MM-YYYY'),
                     diastolicBP: item.diastolicBP,
                     heartRate: item.heartRate,
                     oxygenSaturation: item.oxygenSaturation,
