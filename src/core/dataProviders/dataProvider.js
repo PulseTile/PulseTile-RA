@@ -212,11 +212,12 @@ const convertHTTPResponse = (response, type, resource, params) => {
             };
 
         case GET_ONE:
+            if (resource === 'vitalsigns') {
+                response.dateCreated = response.dateCreate * 1000;
+            }
             return {
                 data: Object.assign({
                     id: response.sourceId,
-                    dateCreated: (resource === 'vitalsigns') ? (1000 * resource.dateCreate) : resource.dateCreate,
-                    text: getTextByHeading({ data: response }, resource)
                 }, response),
             };
 
