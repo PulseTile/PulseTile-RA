@@ -81,11 +81,11 @@ class PatientsList extends Component {
         const newPatientsIds = get(newProps, 'patientsIds', []);
         const isPatientListCount = get(themeCommonElements, 'isPatientListCount', false);
 
-        if (isPatientListCount && (prevPatientsIds !== newPatientsIds) && newPatientsIds.length > 0) {
-            newPatientsIds.map(item => {
-                getPatientsCounts(item);
-            });
-        }
+        // if (isPatientListCount && (prevPatientsIds !== newPatientsIds) && newPatientsIds.length > 0) {
+        //     newPatientsIds.map(item => {
+        //         getPatientsCounts(item);
+        //     });
+        // }
     }
 
     updateTableHead = () => {

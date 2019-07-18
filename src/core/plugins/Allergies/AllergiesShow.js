@@ -22,8 +22,9 @@ const AllergiesShow = ({ classes, ...rest }) => (
     <ShowTemplate pageTitle="Allergy" {...rest}>
         <TextField className={classes.labelBlock} label="Cause" source="cause" />
         <TextField className={classes.labelBlock} label="Reaction / Description" source="reaction" />
+        <TextField className={classes.labelBlock} label="Terminology" source="causeCode" />
+        <TextField className={classes.labelBlock} label="Terminology Code" source="causeTerminology" />
         <TextField className={classes.labelBlock} label="Author" source="author" />
-        <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
     </ShowTemplate>
 );
 

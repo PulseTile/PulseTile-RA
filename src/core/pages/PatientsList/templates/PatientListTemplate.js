@@ -436,6 +436,11 @@ class ListTemplate extends Component {
 
         const open = Boolean(anchorEl);
 
+        console.log('++++++++++++++++++++++++++++++++++')
+        console.log('filterText', filterText)
+        console.log('userSearch', userSearch)
+        console.log('++++++++++++++++++++++++++++++++++')
+
         return (
             <div className={classes.container}>
                 <Breadcrumbs resource={breadcrumbsResource} />
@@ -491,16 +496,20 @@ class ListTemplate extends Component {
                                 </div>
                             }
                         </div>
-                        <ContentBlock
-                            key={key}
-                            filterText={filterText}
-                            hiddenColumns={hiddenColumns}
-                            createUrl={createUrl}
-                            idsNumber={idsNumber}
-                            isCustomDatagrid={isCustomDatagrid}
-                            history={history}
-                            {...this.props}
-                        />
+                        {
+                            (filterText === userSearch || filterText === userSearchID || filterText === userSearchValue || this.state.userClinicalQuery === this.props.userClinicalQuery) &&
+                                <ContentBlock
+                                    key={key}
+                                    filterText={filterText}
+                                    hiddenColumns={hiddenColumns}
+                                    createUrl={createUrl}
+                                    idsNumber={idsNumber}
+                                    isCustomDatagrid={isCustomDatagrid}
+                                    history={history}
+                                    {...this.props}
+                                />
+                        }
+
                     </Grid>
                     }
                     {
