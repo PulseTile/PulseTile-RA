@@ -49,24 +49,35 @@ function getNumberFromStore(currentVitals, record) {
     return result;
 }
 
+function getRowNumber(currentVitals, currentList, record) {
+    let result = null;
+    const numberFromStore = getNumberFromStore(currentVitals, record);
+    if (numberFromStore) {
+        result = numberFromStore;
+    } else if (record.numberItem) {
+        result = record.numberItem;
+    } else if (currentList) {
+        result = currentList.length;
+    }
+    return result;
+}
+
 const DatagridRow = props => {
-    const { classes, record, currentVitals, saveCurrentVital } = props;
+    const { classes, record, currentVitals, saveCurrentVital, currentList } = props;
     if (!record) {
         return null;
     }
     const newsScore = get(record, 'newsScore', null);
     const newsScoreCellClassName = defineColor(newsScore);
-
-    let numberFromStore = getNumberFromStore(currentVitals, record);
-    let number = numberFromStore ? numberFromStore : record.numberItem;
-
+    const number = getRowNumber(currentVitals, currentList, record);
+    const dateCreatedConverted = 1000 * record.dateCreate;
     return (
         <CustomDatagridRow {...props}>
             <TableCell key={`${record.id}-number`} onClick={() => saveCurrentVital(record.id, number)}>
                 {number}
             </TableCell>
             <TableCell key={`${record.id}-dateCreate`} onClick={() => saveCurrentVital(record.id, number)}>
-                {moment(record.dateCreated).format(DATE_FORMAT)}
+                {moment(dateCreatedConverted).format(DATE_FORMAT)}
             </TableCell>
             <TableCell className={classes[newsScoreCellClassName]} key={`${record.id}-newsScore`} onClick={() => saveCurrentVital(record.id, number)}>
                 {record.newsScore}
@@ -81,6 +92,7 @@ const DatagridRow = props => {
 const mapStateToProps = (state)  => {
     return {
         currentVitals: get(state, 'custom.vitalsForChart.current', []),
+        currentList: get(state, 'admin.resources.vitalsigns.list.ids', []),
     }
 };
 
