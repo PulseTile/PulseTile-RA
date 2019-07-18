@@ -49,17 +49,27 @@ function getNumberFromStore(currentVitals, record) {
     return result;
 }
 
+function getRowNumber(currentVitals, currentList, record) {
+    let result = null;
+    const numberFromStore = getNumberFromStore(currentVitals, record);
+    if (numberFromStore) {
+        result = numberFromStore;
+    } else if (record.number) {
+        result = record.number;
+    } else if (currentList) {
+        result = currentList.length;
+    }
+    return result;
+}
+
 const DatagridRow = props => {
-    const { classes, record, currentVitals, saveCurrentVital } = props;
+    const { classes, record, currentVitals, saveCurrentVital, currentList } = props;
     if (!record) {
         return null;
     }
     const newsScore = get(record, 'newsScore', null);
     const newsScoreCellClassName = defineColor(newsScore);
-
-    let numberFromStore = getNumberFromStore(currentVitals, record);
-    let number = numberFromStore ? numberFromStore : record.number;
-
+    const number = getRowNumber(currentVitals, currentList, record);
     return (
         <CustomDatagridRow {...props}>
             <TableCell key={`${record.id}-number`} onClick={() => saveCurrentVital(record.id, number)}>
@@ -81,6 +91,7 @@ const DatagridRow = props => {
 const mapStateToProps = (state)  => {
     return {
         currentVitals: get(state, 'custom.vitalsForChart.current', []),
+        currentList: get(state, 'admin.resources.vitalsigns.list.ids', []),
     }
 };
 

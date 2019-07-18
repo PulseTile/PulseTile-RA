@@ -21,9 +21,10 @@ const styles = {
 const VaccinationsShow = ({ classes, ...rest }) => (
     <ShowTemplate pageTitle="Vaccination" {...rest}>
         <TextField className={classes.labelBlock} source="vaccinationName" label="Vaccination name" />
+        <DateField className={classes.labelBlock} source="vaccinationDateTime" label="Vaccination date" />
+        <TextField className={classes.labelBlock} source="series" label="Series" />
         <TextField className={classes.labelBlock} source="comment" label="Comment" />
         <TextField className={classes.labelBlock} source="author" label="Author" />
-        <DateField className={classes.labelBlock} source="vaccinationDateTime" label="Date" />
     </ShowTemplate>
 );
 
