@@ -436,11 +436,6 @@ class ListTemplate extends Component {
 
         const open = Boolean(anchorEl);
 
-        console.log('++++++++++++++++++++++++++++++++++')
-        console.log('filterText', filterText)
-        console.log('userSearch', userSearch)
-        console.log('++++++++++++++++++++++++++++++++++')
-
         return (
             <div className={classes.container}>
                 <Breadcrumbs resource={breadcrumbsResource} />
