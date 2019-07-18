@@ -7,6 +7,7 @@ import {
 
 import createCustomReducer from "../../core/reducers/createCustomReducer";
 import businessIntelligenceReducer from "./businessIntelligenceReducer";
+import vitalsReducer from "./vitalsReducer";
 
 /**
  * This component returns version reducers
@@ -19,4 +20,5 @@ export default {
     top3ThingsSynopsis: createCustomReducer(SYNOPSIS_TOP_THREE_THINGS_ACTION, "data.synopsis"),
     contrastMode,
     businessIntelligence: businessIntelligenceReducer,
+    vitalsForChart: vitalsReducer,
 };

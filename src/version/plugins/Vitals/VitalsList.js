@@ -32,8 +32,8 @@ const VitalsList = ({ classes, ...rest }) => (
         isChartDefault={true}
         {...rest}
     >
-        <DateField label="#" source="text" />
-        <DateField label="Date" source="dateCreate" />
+        <DateField label="#" source="number" />
+        <DateField label="Date" source="dateCreated" />
         <TextField label="NEWS Score" source="newsScore" />
         <TextField label="Source" source="source" />
     </ListTemplate>

@@ -8,6 +8,7 @@ import { Toolbar } from "react-admin";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from '@material-ui/core/Typography';
 
+import { vitalsAction } from "../../actions/vitalsAction";
 import CreateButton from "../../../core/common/Buttons/CreateButton";
 import EmptyListBlock from "../../../core/common/ResourseTemplates/EmptyListBlock";
 
@@ -48,6 +49,10 @@ class VitalsChart extends Component {
         disabledLines: [],
     };
 
+    componentDidMount() {
+        this.props.getVitalsForChart();
+    }
+
     /**
      * This action is run when user click on the dot on the legend to toggle lines visibility
      *
@@ -84,21 +89,24 @@ class VitalsChart extends Component {
     render() {
         const { classes, currentList, vitalsList, vitalsEmergencySummary, history, createUrl } = this.props;
         const { disabledLines } = this.state;
-        const vitalsListArray = vitalsEmergencySummary ? Object.values(vitalsEmergencySummary) : Object.values(vitalsList);
-        let chartData = [];
-        for (let i = 0, n = vitalsListArray.length; i < n; i++) {
+        // const vitalsListArray = vitalsEmergencySummary ? Object.values(vitalsEmergencySummary) : vitalsList;
 
-            let item = vitalsListArray[i];
-            chartData.push({
-                name: moment(item.dateCreate).format('MM-DD-YYYY'),
-                diastolicBP: item.diastolicBP,
-                heartRate: item.heartRate,
-                oxygenSaturation: item.oxygenSaturation,
-                respirationRate: item.respirationRate,
-                systolicBP: item.systolicBP,
-                temperature: item.temperature,
-                sourceId: item.sourceId,
-            });
+        let chartData = [];
+        if (vitalsList) {
+            for (let i = 0, n = vitalsList.length; i < n; i++) {
+
+                let item = vitalsList[i];
+                chartData.push({
+                    name: moment(item.dateCreated).format('MM-DD-YYYY'),
+                    diastolicBP: item.diastolicBP,
+                    heartRate: item.heartRate,
+                    oxygenSaturation: item.oxygenSaturation,
+                    respirationRate: item.respirationRate,
+                    systolicBP: item.systolicBP,
+                    temperature: item.temperature,
+                    sourceId: item.sourceId,
+                });
+            }
         }
 
         const DOT_RADIUS = 8;
@@ -175,9 +183,17 @@ class VitalsChart extends Component {
 
 const mapStateToProps = state => {
     return {
-        vitalsList: get(state, 'admin.resources.vitalsigns.data', []),
+        vitalsList: get(state, 'custom.vitalsForChart.data', []),
         currentList: get(state, 'admin.resources.vitalsigns.list.ids', []),
     }
 };
 
-export default connect(mapStateToProps, null)(withStyles(styles)(VitalsChart));
+const mapDispatchToProps = dispatch => {
+    return {
+        getVitalsForChart() {
+            dispatch(vitalsAction.request());
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(VitalsChart));

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import get from "lodash/get";
 import moment from "moment";
+import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
 import TableCell from '@material-ui/core/TableCell';
@@ -8,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import { DANGER_COLOR, WARNING_COLOR, SUCCESS_COLOR } from "./settings";
 import CustomDatagridRow from "../../../../core/common/ResourseTemplates/fragments/CustomDatagridRow";
 import { DATE_FORMAT } from "../../../../core/common/ResourseTemplates/fragments/constants";
+import { vitalsAction } from "../../../actions/vitalsAction";
 
 const styles = theme => ({
     newsScoreCellDanger: {
@@ -34,30 +36,60 @@ function defineColor(newsScoreValue) {
     return result;
 };
 
+function getNumberFromStore(currentVitals, record) {
+    let result = null;
+    if (currentVitals) {
+        for (let i = 0, n = currentVitals.length; i < n; i++) {
+            let item = currentVitals[i];
+            if (record.id === item.id) {
+                result = item.number;
+            }
+        }
+    }
+    return result;
+}
+
 const DatagridRow = props => {
-    const { classes, record } = props;
+    const { classes, record, currentVitals, saveCurrentVital } = props;
     if (!record) {
         return null;
     }
     const newsScore = get(record, 'newsScore', null);
     const newsScoreCellClassName = defineColor(newsScore);
+
+    let numberFromStore = getNumberFromStore(currentVitals, record);
+    let number = numberFromStore ? numberFromStore : record.numberItem;
+
     return (
-        <CustomDatagridRow {...props} >
-            <TableCell key={`${record.id}-text`}>
-                {record.text}
+        <CustomDatagridRow {...props}>
+            <TableCell key={`${record.id}-number`} onClick={() => saveCurrentVital(record.id, number)}>
+                {number}
             </TableCell>
-            <TableCell key={`${record.id}-dateCreate`}>
-                {moment(record.dateCreate).format(DATE_FORMAT)}
+            <TableCell key={`${record.id}-dateCreate`} onClick={() => saveCurrentVital(record.id, number)}>
+                {moment(record.dateCreated).format(DATE_FORMAT)}
             </TableCell>
-            <TableCell className={classes[newsScoreCellClassName]} key={`${record.id}-newsScore`}>
+            <TableCell className={classes[newsScoreCellClassName]} key={`${record.id}-newsScore`} onClick={() => saveCurrentVital(record.id, number)}>
                 {record.newsScore}
             </TableCell>
-            <TableCell key={`${record.id}-source`}>
+            <TableCell key={`${record.id}-source`} onClick={() => saveCurrentVital(record.id, number)}>
                 {record.source}
             </TableCell>
         </CustomDatagridRow>
     );
 };
 
-export default withStyles(styles)(DatagridRow);
+const mapStateToProps = (state)  => {
+    return {
+        currentVitals: get(state, 'custom.vitalsForChart.current', []),
+    }
+};
 
+const mapDispatchToProps = dispatch => {
+    return {
+        saveCurrentVital(id, vitalNumber) {
+            dispatch(vitalsAction.current(id, vitalNumber));
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(DatagridRow));

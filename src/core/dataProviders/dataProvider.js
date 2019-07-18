@@ -109,12 +109,14 @@ const convertDataRequestToHTTP = (type, resource, params) => {
  * @return {array}
  */
 function getResultsFromResponse(response) {
-    return response.map((item, id) => {
-        return Object.assign({
-            number: (id + 1),
-            id: item.sourceId
-        }, item);
-    });
+    let result = [];
+    const responseArray = Object.values(response);
+    for (let i = 0, n = responseArray.length; i < n; i++) {
+        let item = responseArray[i];
+        item.numberItem = i + 1;
+        result.push(item);
+    }
+    return result;
 }
 
 /**
@@ -192,11 +194,9 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
         case GET_LIST:
 
-            const results = response;
-
             const pageNumber = get(params, 'pagination.page', 1);
             const numberPerPage = get(params, 'pagination.perPage', 10);
-            // const results = getResultsFromResponse(response);
+            const results = getResultsFromResponse(response);
 
             const resultsFiltering = getFilterResults(resource, results, params);
             const resultsSorting = getSortedResults(resultsFiltering, params);
@@ -205,32 +205,9 @@ const convertHTTPResponse = (response, type, resource, params) => {
             const endItem = pageNumber * numberPerPage;
             const paginationResults = resultsSorting.slice(startItem, endItem);
 
-            const resultsWithId = [];
-            let count = 1;
-            paginationResults.map(item => {
-                if (resource === 'vitalsigns') {
-                    resultsWithId.push({
-                        id: item.sourceId,
-                        text: '#' + count,
-                        diastolicBP: item.diastolicBP,
-                        heartRate: item.heartRate,
-                        oxygenSaturation: item.oxygenSaturation,
-                        respirationRate: item.respirationRate,
-                        systolicBP: item.systolicBP,
-                        temperature: item.temperature,
-                        newsScore: item.newsScore,
-                        source: item.source,
-                        sourceId: item.sourceId,
-                    });
-                    count++;
-                } else {
-                    resultsWithId.push(item)
-                }
-            });
-
             return {
-                data: resultsWithId,
-                total: results.length,
+                data: paginationResults,
+                total: paginationResults.length,
             };
 
         case GET_ONE:
