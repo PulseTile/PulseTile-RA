@@ -24,6 +24,8 @@ const ProceduresShow = ({ classes, ...rest }) => (
         <DateField className={classes.labelBlock} source="date" label="Date of Procedure" />
         <TextField className={classes.labelBlock} source="performer" label="Procedure Performed By" />
         <TextField className={classes.labelBlock} source="notes" label="Procedure Notes" />
+        <TextField className={classes.labelBlock} source="procedureTerminology" label="Terminology" />
+        <TextField className={classes.labelBlock} source="procedureCode" label="Code" />
         <TextField className={classes.labelBlock} source="author" label="Author" />
     </ShowTemplate>
 );

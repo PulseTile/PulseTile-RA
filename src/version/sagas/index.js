@@ -3,6 +3,7 @@ import feedsRssSagas from "./feedsRssSagas";
 import transferOfCareSagas from "./transferOfCareSagas";
 import respectSagas from "./respectSagas";
 import businessIntelligenceSagas from "./businessIntelligenceSagas";
+import vitalsSagas from "./vitalsSagas";
 
 import createSynopsisSagas from "../../core/sagas/createSynopsisSagas";
 import {
@@ -24,4 +25,5 @@ export default [
     transferOfCareSagas,
     respectSagas,
     businessIntelligenceSagas,
+    vitalsSagas,
 ];

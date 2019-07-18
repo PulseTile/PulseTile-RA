@@ -12,6 +12,7 @@ import createRespectPluginReducer from "./createRespectPluginReducer";
 import respectModal from "./respectModalReducer";
 import versionsServerInfo from "./versionsServerInfoReducer";
 import businessIntelligenceReducer from "./businessIntelligenceReducer";
+import vitalsReducer from "./vitalsReducer";
 
 import { PERSONAL_DETAILS_ACTION } from "../actions/ReSPECT/personalDetailsAction";
 import { SUMMARY_INFORMATION_ACTION } from "../actions/ReSPECT/summaryInformationAction";
@@ -51,4 +52,5 @@ export default {
     emergencyView: createRespectPluginReducer(EMERGENCY_VIEW_ACTION),
     versionsServerInfo,
     businessIntelligence: businessIntelligenceReducer,
+    vitalsForChart: vitalsReducer,
 };

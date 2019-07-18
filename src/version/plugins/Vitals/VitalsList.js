@@ -33,7 +33,7 @@ const VitalsList = ({ classes, ...rest }) => (
         {...rest}
     >
         <DateField label="#" source="number" />
-        <DateField label="Date" source="dateCreate" />
+        <DateField label="Date" source="dateCreated" />
         <TextField label="NEWS Score" source="newsScore" />
         <TextField label="Source" source="source" />
     </ListTemplate>

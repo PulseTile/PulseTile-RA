@@ -21,9 +21,13 @@ const styles = {
 const ProblemsShow = ({ classes, ...rest }) => (
     <ShowTemplate pageTitle="Medication" {...rest}>
         <TextField className={classes.labelBlock} label="Name" source="name" />
-        <TextField className={classes.labelBlock} label="Dose Description" source="doseAmount" />
+        <TextField className={classes.labelBlock} label="Route" source="route" />
+        <TextField className={classes.labelBlock} label="Dose Amount" source="doseAmount" />
+        <TextField className={classes.labelBlock} label="Dose Description" source="doseDirections" />
+        <TextField className={classes.labelBlock} label="Dose Timing" source="doseTiming" />
+        <TextField className={classes.labelBlock} label="Medication Description" source="medicationCode" />
+        <DateField className={classes.labelBlock} label="Start Date" source="startDate" />
         <TextField className={classes.labelBlock} label="Author" source="author" />
-        <DateField className={classes.labelBlock} label="Date" source="dateCreated" />
     </ShowTemplate>
 );
 

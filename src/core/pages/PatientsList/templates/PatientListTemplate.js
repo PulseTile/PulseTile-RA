@@ -281,6 +281,8 @@ class ListTemplate extends Component {
         if (defaultHiddenColumns) {
             this.props.updateTableHead();
         }
+
+
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -491,16 +493,20 @@ class ListTemplate extends Component {
                                 </div>
                             }
                         </div>
-                        <ContentBlock
-                            key={key}
-                            filterText={filterText}
-                            hiddenColumns={hiddenColumns}
-                            createUrl={createUrl}
-                            idsNumber={idsNumber}
-                            isCustomDatagrid={isCustomDatagrid}
-                            history={history}
-                            {...this.props}
-                        />
+                        {
+                            (filterText === userSearch || filterText === userSearchID || filterText === userSearchValue || userClinicalQuery === userClinicalQuery) &&
+                                <ContentBlock
+                                    key={key}
+                                    filterText={filterText}
+                                    hiddenColumns={hiddenColumns}
+                                    createUrl={createUrl}
+                                    idsNumber={idsNumber}
+                                    isCustomDatagrid={isCustomDatagrid}
+                                    history={history}
+                                    {...this.props}
+                                />
+                        }
+
                     </Grid>
                     }
                     {
