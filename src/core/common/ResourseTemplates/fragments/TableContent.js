@@ -48,18 +48,6 @@ const styles = theme => ({
     }
 });
 
-
-function getPath(id, basePath, record) {
-
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    console.log('id', id);
-    console.log('basePath', basePath);
-    console.log('record', record);
-
-    return 'show'
-
-}
-
 const CustomDatagridBody = ({ CustomRow, location, hiddenColumns, history, ...rest }) => {
     return (
         <DatagridBody
@@ -77,7 +65,6 @@ const CustomDatagridBody = ({ CustomRow, location, hiddenColumns, history, ...re
 const CustomDatagrid = ({ classes, history, CustomRow, CustomTableHead, hiddenColumns, location, ...rest }) => {
     return (
         <Datagrid
-            rowClick={(id, basePath, record) => getPath(id, basePath, record)}
             body={
                 <CustomDatagridBody
                     location={location}
@@ -113,7 +100,6 @@ const DatagridBlock = ({ classes, location, hiddenColumns, isCustomDatagrid, chi
             <Datagrid
                 className={classes.tableList}
                 classes={{ rowEven: classes.rowEven, rowOdd: classes.rowOdd  }}
-                rowClick={(id, basePath, record) => getPath(id, basePath, record)}
                 {...rest}
             >
                 {children}
