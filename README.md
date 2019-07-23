@@ -1,10 +1,26 @@
 # General Information
 
-PulseTile-ReactAdmin is a client side part of PulseTile application, based on React-Admin framework. This framework was designed by French company Marmelab. For this moment Marmelab works on development and improvement of React-Admin framework.
+This application is a version of PulseTile-ReactAdmin project, which used NodeRed tool as a server side. Client side of the project is based on ReactAdmin framework as same as all other versions of this project.
 
-Possibilities and features of React-Admin framework are described in this manual: https://marmelab.com/react-admin
+# Tools and Technologies 
 
-This framework gives possibility to solve a lot of programming issues by using its basis functionality. Besides this, React-Admin gives possibility to customize and expand basis functionality if it is necessary.
+**React-Admin** is a framework based on ReactJS-library. Basis functionality of this tool is adaptated to create the client side of CMS.
+
+It was developed and maintains by french Marmelab company.
+
+Tutorial for React-Admin framework is available by this link: https://marmelab.com/react-admin
+
+**Node-RED** is a flow-based programming tool for wiring together hardware devices, APIs and online services in new and interesting ways.
+
+It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single-click.
+
+It was developed by IBM’s Emerging Technology Services team and now a part of the JS Foundation.
+
+Tutorial for Node-Red is available by this link: https://nodered.org
+
+We are combining **NodeRed** and **Redis** as separate elements in this project.
+
+**Redis** is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker. It supports data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes with radius queries and streams. More information about this technology is presented by this link: https://redis.io/
 
 # Initial project component
 
@@ -156,3 +172,38 @@ If you want to create build, you should run the command:
 ```
 $ npm run build
 ```
+
+After this application is available at your local machine by the link http://[localhost]:3000, but your application can't work because server side hasn't been installed yet.
+
+You should install Node-Red at your local machine:
+``` 
+$ docker run -it -d -p 1880:1880 --name my-nodered nodered/node-red-docker
+$ docker exec -it my-nodered bash
+$ npm install node-red-contrib-redis
+$ exit
+$ docker stop my-nodered
+$ docker start my-nodered
+$ docker run -it -p 6379:6379 -d -v 'DIRECTORY_PATH'/redis.conf:/usr/local/etc/redis/redis.conf --name my-redis redis redis-server /usr/local/etc/redis/redis.conf
+```
+
+Node-Red is available by this link: http://[localhost]:1880
+
+For this reason you should define domain name in the public/index.html file:
+
+``` 
+<html>
+    <head>
+    ...
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/javascript">
+          window.config = {
+            domainName: "http://[my-localhost-name]:1880"
+          }
+        </script>
+    </body>
+</html>
+```
+
+After this you should import required flows to your local Node-Red. Flows are located inside your project in the /flows directory.
