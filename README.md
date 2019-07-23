@@ -16,7 +16,7 @@ User also has possibility to add new patients and edit information about patient
 
 **ReSPECT-plugin**
 
-...place for the total description of ReSPECT-plugin appointment... 
+ReSPECT-plugin is a virtual medical card of patient, which storage history of changes.
 
 # Before installing
 
