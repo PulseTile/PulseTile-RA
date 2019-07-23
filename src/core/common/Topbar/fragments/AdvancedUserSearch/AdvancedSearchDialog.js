@@ -126,18 +126,7 @@ class AdvancedSearchDialog extends Component {
         this.props.removeUserSearch();
         this.props.removeClinicalQuery();
         this.props.setAdvancedSearch(advancedSearchData);
-
-        if (nhsNumber) {
-            this.props.setUserId(nhsNumber);
-        } else if (lastName) {
-            this.props.setUserSearch(lastName.toLowerCase());
-        } else if (searchDateOfBirth) {
-            this.props.setSearchType('by_birthdate', searchDateOfBirth);
-        } else if (gender) {
-            this.props.setSearchType('by_gender', gender);
-        } else if (age) {
-            this.props.setSearchType('by_age', age);
-        }
+        this.props.setSearchType('advanced', advancedSearchData);
 
         window.location.replace('/#/patients');
         this.props.onClose();
