@@ -156,3 +156,69 @@ If you want to create build, you should run the command:
 ```
 $ npm run build
 ```
+
+# Showcase version differences
+
+**Showcase-Devra** is the most functionable version of PulseTile-ReactAdmin project. 
+
+It includes all possible plugins and all functionality, which can be used in this project.
+
+The main deffirences of this version are:
+- multi and single patient view mode;
+- business intelligence tool;
+- advanced patients search;
+- clinical query search;
+- patient summary roll;
+- all possible plugins are included.
+
+Showcase version has possibility to work **as in multi patient, as in single patient mode**. 
+User role (IDCR or PHR) is defined by the server side. 
+User permission to review pages and use functionality (like user search, business intelligence etc.) depends on user role.
+
+**Business intelligence** tool gives possibility to investigate statistic of the health condition depends on:
+- patient location (city);
+- patient age range;
+- gender;
+- the most common diagnosis (asthma, measles, diabetes and dementia).
+
+**Advanced search** gives possibility to get a list of patients depends on:
+- patient ID;
+- patient first and last names;
+- age range;
+- gender;
+- date of born.
+
+**Clinical query** gives possibility to get a list of patients depends on:
+- patient allergy, medication, problem or procedure;
+- age range;
+- gender;
+- date of born.
+
+**Patient summary roll** presents a view, which include expand summary of the information about current patient:
+- patients anthropometric data (age, weight, BMI, height, blood group etc.);
+- patients vitals parameters (systolic and diastolic pressure, oxygen saturation, heart rate etc.);
+- last four problems, allergies and medications of this patient;
+- results of lab tests;
+- nearest events with a doctor;
+- vitals measurement history.
+
+Showcase-Devra version includes **all plugins**, which were developed for PulseTile-ReactAdmin project:
+- allergies;
+- medications;
+- problems;
+- contacts;
+- clinical notes;
+- personal notes;
+- procedures;
+- events;
+- lab results;
+- MDTs;
+- referrals;
+- top three things;
+- vaccinations;
+- transfers of care;
+- vitals;
+- ReSPECT plugin.
+
+More information about these plugins are available by this link:
+http://docs.pulsetile.com/react-admin-background.html
