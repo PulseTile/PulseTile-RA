@@ -20,9 +20,6 @@ const currentPatientRequest = takeEvery(CURRENT_PATIENT_ACTION.REQUEST, function
     };
     try {
         const result = yield fetch(url, options).then(res => res.json());
-
-        console.log('resultresult', result)
-
         yield put(currentPatientAction.success(result));
     } catch(e) {
         yield put(currentPatientAction.error(e));

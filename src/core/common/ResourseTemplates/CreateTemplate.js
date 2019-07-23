@@ -60,7 +60,7 @@ const styles = theme => ({
  * @param {shape}   children
  * @param {shape}   rest
  */
-const CreateTemplate = ({ classes, isCustom, isListOpened, toggleListBlock, blockTitle, children, ...rest }) => (
+const CreateTemplate = ({ classes, isCustom, resourceUrl, history, isListOpened, toggleListBlock, blockTitle, children, ...rest }) => (
     <Grid item xs={12} sm={isListOpened ? 6 : 12}>
         <div className={classes.blockTitle}>
             <Typography className={classes.title}>{blockTitle}</Typography>
@@ -74,7 +74,7 @@ const CreateTemplate = ({ classes, isCustom, isListOpened, toggleListBlock, bloc
         { !isCustom
             ?
                 <Create {...rest}>
-                    <SimpleForm className={classes.createForm} toolbar={<CreateFormToolbar />}>
+                    <SimpleForm className={classes.createForm} toolbar={<CreateFormToolbar resourceUrl={resourceUrl} history={history} />}>
                         {children}
                     </SimpleForm>
                 </Create>

@@ -198,7 +198,6 @@ const convertHTTPResponse = (response, type, resource, params) => {
             const pageNumber = get(params, 'pagination.page', 1);
             const numberPerPage = get(params, 'pagination.perPage', 10);
             const results = getResultsFromResponse(response, resource);
-
             const resultsFiltering = getFilterResults(resource, results, params);
             const resultsSorting = getSortedResults(resultsFiltering, params);
 
@@ -208,7 +207,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
 
             return {
                 data: paginationResults,
-                total: paginationResults.length,
+                total: results.length,
             };
 
         case GET_ONE:
