@@ -138,7 +138,14 @@ class ListTemplate extends Component {
      * @return {string}
      */
     getCreateUrl = () => {
-        return "/" + this.props.resourceUrl + "/create";
+        let currentPage = null;
+        const search = get(this.props, 'location.search', null);
+        if (search) {
+            const params = new URLSearchParams(search);
+            currentPage = params.get('page');
+        }
+        let createPage = "/" + this.props.resourceUrl + "/create";
+        return currentPage ? (createPage + "?page=" + currentPage + "&perPage=10") : createPage;
     };
 
     /**
@@ -158,7 +165,8 @@ class ListTemplate extends Component {
      * @return {string}
      */
     isCreatePage = () => {
-        return (this.props.location.pathname === this.getCreateUrl());
+        const defaultCreateUrl = "/" + this.props.resourceUrl + "/create";
+        return (this.props.location.pathname === defaultCreateUrl);
     };
 
     /**
@@ -327,6 +335,7 @@ class ListTemplate extends Component {
         ];
         const CreateBlock = create;
         const createUrl = this.getCreateUrl();
+        const defaultCreateUrl = "/" + this.props.resourceUrl + "/create";
 
         let titleTable = title;
 
@@ -418,7 +427,7 @@ class ListTemplate extends Component {
                             />
                             :
                             <Route
-                                path={createUrl}
+                                path={defaultCreateUrl}
                                 render={({ match }) => <CreateBlock isListOpened={isListOpened} toggleListBlock={this.toggleListBlock} id={match.params.id} {...this.props} />}
                             />
                     }
