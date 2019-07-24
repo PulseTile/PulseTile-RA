@@ -3,7 +3,7 @@ import get from "lodash/get";
 import { themeShortMenu, themeFullMenu } from "../../../version/config/theme.config";
 
 const defaultShortMenu = [
-    { url: '/', label: 'Charts' },
+    // { url: '/', label: 'Charts' },
     { url: '/patients', label: 'Patients' }
 ];
 
