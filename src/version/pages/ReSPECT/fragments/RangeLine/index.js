@@ -30,7 +30,7 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        background: `linear-gradient(160deg, ${theme.palette.mainColor} 50%, #fff 51%, ${theme.palette.mainColor} 50%)`
+        background: `linear-gradient(160deg, ${theme.palette.tableHeadColor} 50%, #fff 51%, ${theme.palette.mainColor} 50%)`
     },
     leftDescriptionBlock: {
         width: "25%",

@@ -58,7 +58,7 @@ const styles = theme => ({
         paddingLeft: 15,
     },
     title: {
-        color: theme.palette.fontColor,
+        color: theme.palette.paperColor,
         backgroundColor: theme.palette.mainColor,
         fontSize: 18,
         fontWeight: 400,
