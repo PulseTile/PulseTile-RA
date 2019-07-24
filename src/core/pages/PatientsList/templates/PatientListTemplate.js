@@ -33,7 +33,7 @@ import ColumnsTogglingIcon from "../../../common/ResourseTemplates/icons/Columns
 
 const listStyles = theme => ({
     container: {
-        width: '100vw',
+        width: '100%',
         height: '100%',
         background: theme.patientSummaryPanel.container.background,
         backgroundSize: "cover",
@@ -362,17 +362,11 @@ class ListTemplate extends Component {
 
     getTitleForAdvancedSearh = (userSearchType, userSearchValue) => {
         let result = '';
-        if (userSearchType === 'by_gender') {
-            result = `Patients search by Gender: ${userSearchValue}`;
-        }
-        if (userSearchType === 'by_birthdate') {
-            result = `Patients search by Birthdate: ${userSearchValue}`;
-        }
         if (userSearchType === 'by_city') {
             result = `Patients search by City: ${userSearchValue}`;
         }
-        if (userSearchType === 'by_age') {
-            result = `Patients search by Age: ${userSearchValue[0]}-${userSearchValue[1]}`;
+        if (userSearchType === 'advanced') {
+            result = userSearchValue.title;
         }
         return result;
     };

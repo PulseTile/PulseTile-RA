@@ -20,10 +20,16 @@ const styles = {
  */
 const PatientShow = ({ classes, ...rest }) => (
     <PatientShowTemplate pageTitle="Patient" {...rest}>
-        <TextField className={classes.labelBlock} label="Name" source="name" />
-        <DateField className={classes.labelBlock} label="Date of Birth" source="dateOfBirth" />
+        <TextField className={classes.labelBlock} label="Name" source="firstName" />
+        <TextField className={classes.labelBlock} label="Surname" source="lastName" />
+        <DateField className={classes.labelBlock} label="Date of Birth" source="birthDate" />
         <TextField className={classes.labelBlock} label="Gender" source="gender" />
-        <TextField className={classes.labelBlock} label="Address" source="totalAddress" />
+        <TextField className={classes.labelBlock} label="Address" source="address" />
+        <TextField className={classes.labelBlock} label="District" source="district" />
+        <TextField className={classes.labelBlock} label="City" source="city" />
+        <TextField className={classes.labelBlock} label="Country" source="country" />
+        <TextField className={classes.labelBlock} label="Telephone Number" source="phone" />
+        <TextField className={classes.labelBlock} label="NHS number" source="nhsNumber" />
     </PatientShowTemplate>
 );
 
