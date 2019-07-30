@@ -16,6 +16,7 @@ import fakePatientsProvider from "./fakePatientsProvider";
 import fakeTestResultsProvider from "./fakeTestResultsProvider";
 
 import newPatientsProvider from "./patientsProvider";
+import { checkFormData } from "./functions";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
 const apiPatientsUser = 'api/patients';
@@ -56,6 +57,9 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
+
+            checkFormData(resource, params);
+
             let updateData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
 
             if (resource === 'problems') {
@@ -79,6 +83,9 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
+
+            checkFormData(resource, params);
+
             let newData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
             url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
             options.method = "POST";
