@@ -69,6 +69,11 @@ const convertDataRequestToHTTP = (type, resource, params) => {
                 updateData.dateOfOnset = moment(dateOfOnset).format('YYYY-MM-DD');
             }
 
+            if (resource === 'medications') {
+                let startDate = get(params, 'data.startDate', null);
+                updateData.startDate = 1000 * moment(startDate).unix();
+            }
+
             url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
             options.method = "PUT";
             if (!options.headers) {
