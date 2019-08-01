@@ -54,7 +54,6 @@ function getParamsByResource(resource) {
             { param: 'data.serviceTeam', label: 'Service / Team' },
             { param: 'data.dateOfRequest', label: 'Date of Request' },
             { param: 'data.dateOfMeeting', label: 'Date of Meeting' },
-            { param: 'data.servicePageLink', label: 'Link to MDT Web Service Directory' },
             { param: 'data.question', label: 'Question For MDT' },
             { param: 'data.notes', label: 'Meeting Discussion' },
         ];
