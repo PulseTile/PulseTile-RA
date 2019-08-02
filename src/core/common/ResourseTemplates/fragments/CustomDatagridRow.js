@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import get from "lodash/get";
+import {Datagrid, DatagridRow} from 'react-admin';
 
 import { withStyles } from "@material-ui/core/styles";
 import TableRow from '@material-ui/core/TableRow';
@@ -32,12 +33,29 @@ class CustomDatagridRow extends Component {
         return id === sourceId;
     };
 
+    getCurrentPage = () => {
+        const { location } = this.props;
+        let result = 1;
+        const search = get(location, 'search', null);
+        if (search) {
+            const params = new URLSearchParams(search);
+            result = params.get('page');
+        }
+        return result;
+    };
+
+    getUrl = () => {
+        const { id, basePath } = this.props;
+        const currentPage = this.getCurrentPage();
+        return (currentPage > 1) ? (basePath + '/' + id + '?page=' + currentPage + '&perPage=10')  : (basePath + '/' + id);
+    };
+
     render() {
-        const { classes, record, id, history, basePath, children } = this.props;
+        const { classes, record, history, children } = this.props;
         if (!record) {
             return null;
         }
-        const detailsPath = basePath + '/' + id;
+        const detailsPath = this.getUrl();
         const isActiveRow = this.isActiveRow();
         return (
             <TableRow className={isActiveRow ? classes.tableRowActive : classes.tableRow} key={record.id} onClick={() => history.push(detailsPath)}>

@@ -5,6 +5,7 @@ import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
+import ChevronRight from "@material-ui/icons/ChevronRight";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -62,6 +63,7 @@ export default props => {
         return null;
     }
     const isOldDesign = get(themeCommonElements, 'isOldDesign', false);
+    const menuHasChevrons = get(themeCommonElements, 'menuHasChevrons', false);
     return (
         <Grid item xs={12} sm={6} md={6} lg={3}>
             <Card className={classes.card}>
@@ -71,6 +73,7 @@ export default props => {
                         <Typography className={classes.title}>
                             {title}
                         </Typography>
+                        { menuHasChevrons && <ChevronRight /> }
                     </h1>
                 </div>
                 { (showMode === SHOW_ALL || !showMode) &&

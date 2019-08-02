@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 
-import PageTitle from "../../../../core/common/Topbar/fragments/PageTitle";
+import { pageHasTitle } from "../../../../core/common/Topbar/functions";
 import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
 import MobileMenu from "./MobileMenu";
 
@@ -153,10 +153,6 @@ class LowPart extends Component {
         const isPageHasPatientBanner = pageHasPatientBanner(location);
         return (
             <Toolbar className={classes.lowPart}>
-                {
-                    isPageHasTitle &&
-                    <PageTitle classes={classes} location={location} />
-                }
                 <div className={classes.menuAndBanner}>
                     <MenuButton classes={classes} setSidebarVisibility={setSidebarVisibility} isSidebarOpen={isSidebarOpen} />
                     {

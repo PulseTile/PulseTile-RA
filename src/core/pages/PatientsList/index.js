@@ -7,16 +7,16 @@ import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 
+import { patientsCountAction } from "../../actions/patientsCountAction";
 import image from "../../../version/images/helm-logo.png";
+import PatientListTemplate from "./templates/PatientListTemplate";
 import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";
 import PatientShow from "./PatientShow";
-
 import DatagridRow from "./fragments/DatagridRow";
 import ColumnsTogglingPopover from "./fragments/ColumnsTogglingPopover";
-
 import { themeCommonElements } from "../../../version/config/theme.config";
 
 const styles = theme => ({
@@ -73,6 +73,20 @@ class PatientsList extends Component {
         this.props.setSidebarVisibility(false);
     }
 
+    componentWillReceiveProps(newProps, prevList) {
+        const { getPatientsCounts } = this.props;
+
+        const prevPatientsIds = get(prevList, 'patientsIds', []);
+        const newPatientsIds = get(newProps, 'patientsIds', []);
+        const isPatientListCount = get(themeCommonElements, 'isPatientListCount', false);
+
+        // if (isPatientListCount && (prevPatientsIds !== newPatientsIds) && newPatientsIds.length > 0) {
+        //     newPatientsIds.map(item => {
+        //         getPatientsCounts(item);
+        //     });
+        // }
+    }
+
     updateTableHead = () => {
         this.setState({
             key: this.state.key + 1,
@@ -85,9 +99,9 @@ class PatientsList extends Component {
     };
 
     render() {
-        const { userSearch, userSearchID, classes } = this.props;
+        const { userSearch, userSearchID, userSearchType, userClinicalQuery, userSearchValue, classes } = this.props;
 
-        if (!userSearch && !userSearchID) {
+        if (!userSearch && !userSearchID && !userSearchType && !userSearchValue && !userClinicalQuery) {
             return (
                 <div className={classes.content}>
                     <div className={classes.imageBlock} >
@@ -102,9 +116,10 @@ class PatientsList extends Component {
             )
         }
 
+
         return (
             <React.Fragment>
-                <ListTemplate
+                <PatientListTemplate
                     basePath="/patients"
                     create={PatientCreate}
                     edit={PatientEdit}
@@ -121,14 +136,43 @@ class PatientsList extends Component {
                     {...this.props}
                 >
                     <TextField source="name" label="Name"/>
-                    <TextField source="address" label="Address" />
+                    { this.isColumnHidden('address') && <TextField source="totalAddress" label="Address" /> }
                     <TextField source="gender" label="Gender"/>
                     <DateField source="birthDate" label="Born"/>
-                    <TextField source="nhsNumber" label="NHS No." />
+                    { this.isColumnHidden('nhsNumber') && <TextField source="nhsNumber" label="NHS No." /> }
+
+                    {/*{ this.isColumnHidden('ordersDate') &&*/}
+                    {/*    <DateField source="ordersDate" label={<LabelWithIcon classes={classes} title="Orders" icon={<TodayIcon className={classes.icon}/>}/>} />*/}
+                    {/*}*/}
+                    {/*{ this.isColumnHidden('ordersCount') &&*/}
+                    {/*    <DateField source="ordersCount" label={<LabelWithIcon classes={classes} title="Orders" icon={<CheckIcon className={classes.icon}/>}/>} />*/}
+                    {/*}*/}
+                    {/*{ this.isColumnHidden('resultsDate') &&*/}
+                    {/*    <DateField source="resultsDate" label={<LabelWithIcon classes={classes} title="Results" icon={<TodayIcon className={classes.icon} />} />} />*/}
+                    {/*}*/}
+                    {/*{ this.isColumnHidden('resultsCount') &&*/}
+                    {/*    <DateField source="resultsCount" label={<LabelWithIcon classes={classes} title="Results" icon={<CheckIcon className={classes.icon} />} />} />*/}
+                    {/*}*/}
+
+                    { this.isColumnHidden('vitalsDate')  &&
+                        <DateField source="vitalsDate" label={<LabelWithIcon classes={classes} title="Vitals" icon={<TodayIcon className={classes.icon} />} />} />
+                    }
+
+                    { this.isColumnHidden('vitalsCount') &&
+                        <DateField source="vitalsCount" label={<LabelWithIcon classes={classes} title="Vitals" icon={<CheckIcon className={classes.icon}/>}/>} />
+                    }
+
+                    { this.isColumnHidden('problemsDate') &&
+                        <DateField source="problemsDate" label={<LabelWithIcon classes={classes} title="Problems" icon={<TodayIcon className={classes.icon} />} />}/>
+                    }
+
+                    { this.isColumnHidden('problemsCount') &&
+                        <DateField source="problemsCount" label={<LabelWithIcon classes={classes} title="Problems" icon={<CheckIcon className={classes.icon} />} />} />
+                    }
 
                     <ViewButton />
 
-                </ListTemplate>
+                </PatientListTemplate>
             </React.Fragment>
         );
     }
@@ -138,7 +182,11 @@ const mapStateToProps = state => {
     return {
         userSearch: get(state, 'custom.userSearch.data', null),
         userSearchID: get(state, 'custom.userSearch.id', null),
+        userSearchType: get(state, 'custom.userSearch.type', null),
+        userSearchValue: get(state, 'custom.userSearch.value', null),
+        userClinicalQuery: get(state, 'custom.clinicalQuery.data', null),
         hiddenColumns:  get(state, 'custom.toggleColumns.data.patients', []),
+        patientsIds: get(state, 'admin.resources.patients.list.ids', []),
     }
 };
 
@@ -147,6 +195,9 @@ const mapDispatchToProps = dispatch => {
         setSidebarVisibility(params) {
             dispatch(setSidebarVisibility(params));
         },
+        getPatientsCounts(patientId) {
+            dispatch(patientsCountAction.request(patientId));
+        }
     }
 };
 

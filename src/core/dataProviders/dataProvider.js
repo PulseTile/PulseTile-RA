@@ -6,14 +6,17 @@ import {
     UPDATE,
     HttpError,
 } from "react-admin";
+import moment from "moment";
 import sort, { ASC, DESC } from 'sort-array-objects';
 
 import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
 import fakePatientsProvider from "./fakePatientsProvider";
+// import fakeTestResultsProvider from "./fakeTestResultsProvider";
 
 import newPatientsProvider from "./patientsProvider";
+import { checkFormData } from "./functions";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
 const apiPatientsUser = 'api/patients';
@@ -54,7 +57,23 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
+
+            checkFormData(resource, params);
+
             let updateData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
+
+            if (resource === 'problems') {
+                let dateCreated = get(params, 'data.dateCreated', null);
+                let dateOfOnset = get(params, 'data.dateOfOnset', null);
+                updateData.dateCreated = moment(dateCreated).format('DD-MM-YYYY');
+                updateData.dateOfOnset = moment(dateOfOnset).format('YYYY-MM-DD');
+            }
+
+            if (resource === 'medications') {
+                let startDate = get(params, 'data.startDate', null);
+                updateData.startDate = 1000 * moment(startDate).unix();
+            }
+
             url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
             options.method = "PUT";
             if (!options.headers) {
@@ -69,6 +88,9 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
+
+            checkFormData(resource, params);
+
             let newData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
             url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
             options.method = "POST";
@@ -98,7 +120,10 @@ const convertDataRequestToHTTP = (type, resource, params) => {
  */
 function getResultsFromResponse(response) {
     return response.map((item, id) => {
-        return Object.assign({id: item.sourceId}, item);
+        return Object.assign({
+            number: (id + 1),
+            id: item.sourceId
+        }, item);
     });
 }
 
@@ -120,12 +145,6 @@ function isItemConsider(item, filters, filterText) {
         }
     });
     return result;
-}
-
-function isSearchPresented(item, search) {
-    const userName = item.name.toLowerCase().trim();
-    const searchString = search.toLowerCase().trim();
-    return userName.search(searchString) >= 0;
 }
 
 /**
@@ -200,6 +219,7 @@ const convertHTTPResponse = (response, type, resource, params) => {
                 sourceID = compositionUidArray[0];
             }
             dataFromRequest.id = get(response, 'host', null) + '-' + sourceID;
+            dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
             }
@@ -247,5 +267,8 @@ export default (type, resource, params) => {
     if (resource === `patients`) {
         return newPatientsProvider(type, resource, params);
     }
+    // if (resource === `labresults`) {
+    //     return fakeTestResultsProvider(type, resource, params);
+    // }
     return dataProvider(type, resource, params);
 };

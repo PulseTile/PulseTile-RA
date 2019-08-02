@@ -15,7 +15,7 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        marginRight: 25,
+        width: "100%",
         height: 36,
         minWidth: 350,
         borderRadius: 18,
@@ -23,7 +23,7 @@ const styles = theme => ({
     },
     input: {
         display: "block",
-        width: "80%",
+        width: "100%",
         height: "95%",
         paddingTop: 0,
         paddingBottom: 0,

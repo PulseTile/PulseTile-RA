@@ -94,16 +94,6 @@ const MedicationsInputs = ({ classes, ...rest }) => (
         </FormGroup>
 
         <FormGroup className={classes.formGroup}>
-            <DateInput
-                source="startTime"
-                label="Start time"
-                fullWidth
-                InputProps={{ disableUnderline: true, classes: { root: classes.customRoot, input: classes.customInput } }}
-                InputLabelProps={{ shrink: true, className: classes.customFormLabel }}
-            />
-        </FormGroup>
-
-        <FormGroup className={classes.formGroup}>
             <TextInput
                 source="author"
                 label="Author"

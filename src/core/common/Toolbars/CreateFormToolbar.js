@@ -1,10 +1,12 @@
 import React from "react";
-import { Toolbar, SaveButton, ListButton } from "react-admin";
+import { Toolbar, ListButton } from "react-admin";
 
 import { withStyles } from '@material-ui/core/styles';
 import BlockIcon from '@material-ui/icons/Block';
 
 import CustomSaveButton from "../../common/Buttons/CustomSaveButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ({
     listButton: {
@@ -43,13 +45,20 @@ const styles = theme => ({
  * This component returns toolbar without delete button for create forms
  *
  * @author Bogdan Shcherban <bsc@piogroup.net>
- * @param {shape} classes
- * @param {shape} props
+ * @param {shape}  classes
+ * @param {string} resourceUrl
+ * @param {shape}  history
+ * @param {shape}  props
  */
-const CreateFormToolbar = ({ classes, ...props}) => {
+const CreateFormToolbar = ({ classes, resourceUrl, history, ...props}) => {
     return (
         <Toolbar className={classes.toolbar} {...props} >
-            <ListButton label="Cancel" icon={<BlockIcon />} className={classes.listButton} />
+            <Tooltip title="Cancel" disableHoverListener={true}>
+                <IconButton type="button" className={classes.listButton} onClick={() => history.push('/' + resourceUrl)}>
+                    <BlockIcon />
+                    Cancel
+                </IconButton>
+            </Tooltip>
             <CustomSaveButton {...props} />
         </Toolbar>
     );

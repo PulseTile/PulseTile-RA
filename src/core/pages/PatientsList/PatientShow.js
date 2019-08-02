@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, DateField } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 
-import ShowTemplate from "../../common/ResourseTemplates/ShowTemplate";
+import PatientShowTemplate from "./templates/PatientShowTemplate";
 
 const styles = {
     labelBlock: {
@@ -19,12 +19,18 @@ const styles = {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 const PatientShow = ({ classes, ...rest }) => (
-    <ShowTemplate pageTitle="Patient" {...rest}>
-        <TextField className={classes.labelBlock} label="Name" source="name" />
-        <DateField className={classes.labelBlock} label="Date of Birth" source="dateOfBirth" />
+    <PatientShowTemplate pageTitle="Patient" {...rest}>
+        <TextField className={classes.labelBlock} label="Name" source="firstName" />
+        <TextField className={classes.labelBlock} label="Surname" source="lastName" />
+        <DateField className={classes.labelBlock} label="Date of Birth" source="birthDate" />
         <TextField className={classes.labelBlock} label="Gender" source="gender" />
         <TextField className={classes.labelBlock} label="Address" source="address" />
-    </ShowTemplate>
+        <TextField className={classes.labelBlock} label="District" source="district" />
+        <TextField className={classes.labelBlock} label="City" source="city" />
+        <TextField className={classes.labelBlock} label="Country" source="country" />
+        <TextField className={classes.labelBlock} label="Telephone Number" source="phone" />
+        <TextField className={classes.labelBlock} label="NHS number" source="nhsNumber" />
+    </PatientShowTemplate>
 );
 
 export default withStyles(styles)(PatientShow);

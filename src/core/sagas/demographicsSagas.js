@@ -15,6 +15,7 @@ export default takeEvery(DEMOGRAPHICS_ACTION.REQUEST, function*(action) {
         options.headers = new Headers({ Accept: 'application/json' });
     }
     options.headers = {
+        Authorization: "Bearer " + token,
         'X-Requested-With': "XMLHttpRequest",
         Authorization: "Bearer " + token,
     };
