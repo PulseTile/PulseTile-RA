@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { pageHasTitle } from "../../../../core/common/Topbar/functions";
 import PatientBanner from "../../../../core/common/Topbar/fragments/PatientBanner";
 import MobileMenu from "./MobileMenu";
 

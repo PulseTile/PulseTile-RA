@@ -6,11 +6,12 @@ import { TextField, DateField, setSidebarVisibility } from "react-admin";
 import { withStyles } from '@material-ui/core/styles';
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import TodayIcon from "@material-ui/icons/Today";
+import CheckIcon from "@material-ui/icons/Check";
 
 import { patientsCountAction } from "../../actions/patientsCountAction";
 import image from "../../../version/images/helm-logo.png";
 import PatientListTemplate from "./templates/PatientListTemplate";
-import ListTemplate from "../../common/ResourseTemplates/ListTemplate";
 import ViewButton from "../../common/Buttons/ViewButton";
 import PatientCreate from "./PatientCreate";
 import PatientEdit from "./PatientEdit";

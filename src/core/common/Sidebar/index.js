@@ -34,8 +34,6 @@ const styles = theme => ({
     },
     menuItem: {
         color: `${theme.palette.menuItemsColor} !important`,
-        fontSize: 14,
-        fontWeight: 600,
         borderBottom: `1px solid ${theme.palette.borderColor}`,
         '&:hover': {
             backgroundColor: theme.palette.secondaryMainColor,
@@ -47,8 +45,6 @@ const styles = theme => ({
         },
     },
     menuItemSelected: {
-        fontSize: 14,
-        fontWeight: 600,
         backgroundColor: theme.palette.secondaryMainColor + '! important',
         color: "#fff !important",
         borderBottom: `1px solid ${theme.palette.borderColor}`,
