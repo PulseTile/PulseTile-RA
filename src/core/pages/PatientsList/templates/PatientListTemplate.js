@@ -33,7 +33,7 @@ import ColumnsTogglingIcon from "../../../common/ResourseTemplates/icons/Columns
 
 const listStyles = theme => ({
     container: {
-        width: '100vw',
+        width: '100%',
         height: '100%',
         background: theme.patientSummaryPanel.container.background,
         backgroundSize: "cover",
@@ -281,6 +281,8 @@ class ListTemplate extends Component {
         if (defaultHiddenColumns) {
             this.props.updateTableHead();
         }
+
+
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -361,18 +363,16 @@ class ListTemplate extends Component {
     };
 
     getTitleForAdvancedSearh = (userSearchType, userSearchValue) => {
+
+        console.log('userSearchType', userSearchType)
+        console.log('userSearchValue', userSearchValue)
+
         let result = '';
-        if (userSearchType === 'by_gender') {
-            result = `Patients search by Gender: ${userSearchValue}`;
-        }
-        if (userSearchType === 'by_birthdate') {
-            result = `Patients search by Birthdate: ${userSearchValue}`;
-        }
         if (userSearchType === 'by_city') {
             result = `Patients search by City: ${userSearchValue}`;
         }
-        if (userSearchType === 'by_age') {
-            result = `Patients search by Age: ${userSearchValue[0]}-${userSearchValue[1]}`;
+        if (userSearchType === 'advanced') {
+            result = userSearchValue.title;
         }
         return result;
     };
@@ -491,16 +491,20 @@ class ListTemplate extends Component {
                                 </div>
                             }
                         </div>
-                        <ContentBlock
-                            key={key}
-                            filterText={filterText}
-                            hiddenColumns={hiddenColumns}
-                            createUrl={createUrl}
-                            idsNumber={idsNumber}
-                            isCustomDatagrid={isCustomDatagrid}
-                            history={history}
-                            {...this.props}
-                        />
+                        {
+                            (filterText === userSearch || filterText === userSearchID || filterText === userSearchValue || this.state.userClinicalQuery === this.props.userClinicalQuery) &&
+                                <ContentBlock
+                                    key={key}
+                                    filterText={filterText}
+                                    hiddenColumns={hiddenColumns}
+                                    createUrl={createUrl}
+                                    idsNumber={idsNumber}
+                                    isCustomDatagrid={isCustomDatagrid}
+                                    history={history}
+                                    {...this.props}
+                                />
+                        }
+
                     </Grid>
                     }
                     {

@@ -100,8 +100,6 @@ class PatientDatagridRow extends Component {
         const isPermissionRequired = get(themeCommonElements, 'patientSummaryPermission', false);
         const open = Boolean(anchorEl);
 
-        console.log('record', record)
-
         return (
             <CustomDatagridRow {...this.props} >
                 <TableCell key={`${record.id}-name`}>

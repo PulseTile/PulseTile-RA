@@ -79,12 +79,7 @@ const CustomHeader = ({ classes, items }) => {
 
     const dateAndTime = items[0];
     const events = items[1];
-
-    console.log('dateAndTime', dateAndTime)
-
     const dateForPoint = moment.unix(dateAndTime).format('Do MMM')
-
-    console.log('dateForPoint', dateForPoint)
 
     // Use your own CSS
     return (
@@ -165,7 +160,6 @@ const EventsTimeline = ({ classes }) => {
 
     const eventsGroupByDateArray = Object.entries(eventsGroupByDate);
 
-    console.log('eventsGroupByDate', eventsGroupByDate)
     return (
         <div className={classes.timeline}>
             <Timeline>

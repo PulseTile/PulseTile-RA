@@ -12,6 +12,7 @@ import { token, domainName } from "../token";
 function checkFormData(params) {
 
     const paramsArray = [
+        { param: 'data.prefix', label: 'Preferred Name' },
         { param: 'data.firstName', label: 'Name' },
         { param: 'data.lastName', label: 'Surname' },
         { param: 'data.birthDate', label: 'Date of Birth' },
@@ -48,12 +49,12 @@ function getRequestUrl(params) {
     let result = null;
     if (searchType === 'id') {
         result = `${domainName}/mpi/Patient/${search}`;
+    } else if (searchType === 'by_city' && search) {
+        result = `${domainName}/mpi/Patient/search/searchByCity`;
     } else if (searchType === 'clinicalQuery' && clinicalSearchType) {
         result = `${domainName}/api/patient/clinicalSearch/${clinicalSearchType}`;
-    } else if (searchType === 'by_age' && search) {
-        result = `${domainName}/mpi/Patient/search/advanced?type=by_age&from=${search[0]}&to=${search[1]}`;
-    } else if (searchType !== 'name' && search) {
-        result = `${domainName}/mpi/Patient/search/advanced?type=${searchType}&value=${search.toLowerCase()}`;
+    } else if ((searchType === 'by_age' || searchType !== 'name') && search) {
+        result = `${domainName}/mpi/Patient/search/advanced`;
     } else if (search) {
         result = `${domainName}/mpi/Patient?name=${search}`;
     }
@@ -62,14 +63,45 @@ function getRequestUrl(params) {
 
 function getRequestMethod(params) {
     const isClinicalQuery = get(params, 'filter.clinicalQuery', null);
-    return isClinicalQuery ? 'POST' : 'GET';
+    const searchType = get(params, 'filter.filterType', null);
+    const isSearchByCity = (searchType === 'by_city');
+    const isSearchByAge = (searchType === 'by_age');
+    const isAdvancedSearch = (searchType === 'advanced');
+    return (isClinicalQuery || isSearchByCity || isSearchByAge || isAdvancedSearch) ? 'POST' : 'GET';
 }
 
-function getRequestBody(params) {
-    const isClinicalQuery = get(params, 'filter.clinicalQuery', null);
-    if (!isClinicalQuery) {
-        return null;
+function getAdvancedSearchBody(params) {
+    const searchParams = get(params, 'filter.filterText', null);
+    const nhsNumber = get(searchParams, 'nhsNumber', null);
+    const firstName = get(searchParams, 'firstName', null);
+    const lastName = get(searchParams, 'lastName', null);
+    const gender = get(searchParams, 'gender', null);
+    const birthDate = get(searchParams, 'dateOfBirth', null);
+    const from = get(searchParams, 'minAge', 0);
+    const to = get(searchParams, 'maxAge', 100);
+    let requestBody = {};
+    if (birthDate) {
+        requestBody = {
+            nhsNumber: nhsNumber,
+            firstName: firstName,
+            lastName : lastName,
+            gender: gender,
+            birthDate: birthDate
+        }
+    } else {
+        requestBody = {
+            from: from,
+            to: to,
+            nhsNumber: nhsNumber,
+            firstName: firstName,
+            lastName : lastName,
+            gender: gender,
+        }
     }
+    return requestBody;
+}
+
+function getClinicalQueryBody(params) {
     let requestBody = {
         query: get(params, 'filter.clinicalQuery.searchValue', null),
         gender: get(params, 'filter.clinicalQuery.gender', null),
@@ -83,6 +115,38 @@ function getRequestBody(params) {
         requestBody.from = from;
         requestBody.to = to;
     }
+    return requestBody;
+}
+
+function getRequestBody(params) {
+
+    const isClinicalQuery = get(params, 'filter.clinicalQuery', null);
+    const searchType = get(params, 'filter.filterType', null);
+    const isSearchByCity = (searchType === 'by_city');
+    const isSearchByAge = (searchType === 'by_age');
+    const isAdvancedSearch = (searchType === 'advanced');
+
+    if (!isClinicalQuery && !isSearchByCity && !isSearchByAge && !isAdvancedSearch) {
+        return null;
+    }
+
+    let requestBody = {};
+    if (isClinicalQuery) {
+        requestBody = getClinicalQueryBody(params);
+    } else if (isSearchByCity) {
+        requestBody = {
+            city: get(params, 'filter.filterText', null),
+        }
+    } else if (isAdvancedSearch) {
+        requestBody = getAdvancedSearchBody(params);
+    } else if (isSearchByAge) {
+        const ageRange = get(params, 'filter.filterText', [0, 100]);
+        requestBody = {
+            from: ageRange[0],
+            to: ageRange[1],
+        };
+    }
+
     return JSON.stringify(requestBody);
 }
 
@@ -307,7 +371,9 @@ const convertPatientsHTTPResponse = (response, type, resource, params) => {
             }
             dataFromRequest.id = Number(get(params, 'data.nhsNumber', null));
             dataFromRequest.name = get(params, 'data.firstName', null) + ' ' + get(params, 'data.lastName', null);
-            dataFromRequest.address = get(params, 'data.address', null) + ' ' + get(params, 'data.city', null) + ' ' + get(params, 'data.district', null) + ' ' + get(params, 'data.postCode', null);
+            let newAddress = get(params, 'data.address', null) + ' ' + get(params, 'data.city', null) + ' ' + get(params, 'data.district', null) + ' ' + get(params, 'data.postCode', null);
+            dataFromRequest.address = newAddress;
+            dataFromRequest.totalAddress = newAddress;
             dataFromRequest.isNew = true;
             if (!get(params, 'source', null)) {
                 dataFromRequest.source = 'ethercis';
@@ -402,6 +468,10 @@ function getSortedResults(results, params) {
 
 export default (type, resource, params) => {
     let { url, options } = convertPatientsDataRequestToHTTP(type, resource, params);
+    if (!url) {
+        return null;
+    }
+
     let responseInfo = {};
     return fetch(url, options).then(response => {
         responseInfo.status = get(response, 'status', null);

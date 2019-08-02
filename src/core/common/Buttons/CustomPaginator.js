@@ -55,6 +55,7 @@ class CustomPaginator extends Component {
 
     state = {
         page: 1,
+        showAll: false,
     };
 
     /**
@@ -72,6 +73,36 @@ class CustomPaginator extends Component {
                 history.push("/" + resourceUrl + "?page=" + page + "&perPage=" + itemsPerPage)
             }
         );
+    };
+
+    showAllButtons = () => {
+        this.setState({
+            showAll: true,
+        });
+    };
+
+    /**
+     * This function show all possible buttons
+     *
+     * @author Bogdan Shcherban <bsc@piogroup.net>
+     * @param {number} buttonsNumber
+     * @param {number} page
+     * @param {shape} classes
+     * @return {array}
+     */
+    getAllButtons = (buttonsNumber, page, classes) => {
+        let buttons = [];
+        for (let i = 0; i < buttonsNumber; i++) {
+            buttons.push(
+                <Button
+                    onClick={() => this.goToPage(i + 1)}
+                    aria-label={ i + 1 }
+                    className={(page === i + 1) ? classes.activeButton : classes.button}>
+                    { i + 1 }
+                </Button>
+            );
+        }
+        return buttons;
     };
 
     /**
@@ -97,7 +128,48 @@ class CustomPaginator extends Component {
                     </Button>
                 );
             }
-            buttons.push(<Button className={classes.button}>{'...'}</Button>);
+            if (page === half) {
+                buttons.push(
+                    <Button
+                        onClick={() => this.goToPage(page + 1)}
+                        aria-label={ page + 1 }
+                        className={(page === page + 1) ? classes.activeButton : classes.button}>
+                        { page + 1 }
+                    </Button>
+                );
+            }
+            if (page > half && page < buttonsNumber - half) {
+                if (page > half + 1) {
+                    buttons.push(<Button className={classes.button} onClick={() => this.showAllButtons()}>{'...'}</Button>);
+                }
+                buttons.push(
+                    <Button
+                        onClick={() => this.goToPage(page + 1)}
+                        aria-label={ page }
+                        className={classes.activeButton}>
+                        { page }
+                    </Button>
+                );
+                buttons.push(
+                    <Button
+                        onClick={() => this.goToPage(page + 1)}
+                        aria-label={ page + 1 }
+                        className={(page === page + 1) ? classes.activeButton : classes.button}>
+                        { page + 1 }
+                    </Button>
+                );
+            }
+            buttons.push(<Button className={classes.button} onClick={() => this.showAllButtons()}>{'...'}</Button>);
+            if (page === buttonsNumber - half) {
+                buttons.push(
+                    <Button
+                        onClick={() => this.goToPage(page)}
+                        aria-label={ page }
+                        className={classes.activeButton}>
+                        { page }
+                    </Button>
+                );
+            }
             for (let i = buttonsNumber - half; i < buttonsNumber; i++) {
                 buttons.push(
                     <Button
@@ -126,9 +198,9 @@ class CustomPaginator extends Component {
 
     render() {
         const { classes, itemsPerPage, total } = this.props;
-        const { page } = this.state;
+        const { page, showAll } = this.state;
         const buttonsNumber = Math.ceil(total / itemsPerPage);
-        const buttons = this.getDigitButtons(buttonsNumber, page, classes);
+        const buttons = showAll ? this.getAllButtons(buttonsNumber, page, classes) : this.getDigitButtons(buttonsNumber, page, classes);
         return (
             <div className={classes.paginatorRoot}>
                 <Tooltip title="First page">

@@ -76,9 +76,11 @@ class HandleErrorModal extends Component {
         return (Number(status) === 400 && message.includes('JWT')) || Number(status) === 403;
     };
 
-    getErrorDescription = (status, isJwtOld) => {
+    getErrorDescription = (status, errorMessage, isJwtOld) => {
         let result = 'Something is wrong';
-        if (Number(status) === 404) {
+        if (Number(status) === 777) {
+            result = errorMessage;
+        } else if (Number(status) === 404) {
             result = 'API is currently unavailable';
         } else if (Number(status) > 499) {
             result = 'Something is wrong with the server. Please try again later.';
@@ -105,7 +107,7 @@ class HandleErrorModal extends Component {
         const isOpen = isErrorModalOpen || (errorStatus && errorMessage);
 
         const isJwtOld = this.isSessionExpired(errorStatus, errorMessage);
-        const errorDescription = this.getErrorDescription(errorStatus, isJwtOld);
+        const errorDescription = this.getErrorDescription(errorStatus, errorMessage, isJwtOld);
         return (
             <React.Fragment>
                 <Dialog open={isOpen} {...rest}>

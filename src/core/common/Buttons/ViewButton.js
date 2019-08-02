@@ -32,10 +32,10 @@ const styles = theme => ({
         '& span p': {
             fontSize: 16,
             color: theme.isOldDesign ? theme.palette.secondaryMainColor : theme.palette.viewButton,
-        }
+        },
     },
     arrowButton: {
-        height: 38,
+        height: 40,
         paddingLeft: 0,
         paddingRight: 0,
         borderTop: theme.isOldDesign ? `1px solid ${theme.palette.secondaryMainColor}` : null,
