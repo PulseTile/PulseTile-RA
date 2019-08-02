@@ -8,6 +8,8 @@ import DashboardCard from "../../../common/DashboardCard";
 import { themeCommonElements } from "../../../../version/config/theme.config";
 import {getSynopsisProps, synopsisData} from "../config";
 
+const invertedTableHeaders = get(themeCommonElements, 'invertedTableHeaders', false);
+
 const styles = theme => ({
     card: {
         borderRadius: 0,
@@ -20,11 +22,11 @@ const styles = theme => ({
         display: "flex",
         flexDirection: "column",
         height: theme.isOldDesign ? 50 : 100,
-        backgroundColor: theme.palette.tableHeadColor,
+        backgroundColor: invertedTableHeaders ? theme.palette.tableHeadColor : theme.palette.mainColor,
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-        color: theme.palette.mainColor,
+        color: invertedTableHeaders ? theme.palette.mainColor : theme.palette.paperColor,
         border: theme.isOldDesign ? `1px solid ${theme.palette.borderColor}` : null,
         '&:hover': {
             cursor: "pointer",
@@ -46,7 +48,7 @@ const styles = theme => ({
     },
     title: {
         marginBottom: 0,
-        color: theme.palette.fontColor,
+        color: invertedTableHeaders ? theme.palette.fontColor : theme.palette.paperColor,
         fontSize: 18,
         fontWeight: 600,
         zIndex: 99999999,

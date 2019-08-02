@@ -89,6 +89,26 @@ const styles = theme => ({
     },
     emptyBlock: {
         flexGrow: 1,
+    },
+    userSearchBlock: {
+        [theme.breakpoints.down('sm')]: {
+            display: "none",
+        },
+        display: 'flex',
+        flexDirection: 'row',
+        maxWidth: 300,
+        marginRight: 60,
+    },
+    userSearchBlockMobile: {
+        [theme.breakpoints.up('md')]: {
+            display: "none",
+        },
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        backgroundColor: theme.palette.paperColor,
+        minHeight: 52,
+        padding: 10,
     }
 });
 
@@ -107,38 +127,45 @@ class TopPart extends Component {
     render() {
         const { classes, location } = this.props;
         return (
-            <Toolbar className={classes.topPart}>
-                <div className={classes.homeButtonItem}>
-                    <Tooltip title="Home">
-                        <IconButton id="icon-home" aria-label="Home" className={classes.homeButton} onClick={() => this.goHomePage()}>
-                            <HomeIcon />
-                        </IconButton>
-                    </Tooltip>
-                </div>
-                <div className={classes.mainLogoItem}>
+            <React.Fragment>
+                <Toolbar className={classes.topPart}>
+                    <div className={classes.homeButtonItem}>
+                        <Tooltip title="Home">
+                            <IconButton id="icon-home" aria-label="Home" className={classes.homeButton} onClick={() => this.goHomePage()}>
+                                <HomeIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </div>
+                    <div className={classes.mainLogoItem}>
+                        <CardMedia
+                            id="logo-image"
+                            className={classes.image}
+                            component="img"
+                            alt="Pulse Tile"
+                            image={headerLogo}
+                            title="Pulse Tile"
+                            onClick={() => this.goHomePage()}
+                        />
+                    </div>
+                    <div className={classes.emptyBlock}></div>
+                    <div className={classes.userSearchBlock}>
+                        <UserSearch location={location} />
+                    </div>
                     <CardMedia
-                        id="logo-image"
-                        className={classes.image}
+                        className={classes.nhsLogo}
                         component="img"
                         alt="Pulse Tile"
-                        image={headerLogo}
+                        height="29px"
+                        image={nhsLogo}
                         title="Pulse Tile"
-                        onClick={() => this.goHomePage()}
                     />
-                </div>
-                <div className={classes.emptyBlock}></div>
-                <UserSearch location={location} />
-                <CardMedia
-                    className={classes.nhsLogo}
-                    component="img"
-                    alt="Pulse Tile"
-                    height="29px"
-                    image={nhsLogo}
-                    title="Pulse Tile"
-                />
-                <ContrastMode classes={classes} />
-                <UserPanelButton classes={classes} />
-            </Toolbar>
+                    <ContrastMode classes={classes} />
+                    <UserPanelButton classes={classes} />
+                </Toolbar>
+                <Toolbar className={classes.userSearchBlockMobile}>
+                    <UserSearch location={location} />
+                </Toolbar>
+            </React.Fragment>
         );
     }
 };

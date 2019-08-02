@@ -119,30 +119,34 @@ class PatientSummaryInfo extends Component {
             { url: location.pathname, title: "Patient Summary", isActive: false }
         ];
         const viewType = isRollView ? ROLL_VIEW : TABLE_VIEW;
+        const isRollViewDefault = get(themeCommonElements, 'hasPatientSummaryRoll', false);
         return (
             <Grid className={classes.container} >
                 <Breadcrumbs resource={breadcrumbsResource} />
                 <div className={classes.toggleViewBlock}>
                     <SettingsDialog className={classes.settingsIcon} />
-                    <div className={classes.toggleViewBlock} >
-                        <Typography variant="h1" className={classes.formGroupLabel}>View</Typography>
-                        <FormGroup className={classes.formGroup}>
-                            <RadioGroup name="viewType" className={classes.radioGroup} value={viewType} onChange={() => this.toggleView()} row>
-                                <FormControlLabel
-                                    className={classes.formControlLabel}
-                                    value={ROLL_VIEW}
-                                    control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />}
-                                    label="Roll"
-                                />
-                                <FormControlLabel
-                                    className={classes.formControlLabel}
-                                    value={TABLE_VIEW}
-                                    control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />}
-                                    label="Table"
-                                />
-                            </RadioGroup>
-                        </FormGroup>
-                    </div>
+                    {
+                        isRollViewDefault &&
+                            <div className={classes.toggleViewBlock} >
+                                <Typography variant="h1" className={classes.formGroupLabel}>View</Typography>
+                                <FormGroup className={classes.formGroup}>
+                                    <RadioGroup name="viewType" className={classes.radioGroup} value={viewType} onChange={() => this.toggleView()} row>
+                                        <FormControlLabel
+                                            className={classes.formControlLabel}
+                                            value={ROLL_VIEW}
+                                            control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />}
+                                            label="Roll"
+                                        />
+                                        <FormControlLabel
+                                            className={classes.formControlLabel}
+                                            value={TABLE_VIEW}
+                                            control={<Radio classes={{ root: classes.radio, checked: classes.checked }} />}
+                                            label="Table"
+                                        />
+                                    </RadioGroup>
+                                </FormGroup>
+                            </div>
+                    }
                 </div>
                 <Grid className={classes.summaryContainer} spacing={16} container>
                     {
