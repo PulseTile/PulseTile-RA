@@ -187,8 +187,6 @@ class DummyVitalsChart extends Component {
             });
         }
 
-        console.log(chartData)
-
         const DOT_RADIUS = 8;
         const STROKE_WIDTH = 4;
 

@@ -13,8 +13,10 @@ import pluginFilters from "../config/pluginFilters";
 import { token, domainName } from "../token";
 
 import fakePatientsProvider from "./fakePatientsProvider";
+// import fakeTestResultsProvider from "./fakeTestResultsProvider";
 
 import newPatientsProvider from "./patientsProvider";
+import { checkFormData } from "./functions";
 import { httpErrorAction } from '../actions/httpErrorAction';
 
 const apiPatientsUser = 'api/patients';
@@ -55,6 +57,9 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case UPDATE:
+
+            checkFormData(resource, params);
+
             let updateData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
 
             if (resource === 'problems') {
@@ -62,6 +67,11 @@ const convertDataRequestToHTTP = (type, resource, params) => {
                 let dateOfOnset = get(params, 'data.dateOfOnset', null);
                 updateData.dateCreated = moment(dateCreated).format('DD-MM-YYYY');
                 updateData.dateOfOnset = moment(dateOfOnset).format('YYYY-MM-DD');
+            }
+
+            if (resource === 'medications') {
+                let startDate = get(params, 'data.startDate', null);
+                updateData.startDate = 1000 * moment(startDate).unix();
             }
 
             url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}/${params.id}`;
@@ -78,6 +88,9 @@ const convertDataRequestToHTTP = (type, resource, params) => {
             break;
 
         case CREATE:
+
+            checkFormData(resource, params);
+
             let newData = Object.assign({userId: localStorage.getItem('patientId')}, params.data);
             url = `${domainName}/${apiPatientsUser}/${localStorage.getItem('patientId')}/${resource}`;
             options.method = "POST";
@@ -254,5 +267,8 @@ export default (type, resource, params) => {
     if (resource === `patients`) {
         return newPatientsProvider(type, resource, params);
     }
+    // if (resource === `labresults`) {
+    //     return fakeTestResultsProvider(type, resource, params);
+    // }
     return dataProvider(type, resource, params);
 };
