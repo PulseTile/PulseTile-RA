@@ -66,7 +66,6 @@ function getParamsByResource(resource) {
         paramsArray = [
             { param: 'data.procedureName', label: 'Procedure Name' },
             { param: 'data.date', label: 'Date of Procedure' },
-            { param: 'data.performer', label: 'Procedure Performed By' },
             { param: 'data.notes', label: 'Procedure Notes' },
             { param: 'data.procedureTerminology', label: 'Terminology' },
             { param: 'data.procedureCode', label: 'Code' },
